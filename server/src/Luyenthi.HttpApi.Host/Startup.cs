@@ -1,10 +1,16 @@
+using Luyenthi.Domain.User;
+using Luyenthi.EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,11 +31,30 @@ namespace Luyenthi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpContextAccessor();
+            services.AddDbContext<LuyenthiDbContext>(options =>
+                 options.UseMySql(
+                     Configuration.GetConnectionString("Default"),
+                     b => b.MigrationsAssembly("Luyenthi.DbMigrator")
+                 )
+             );
+            services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
+                {
+                    options.User.RequireUniqueEmail = false;
+                    options.SignIn.RequireConfirmedAccount = false;
+                    options.SignIn.RequireConfirmedEmail = false;
+                    options.Password.RequireDigit = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireLowercase = false;
+                }
+            )
+                .AddEntityFrameworkStores<LuyenthiDbContext>()
+                .AddDefaultTokenProviders();
             services.AddControllers()
-            .AddJsonOptions(options =>
+            .AddNewtonsoftJson(options =>
             {
-                options.JsonSerializerOptions.DictionaryKeyPolicy = null;
-                options.JsonSerializerOptions.PropertyNameCaseInsensitive = false;
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver(); 
             });
             services.AddSwaggerGen(c =>
             {
