@@ -1,7 +1,23 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Apis" Version="1.55.0" />
+    <PackageReference Include="Google.Apis.Auth" Version="1.55.0" />
+    <PackageReference Include="Google.Apis.Docs.v1" Version="1.55.0.2379" />
+    <PackageReference Include="Google.Apis.Drive.v2" Version="1.55.0.2397" />
+    <PackageReference Include="Google.Apis.Sheets.v4" Version="1.55.0.2371" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UserService\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Luyenthi.Core\Luyenthi.Core.csproj" />
+  </ItemGroup>
 
 </Project>

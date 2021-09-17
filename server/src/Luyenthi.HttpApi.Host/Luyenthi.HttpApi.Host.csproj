@@ -1,8 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="appsettings.Development.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="appsettings.Development.json" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
@@ -29,6 +37,11 @@
     <ProjectReference Include="..\Luyenthi.DbMigrator\Luyenthi.DbMigrator.csproj" />
     <ProjectReference Include="..\Luyenthi.Domain\Luyenthi.Domain.csproj" />
     <ProjectReference Include="..\Luyenthi.EntityFrameworkCore\Luyenthi.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\Luyenthi.Services\Luyenthi.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>

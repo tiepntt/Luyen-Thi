@@ -1,4 +1,5 @@
 ﻿using Luyenthi.Domain.Base;
+using Luyenthi.Domain.Questions;
 using Luyenthi.Domain.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -11,6 +12,7 @@ namespace Luyenthi.EntityFrameworkCore
     public class LuyenthiDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
+        public DbSet<Question> Questions { get; set; }
         public LuyenthiDbContext(DbContextOptions<LuyenthiDbContext> options, IHttpContextAccessor httpContextAccessor) : base(options)
         {
             this._httpContextAccessor = httpContextAccessor;

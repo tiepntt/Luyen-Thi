@@ -30,6 +30,7 @@ namespace Luyenthi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<DriverSetting>(Configuration.GetSection("DriverSetting"));
             services.AddHttpContextAccessor();
             services.AddDbContext<LuyenthiDbContext>(options =>
                  options.UseMySql(
