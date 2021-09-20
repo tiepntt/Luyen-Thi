@@ -1,0 +1,32 @@
+.option-editor {
+  .button-option-editor {
+    display: inline-block;
+    border-radius: 3px;
+    border: 0.5px solid rgb(180, 177, 177);
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    margin: 5px;
+    padding-top: 2px;
+    cursor: pointer;
+    font-weight: 400;
+    color: rgb(94, 92, 92);
+    &:hover,
+    &.active {
+      border-color: blue;
+      color: blue;
+    }
+  }
+}
+.input-math-quil {
+  width: 500px;
+  min-height: 300px;
+  border: 1px solid rgb(160, 159, 159);
+  border-radius: 4px;
+  color: black !important;
+  font-size: 24px;
+  padding: 5px;
+  span.mq-sup {
+    font-size: 18px !important;
+  }
+}

@@ -40,8 +40,4 @@
     <ProjectReference Include="..\Luyenthi.Services\Luyenthi.Services.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\" />
-  </ItemGroup>
-
 </Project>
