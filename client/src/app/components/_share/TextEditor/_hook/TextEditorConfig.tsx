@@ -5,7 +5,11 @@ import HeadingElement from "../Elements/HeadingElement/HeadingElement";
 import ImageElement from "../Elements/ImageElement/ImageElement";
 import KatexElement from "../Elements/KatexElement/KatexElement";
 import ParagraphElement from "../Elements/ParagraphElement/ParagraphElement";
-import { toggleStyle } from "../_utils";
+import TableElement, {
+  TableCell,
+  TableRow,
+} from "../Elements/TableElement/TableElement";
+import { toggleBlockType, toggleStyle } from "../_utils";
 
 export const useEditorConfig = (editor: ReactEditor) => {
   const onKeyDown = useCallback(
@@ -25,6 +29,9 @@ const elements = {
   katex: KatexElement,
   paragraph: ParagraphElement,
   image: ImageElement,
+  table: TableElement,
+  table_cell: TableCell,
+  table_row: TableRow,
 };
 enum ElementType {
   h1 = "h1",
@@ -34,6 +41,9 @@ enum ElementType {
   h5 = "h1",
   katex = "katex",
   paragraph = "paragraph",
+  table = "table",
+  table_cell = "table_cell",
+  table_row = "table_row",
 }
 interface ElementProp {
   children: any;
@@ -89,18 +99,39 @@ const renderLeaf: React.FC<LeftProp> = (props) => {
 const KeyBindings = {
   onKeyDown: (editor: any, event: any) => {
     if (isHotkey("mod+b", event)) {
-      event.preventDefault()
+      event.preventDefault();
       toggleStyle(editor, "bold");
       return;
     }
     if (isHotkey("mod+i", event)) {
-      event.preventDefault()
-      toggleStyle(editor, "italic");
+      event.preventDefault();
+      toggleBlockType(editor, "center");
       return;
     }
     if (isHotkey("mod+u", event)) {
-      event.preventDefault()
+      event.preventDefault();
       toggleStyle(editor, "underline");
+      return;
+    }
+    // text align
+    if (isHotkey("mod+e", event)) {
+      event.preventDefault();
+      toggleBlockType(editor, "center");
+      return;
+    }
+    if (isHotkey("mod+l", event)) {
+      event.preventDefault();
+      toggleBlockType(editor, "left");
+      return;
+    }
+    if (isHotkey("mod+r", event)) {
+      event.preventDefault();
+      toggleBlockType(editor, "right");
+      return;
+    }
+    if (isHotkey("mod+j", event)) {
+      event.preventDefault();
+      toggleBlockType(editor, "justify");
       return;
     }
   },

@@ -34,3 +34,19 @@
     font-size: 18px !important;
   }
 }
+.table-item-editor {
+  border: 1px solid black;
+  .table-row-item-list-editor {
+    display: flex;
+    .table-cell-item-list-editor {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: gray 1px solid;
+      cursor: pointer;
+      &.active {
+        background: rgb(194, 193, 193);
+      }
+    }
+  }
+}

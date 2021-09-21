@@ -14,6 +14,7 @@ import { useSlate } from "slate-react";
 import { isMarkActive, toggleBlockType, toggleStyle } from "../_utils";
 import ImageButton from "./ImportOptions/ImageButton";
 import KatexButton from "./ImportOptions/KatexButton";
+import TableButton from "./ImportOptions/TableButton";
 import "./style.scss";
 
 const CHARACTER_STYLES = [
@@ -72,6 +73,7 @@ const OptionEditor: React.FC<Props> = ({ selection }) => {
         ))}
         <ImageButton />
         <KatexButton />
+        <TableButton />
         {Block_STYLES.map(({ value, icon }) => (
           <ToolBarButton
             key={value}

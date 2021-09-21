@@ -2,7 +2,9 @@
 .explain-question {
   min-height: 150px;
 }
-
+.option-question-editor {
+  // min-height: 60px;
+}
 .option-Check {
   display: inline-block;
   border-radius: 50%;
@@ -13,7 +15,7 @@
   box-sizing: border-box;
   margin: auto;
   margin-left: 5px;
-  margin-top: 5px;
+  // margin-top: 5px;
   cursor: pointer;
   &:active {
     background: greenyellow;

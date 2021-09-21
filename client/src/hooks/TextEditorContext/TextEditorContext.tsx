@@ -1,8 +1,11 @@
 import React, { useContext } from "react";
 export interface TextEditModels {
-  setModalActive: () => void;
+  selection: any | null;
+  setSelection?: (value: any) => void | null;
+  setDocument: (document: any) => void;
+  document: any;
 }
-export const AppContext = React.createContext<TextEditModels>(
+export const TextEditorContext = React.createContext<TextEditModels>(
   {} as TextEditModels
 );
-export const useAppContext = () => useContext(AppContext);
+export const useEditorContext = () => useContext(TextEditorContext);

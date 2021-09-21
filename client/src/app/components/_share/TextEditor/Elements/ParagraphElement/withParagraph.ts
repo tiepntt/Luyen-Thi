@@ -4,15 +4,15 @@ import { ReactEditor } from "slate-react";
 export const withParagraph = (editor: ReactEditor) => {
   const { insertData } = editor;
   editor.insertData = (data) => {
-    const text = data.getData("text/plain")
-    
+    const text = data.getData("text/plain");
+
     try {
       insertParagraph(editor, text);
     } catch {
       insertData(data);
     }
   };
-  
+
   return editor;
 };
 const insertParagraph = (editor: ReactEditor, content: string) => {
