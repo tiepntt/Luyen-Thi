@@ -42,6 +42,7 @@ export const withImages = (editor: ReactEditor) => {
     }
   };
 
+
   return editor;
 };
 

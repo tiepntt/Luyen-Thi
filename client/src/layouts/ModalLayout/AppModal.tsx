@@ -1,53 +1,56 @@
-import React from "react";
-import Popup from "reactjs-popup";
+// import React from "react";
+// import "./styles.scss";
+// import {
+//   Button,
+//   Dialog,
+//   DialogActions,
+//   DialogContent,
+//   DialogContentText,
+//   Slide,
+// } from "@mui/material";
+// import "reactjs-popup/dist/index.css";
+// const Transition = React.forwardRef(function Transition(props, ref) {
+//   return (
+//     <Slide
+//       direction="up"
+//       ref={ref}
+//       {...props}
+//       children={props.children as any}
+//     />
+//   );
+// });
 
-import "./styles.scss";
-export const AppModal = () => (
-  <Popup
-    trigger={<button className="button"> Open Modal </button>}
-    modal
-    nested
-  >
-    {(close: any) => (
-      <div className="modal">
-        <button className="close" onClick={close}>
-          &times;
-        </button>
-        <div className="header"> Modal Title </div>
-        <div className="content">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, a
-          nostrum. Dolorem, repellat quidem ut, minima sint vel eveniet
-          quibusdam voluptates delectus doloremque, explicabo tempore dicta
-          adipisci fugit amet dignissimos?
-          <br />
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur
-          sit commodi beatae optio voluptatum sed eius cumque, delectus saepe
-          repudiandae explicabo nemo nam libero ad, doloribus, voluptas rem
-          alias. Vitae?
-        </div>
-        <div className="actions">
-          <Popup
-            trigger={<button className="button"> Trigger </button>}
-            position="top center"
-            nested
-          >
-            <span>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae
-              magni omnis delectus nemo, maxime molestiae dolorem numquam
-              mollitia, voluptate ea, accusamus excepturi deleniti ratione
-              sapiente! Laudantium, aperiam doloribus. Odit, aut.
-            </span>
-          </Popup>
-          <button
-            className="button"
-            onClick={() => {
-              close();
-            }}
-          >
-            close modal
-          </button>
-        </div>
-      </div>
-    )}
-  </Popup>
-);
+// export const AppModal = () => {
+//   return (
+//     <Dialog
+//       open={open}
+//       TransitionComponent={Transition as any}
+//       keepMounted
+//       onClose={handleClose}
+//       aria-describedby="alert-dialog-slide-description"
+//     >
+//       <DialogContent>
+//         <DialogContentText id="alert-dialog-slide-description">
+//           <div className="input-math-quil">
+//             <InputMathQuil defaultValue={value} onChange={setValue} />
+//           </div>
+//         </DialogContentText>
+//       </DialogContent>
+//       <DialogActions>
+//         <Button onClick={handleClose} variant="outlined">
+//           Hủy
+//         </Button>
+//         <Button onClick={saveKatex} variant="contained">
+//           Lưu
+//         </Button>
+//       </DialogActions>
+//     </Dialog>
+//   );
+// };
+import React from "react";
+
+const AppModal = () => {
+  return <div></div>;
+};
+
+export default AppModal;

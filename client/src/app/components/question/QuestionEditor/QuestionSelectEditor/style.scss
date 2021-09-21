@@ -1,0 +1,21 @@
+.introduction-editor,
+.explain-question {
+  min-height: 150px;
+}
+
+.option-Check {
+  display: inline-block;
+  border-radius: 50%;
+  width: 42px;
+  height: 40px;
+  background: #fbfbfb;
+  border: 1px solid #c9c9c9;
+  box-sizing: border-box;
+  margin: auto;
+  margin-left: 5px;
+  margin-top: 5px;
+  cursor: pointer;
+  &:active {
+    background: greenyellow;
+  }
+}

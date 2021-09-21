@@ -15,12 +15,12 @@ const ParagraphElement: React.FC<Props> = ({
   align,
 }) => {
   return (
-    <p
+    <div
       style={{ marginBottom: 0, textAlign: element.align || align || "left" }}
       {...attributes}
     >
       {children}
-    </p>
+    </div>
   );
 };
 

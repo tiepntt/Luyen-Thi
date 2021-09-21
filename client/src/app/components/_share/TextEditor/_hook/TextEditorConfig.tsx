@@ -89,14 +89,17 @@ const renderLeaf: React.FC<LeftProp> = (props) => {
 const KeyBindings = {
   onKeyDown: (editor: any, event: any) => {
     if (isHotkey("mod+b", event)) {
+      event.preventDefault()
       toggleStyle(editor, "bold");
       return;
     }
     if (isHotkey("mod+i", event)) {
+      event.preventDefault()
       toggleStyle(editor, "italic");
       return;
     }
     if (isHotkey("mod+u", event)) {
+      event.preventDefault()
       toggleStyle(editor, "underline");
       return;
     }

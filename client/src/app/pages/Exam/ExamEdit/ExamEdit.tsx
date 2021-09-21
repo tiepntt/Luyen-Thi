@@ -1,4 +1,4 @@
-import TextEditor from "app/components/_share/TextEditor";
+import QuestionEditor from "app/components/question/QuestionEditor/QuestionEditor";
 import React from "react";
 import "./style.scss";
 
@@ -9,7 +9,7 @@ const ExamEdit = () => {
       <div className="main-content-side-bar">
         <div className="editor">
           <div className="item-editor">
-            <TextEditor />
+            <QuestionEditor />
           </div>
         </div>
         <div className="math-quild"></div>
