@@ -11,7 +11,7 @@ interface Props {
 const KatexElement: React.FC<Props> = ({ element, attributes, children }) => {
   return (
     <div className="d-inline-block" {...attributes}>
-      <div className="d-inline-block">
+      <div className="d-inline-block" style={{userSelect :"none"}} contentEditable={false}>
         <TemplateKatex element={element} />
       </div>
       {children}

@@ -1,4 +1,7 @@
 .option-editor {
+  background: #f1f1f1;
+  border-radius: 4px;
+  text-align: right;
   .button-option-editor {
     display: inline-block;
     border-radius: 3px;
@@ -11,6 +14,7 @@
     cursor: pointer;
     font-weight: 400;
     color: rgb(94, 92, 92);
+    background: white;
     &:hover,
     &.active {
       border-color: blue;
@@ -28,5 +32,21 @@
   padding: 5px;
   span.mq-sup {
     font-size: 18px !important;
+  }
+}
+.table-item-editor {
+  border: 1px solid black;
+  .table-row-item-list-editor {
+    display: flex;
+    .table-cell-item-list-editor {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: gray 1px solid;
+      cursor: pointer;
+      &.active {
+        background: rgb(194, 193, 193);
+      }
+    }
   }
 }

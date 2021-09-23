@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import InputMathQuil from "app/components/_share/Quil";
 import TemplateKatex from "app/components/_share/TemplateKatex/TemplateKatex";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "reactjs-popup/dist/index.css";
 import { useSlateStatic } from "slate-react";
 import { insertKaTextAtIndex } from "../../Elements/KatexElement/WithKatex";
@@ -26,23 +26,33 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const KatexButton = () => {
   const editor = useSlateStatic();
   const [open, setOpen] = React.useState(false);
+  const [actionSave, setActionSave] = React.useState(false);
   const [selection, setSelection] = useState(null);
-  const [value, setValue] = useState("x^2+ 3x + 5 = 2x^2+ 6x^3 - 7 + x");
+  const [value, setValueKatex] = useState("x^2+ 3x + 5 = 2x^2+ 6x^3 - 7 + x");
   const handleClickOpen = () => {
     setSelection(editor.selection as any);
     setOpen(true);
+    setActionSave(false);
   };
 
   const handleClose = () => {
     setOpen(false);
   };
+  useEffect(() => {
+    if (actionSave) {
+      saveKatex();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [actionSave]);
   const saveKatex = () => {
+    if (value) {
+      insertKaTextAtIndex(
+        editor as any,
+        `$${value.replaceAll("\\frac", "\\dfrac")}$`,
+        selection
+      );
+    }
     handleClose();
-    insertKaTextAtIndex(
-      editor as any,
-      `$${value.replaceAll("\\frac", "\\dfrac")}$`,
-      selection
-    );
   };
 
   return (
@@ -60,7 +70,11 @@ const KatexButton = () => {
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
             <div className="input-math-quil">
-              <InputMathQuil defaultValue={value} onChange={setValue} />
+              <InputMathQuil
+                defaultValue={value}
+                onChange={setValueKatex}
+                onEnter={() => setActionSave(true)}
+              />
             </div>
           </DialogContentText>
         </DialogContent>
