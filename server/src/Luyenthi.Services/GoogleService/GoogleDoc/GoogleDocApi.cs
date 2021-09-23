@@ -38,11 +38,11 @@ namespace Luyenthi.Services.GoolgeAPI
             return service;
         }
 
-        public static Document GetDocument(DocsService service, string documentId)
+        public static async Task<Document> GetDocument(DocsService service, string documentId)
         {
             DocumentsResource.GetRequest request = service.Documents.Get(documentId);
 
-            Document doc = request.Execute();
+            Document doc = await request.ExecuteAsync();
 
             return doc;
         }

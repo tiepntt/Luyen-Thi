@@ -105,7 +105,7 @@ const KeyBindings = {
     }
     if (isHotkey("mod+i", event)) {
       event.preventDefault();
-      toggleBlockType(editor, "center");
+      toggleStyle(editor, "italic");
       return;
     }
     if (isHotkey("mod+u", event)) {

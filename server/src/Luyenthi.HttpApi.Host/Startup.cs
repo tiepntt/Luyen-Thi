@@ -1,5 +1,6 @@
 using Luyenthi.Domain.User;
 using Luyenthi.EntityFrameworkCore;
+using Luyenthi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -35,9 +36,13 @@ namespace Luyenthi
             services.AddDbContext<LuyenthiDbContext>(options =>
                  options.UseMySql(
                      Configuration.GetConnectionString("Default"),
+                     ServerVersion.AutoDetect(Configuration.GetConnectionString("Default")),
                      b => b.MigrationsAssembly("Luyenthi.DbMigrator")
+                     
                  )
              );
+            // add transient
+            services.AddTransient<DocumentService>();
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
                 {
                     options.User.RequireUniqueEmail = false;

@@ -8,11 +8,12 @@ namespace Luyenthi.Domain.User
 {
     public class ApplicationUser : IdentityUser<Guid>, IBaseEntity
     {
-        public DateTime CreatedAt { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public DateTime UpdatedAt { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Guid? CreatedBy { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Guid? UpdatedBy { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get ; set ; }
+        public Guid? CreatedBy { get ; set ; }
+        public Guid? UpdatedBy { get ; set ; }
         public string FirstName { get; set; }
+        public string LastName { get; set; }
         public DateTime BirthDay { get; set; }
     }
 }
