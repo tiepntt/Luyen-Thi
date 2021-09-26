@@ -4,9 +4,8 @@ using System.Text;
 
 namespace Luyenthi.Core.Dtos.GoogleDoc
 {
-    public class StructElement:BaseElement
+    public abstract class StructElement:BaseElement
     {
-        public TableElement Table { get; set; } = null;
-        public ElementParagraph Paragraph { get; set; } = null;
+        public string NameStyle { get; set; }
     }
 }

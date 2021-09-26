@@ -1,37 +1,65 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20210917071832_Initial.cs" />
-    <Compile Remove="Migrations\20210917071832_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20210923095025_Inital.cs" />
+    <Compile Remove="Migrations\20210923095025_Inital.Designer.cs" />
+    <Compile Remove="Migrations\20210923100839_Initial.cs" />
+    <Compile Remove="Migrations\20210923100839_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20210923102414_Initial.cs" />
+    <Compile Remove="Migrations\20210923102414_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20210923102600_Initial.cs" />
+    <Compile Remove="Migrations\20210923102600_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20210923104432_Initial.cs" />
+    <Compile Remove="Migrations\20210923104432_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20210923121549_Initial.cs" />
+    <Compile Remove="Migrations\20210923121549_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20210923121846_Initial.cs" />
+    <Compile Remove="Migrations\20210923121846_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20210923122048_Inital.cs" />
+    <Compile Remove="Migrations\20210923122048_Inital.Designer.cs" />
+    <Compile Remove="Migrations\20210923123031_Inital.cs" />
+    <Compile Remove="Migrations\20210923123031_Inital.Designer.cs" />
+    <Compile Remove="Migrations\20210923123201_Inital.cs" />
+    <Compile Remove="Migrations\20210923123201_Inital.Designer.cs" />
+    <Compile Remove="Migrations\20210923123519_Initial.cs" />
+    <Compile Remove="Migrations\20210923123519_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20210923124040_Initial.cs" />
+    <Compile Remove="Migrations\20210923124040_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20210923124223_Initial.cs" />
+    <Compile Remove="Migrations\20210923124223_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20210923130525_initial.cs" />
+    <Compile Remove="Migrations\20210923130525_initial.Designer.cs" />
+    <Compile Remove="Migrations\20210923132900_initial.cs" />
+    <Compile Remove="Migrations\20210923132900_initial.Designer.cs" />
+    <Compile Remove="Migrations\20210923132916_initial.cs" />
+    <Compile Remove="Migrations\20210923132916_initial.Designer.cs" />
+    <Compile Remove="Migrations\20210923133347_initial.cs" />
+    <Compile Remove="Migrations\20210923133347_initial.Designer.cs" />
+    <Compile Remove="Migrations\20210923133900_initial.cs" />
+    <Compile Remove="Migrations\20210923133900_initial.Designer.cs" />
+    <Compile Remove="Migrations\20210923140150_initial.cs" />
+    <Compile Remove="Migrations\20210923140150_initial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.8" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.8">
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.10">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.8" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.8">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="3.1.8" />
-    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="3.1.8" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="5.0.10" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Luyenthi.EntityFrameworkCore\Luyenthi.EntityFrameworkCore.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

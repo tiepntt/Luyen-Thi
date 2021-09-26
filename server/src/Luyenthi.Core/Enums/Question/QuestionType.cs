@@ -6,6 +6,7 @@ namespace Luyenthi.Core.Enums.Question
 {
     public enum QuestionType
     {
-        
+        QuestionMultipleChoice,
+        QuestionSet
     }
 }
