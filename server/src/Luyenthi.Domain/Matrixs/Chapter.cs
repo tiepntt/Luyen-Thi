@@ -14,8 +14,10 @@ namespace Luyenthi.Domain
         public string Name { get; set; }
         public string Code { get; set; }
         public string OrderNumber { get; set; }
+        public Guid SubjectId { get; set; }
         public Subject Subject { get; set; }
-        public Grade Grades { get; set; }
+        public Guid GradeId { get; set; }
+        public Grade Grade { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public Guid? CreatedBy { get; set; }

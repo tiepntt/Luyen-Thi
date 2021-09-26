@@ -1,4 +1,5 @@
-﻿using Luyenthi.Domain.Base;
+﻿using Luyenthi.Core.Enums.Question;
+using Luyenthi.Domain.Base;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,17 +10,18 @@ namespace Luyenthi.Domain
     public class Question:IEntity<Guid>, IBaseEntity
     {
         public Guid Id { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get ; set ; }
-        public Guid? CreatedBy { get ; set ; }
-        public Guid? UpdatedBy { get; set; }
-
-        [NotMapped]
+        public Guid SubjectId { get; set; }
+        public Guid GradeId { get; set; }
+        public Guid ChapterId { get; set; }
+        public Guid UnitId { get; set; }
+        public Guid LevelId { get; set; }
+        public Guid ParentId { get; set; }
         public dynamic Content { get; set; }
-        [NotMapped]
         public dynamic Introduction { get; set; }
-        [NotMapped]
         public dynamic Solve { get; set; }
+        public string CorrectAnswer { get; set; }
+        public QuestionStatus Status { get; set; } = QuestionStatus.Waiting;
+        public int OrderNumber { get; set; }
         public virtual List<Question> SubQuestions { get; set; }
         public virtual Question Parent { get; set; }
         public Grade Grade { get; set; }
@@ -28,5 +30,9 @@ namespace Luyenthi.Domain
         public Unit Unit { get; set; }
         public LevelQuestion Level { get; set; }
         public  ICollection<PartDocument> PartDocuments { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
+        public Guid? CreatedBy { get; set; }
+        public Guid? UpdatedBy { get; set; }
     }
 }

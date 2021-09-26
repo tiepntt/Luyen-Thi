@@ -12,6 +12,7 @@ namespace Luyenthi.Domain
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
-        public List<Grade> Grades { get; set; }
+        public int OrderNumber { get; set; }
+        public virtual List<Grade> Grades { get; set; }
     }
 }

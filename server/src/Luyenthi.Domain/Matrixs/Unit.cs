@@ -11,7 +11,9 @@ namespace Luyenthi.Domain
     {
         public string Name { get; set; }
         public string Code { get; set; }
+        public Guid ChapterId { get; set; }
         public Chapter Chapter { get; set; }
+        public Guid GradeId { get; set; }
         public Grade Grade { get; set; }
         public Guid Id { get; set; }
         public DateTime CreatedAt { get; set; }

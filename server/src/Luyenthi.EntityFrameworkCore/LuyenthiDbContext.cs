@@ -8,7 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
+using System.Collections.Generic;
 using System.Dynamic;
+using System.IO;
+using System.Linq;
 
 namespace Luyenthi.EntityFrameworkCore
 {
@@ -63,8 +66,8 @@ namespace Luyenthi.EntityFrameworkCore
         {
             // tạo data khi thiết lập
             base.OnModelCreating(builder);
-            RelationShipConfiguration(builder);
             EntityConfiguration(builder);
+            RelationShipConfiguration(builder);
 
             // relation ship
         }
@@ -87,6 +90,10 @@ namespace Luyenthi.EntityFrameworkCore
             });
             builder.Entity<Question>(b =>
             {
+                b.Property(x => x.Introduction).HasConversion(
+                       v => JsonConvert.SerializeObject(v as object),
+                       v => JsonConvert.DeserializeObject<ExpandoObject>(v, new ExpandoObjectConverter())
+                   );
                 b.Property(x => x.Content).HasConversion(
                     v => JsonConvert.SerializeObject(v as object),
                     v => JsonConvert.DeserializeObject<ExpandoObject>(v, new ExpandoObjectConverter())
@@ -100,10 +107,18 @@ namespace Luyenthi.EntityFrameworkCore
                     v => JsonConvert.DeserializeObject<ExpandoObject>(v, new ExpandoObjectConverter())
                 );
             });
+            builder.Entity<Document>(b =>
+            {
+                b.Property(x => x.Description).HasConversion(
+                    v => JsonConvert.SerializeObject(v as object),
+                    v => JsonConvert.DeserializeObject<ExpandoObject>(v, new ExpandoObjectConverter())
+                );
+            }
+            );
         }
         public void RelationShipConfiguration(ModelBuilder builder)
         {
-            builder.SharedTypeEntity<QuestionDocumentPart>("QuestionDocumentParts");
+            builder.SharedTypeEntity<QuestionDocumentPart>("QuestionDocumentParts").HasNoKey();
             builder.Entity<PartDocument>()
                .HasMany(b => b.Questions)
                .WithMany(x => x.PartDocuments)
@@ -126,15 +141,14 @@ namespace Luyenthi.EntityFrameworkCore
             builder.ApplyConfiguration(new RoleConfiguration());
             builder.ApplyConfiguration(new AdminConfiguration());
             builder.ApplyConfiguration(new UserWithRolesConfig());
+
         }
-        private void SeedGrades(ModelBuilder builder)
+        private void SeedGradeAndSubject(ModelBuilder builder)
         {
             // seeding project
-        }
-        private void SeedSubject(ModelBuilder builder)
-        {
+            
+            //builder.Entity<GradeSubject>().HasData(gradeSubjects);
 
         }
-
     }
 }

@@ -17,8 +17,6 @@ namespace Luyenthi.EntityFrameworkCore
                 RoleId = new Guid(RoleConfiguration.adminRoleId),
                 UserId = new Guid(AdminConfiguration.adminId),
             };
-            
-
             builder.HasData(iur);
         }
     }

@@ -1,13 +1,16 @@
 using Luyenthi.Domain.User;
 using Luyenthi.EntityFrameworkCore;
 using Luyenthi.Services;
+using Luyenthi.Services.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
@@ -24,6 +27,7 @@ namespace Luyenthi
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            
         }
 
         public IConfiguration Configuration { get; }
@@ -31,18 +35,28 @@ namespace Luyenthi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<DriverSetting>(Configuration.GetSection("DriverSetting"));
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
             services.AddHttpContextAccessor();
             services.AddDbContext<LuyenthiDbContext>(options =>
-                 options.UseMySql(
-                     Configuration.GetConnectionString("Default"),
-                     ServerVersion.AutoDetect(Configuration.GetConnectionString("Default")),
-                     b => b.MigrationsAssembly("Luyenthi.DbMigrator")
-                     
-                 )
+            {
+                options.UseMySql(
+                    Configuration.GetConnectionString("Default"),
+                    ServerVersion.AutoDetect(Configuration.GetConnectionString("Default")),
+                    b => b.MigrationsAssembly("Luyenthi.DbMigrator")
+
+                );
+                options.EnableSensitiveDataLogging();
+            }
              );
-            // add transient
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddOptions();
+            // repository
+            services.AddTransient<GradeRepository>();
+            services.AddTransient<SubjectRepository>();
+            // add transient service
             services.AddTransient<DocumentService>();
+            services.AddTransient<FileService>();
+           
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
                 {
                     options.User.RequireUniqueEmail = false;

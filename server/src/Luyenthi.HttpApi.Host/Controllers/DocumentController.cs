@@ -1,8 +1,13 @@
-﻿using Luyenthi.Core.Dtos.Document;
+﻿using Luyenthi.Core;
+using Luyenthi.Core.Dtos.Document;
+using Luyenthi.Core.Dtos.GoogleDoc;
 using Luyenthi.Services;
+using Luyenthi.Services.GoolgeAPI;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,21 +17,37 @@ namespace Luyenthi.HttpApi.Host.Controllers
     [ApiController]
     public class DocumentController : Controller
     {
-        private readonly  DocumentService _documentService;
-        
-        public DocumentController(DocumentService documentService)
+        private readonly DocumentService _documentService;
+        private readonly FileService _fileService;
+        private readonly IWebHostEnvironment _hostingEnvironment;
+
+        public DocumentController(
+            DocumentService documentService,
+            FileService fileService,
+            IWebHostEnvironment hostEnvironment
+            )
         {
             _documentService = documentService;
+            _fileService = fileService;
+            _hostingEnvironment = hostEnvironment;
         }
         [HttpPost("import-document")]
-        public async Task<dynamic> ImportDocument(DocumentImportRequestDto request)
+        public  dynamic ImportDocument(DocumentImportRequestDto request)
         {
             if(request.GoogleDocId == "")
             {
                 throw new Exception("Không tìm thấy GoogleDocId");
             }
-            var result =await _documentService.ImportDocument(request);
+            
+            return null;
+        }
+        [HttpPost("import-questions")]
+        public async Task<dynamic> ImportQuestion(QuestionImportDto questionImport)
+        {
+            var result = await _documentService.ImportDocument(questionImport, _hostingEnvironment.WebRootPath);
             return result;
+            // lấy document
+           
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Luyenthi.Domain.Base;
+﻿using Luyenthi.Core.Enums.User;
+using Luyenthi.Domain.Base;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -15,5 +16,6 @@ namespace Luyenthi.Domain.User
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime BirthDay { get; set; }
+        public Gender Gender { get; set; }
     }
 }

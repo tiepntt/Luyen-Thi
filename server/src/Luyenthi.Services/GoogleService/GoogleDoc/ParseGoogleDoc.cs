@@ -10,46 +10,16 @@ using Luyenthi.Core.Dtos.GoogleDoc;
 
 namespace Luyenthi.Services
 {
-    public class ParseGoogleDoc
-    {
-        // trả về 1 tree của các question
-        // Pt
-        /// <summary>
-        /// template split by paragraph has heading H3 and end by paragraph heading normal text
-        /// </summary>
-        /// <returns></returns>
-        public static List<List<StructuralElement>> SplitParagraph(List<StructuralElement> structuralElements, string heading)
-        {
-
-            return new List<List<StructuralElement>>();
-        }
-        /// <summary>
-        /// xóa các heading không cân thiết
-        /// </summary>
-        /// <param name="headings"> các heading</param>
-        /// <returns></returns>
-        public  static List<StructuralElement> RemovePargraph(List<StructuralElement> structuralElements, string[] headings) {
-
-            return structuralElements.Where(structElement =>
-            {
-                if (structElement.Paragraph == null || structElement.Paragraph.ParagraphStyle == null)
-                {
-                    return true;
-                }
-                var result = headings.Contains(structElement.Paragraph.ParagraphStyle.NamedStyleType);
-                return result;
-            }).ToList();
-        }
-        
-    }
     public class ParseDoc
     {
         private List<ImageDto> _images;
         private List<StructuralElement> _elements;
-        public ParseDoc(IList<StructuralElement> structuralElement, List<ImageDto> images)
+        private bool _isOption;
+        public ParseDoc(IList<StructuralElement> structuralElement, List<ImageDto> images, bool isOption = false)
         {
             _images = images;
             _elements = structuralElement.ToList();
+            _isOption = isOption;
         }
         public List<StructElement> Parse()
         {
@@ -135,7 +105,6 @@ namespace Luyenthi.Services
             {
                 Type = "paragraph",
                 Align = paragraph.ParagraphStyle.Alignment,
-                NameStyle = paragraph.ParagraphStyle.NamedStyleType
             };
             if (paragraphElement.Align != null && paragraphElement.Align=="JUSTIFIED")
             {
@@ -165,13 +134,20 @@ namespace Luyenthi.Services
                 var elements = new List<Element>();
                 textElements.ForEach(i =>
                 {
+                    var text = i;
+                    text = Regex.Replace(text, @"(Câu\s+[0-9]+[\.\․\:]\s{0,5})", "");
+                    if (_isOption)
+                    {
+                     text = Regex.Replace(i, @"([АВСABCD]\s*?[\.|\․])", "");  
+                    }
+                    
                     if (Regex.IsMatch(i, @"(\$[^$]+\$)|(\$\$[^$]*?\$\$)"))
                     {
-                        elements.Add(ParseKatex(i));
+                        elements.Add(ParseKatex(text));
                     }
                     else
                     {
-                        elements.Add(ParseTextRun(i, style));
+                        elements.Add(ParseTextRun(text, style));
                     }
                 });
                 return elements;
