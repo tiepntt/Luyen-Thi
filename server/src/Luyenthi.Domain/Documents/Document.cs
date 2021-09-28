@@ -15,7 +15,7 @@ namespace Luyenthi.Domain
         public Subject Subject { get; set; }
         public Guid GradeId { get; set; }
         public Grade Grade { get; set; }
-        public dynamic Description { get; set; }
+        public string Description { get; set; }
         public DocumentType DocumentType { get; set; }
         public DocumentStatus Status { get; set; } = DocumentStatus.Private;
         public virtual List<QuestionSet> QuestionSets { get; set; }

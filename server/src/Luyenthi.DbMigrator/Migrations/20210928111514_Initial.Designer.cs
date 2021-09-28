@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Luyenthi.DbMigrator.Migrations
 {
     [DbContext(typeof(LuyenthiDbContext))]
-    [Migration("20210928035107_Initial")]
+    [Migration("20210928111514_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -267,14 +267,14 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.Property<int>("OrderNumber")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Show")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<Guid?>("UpdatedBy")
                         .HasColumnType("char(36)");
-
-                    b.Property<bool>("show")
-                        .HasColumnType("tinyint(1)");
 
                     b.HasKey("Id");
 
@@ -442,7 +442,7 @@ namespace Luyenthi.DbMigrator.Migrations
                             Id = new Guid("cb3850a2-0a32-4cee-a175-08df5ec6169b"),
                             AccessFailedCount = 0,
                             BirthDay = new DateTime(1980, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "36d3b908-3462-4c85-8261-294ba298ce38",
+                            ConcurrencyStamp = "b4582cb3-1eeb-46f9-91f9-99939f1d273f",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "Admin@Admin.com",
                             EmailConfirmed = true,
@@ -450,7 +450,7 @@ namespace Luyenthi.DbMigrator.Migrations
                             Gender = 0,
                             LastName = "Nguyễn",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEKkjEWH4glGhD5IDVWJhx+5H1KNMp+n7m1jR+ANAYctYpScxSrD9rDAaERaN06HmxA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPPUCKjZW5UVmly0CX/bxtwozLO6iwklUS8jrUfucjKm5IA3D/orzGxNqK+0nQt5Fg==",
                             PhoneNumber = "0819200620",
                             PhoneNumberConfirmed = true,
                             TwoFactorEnabled = false,
@@ -489,21 +489,21 @@ namespace Luyenthi.DbMigrator.Migrations
                         new
                         {
                             Id = new Guid("daf39ce6-9c5f-495e-af95-810df7f64e40"),
-                            ConcurrencyStamp = "e25d07cc-7424-4bb5-84a4-6541fca5588c",
+                            ConcurrencyStamp = "4f48a85e-d51b-4c80-83f0-f9da29d2a073",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = new Guid("f25e6a5a-2ce9-4273-9bd3-3b71755add19"),
-                            ConcurrencyStamp = "5cfef18d-2504-47ca-a757-2ae64b2ea63a",
+                            ConcurrencyStamp = "30f2dc5a-6db4-4414-a885-3ed099963b9e",
                             Name = "Teacher",
                             NormalizedName = "TEACHER"
                         },
                         new
                         {
                             Id = new Guid("fcdea3ce-afe0-4fff-b32c-6c28309ec12e"),
-                            ConcurrencyStamp = "e9a4c212-f403-4f21-848b-230eea72b52a",
+                            ConcurrencyStamp = "4c6feac1-49e6-4fda-ac31-afa9f0ce0192",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         });
@@ -617,11 +617,17 @@ namespace Luyenthi.DbMigrator.Migrations
 
             modelBuilder.Entity("QuestionSetQuestion", b =>
                 {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
                     b.Property<Guid>("QuestionId")
                         .HasColumnType("char(36)");
 
                     b.Property<Guid>("QuestionSetId")
                         .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("QuestionId");
 
@@ -705,7 +711,8 @@ namespace Luyenthi.DbMigrator.Migrations
 
                     b.HasOne("Luyenthi.Domain.Question", "Parent")
                         .WithMany("SubQuestions")
-                        .HasForeignKey("ParentId");
+                        .HasForeignKey("ParentId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Luyenthi.Domain.Subject", "Subject")
                         .WithMany("Questions")

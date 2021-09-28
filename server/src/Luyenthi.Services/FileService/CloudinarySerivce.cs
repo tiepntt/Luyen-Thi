@@ -15,7 +15,7 @@ namespace Luyenthi.Services
         {
             _cloudinary = new Cloudinary(new Account {Cloud= "nguyentiep", ApiKey= "458933818533949", ApiSecret= "X26joMtt0oOXoYqjj87l13gIzR8" });
         }
-        public async Task<ImageUploadResult> UploadImage(byte[] bytes)
+        public ImageUploadResult UploadImage(byte[] bytes)
         {
             //var file = new ImageUploadParams
             //{

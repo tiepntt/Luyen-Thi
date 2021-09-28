@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Luyenthi.Core;
 using Luyenthi.Core.Dtos;
 using Luyenthi.Domain;
 using System;
@@ -17,11 +18,17 @@ namespace Luyenthi.HttpApi.Host
             CreateMap<Document, DocumentDto>();
             CreateMap<Document, DocumentGetDto>();
             CreateMap<Document, DocumentTitleDto>();
-            CreateMap<Grade, GradeDto > ();
-            // questin
+           
+            // question
             CreateMap<QuestionCreateDto, Question>();
+            CreateMap<QuestionGdocDto, Question>();
             CreateMap<Question, QuestionDto>();
+            // question set
+            CreateMap<QuestionSetGdocDto, QuestionSet>();
+            // subject
             CreateMap<Subject, SubjectDto>();
+            //grade
+            CreateMap<Grade, GradeDto>();
         }
     }
 }

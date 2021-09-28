@@ -92,33 +92,28 @@ namespace Luyenthi.EntityFrameworkCore
             {
                 b.Property(x => x.Introduction).HasConversion(
                        v => JsonConvert.SerializeObject(v as object),
-                       v => JsonConvert.DeserializeObject<ExpandoObject>(v, new ExpandoObjectConverter())
+                       v => JsonConvert.DeserializeObject<List<ExpandoObject>>(v)
                    );
                 b.Property(x => x.Content).HasConversion(
                     v => JsonConvert.SerializeObject(v as object),
-                    v => JsonConvert.DeserializeObject<ExpandoObject>(v, new ExpandoObjectConverter())
+                     v => JsonConvert.DeserializeObject<List<ExpandoObject>>(v)
                 );
                 b.Property(x => x.Solve).HasConversion(
                     v => JsonConvert.SerializeObject(v as object),
-                    v => JsonConvert.DeserializeObject<ExpandoObject>(v, new ExpandoObjectConverter())
+                     v => JsonConvert.DeserializeObject<List<ExpandoObject>>(v)
                 );
                 b.Property(x => x.Solve).HasConversion(
                     v => JsonConvert.SerializeObject(v as object),
-                    v => JsonConvert.DeserializeObject<ExpandoObject>(v, new ExpandoObjectConverter())
+                     v => JsonConvert.DeserializeObject<List<ExpandoObject>>(v)
                 );
+                b.HasMany(x => x.SubQuestions).WithOne(x => x.Parent)
+                .OnDelete(DeleteBehavior.Cascade);
             });
-            builder.Entity<Document>(b =>
-            {
-                b.Property(x => x.Description).HasConversion(
-                    v => JsonConvert.SerializeObject(v as object),
-                    v => JsonConvert.DeserializeObject<ExpandoObject>(v, new ExpandoObjectConverter())
-                );
-            }
-            );
+            
         }
         public void RelationShipConfiguration(ModelBuilder builder)
         {
-            builder.SharedTypeEntity<QuestionSetQuestion>("QuestionSetQuestion").HasNoKey();
+            builder.SharedTypeEntity<QuestionSetQuestion>("QuestionSetQuestion");
             builder.Entity<QuestionSet>()
                .HasMany(b => b.Questions)
                .WithMany(x => x.QuestionSets)

@@ -29,7 +29,7 @@ namespace Luyenthi.Domain
         public virtual Chapter Chapter { get; set; }
         public virtual Unit Unit { get; set; }
         public virtual LevelQuestion Level { get; set; }
-        public ICollection<QuestionSet> QuestionSets { get; set; }
+        public virtual List<QuestionSet> QuestionSets { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public Guid? CreatedBy { get; set; }

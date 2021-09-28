@@ -10,7 +10,8 @@ namespace Luyenthi.Core
     {
         public string Name { get; set; }
         public int OrderNumber { get; set; }
-        public bool show { get; set; }
+        public bool Show { get; set; }
+        public Guid DocumentId { get; set; }
         public List<QuestionGdocDto> Questions { get; set; }
     }
 }

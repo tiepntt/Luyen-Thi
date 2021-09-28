@@ -18,13 +18,16 @@ namespace Luyenthi.Services
         // tạo dữ liệu kiểu mẫu cho từng phần dạng Paragraph
         private List<ImageDto> _images;
         private List<StructuralElement> _elements;
+        private Guid _documentId;
         public ParseQuestionDocService(
             List<StructuralElement> elements,
-            List<ImageDto> images
+            List<ImageDto> images,
+             Guid documentId
             )
         {
             _images = images;
             _elements = elements;
+            _documentId = documentId;
         }
         public List<QuestionSetGdocDto> Parse()
         {
@@ -44,8 +47,9 @@ namespace Luyenthi.Services
             }
             var questionElements = GoogleDocHelper.SplitParagraph(partElement, "HEADING_3");
             part.Questions = questionElements.Select((e, i) => ParseQuestion(e, i)).ToList();
-            part.show = isShow;
+            part.Show = isShow;
             part.OrderNumber = index;
+            part.DocumentId = _documentId;
             return part;
         }
         public QuestionGdocDto ParseQuestion(List<StructuralElement> partElement,int index)

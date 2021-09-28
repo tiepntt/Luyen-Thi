@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Luyenthi.HttpApi.Host.Controllers
 {
@@ -21,6 +22,8 @@ namespace Luyenthi.HttpApi.Host.Controllers
     public class DocumentController : Controller
     {
         private readonly DocumentService _documentService;
+        private readonly QuestionSetService _questionSetService;
+        private readonly QuestionService _questionService;
         private readonly FileService _fileService;
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IMapper _mapper;
@@ -28,13 +31,17 @@ namespace Luyenthi.HttpApi.Host.Controllers
         public DocumentController(
             DocumentService documentService,
             FileService fileService,
-            IWebHostEnvironment hostEnvironment, 
+            IWebHostEnvironment hostEnvironment,
+            QuestionSetService questionSetService,
+            QuestionService questionService,
             IMapper mapper
             )
         {
             _documentService = documentService;
             _fileService = fileService;
             _hostingEnvironment = hostEnvironment;
+            _questionSetService = questionSetService;
+            _questionService = questionService;
             _mapper = mapper;
         }
         [HttpPost("import-document")]
@@ -50,10 +57,34 @@ namespace Luyenthi.HttpApi.Host.Controllers
         [HttpPost("import-questions")]
         public async Task<dynamic> ImportQuestion(QuestionImportDto questionImport)
         {
-            var result = await _documentService.ImportDocument(questionImport, _hostingEnvironment.WebRootPath);
-            return result;
-            // lấy document
-           
+            using TransactionScope scope = new TransactionScope();
+            if (questionImport.DocumentId == Guid.Empty || questionImport.GoogleDocId == "")
+            {
+                throw new Exception("Dữ liệu không hợp lệ");
+            }
+            var docService = GoogleDocApi.GetService();
+            var doc = await GoogleDocApi.GetDocument(docService, questionImport.GoogleDocId);
+            // download image
+            List<Task<ImageDto>> uploadImages = new List<Task<ImageDto>>();
+            var folderPath = Path.Combine(_hostingEnvironment.WebRootPath, "uploads/questions");
+            if (doc.InlineObjects != null)
+            {
+                for (int i = 0; i < doc.InlineObjects.Count; i++)
+                {
+                    var inlineObject = doc.InlineObjects.Values.ToList()[i];
+                    uploadImages.Add(_fileService.DownLoadImageFromDoc(inlineObject, folderPath, "uploads/questions"));
+                }
+            }
+            var tasks = uploadImages.ToArray();
+            var imageResults = await Task.WhenAll(tasks);
+            var images = imageResults.ToList();
+            // parse doc
+            var questionSetDatas = new ParseQuestionDocService(doc.Body.Content.ToList(), images, questionImport.DocumentId).Parse();
+            var questionSets = _mapper.Map<List<QuestionSet>>(questionSetDatas);
+
+            _questionSetService.CreateMany(questionSets);
+            scope.Complete();
+            return questionSets;
         }
         [HttpPost]
         public DocumentDto Create(DocumentCreateDto document)

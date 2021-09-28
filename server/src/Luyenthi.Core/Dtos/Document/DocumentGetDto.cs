@@ -11,7 +11,7 @@ namespace Luyenthi.Core.Dtos
     {
         public string Name { get; set; }
         public Guid Id { get; set; }
-        public dynamic Description { get; set; }
+        public string Description { get; set; }
         public GradeDto Grade { get; set; }
         public SubjectDto Subject { get; set; }
         public DocumentType DocumentType { get; set; }

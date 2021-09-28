@@ -1,11 +1,12 @@
-﻿using Luyenthi.Domain.Base;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace Luyenthi.Domain
+namespace Luyenthi.Core.Dtos.QuestionSet
 {
-    public class QuestionSet : IEntity<Guid>, IBaseEntity
+    public class QuestionSetCreateDto
     {
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
@@ -14,9 +15,7 @@ namespace Luyenthi.Domain
         public Guid Id { get; set; }
         public bool Show { get; set; }
         public string Name { get; set; }
-        public int OrderNumber { get; set; }
-        public  Guid DocumentId { get; set; }
-        public virtual Document Document { get; set; }
-        public virtual List<Question> Questions { get; set; }
+        public int OrderNumber { get; set;}
+        public Guid DocumentId { get; set; }
     }
 }

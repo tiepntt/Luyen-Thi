@@ -392,7 +392,7 @@ namespace Luyenthi.DbMigrator.Migrations
                     UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     UpdatedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    show = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Show = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Name = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     OrderNumber = table.Column<int>(type: "int", nullable: false),
@@ -462,7 +462,7 @@ namespace Luyenthi.DbMigrator.Migrations
                         column: x => x.ParentId,
                         principalTable: "Questions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Questions_Subjects_SubjectId",
                         column: x => x.SubjectId,
@@ -482,11 +482,13 @@ namespace Luyenthi.DbMigrator.Migrations
                 name: "QuestionSetQuestion",
                 columns: table => new
                 {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     QuestionId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     QuestionSetId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
                 },
                 constraints: table =>
                 {
+                    table.PrimaryKey("PK_QuestionSetQuestion", x => x.Id);
                     table.ForeignKey(
                         name: "FK_QuestionSetQuestion_Questions_QuestionId",
                         column: x => x.QuestionId,
@@ -507,15 +509,15 @@ namespace Luyenthi.DbMigrator.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { new Guid("daf39ce6-9c5f-495e-af95-810df7f64e40"), "e25d07cc-7424-4bb5-84a4-6541fca5588c", "Admin", "ADMIN" },
-                    { new Guid("f25e6a5a-2ce9-4273-9bd3-3b71755add19"), "5cfef18d-2504-47ca-a757-2ae64b2ea63a", "Teacher", "TEACHER" },
-                    { new Guid("fcdea3ce-afe0-4fff-b32c-6c28309ec12e"), "e9a4c212-f403-4f21-848b-230eea72b52a", "Student", "STUDENT" }
+                    { new Guid("daf39ce6-9c5f-495e-af95-810df7f64e40"), "4f48a85e-d51b-4c80-83f0-f9da29d2a073", "Admin", "ADMIN" },
+                    { new Guid("f25e6a5a-2ce9-4273-9bd3-3b71755add19"), "30f2dc5a-6db4-4414-a885-3ed099963b9e", "Teacher", "TEACHER" },
+                    { new Guid("fcdea3ce-afe0-4fff-b32c-6c28309ec12e"), "4c6feac1-49e6-4fda-ac31-afa9f0ce0192", "Student", "STUDENT" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "BirthDay", "ConcurrencyStamp", "CreatedAt", "CreatedBy", "Email", "EmailConfirmed", "FirstName", "Gender", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UpdatedAt", "UpdatedBy", "UserName" },
-                values: new object[] { new Guid("cb3850a2-0a32-4cee-a175-08df5ec6169b"), 0, new DateTime(1980, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "36d3b908-3462-4c85-8261-294ba298ce38", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Admin@Admin.com", true, "Tiệp", 0, "Nguyễn", false, null, null, null, "AQAAAAEAACcQAAAAEKkjEWH4glGhD5IDVWJhx+5H1KNMp+n7m1jR+ANAYctYpScxSrD9rDAaERaN06HmxA==", "0819200620", true, null, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "admin" });
+                values: new object[] { new Guid("cb3850a2-0a32-4cee-a175-08df5ec6169b"), 0, new DateTime(1980, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "b4582cb3-1eeb-46f9-91f9-99939f1d273f", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Admin@Admin.com", true, "Tiệp", 0, "Nguyễn", false, null, null, null, "AQAAAAEAACcQAAAAEPPUCKjZW5UVmly0CX/bxtwozLO6iwklUS8jrUfucjKm5IA3D/orzGxNqK+0nQt5Fg==", "0819200620", true, null, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",

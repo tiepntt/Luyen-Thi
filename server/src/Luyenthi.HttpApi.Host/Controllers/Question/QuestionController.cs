@@ -42,6 +42,11 @@ namespace Luyenthi.HttpApi.Host.Controllers
             question = _questionService.Create(question);
             return _mapper.Map<QuestionDto>(question);
         }
-        
+        [HttpGet("{questionId}")]
+        public QuestionDto GetQuestion(Guid questionId)
+        {
+            var question = _questionService.GetQuestion(questionId);
+            return _mapper.Map<QuestionDto>(question);
+        }
     }
 }

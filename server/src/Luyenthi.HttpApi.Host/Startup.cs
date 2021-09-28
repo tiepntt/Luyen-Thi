@@ -59,10 +59,12 @@ namespace Luyenthi
             services.AddTransient<QuestionRepository>();
             services.AddTransient<SubjectRepository>();
             services.AddTransient<DocumentRepository>();
+            services.AddTransient<QuestionSetRepository>();
             // add transient service
             services.AddTransient<DocumentService>();
             services.AddTransient<QuestionService>();
             services.AddTransient<FileService>();
+            services.AddTransient<QuestionSetService>();
            
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
                 {

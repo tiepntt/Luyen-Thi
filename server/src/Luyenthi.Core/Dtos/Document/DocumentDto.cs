@@ -13,7 +13,7 @@ namespace Luyenthi.Core.Dtos
         public Guid Id { get; set; }
         public Guid SubjectId { get; set; }
         public Guid GradeId { get; set; }
-        public dynamic Description { get; set; }
+        public string Description { get; set; }
         public DocumentType DocumentType { get; set; }
         public DocumentStatus Status { get; set; } = DocumentStatus.Private;
         public Guid? ParentId { get; set; }
