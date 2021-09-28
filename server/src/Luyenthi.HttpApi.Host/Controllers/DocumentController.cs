@@ -1,6 +1,9 @@
-﻿using Luyenthi.Core;
+﻿using AutoMapper;
+using Luyenthi.Core;
+using Luyenthi.Core.Dtos;
 using Luyenthi.Core.Dtos.Document;
 using Luyenthi.Core.Dtos.GoogleDoc;
+using Luyenthi.Domain;
 using Luyenthi.Services;
 using Luyenthi.Services.GoolgeAPI;
 using Microsoft.AspNetCore.Hosting;
@@ -20,16 +23,19 @@ namespace Luyenthi.HttpApi.Host.Controllers
         private readonly DocumentService _documentService;
         private readonly FileService _fileService;
         private readonly IWebHostEnvironment _hostingEnvironment;
+        private readonly IMapper _mapper;
 
         public DocumentController(
             DocumentService documentService,
             FileService fileService,
-            IWebHostEnvironment hostEnvironment
+            IWebHostEnvironment hostEnvironment, 
+            IMapper mapper
             )
         {
             _documentService = documentService;
             _fileService = fileService;
             _hostingEnvironment = hostEnvironment;
+            _mapper = mapper;
         }
         [HttpPost("import-document")]
         public  dynamic ImportDocument(DocumentImportRequestDto request)
@@ -48,6 +54,24 @@ namespace Luyenthi.HttpApi.Host.Controllers
             return result;
             // lấy document
            
+        }
+        [HttpPost]
+        public DocumentDto Create(DocumentCreateDto document)
+        {
+            var documentCreate = _mapper.Map<Document>(document);
+            var documentResponse = _documentService.Create(documentCreate);
+            return _mapper.Map<DocumentDto>(documentResponse);
+        }
+        [HttpGet("{documentId}")]
+        public DocumentGetDto GetById(Guid documentId)
+        {
+            var documentResponse = _documentService.GetById(documentId);
+            return _mapper.Map<DocumentGetDto>(documentResponse);
+        }
+        [HttpDelete("{documentId}")]
+        public void DeleteById(Guid documentId)
+        {
+             _documentService.RemoveById(documentId);
         }
     }
 }

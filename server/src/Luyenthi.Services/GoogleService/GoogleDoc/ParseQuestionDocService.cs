@@ -26,17 +26,17 @@ namespace Luyenthi.Services
             _images = images;
             _elements = elements;
         }
-        public List<PartGdocDto> Parse()
+        public List<QuestionSetGdocDto> Parse()
         {
             // tách các tiêu đề 2
             var partElements = GoogleDocHelper.SplitParagraph(_elements, "HEADING_2");
-            var parts = partElements.Select((e, i) => ParsePartQuestion(e, i, partElements.Count == 1)).ToList();
+            var parts = partElements.Select((e, i) => ParsePartQuestion(e, i, partElements.Count > 1)).ToList();
             return parts;
         }
-        public PartGdocDto ParsePartQuestion(List<StructuralElement> partElement,int index, bool isShow=true)
+        public QuestionSetGdocDto ParsePartQuestion(List<StructuralElement> partElement,int index, bool isShow=true)
         {
             var partHeader = partElement[0];
-            var part = new PartGdocDto();
+            var part = new QuestionSetGdocDto();
             part.Name = "";
             if(partHeader.Paragraph != null && partHeader.Paragraph.ParagraphStyle.NamedStyleType == "HEADING_2")
             {

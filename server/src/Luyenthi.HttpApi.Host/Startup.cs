@@ -19,6 +19,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Luyenthi.HttpApi.Host;
+using Luyenthi.HttpApi.Host.Middleware;
 
 namespace Luyenthi
 {
@@ -48,13 +51,17 @@ namespace Luyenthi
                 options.EnableSensitiveDataLogging();
             }
              );
+            
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddOptions();
             // repository
             services.AddTransient<GradeRepository>();
+            services.AddTransient<QuestionRepository>();
             services.AddTransient<SubjectRepository>();
+            services.AddTransient<DocumentRepository>();
             // add transient service
             services.AddTransient<DocumentService>();
+            services.AddTransient<QuestionService>();
             services.AddTransient<FileService>();
            
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
@@ -70,7 +77,9 @@ namespace Luyenthi
             )
                 .AddEntityFrameworkStores<LuyenthiDbContext>()
                 .AddDefaultTokenProviders();
+            services.AddAutoMapper(c => c.AddProfile<MappingProfile>(), typeof(Startup));
             services.AddControllers()
+
             .AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
@@ -102,6 +111,7 @@ namespace Luyenthi
                     }
                 });
             });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -134,6 +144,7 @@ namespace Luyenthi
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseMiddleware<HandleErrorMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

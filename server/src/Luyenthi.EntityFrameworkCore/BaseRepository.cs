@@ -107,6 +107,11 @@ namespace Luyenthi.EntityFrameworkCore
             Entities.Remove(entity);
             Context.SaveChanges();
         }
+        public void RemoveById(Guid id)
+        {
+            Entities.Remove(Entities.Find(id));
+            Context.SaveChanges();
+        }
 
         /// <summary>
         /// Removes the range.

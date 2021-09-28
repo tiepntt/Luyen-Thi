@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Luyenthi.Domain
 {
-    public class PartDocument : IEntity<Guid>, IBaseEntity
+    public class QuestionSet : IEntity<Guid>, IBaseEntity
     {
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }

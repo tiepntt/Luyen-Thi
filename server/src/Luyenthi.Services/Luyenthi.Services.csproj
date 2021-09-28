@@ -19,6 +19,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Luyenthi.Core\Luyenthi.Core.csproj" />
+    <ProjectReference Include="..\Luyenthi.Domain\Luyenthi.Domain.csproj" />
+    <ProjectReference Include="..\Luyenthi.EntityFrameworkCore\Luyenthi.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
 </Project>

@@ -92,14 +92,20 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("longtext");
 
+                    b.Property<int>("DocumentType")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("GradeId")
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Name")
                         .HasColumnType("longtext");
 
-                    b.Property<Guid>("ParentId")
+                    b.Property<Guid?>("ParentId")
                         .HasColumnType("char(36)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("SubjectId")
                         .HasColumnType("char(36)");
@@ -118,7 +124,7 @@ namespace Luyenthi.DbMigrator.Migrations
 
                     b.HasIndex("SubjectId");
 
-                    b.ToTable("Document");
+                    b.ToTable("Documents");
                 });
 
             modelBuilder.Entity("Luyenthi.Domain.Grade", b =>
@@ -167,47 +173,19 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.ToTable("LevelQuestions");
                 });
 
-            modelBuilder.Entity("Luyenthi.Domain.PartDocument", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<Guid?>("CreatedBy")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("DocumentId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DocumentId");
-
-                    b.ToTable("PartDocument");
-                });
-
             modelBuilder.Entity("Luyenthi.Domain.Question", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("ChapterId")
+                    b.Property<Guid?>("ChapterId")
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Content")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("CorrectAnswer")
                         .HasColumnType("longtext");
 
                     b.Property<DateTime>("CreatedAt")
@@ -216,25 +194,31 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.Property<Guid?>("CreatedBy")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("GradeId")
+                    b.Property<Guid?>("GradeId")
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Introduction")
                         .HasColumnType("longtext");
 
-                    b.Property<Guid>("LevelId")
+                    b.Property<Guid?>("LevelId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("ParentId")
+                    b.Property<int>("OrderNumber")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("ParentId")
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Solve")
                         .HasColumnType("longtext");
 
-                    b.Property<Guid>("SubjectId")
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("SubjectId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("UnitId")
+                    b.Property<Guid?>("UnitId")
                         .HasColumnType("char(36)");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -258,6 +242,43 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.HasIndex("UnitId");
 
                     b.ToTable("Questions");
+                });
+
+            modelBuilder.Entity("Luyenthi.Domain.QuestionSet", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("DocumentId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("OrderNumber")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("char(36)");
+
+                    b.Property<bool>("show")
+                        .HasColumnType("tinyint(1)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumentId");
+
+                    b.ToTable("QuestionSets");
                 });
 
             modelBuilder.Entity("Luyenthi.Domain.Subject", b =>
@@ -322,7 +343,7 @@ namespace Luyenthi.DbMigrator.Migrations
 
                     b.HasIndex("GradeId");
 
-                    b.ToTable("Unit");
+                    b.ToTable("Units");
                 });
 
             modelBuilder.Entity("Luyenthi.Domain.User.ApplicationUser", b =>
@@ -419,7 +440,7 @@ namespace Luyenthi.DbMigrator.Migrations
                             Id = new Guid("cb3850a2-0a32-4cee-a175-08df5ec6169b"),
                             AccessFailedCount = 0,
                             BirthDay = new DateTime(1980, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "7b90e416-152c-4fe3-a771-d15a16065fe6",
+                            ConcurrencyStamp = "36d3b908-3462-4c85-8261-294ba298ce38",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "Admin@Admin.com",
                             EmailConfirmed = true,
@@ -427,7 +448,7 @@ namespace Luyenthi.DbMigrator.Migrations
                             Gender = 0,
                             LastName = "Nguyễn",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEEquEqnzNqASJFARPiP9/MyGYir5m6k2ymmRowl6iAfeUj6Cd75YKz5Ou03Jm73hXA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKkjEWH4glGhD5IDVWJhx+5H1KNMp+n7m1jR+ANAYctYpScxSrD9rDAaERaN06HmxA==",
                             PhoneNumber = "0819200620",
                             PhoneNumberConfirmed = true,
                             TwoFactorEnabled = false,
@@ -466,21 +487,21 @@ namespace Luyenthi.DbMigrator.Migrations
                         new
                         {
                             Id = new Guid("daf39ce6-9c5f-495e-af95-810df7f64e40"),
-                            ConcurrencyStamp = "dafd867d-859d-4f90-bb06-0a296c8b5077",
+                            ConcurrencyStamp = "e25d07cc-7424-4bb5-84a4-6541fca5588c",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = new Guid("f25e6a5a-2ce9-4273-9bd3-3b71755add19"),
-                            ConcurrencyStamp = "6fcec365-0f1d-4cd2-9ad9-894fd306dfbc",
+                            ConcurrencyStamp = "5cfef18d-2504-47ca-a757-2ae64b2ea63a",
                             Name = "Teacher",
                             NormalizedName = "TEACHER"
                         },
                         new
                         {
                             Id = new Guid("fcdea3ce-afe0-4fff-b32c-6c28309ec12e"),
-                            ConcurrencyStamp = "9f2c1678-8658-4e75-8d70-11803369f069",
+                            ConcurrencyStamp = "e9a4c212-f403-4f21-848b-230eea72b52a",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         });
@@ -592,19 +613,19 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("QuestionDocumentParts", b =>
+            modelBuilder.Entity("QuestionSetQuestion", b =>
                 {
-                    b.Property<Guid>("PartDocumentId")
-                        .HasColumnType("char(36)");
-
                     b.Property<Guid>("QuestionId")
                         .HasColumnType("char(36)");
 
-                    b.HasIndex("PartDocumentId");
+                    b.Property<Guid>("QuestionSetId")
+                        .HasColumnType("char(36)");
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("QuestionDocumentParts");
+                    b.HasIndex("QuestionSetId");
+
+                    b.ToTable("QuestionSetQuestion");
                 });
 
             modelBuilder.Entity("GradeSubjects", b =>
@@ -651,9 +672,7 @@ namespace Luyenthi.DbMigrator.Migrations
 
                     b.HasOne("Luyenthi.Domain.Document", "Parent")
                         .WithMany("Childrens")
-                        .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ParentId");
 
                     b.HasOne("Luyenthi.Domain.Subject", "Subject")
                         .WithMany()
@@ -668,54 +687,31 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.Navigation("Subject");
                 });
 
-            modelBuilder.Entity("Luyenthi.Domain.PartDocument", b =>
-                {
-                    b.HasOne("Luyenthi.Domain.Document", "Document")
-                        .WithMany("PartDocuments")
-                        .HasForeignKey("DocumentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Document");
-                });
-
             modelBuilder.Entity("Luyenthi.Domain.Question", b =>
                 {
                     b.HasOne("Luyenthi.Domain.Chapter", "Chapter")
-                        .WithMany()
-                        .HasForeignKey("ChapterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Questions")
+                        .HasForeignKey("ChapterId");
 
                     b.HasOne("Luyenthi.Domain.Grade", "Grade")
-                        .WithMany()
-                        .HasForeignKey("GradeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Questions")
+                        .HasForeignKey("GradeId");
 
                     b.HasOne("Luyenthi.Domain.LevelQuestion", "Level")
-                        .WithMany()
-                        .HasForeignKey("LevelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Questions")
+                        .HasForeignKey("LevelId");
 
                     b.HasOne("Luyenthi.Domain.Question", "Parent")
                         .WithMany("SubQuestions")
-                        .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ParentId");
 
                     b.HasOne("Luyenthi.Domain.Subject", "Subject")
-                        .WithMany()
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Questions")
+                        .HasForeignKey("SubjectId");
 
                     b.HasOne("Luyenthi.Domain.Unit", "Unit")
-                        .WithMany()
-                        .HasForeignKey("UnitId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Questions")
+                        .HasForeignKey("UnitId");
 
                     b.Navigation("Chapter");
 
@@ -728,6 +724,17 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.Navigation("Subject");
 
                     b.Navigation("Unit");
+                });
+
+            modelBuilder.Entity("Luyenthi.Domain.QuestionSet", b =>
+                {
+                    b.HasOne("Luyenthi.Domain.Document", "Document")
+                        .WithMany("QuestionSets")
+                        .HasForeignKey("DocumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Document");
                 });
 
             modelBuilder.Entity("Luyenthi.Domain.Unit", b =>
@@ -800,31 +807,56 @@ namespace Luyenthi.DbMigrator.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("QuestionDocumentParts", b =>
+            modelBuilder.Entity("QuestionSetQuestion", b =>
                 {
-                    b.HasOne("Luyenthi.Domain.PartDocument", null)
-                        .WithMany()
-                        .HasForeignKey("PartDocumentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Luyenthi.Domain.Question", null)
                         .WithMany()
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Luyenthi.Domain.QuestionSet", null)
+                        .WithMany()
+                        .HasForeignKey("QuestionSetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Luyenthi.Domain.Chapter", b =>
+                {
+                    b.Navigation("Questions");
                 });
 
             modelBuilder.Entity("Luyenthi.Domain.Document", b =>
                 {
                     b.Navigation("Childrens");
 
-                    b.Navigation("PartDocuments");
+                    b.Navigation("QuestionSets");
+                });
+
+            modelBuilder.Entity("Luyenthi.Domain.Grade", b =>
+                {
+                    b.Navigation("Questions");
+                });
+
+            modelBuilder.Entity("Luyenthi.Domain.LevelQuestion", b =>
+                {
+                    b.Navigation("Questions");
                 });
 
             modelBuilder.Entity("Luyenthi.Domain.Question", b =>
                 {
                     b.Navigation("SubQuestions");
+                });
+
+            modelBuilder.Entity("Luyenthi.Domain.Subject", b =>
+                {
+                    b.Navigation("Questions");
+                });
+
+            modelBuilder.Entity("Luyenthi.Domain.Unit", b =>
+                {
+                    b.Navigation("Questions");
                 });
 #pragma warning restore 612, 618
         }

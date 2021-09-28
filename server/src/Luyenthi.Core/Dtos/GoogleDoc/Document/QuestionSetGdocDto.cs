@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Luyenthi.Core
 {
-    public class PartGdocDto
+    public class QuestionSetGdocDto
     {
         public string Name { get; set; }
         public int OrderNumber { get; set; }
