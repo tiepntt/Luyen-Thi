@@ -1,7 +1,58 @@
-import React from "react";
+import { makeStyles, Theme } from "@material-ui/core";
+import AdminSideBar from "app/components/_share/Menu/AdminSideBar/AdminSideBar";
+import AdminTopBar from "app/components/_share/Menu/AdminTopBar/AdminTopBar";
+import React, { useState } from "react";
 
 const AdminPage: React.FC = () => {
-  return <div>Admin</div>;
+  const classes = useStyles();
+  const [isMobileNavOpen, setMobileNavOpen] = useState(false);
+  // const history = useHistory();
+  return (
+    <div className={classes.root}>
+      <div className="admin-page">
+        <AdminTopBar onMobileNavOpen={() => setMobileNavOpen(true)} />
+        <AdminSideBar
+          onMobileClose={() => setMobileNavOpen(false)}
+          openMobile={isMobileNavOpen}
+        />
+        {/* nav-bar-admin */}
+        <div className={classes.wrapper}>
+          <div className={classes.contentContainer}>
+            <div className={classes.content} style={{ minHeight: 850 }}>
+              {/* <RouteAdmin /> */}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    backgroundColor: "#F4F6F8",
+    display: "flex",
+    height: "100%",
+    overflow: "hidden",
+    width: "100%",
+  },
+  wrapper: {
+    display: "flex",
+    flex: "1 1 auto",
+    overflow: "hidden",
+    [theme.breakpoints.up("lg")]: {
+      paddingLeft: 256,
+    },
+  },
+  contentContainer: {
+    display: "flex",
+    flex: "1 1 auto",
+    overflow: "hidden",
+  },
+  content: {
+    flex: "1 1 auto",
+    height: "100%",
+    overflow: "auto",
+  },
+})) as any;
 
 export default AdminPage;
