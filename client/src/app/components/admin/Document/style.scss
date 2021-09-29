@@ -1,0 +1,12 @@
+.admin-document {
+  width: 100%;
+  .main-content-document {
+    margin-top: 5px;
+    padding: 24px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .main-content-document {
+    padding: 5px !important;
+  }
+}

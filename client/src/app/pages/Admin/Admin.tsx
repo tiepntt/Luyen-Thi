@@ -2,6 +2,9 @@ import { makeStyles, Theme } from "@material-ui/core";
 import AdminSideBar from "app/components/_share/Menu/AdminSideBar/AdminSideBar";
 import AdminTopBar from "app/components/_share/Menu/AdminTopBar/AdminTopBar";
 import React, { useState } from "react";
+import { Redirect, Route, Switch } from "react-router";
+import { adminRoutes } from "./router";
+import "./style.scss";
 
 const AdminPage: React.FC = () => {
   const classes = useStyles();
@@ -18,8 +21,13 @@ const AdminPage: React.FC = () => {
         {/* nav-bar-admin */}
         <div className={classes.wrapper}>
           <div className={classes.contentContainer}>
-            <div className={classes.content} style={{ minHeight: 850 }}>
-              {/* <RouteAdmin /> */}
+            <div className={classes.content}>
+              <Switch>
+                {adminRoutes.map((route, i) => (
+                  <Route key={i} path={route.href} {...route} />
+                ))}
+                <Redirect from="/admin" to="/admin/dashboard" />
+              </Switch>
             </div>
           </div>
         </div>

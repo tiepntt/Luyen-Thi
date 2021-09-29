@@ -1,7 +1,6 @@
 import {
   Avatar,
   Typography,
-  Divider,
   Hidden,
   Drawer,
   makeStyles,
@@ -16,6 +15,7 @@ import { adminRoutes } from "app/pages/Admin/router";
 import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import SideBarItem from "./SideBarItem";
+import "./style.scss";
 interface Props {
   onMobileClose: () => void;
   openMobile: boolean;
@@ -65,7 +65,7 @@ const AdminSideBar: React.FC<Props> = ({ onMobileClose, openMobile }) => {
           {"Manager"}
         </Typography>
       </Box>
-      <Divider />
+      <hr className="divider-line" />
       <Box p={2}>
         <List>
           {adminRoutes.map((item) => {

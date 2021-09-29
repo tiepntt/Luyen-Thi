@@ -1,0 +1,50 @@
+.grade-nav-bar {
+  background: #fcfcfc;
+  box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.25);
+  height: 45px;
+  .grade-item {
+    width: max-content;
+    display: inline-block;
+    padding: 0 !important;
+    // &::after {
+    //   transform: scaleX(1) !important;
+    // }
+    &:hover:after {
+      transform: scaleX(1);
+    }
+
+    .active {
+      color: rgb(10, 110, 128) !important;
+    }
+    .grade-item-buton {
+      font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+      cursor: pointer;
+      color: #c0c0c0;
+      padding: 0px 20px;
+      user-select: none;
+      width: 100%;
+      height: 100%;
+      background: none !important;
+      &:hover {
+        color: rgb(10, 110, 128);
+      }
+    }
+  }
+  .grade-item::after {
+    display: block;
+    content: "";
+    width: 100%;
+    border-bottom: solid 2px #019fb6;
+    transform: scaleX(0);
+    transition: transform 250ms ease-in-out;
+    transform-origin: 0% 50% !important;
+  }
+  .grade-item.active::after {
+    transform: scaleX(1) !important;
+  }
+  @media only screen and (max-width: 425px) {
+    .grade-item-buton {
+      padding: 0px 10px !important;
+    }
+  }
+}
