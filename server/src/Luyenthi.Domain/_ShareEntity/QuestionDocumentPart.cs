@@ -6,9 +6,10 @@ using System.Text;
 
 namespace Luyenthi.Domain
 {
-    public class QuestionDocumentPart
+    public class QuestionSetQuestion:IEntity<Guid>
     {
+        public Guid Id { get; set; }
         public Guid QuestionId { get; set; }
-        public Guid PartDocumentId { get; set; }
+        public Guid QuestionSetId { get; set; }
     }
 }

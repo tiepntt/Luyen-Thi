@@ -8,6 +8,6 @@ namespace Luyenthi.Core.Dtos.Document
     public class DocumentImportRequestDto
     {
         public string GoogleDocId { get; set; }
-        public string documentId { get; set; }
+        public string DocumentId { get; set; }
     }
 }

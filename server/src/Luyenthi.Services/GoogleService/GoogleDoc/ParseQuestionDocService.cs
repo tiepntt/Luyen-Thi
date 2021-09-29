@@ -18,25 +18,28 @@ namespace Luyenthi.Services
         // tạo dữ liệu kiểu mẫu cho từng phần dạng Paragraph
         private List<ImageDto> _images;
         private List<StructuralElement> _elements;
+        private Guid _documentId;
         public ParseQuestionDocService(
             List<StructuralElement> elements,
-            List<ImageDto> images
+            List<ImageDto> images,
+             Guid documentId
             )
         {
             _images = images;
             _elements = elements;
+            _documentId = documentId;
         }
-        public List<PartGdocDto> Parse()
+        public List<QuestionSetGdocDto> Parse()
         {
             // tách các tiêu đề 2
             var partElements = GoogleDocHelper.SplitParagraph(_elements, "HEADING_2");
-            var parts = partElements.Select((e, i) => ParsePartQuestion(e, i, partElements.Count == 1)).ToList();
+            var parts = partElements.Select((e, i) => ParsePartQuestion(e, i, partElements.Count > 1)).ToList();
             return parts;
         }
-        public PartGdocDto ParsePartQuestion(List<StructuralElement> partElement,int index, bool isShow=true)
+        public QuestionSetGdocDto ParsePartQuestion(List<StructuralElement> partElement,int index, bool isShow=true)
         {
             var partHeader = partElement[0];
-            var part = new PartGdocDto();
+            var part = new QuestionSetGdocDto();
             part.Name = "";
             if(partHeader.Paragraph != null && partHeader.Paragraph.ParagraphStyle.NamedStyleType == "HEADING_2")
             {
@@ -44,8 +47,9 @@ namespace Luyenthi.Services
             }
             var questionElements = GoogleDocHelper.SplitParagraph(partElement, "HEADING_3");
             part.Questions = questionElements.Select((e, i) => ParseQuestion(e, i)).ToList();
-            part.show = isShow;
+            part.Show = isShow;
             part.OrderNumber = index;
+            part.DocumentId = _documentId;
             return part;
         }
         public QuestionGdocDto ParseQuestion(List<StructuralElement> partElement,int index)

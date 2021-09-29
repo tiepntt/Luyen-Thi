@@ -20,12 +20,12 @@ namespace Luyenthi.EntityFrameworkCore
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public DbSet<Question> Questions { get; set; }
-        public DbSet<PartDocument> PartDocument { get; set; }
-        public DbSet<Document> Document { get; set; }
+        public DbSet<QuestionSet> QuestionSets { get; set; }
+        public DbSet<Document> Documents { get; set; }
         public DbSet<Grade> Grades { get; set; }
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Chapter> Chapters { get; set; }
-        public DbSet<Unit> Unit { get; set; }
+        public DbSet<Unit> Units { get; set; }
         public DbSet<LevelQuestion> LevelQuestions { get; set; }
 
         public LuyenthiDbContext(DbContextOptions<LuyenthiDbContext> options, IHttpContextAccessor httpContextAccessor) : base(options)
@@ -92,40 +92,35 @@ namespace Luyenthi.EntityFrameworkCore
             {
                 b.Property(x => x.Introduction).HasConversion(
                        v => JsonConvert.SerializeObject(v as object),
-                       v => JsonConvert.DeserializeObject<ExpandoObject>(v, new ExpandoObjectConverter())
+                       v => JsonConvert.DeserializeObject<List<ExpandoObject>>(v)
                    );
                 b.Property(x => x.Content).HasConversion(
                     v => JsonConvert.SerializeObject(v as object),
-                    v => JsonConvert.DeserializeObject<ExpandoObject>(v, new ExpandoObjectConverter())
+                     v => JsonConvert.DeserializeObject<List<ExpandoObject>>(v)
                 );
                 b.Property(x => x.Solve).HasConversion(
                     v => JsonConvert.SerializeObject(v as object),
-                    v => JsonConvert.DeserializeObject<ExpandoObject>(v, new ExpandoObjectConverter())
+                     v => JsonConvert.DeserializeObject<List<ExpandoObject>>(v)
                 );
                 b.Property(x => x.Solve).HasConversion(
                     v => JsonConvert.SerializeObject(v as object),
-                    v => JsonConvert.DeserializeObject<ExpandoObject>(v, new ExpandoObjectConverter())
+                     v => JsonConvert.DeserializeObject<List<ExpandoObject>>(v)
                 );
+                b.HasMany(x => x.SubQuestions).WithOne(x => x.Parent)
+                .OnDelete(DeleteBehavior.Cascade);
             });
-            builder.Entity<Document>(b =>
-            {
-                b.Property(x => x.Description).HasConversion(
-                    v => JsonConvert.SerializeObject(v as object),
-                    v => JsonConvert.DeserializeObject<ExpandoObject>(v, new ExpandoObjectConverter())
-                );
-            }
-            );
+            
         }
         public void RelationShipConfiguration(ModelBuilder builder)
         {
-            builder.SharedTypeEntity<QuestionDocumentPart>("QuestionDocumentParts").HasNoKey();
-            builder.Entity<PartDocument>()
+            builder.SharedTypeEntity<QuestionSetQuestion>("QuestionSetQuestion");
+            builder.Entity<QuestionSet>()
                .HasMany(b => b.Questions)
-               .WithMany(x => x.PartDocuments)
-               .UsingEntity<QuestionDocumentPart>(
-                   "QuestionDocumentParts",
+               .WithMany(x => x.QuestionSets)
+               .UsingEntity<QuestionSetQuestion>(
+                   "QuestionSetQuestion",
                    j => j.HasOne<Question>().WithMany().HasForeignKey("QuestionId"),
-                   j => j.HasOne<PartDocument>().WithMany().HasForeignKey("PartDocumentId")
+                   j => j.HasOne<QuestionSet>().WithMany().HasForeignKey("QuestionSetId")
                    );
 
             builder.SharedTypeEntity<GradeSubject>("GradeSubjects");

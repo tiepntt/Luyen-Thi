@@ -138,7 +138,7 @@ namespace Luyenthi.Services
                     text = Regex.Replace(text, @"(Câu\s+[0-9]+[\.\․\:]\s{0,5})", "");
                     if (_isOption)
                     {
-                     text = Regex.Replace(i, @"([АВСABCD]\s*?[\.|\․])", "");  
+                     text = Regex.Replace(i, @"([АВСABCD]\s*?[\.|\․]\s{0,5})", "");  
                     }
                     
                     if (Regex.IsMatch(i, @"(\$[^$]+\$)|(\$\$[^$]*?\$\$)"))
