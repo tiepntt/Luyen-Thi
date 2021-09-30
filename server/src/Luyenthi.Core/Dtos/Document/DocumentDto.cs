@@ -10,6 +10,7 @@ namespace Luyenthi.Core.Dtos
     public class DocumentDto
     {
         public string Name { get; set; }
+        public string ImageUrl { get; set; }
         public Guid Id { get; set; }
         public Guid SubjectId { get; set; }
         public Guid GradeId { get; set; }

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Luyenthi.DbMigrator.Migrations
 {
     [DbContext(typeof(LuyenthiDbContext))]
-    [Migration("20210928111514_Initial")]
+    [Migration("20210930140356_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -100,7 +100,13 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.Property<Guid>("GradeId")
                         .HasColumnType("char(36)");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NameNomarlize")
                         .HasColumnType("longtext");
 
                     b.Property<Guid?>("ParentId")
@@ -442,7 +448,7 @@ namespace Luyenthi.DbMigrator.Migrations
                             Id = new Guid("cb3850a2-0a32-4cee-a175-08df5ec6169b"),
                             AccessFailedCount = 0,
                             BirthDay = new DateTime(1980, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "b4582cb3-1eeb-46f9-91f9-99939f1d273f",
+                            ConcurrencyStamp = "84fd63d6-6142-496c-be58-3dab505ae4fb",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "Admin@Admin.com",
                             EmailConfirmed = true,
@@ -450,7 +456,7 @@ namespace Luyenthi.DbMigrator.Migrations
                             Gender = 0,
                             LastName = "Nguyễn",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEPPUCKjZW5UVmly0CX/bxtwozLO6iwklUS8jrUfucjKm5IA3D/orzGxNqK+0nQt5Fg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENdweWzpfnGhciytPAGuOI7g55bTSUvriFhmBmdKQoeKYgyoKkkXN1TbrTsaaMpwuw==",
                             PhoneNumber = "0819200620",
                             PhoneNumberConfirmed = true,
                             TwoFactorEnabled = false,
@@ -489,21 +495,21 @@ namespace Luyenthi.DbMigrator.Migrations
                         new
                         {
                             Id = new Guid("daf39ce6-9c5f-495e-af95-810df7f64e40"),
-                            ConcurrencyStamp = "4f48a85e-d51b-4c80-83f0-f9da29d2a073",
+                            ConcurrencyStamp = "fb441464-0781-4cf2-a287-3c93dd64f6c1",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = new Guid("f25e6a5a-2ce9-4273-9bd3-3b71755add19"),
-                            ConcurrencyStamp = "30f2dc5a-6db4-4414-a885-3ed099963b9e",
+                            ConcurrencyStamp = "82f62770-43f4-47a4-b1ea-05293323dbb9",
                             Name = "Teacher",
                             NormalizedName = "TEACHER"
                         },
                         new
                         {
                             Id = new Guid("fcdea3ce-afe0-4fff-b32c-6c28309ec12e"),
-                            ConcurrencyStamp = "4c6feac1-49e6-4fda-ac31-afa9f0ce0192",
+                            ConcurrencyStamp = "c22310f9-de26-4170-ac12-6cb7eb924a55",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         });

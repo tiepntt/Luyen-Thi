@@ -80,6 +80,7 @@ namespace Luyenthi
                 .AddEntityFrameworkStores<LuyenthiDbContext>()
                 .AddDefaultTokenProviders();
             services.AddAutoMapper(c => c.AddProfile<MappingProfile>(), typeof(Startup));
+            services.AddCors();
             services.AddControllers()
 
             .AddNewtonsoftJson(options =>
@@ -139,7 +140,11 @@ namespace Luyenthi
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Thi Thu API V1");
             });
 
-
+            app.UseCors(x => x
+               .AllowAnyMethod()
+               .AllowAnyHeader()
+               .SetIsOriginAllowed(origin => true) // allow any origin
+               .AllowCredentials());
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

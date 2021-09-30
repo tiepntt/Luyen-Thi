@@ -57,7 +57,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
         [HttpPost("import-questions")]
         public async Task<dynamic> ImportQuestion(QuestionImportDto questionImport)
         {
-            using TransactionScope scope = new TransactionScope();
+            //using TransactionScope scope = new TransactionScope();
             if (questionImport.DocumentId == Guid.Empty || questionImport.GoogleDocId == "")
             {
                 throw new Exception("Dữ liệu không hợp lệ");
@@ -83,7 +83,8 @@ namespace Luyenthi.HttpApi.Host.Controllers
             var questionSets = _mapper.Map<List<QuestionSet>>(questionSetDatas);
 
             _questionSetService.CreateMany(questionSets);
-            scope.Complete();
+            //scope.Complete();
+            //scope.Dispose();
             return questionSets;
         }
         [HttpPost]
@@ -103,6 +104,12 @@ namespace Luyenthi.HttpApi.Host.Controllers
         public void DeleteById(Guid documentId)
         {
              _documentService.RemoveById(documentId);
+        }
+        [HttpPost("getAll")]
+        public List<DocumentTitleDto> GetByGradeAndSubject(DocumentGetByGradeSubjectDto request)
+        {
+            var documents = _documentService.GetAll(request);
+            return _mapper.Map<List<DocumentTitleDto>>(documents);
         }
     }
 }

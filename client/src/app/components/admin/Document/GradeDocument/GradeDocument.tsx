@@ -2,7 +2,6 @@ import GradeNavbar from "app/components/_share/Menu/GradeNavbar/GradeNavbar";
 import { useSubjects } from "hooks/Grade-Subject/useSubjects";
 import React from "react";
 import SubjectItem from "./SubjectItem";
-import BoxApp from "app/components/_share/Box/Box";
 import { Col, Row } from "react-bootstrap";
 import { useHistory, useLocation } from "react-router";
 
@@ -35,9 +34,9 @@ const GradeDocument = () => {
             </div>
           </Col>
           <Col lg={4} md={12}>
-            <BoxApp>
+            {/* <BoxApp>
               <div className="side-bar-grade"></div>
-            </BoxApp>
+            </BoxApp> */}
           </Col>
         </Row>
       </div>

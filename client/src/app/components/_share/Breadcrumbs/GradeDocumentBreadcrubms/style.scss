@@ -1,5 +1,45 @@
 .grade-document-breadcrubms {
+  // top: 0;
+  width: 100%;
   background: #fcfcfc;
   box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.25);
   height: 45px;
+  user-select: none;
+  .param-item {
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    margin-left: 10px;
+    .param-title {
+      margin-right: 10px;
+      font-weight: bold;
+      color: #79797a;
+      cursor: pointer;
+
+      &:hover {
+        color: rgb(4, 86, 124);
+      }
+    }
+    span {
+      font-size: 25px;
+      color: rgb(129, 129, 131);
+      font-weight: inherit;
+    }
+  }
+  .option-btn {
+    display: inherit;
+    padding: 0 20px;
+  }
+  .button-add-document {
+    background: rgb(13, 124, 250);
+    padding: 5px 5px;
+    cursor: pointer;
+    font-size: 15px;
+    border-radius: 3px;
+    color: white;
+    margin: auto;
+    &:hover {
+      background: rgb(7, 120, 165);
+    }
+  }
 }

@@ -23,7 +23,6 @@ const TableButton = () => {
   };
   const insertTable = (row: number, col: number) => {
     insertTabletAtIndex(editor as any, row, col, selectionActive);
-    console.log("abc");
 
     handleClose();
     // setDocument && setDocument([...document, table]);

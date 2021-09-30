@@ -58,6 +58,10 @@ namespace Luyenthi.EntityFrameworkCore
         {
             return Entities.Where(predicate);
         }
+        public IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate, int take, int skip)
+        {
+            return Entities.Where(predicate).Take(take).Skip(skip);
+        }
 
         /// <summary>
         /// Singles the or default.
