@@ -1,11 +1,4 @@
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  Slide,
-} from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Slide } from "@material-ui/core";
 import InputMathQuil from "app/components/_share/Quil";
 import TemplateKatex from "app/components/_share/TemplateKatex/TemplateKatex";
 import React, { useEffect, useState } from "react";

@@ -6,6 +6,12 @@
     "OrderNumber": 1
   },
   {
+    "Id": "2e3a837f-efb0-4aae-9d8a-6c7ad75882db",
+    "Name": "Tiếng Anh",
+    "Code": "tieng-anh",
+    "OrderNumber": 10
+  },
+  {
     "Id": "5497624c-b5ec-4288-afba-0c0a4abe18d2",
     "Name": "Vật lý",
     "Code": "vat-ly",

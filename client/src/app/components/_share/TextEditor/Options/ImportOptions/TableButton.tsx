@@ -1,6 +1,6 @@
 import { faTable } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Popover, Typography } from "@mui/material";
+import { Popover, Typography } from "@material-ui/core";
 import React, { useState } from "react";
 import { useSlateStatic } from "slate-react";
 import { insertTabletAtIndex } from "../../Elements/TableElement/withTables";
@@ -23,7 +23,6 @@ const TableButton = () => {
   };
   const insertTable = (row: number, col: number) => {
     insertTabletAtIndex(editor as any, row, col, selectionActive);
-    console.log("abc");
 
     handleClose();
     // setDocument && setDocument([...document, table]);
@@ -51,7 +50,7 @@ const TableButton = () => {
           horizontal: "center",
         }}
       >
-        <Typography sx={{ p: 2 }}>
+        <Typography>
           <div className="table-item-editor">
             {Array(8)
               .fill(null)

@@ -31,6 +31,7 @@ namespace Luyenthi.Services
         }
         public Document Create(Document document)
         {
+            document.NameNomarlize = DocumentHelper.ConvertToUnSign(document.Name);
             _documentRepository.Add(document);
             return document;
         } 
@@ -51,6 +52,17 @@ namespace Luyenthi.Services
                  throw new KeyNotFoundException("Không tìm thấy tài liệu");
             }
             _documentRepository.Remove(document);
+        }
+        public List<Document> GetAll( DocumentGetByGradeSubjectDto request)
+        {
+            var documents = _documentRepository.Find(d =>
+                                            (request.GradeId == Guid.Empty || d.GradeId == request.GradeId) &&
+                                            (request.SubjectId == Guid.Empty || d.SubjectId ==request.SubjectId)&&
+                                            (EF.Functions.Like(d.Name, $"%{request.Key}%")||EF.Functions.Like(d.NameNomarlize, $"%{request.Key}%"))&&
+                                            (request.Status ==d.Status||request.Status ==null)&&
+                                            (request.Type == d.DocumentType || request.Type == null)
+                                            ).Take(request.Take).Skip(request.Skip).ToList();
+            return documents;
         }
         
     }

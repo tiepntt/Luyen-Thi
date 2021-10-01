@@ -5,8 +5,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap");
 
 // global config
-#root {
-  font-family: "Times New Roman", Times, serif;
+* {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
 .row,
 .col,
@@ -22,4 +22,10 @@ body {
 
 html {
   scroll-behavior: smooth;
+}
+.modal-backdrop {
+  z-index: 5000 !important;
+}
+.modal {
+  z-index: 5000;
 }

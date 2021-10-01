@@ -1,0 +1,34 @@
+.admin-document-questions {
+  width: 100%;
+  min-height: calc(100vh - 150px);
+  .question-notification {
+    margin-top: 170px;
+    color: gray;
+    font-size: 24px;
+    text-align: center;
+  }
+  .options-button {
+    text-align: center;
+    margin-top: 30px;
+    .option-button {
+      padding: 3px 10px;
+      cursor: pointer;
+      display: inline-block;
+      user-select: none;
+      height: 35px;
+      line-height: 30px;
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+    .create-question-set-button {
+      background: rgb(0, 132, 255);
+      margin-right: 10px;
+      color: white;
+    }
+    .import-question-set-from-doc {
+      color: white;
+      background: #039772;
+    }
+  }
+}

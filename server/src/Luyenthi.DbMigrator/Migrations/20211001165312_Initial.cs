@@ -288,9 +288,13 @@ namespace Luyenthi.DbMigrator.Migrations
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     Name = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    NameNomarlize = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     SubjectId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     GradeId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     Description = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ImageUrl = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     DocumentType = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
@@ -503,26 +507,6 @@ namespace Luyenthi.DbMigrator.Migrations
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[,]
-                {
-                    { new Guid("daf39ce6-9c5f-495e-af95-810df7f64e40"), "4f48a85e-d51b-4c80-83f0-f9da29d2a073", "Admin", "ADMIN" },
-                    { new Guid("f25e6a5a-2ce9-4273-9bd3-3b71755add19"), "30f2dc5a-6db4-4414-a885-3ed099963b9e", "Teacher", "TEACHER" },
-                    { new Guid("fcdea3ce-afe0-4fff-b32c-6c28309ec12e"), "4c6feac1-49e6-4fda-ac31-afa9f0ce0192", "Student", "STUDENT" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "BirthDay", "ConcurrencyStamp", "CreatedAt", "CreatedBy", "Email", "EmailConfirmed", "FirstName", "Gender", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UpdatedAt", "UpdatedBy", "UserName" },
-                values: new object[] { new Guid("cb3850a2-0a32-4cee-a175-08df5ec6169b"), 0, new DateTime(1980, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "b4582cb3-1eeb-46f9-91f9-99939f1d273f", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Admin@Admin.com", true, "Tiệp", 0, "Nguyễn", false, null, null, null, "AQAAAAEAACcQAAAAEPPUCKjZW5UVmly0CX/bxtwozLO6iwklUS8jrUfucjKm5IA3D/orzGxNqK+0nQt5Fg==", "0819200620", true, null, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "admin" });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUserRoles",
-                columns: new[] { "RoleId", "UserId" },
-                values: new object[] { new Guid("daf39ce6-9c5f-495e-af95-810df7f64e40"), new Guid("cb3850a2-0a32-4cee-a175-08df5ec6169b") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
