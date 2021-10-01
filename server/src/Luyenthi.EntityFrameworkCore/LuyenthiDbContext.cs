@@ -133,9 +133,9 @@ namespace Luyenthi.EntityFrameworkCore
                         b => b.HasOne<Subject>().WithMany().HasForeignKey("SubjectId")
                    );
 
-            builder.ApplyConfiguration(new RoleConfiguration());
-            builder.ApplyConfiguration(new AdminConfiguration());
-            builder.ApplyConfiguration(new UserWithRolesConfig());
+            //builder.ApplyConfiguration(new RoleConfiguration());
+            //builder.ApplyConfiguration(new AdminConfiguration());
+            //builder.ApplyConfiguration(new UserWithRolesConfig());
 
         }
         private void SeedGradeAndSubject(ModelBuilder builder)

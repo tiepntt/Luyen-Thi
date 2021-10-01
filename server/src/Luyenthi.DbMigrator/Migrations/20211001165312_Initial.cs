@@ -508,26 +508,6 @@ namespace Luyenthi.DbMigrator.Migrations
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[,]
-                {
-                    { new Guid("daf39ce6-9c5f-495e-af95-810df7f64e40"), "fb441464-0781-4cf2-a287-3c93dd64f6c1", "Admin", "ADMIN" },
-                    { new Guid("f25e6a5a-2ce9-4273-9bd3-3b71755add19"), "82f62770-43f4-47a4-b1ea-05293323dbb9", "Teacher", "TEACHER" },
-                    { new Guid("fcdea3ce-afe0-4fff-b32c-6c28309ec12e"), "c22310f9-de26-4170-ac12-6cb7eb924a55", "Student", "STUDENT" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "BirthDay", "ConcurrencyStamp", "CreatedAt", "CreatedBy", "Email", "EmailConfirmed", "FirstName", "Gender", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UpdatedAt", "UpdatedBy", "UserName" },
-                values: new object[] { new Guid("cb3850a2-0a32-4cee-a175-08df5ec6169b"), 0, new DateTime(1980, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "84fd63d6-6142-496c-be58-3dab505ae4fb", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Admin@Admin.com", true, "Tiệp", 0, "Nguyễn", false, null, null, null, "AQAAAAEAACcQAAAAENdweWzpfnGhciytPAGuOI7g55bTSUvriFhmBmdKQoeKYgyoKkkXN1TbrTsaaMpwuw==", "0819200620", true, null, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "admin" });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUserRoles",
-                columns: new[] { "RoleId", "UserId" },
-                values: new object[] { new Guid("daf39ce6-9c5f-495e-af95-810df7f64e40"), new Guid("cb3850a2-0a32-4cee-a175-08df5ec6169b") });
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",

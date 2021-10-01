@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Luyenthi.DbMigrator.Migrations
 {
     [DbContext(typeof(LuyenthiDbContext))]
-    [Migration("20210930140356_Initial")]
+    [Migration("20211001165312_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -441,28 +441,6 @@ namespace Luyenthi.DbMigrator.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("cb3850a2-0a32-4cee-a175-08df5ec6169b"),
-                            AccessFailedCount = 0,
-                            BirthDay = new DateTime(1980, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "84fd63d6-6142-496c-be58-3dab505ae4fb",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "Admin@Admin.com",
-                            EmailConfirmed = true,
-                            FirstName = "Tiệp",
-                            Gender = 0,
-                            LastName = "Nguyễn",
-                            LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAENdweWzpfnGhciytPAGuOI7g55bTSUvriFhmBmdKQoeKYgyoKkkXN1TbrTsaaMpwuw==",
-                            PhoneNumber = "0819200620",
-                            PhoneNumberConfirmed = true,
-                            TwoFactorEnabled = false,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            UserName = "admin"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -490,29 +468,6 @@ namespace Luyenthi.DbMigrator.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("daf39ce6-9c5f-495e-af95-810df7f64e40"),
-                            ConcurrencyStamp = "fb441464-0781-4cf2-a287-3c93dd64f6c1",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = new Guid("f25e6a5a-2ce9-4273-9bd3-3b71755add19"),
-                            ConcurrencyStamp = "82f62770-43f4-47a4-b1ea-05293323dbb9",
-                            Name = "Teacher",
-                            NormalizedName = "TEACHER"
-                        },
-                        new
-                        {
-                            Id = new Guid("fcdea3ce-afe0-4fff-b32c-6c28309ec12e"),
-                            ConcurrencyStamp = "c22310f9-de26-4170-ac12-6cb7eb924a55",
-                            Name = "Student",
-                            NormalizedName = "STUDENT"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -593,13 +548,6 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = new Guid("cb3850a2-0a32-4cee-a175-08df5ec6169b"),
-                            RoleId = new Guid("daf39ce6-9c5f-495e-af95-810df7f64e40")
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
