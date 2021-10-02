@@ -7,6 +7,7 @@ export interface DocumentDetail {
   grade: Grade;
   subject: Subject;
   documentType: number;
+  description: string;
   status: number;
   createAt: Date;
   updateAt: Date;

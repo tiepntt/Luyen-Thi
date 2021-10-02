@@ -30,6 +30,7 @@ const ImportQuestionSetModal: React.FC<Props> = (props) => {
       if (res.status === 200) {
         toastService.success();
         onSuccess && onSuccess(res.data);
+        handleCloseModal();
       } else {
         toastService.error();
       }

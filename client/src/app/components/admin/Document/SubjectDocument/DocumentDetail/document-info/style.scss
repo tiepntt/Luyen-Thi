@@ -1,0 +1,35 @@
+.document-edit-info {
+  width: 100%;
+  height: calc(100vh - 150px);
+  position: relative;
+  overflow: auto;
+  .document-info-preview {
+    padding: 20px 50px;
+  }
+  .document-description {
+    color: #656363 !important;
+  }
+  .document-options,
+  .image-document,
+  .matrix-document {
+  }
+  label {
+    font-weight: bold;
+    color: #747474;
+  }
+  .image-document {
+    margin-right: 20px !important;
+    margin-left: 5px;
+    img {
+      outline-style: double;
+      outline-color: rgb(177, 176, 176);
+      border-radius: 1px;
+      outline-width: 5px;
+    }
+  }
+  .document-google-doc {
+    &::placeholder {
+      color: rgb(160, 157, 157);
+    }
+  }
+}

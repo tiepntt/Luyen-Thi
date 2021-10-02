@@ -1,8 +1,8 @@
 export interface Question {
   id: string;
-  content: any;
-  introduction: any;
-  solve: any;
+  content: [];
+  introduction: [];
+  solve: [];
   orderNumber: number;
   subQuestions: Question[];
   correctAnswer: string;

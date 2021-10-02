@@ -8,12 +8,6 @@
 * {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
-.row,
-.col,
-.col-1 {
-  margin: 0 !important;
-  padding: 0 !important;
-}
 body {
   font-family: "Quicksand" !important;
   // background: #f9f9f9;
@@ -28,4 +22,7 @@ html {
 }
 .modal {
   z-index: 5000;
+}
+.text-right {
+  text-align: right;
 }
