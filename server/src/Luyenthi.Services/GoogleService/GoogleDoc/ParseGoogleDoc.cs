@@ -135,7 +135,8 @@ namespace Luyenthi.Services
                 textElements.ForEach(i =>
                 {
                     var text = i;
-                    text = Regex.Replace(text, @"(Câu\s+[0-9]+[\.\․\:]\s{0,5})", "");
+                    text = Regex.Replace(text, @"(Câu\s+[0-9]+[^\s]\s{0,5})", "Câu #{index}.");
+                    text = Regex.Replace(text, @"(Question\s+[0-9]+[^\s]\s{0,5})", "Question #{index}.");
                     if (_isOption)
                     {
                      text = Regex.Replace(i, @"([АВСABCD]\s*?[\.|\․]\s{0,5})", "");  

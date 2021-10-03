@@ -20,6 +20,7 @@ namespace Luyenthi.Domain
         public string ImageUrl { get; set; }
         public DocumentType DocumentType { get; set; }
         public DocumentStatus Status { get; set; } = DocumentStatus.Private;
+        public bool IsApprove { get; set; }
         public virtual List<QuestionSet> QuestionSets { get; set; }
         public virtual List<Document> Childrens { get; set; }
         public Guid? ParentId { get; set; }

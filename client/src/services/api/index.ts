@@ -7,23 +7,23 @@ const axiosInstance = axios.create({
   responseType: "json",
 });
 
-export const setupAxios = (store: EnhancedStore) => {
+export const setupAxios = () => {
   const requestHandler = (request: any) => {
-    const {
-      auth: { authToken, tenant, language },
-    } = store.getState();
+    // const {
+    //   auth: { authToken, tenant, language },
+    // } = store.getState();
 
-    if (authToken) {
-      request.headers.Authorization = `Bearer ${authToken}`;
-    }
+    // if (authToken) {
+    //   request.headers.Authorization = `Bearer ${authToken}`;
+    // }
 
-    if (language) {
-      request.headers["Accept-Language"] = language;
-    }
+    // if (language) {
+    //   request.headers["Accept-Language"] = language;
+    // }
 
-    if (tenant) {
-      request.headers.__tenant = tenant.tenantId;
-    }
+    // if (tenant) {
+    //   request.headers.__tenant = tenant.tenantId;
+    // }
 
     return request;
   };
@@ -39,7 +39,7 @@ export const setupAxios = (store: EnhancedStore) => {
     } else {
       toastService.error("Một lỗi không mong muốn đã xảy ra");
     }
-    return errorRes;
+    return Promise.reject(error);
   };
   interface ResponseError {
     error: any;

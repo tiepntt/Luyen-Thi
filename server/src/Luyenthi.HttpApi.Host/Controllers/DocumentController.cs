@@ -63,6 +63,16 @@ namespace Luyenthi.HttpApi.Host.Controllers
                 throw new Exception("Dữ liệu không hợp lệ");
             }
             var docService = GoogleDocApi.GetService();
+            var document = _documentService.GetById(questionImport.DocumentId);
+            if(document == null)
+            {
+                throw new KeyNotFoundException("Không tìm thấy tài liệu");
+            }
+            if (document.IsApprove)
+            {
+                throw new Exception("Bạn không thể sử dụng chức năng này");
+            }
+            // xóa toàn bộ các question ở trong document
             var doc = await GoogleDocApi.GetDocument(docService, questionImport.GoogleDocId);
             // download image
             List<Task<ImageDto>> uploadImages = new List<Task<ImageDto>>();
@@ -81,11 +91,15 @@ namespace Luyenthi.HttpApi.Host.Controllers
             // parse doc
             var questionSetDatas = new ParseQuestionDocService(doc.Body.Content.ToList(), images, questionImport.DocumentId).Parse();
             var questionSets = _mapper.Map<List<QuestionSet>>(questionSetDatas);
-
+            // xóa các question set đã tạo
+            _questionSetService.RemoveByDocumentId(questionImport.DocumentId);
+            // xóa các question đã tạo 
             _questionSetService.CreateMany(questionSets);
+            questionSets = DocumentHelper.MakeIndexQuestions(questionSets);
+            return questionSets;
             //scope.Complete();
             //scope.Dispose();
-            return questionSets;
+            
         }
         [HttpPost]
         public DocumentDto Create(DocumentCreateDto document)

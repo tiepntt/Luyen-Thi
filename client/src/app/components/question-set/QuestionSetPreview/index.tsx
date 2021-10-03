@@ -1,6 +1,7 @@
 import QuestionPreview from "app/components/question/QuestionPreview";
 import { QuestionSetDetail } from "models/questionSet/QuestionSetDetail";
 import React from "react";
+import "./style.scss";
 interface Props {
   data: QuestionSetDetail;
 }

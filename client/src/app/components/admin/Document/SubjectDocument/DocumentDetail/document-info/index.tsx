@@ -5,15 +5,34 @@ import { useSubjects } from "hooks/Grade-Subject/useSubjects";
 import React, { useEffect, useState } from "react";
 import { Button, Col, Form, Image, Row } from "react-bootstrap";
 import Select from "react-select";
+import { documentApi } from "services/api/document/documentApi";
+import { toastService } from "services/toast";
+
+import { getIdFromUrl, IsGoogleDocUrl } from "utils/urlFunction";
 import "./style.scss";
 interface Props {
   documentId: string;
 }
 const DocumentEditInfo: React.FC<Props> = ({ documentId }) => {
-  const { document } = useDocumentDetailContext();
+  const { document, setQuestionSets } = useDocumentDetailContext();
   const [documentDetail, setDocumentDetail] = useState(document);
   const { grades } = useGrades();
   const { subjects } = useSubjects();
+  const [googleDocUrl, setGoogleDocUrl] = useState("");
+  const [updateEnable, setUpdateEnable] = useState(true);
+  const importQuestionSet = () => {
+    setUpdateEnable(false);
+    const googleDocId = getIdFromUrl(googleDocUrl);
+    documentApi.importQuestion(document.id, googleDocId).then((res: any) => {
+      setUpdateEnable(true);
+      if (res.status === 200) {
+        toastService.success();
+        setQuestionSets(res.data);
+      } else {
+        toastService.error(res.message);
+      }
+    });
+  };
   useEffect(() => {
     setDocumentDetail(document);
   }, [document]);
@@ -173,6 +192,7 @@ const DocumentEditInfo: React.FC<Props> = ({ documentId }) => {
                   <Form.Control
                     className="document-google-doc"
                     spellCheck={false}
+                    onChange={(e) => setGoogleDocUrl(e.target.value)}
                     placeholder="đường dẫn tài liệu google doc (chế độ : mọi người có thể sửa)"
                   />
                 </Form.Group>
@@ -180,7 +200,12 @@ const DocumentEditInfo: React.FC<Props> = ({ documentId }) => {
                   <Button className="mx-2" variant="outline-warning">
                     Sửa dữ liệu
                   </Button>
-                  <Button className="mx-2" variant="outline-primary">
+                  <Button
+                    className="mx-2"
+                    variant="outline-primary"
+                    disabled={!(IsGoogleDocUrl(googleDocUrl) && updateEnable)}
+                    onClick={importQuestionSet}
+                  >
                     Cập nhật
                   </Button>
                 </div>

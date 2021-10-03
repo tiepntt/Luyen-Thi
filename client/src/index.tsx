@@ -3,7 +3,8 @@ import ReactDOM from "react-dom";
 import "./styles.scss";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-
+import { setupAxios } from "services/api";
+setupAxios();
 ReactDOM.render(
   <React.StrictMode>
     <App />
