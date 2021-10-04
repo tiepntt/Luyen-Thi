@@ -298,6 +298,7 @@ namespace Luyenthi.DbMigrator.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     DocumentType = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
+                    IsApprove = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     ParentId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),

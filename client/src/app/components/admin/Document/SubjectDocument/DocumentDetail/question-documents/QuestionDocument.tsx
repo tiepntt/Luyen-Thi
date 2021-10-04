@@ -1,26 +1,21 @@
+import QuestionSetPreview from "app/components/question-set/QuestionSetPreview";
 import BoxApp from "app/components/_share/Box/Box";
 import ImportQuestionSetModal from "app/components/_share/Modals/ImportQuestionSetModal/ImportQuestionSetModal";
 import { QuestionSetDetail } from "models/questionSet/QuestionSetDetail";
-import React, { useEffect, useState } from "react";
-import { questionSetApi } from "services/api/document/questionSetApi";
+import React, { useState } from "react";
 import "./style.scss";
 interface Props {
   documentId: string;
+  questionSets?: QuestionSetDetail[];
+  setQuestionSets: (value: any) => void;
 }
-const QuestionDocument: React.FC<Props> = ({ documentId }) => {
-  const [questionSets, setQuestionSets] = useState<QuestionSetDetail[]>();
+const QuestionDocument: React.FC<Props> = ({
+  documentId,
+  questionSets,
+  setQuestionSets,
+}) => {
   const [showModal, setShowModal] = useState(false);
-  const getQuestionDocument = () => {
-    questionSetApi.getByDocumentId(documentId).then((res) => {
-      if (res.status === 200) {
-        setQuestionSets(res.data);
-      }
-    });
-  };
-  useEffect(() => {
-    getQuestionDocument();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [documentId]);
+
   const onImportSuccess = (questionSets: QuestionSetDetail[]) => {
     setQuestionSets(questionSets);
   };
@@ -47,8 +42,20 @@ const QuestionDocument: React.FC<Props> = ({ documentId }) => {
   return (
     <BoxApp>
       <div className="admin-document-questions">
-        {questionSets && !questionSets.length && <ImportQuestionSet />}
-        {questionSets && questionSets.map((questionSet, i) => <></>)}
+        <div className="preview-document-question">
+          <div className="label-document">DỮ LIỆU CÂU HỎI</div>
+          {questionSets && (
+            <div className="question-document">
+              {!questionSets.length ? (
+                <ImportQuestionSet />
+              ) : (
+                questionSets.map((questionSet, i) => (
+                  <QuestionSetPreview key={i} data={questionSet} />
+                ))
+              )}
+            </div>
+          )}
+        </div>
       </div>
       <ImportQuestionSetModal
         documentId={documentId}

@@ -1,5 +1,6 @@
 import { DocoumentTitle } from "models/document/Document";
 import { DocumentGetAllRequest } from "models/document/DocumentGetAll";
+import { DocumentUpdateInfo } from "models/document/DocumentUpdateInfo";
 import api from "..";
 const baseUrl = "/Document";
 export const documentApi = {
@@ -12,7 +13,10 @@ export const documentApi = {
   getById: (id: string) => {
     return api.get(`${baseUrl}/${id}`);
   },
-  importQuestion: (documentId: string, googleDocId: string) => {
-    return api.post(`${baseUrl}/import-questions`, { googleDocId, documentId });
+  importQuestion: (data: any) => {
+    return api.post(`${baseUrl}/import-questions`, { ...data });
+  },
+  update: (request: DocumentUpdateInfo) => {
+    return api.put(baseUrl, { ...request });
   },
 };

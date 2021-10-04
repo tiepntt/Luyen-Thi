@@ -22,18 +22,20 @@ const ImportQuestionSetModal: React.FC<Props> = (props) => {
   };
   const handleImport = () => {
     const googleDocId = getIdFromUrl(gDocUrl);
-    console.log(googleDocId);
 
     setLoading(true);
-    documentApi.importQuestion(documentId, googleDocId).then((res) => {
-      setLoading(false);
-      if (res.status === 200) {
-        toastService.success();
-        onSuccess && onSuccess(res.data);
-      } else {
-        toastService.error();
-      }
-    });
+    documentApi
+      .importQuestion({ documentId, googleDocId, googleDocUrl: gDocUrl })
+      .then((res) => {
+        setLoading(false);
+        if (res.status === 200) {
+          toastService.success();
+          onSuccess && onSuccess(res.data);
+          handleCloseModal();
+        } else {
+          toastService.error();
+        }
+      });
   };
 
   return (

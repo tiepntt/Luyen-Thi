@@ -1,23 +1,18 @@
-import { Grade } from "hooks/Grade-Subject/useGrades";
-import { Subject } from "hooks/Grade-Subject/useSubjects";
 import { DocumentFormLabel } from "settings/document/documentForm";
 import { ShuffleTypeLabel } from "settings/document/documentShuffle";
 import { DocumentStatusLabel } from "settings/document/documentStatus";
 
-export interface DocumentDetail {
+export interface DocumentUpdateInfo {
   name: string;
   id: string;
-  grade: Grade;
-  subject: Subject;
+  gradeId?: string;
+  subjectId?: string;
   documentType: number;
   description: string;
   status: DocumentStatusLabel;
-  createAt: Date;
-  updateAt: Date;
   form: DocumentFormLabel;
   shuffleType: ShuffleTypeLabel;
   times: number;
-  isApprove?: boolean;
   imageUrl: string;
   googleDocId: string;
 }

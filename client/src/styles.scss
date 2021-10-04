@@ -5,17 +5,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap");
 
 // global config
-* {
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-}
-.row,
-.col,
-.col-1 {
-  margin: 0 !important;
-  padding: 0 !important;
-}
+// * {
+//   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+// }
 body {
-  font-family: "Quicksand" !important;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   // background: #f9f9f9;
   scroll-behavior: smooth;
 }
@@ -28,4 +22,7 @@ html {
 }
 .modal {
   z-index: 5000;
+}
+.text-right {
+  text-align: right;
 }
