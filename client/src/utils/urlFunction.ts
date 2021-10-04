@@ -7,3 +7,4 @@ export const getIdFromUrl = (url: string) => {
 
   return match ? match[0] : "";
 };
+export const getUrlFromId = (id: string) => {};

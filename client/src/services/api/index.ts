@@ -1,5 +1,4 @@
 import axios from "axios";
-import { EnhancedStore } from "@reduxjs/toolkit";
 import { toastService } from "services/toast";
 
 const axiosInstance = axios.create({

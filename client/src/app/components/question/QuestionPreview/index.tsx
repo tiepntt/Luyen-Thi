@@ -1,5 +1,6 @@
 import { Question } from "models/question/Question";
 import React from "react";
+import QuestionGroupPreview from "./QuestionGroup";
 import QuestionMultipleChocie from "./QuestionMultipleChoice";
 import "./style.scss";
 interface Props {
@@ -9,7 +10,11 @@ interface Props {
 const QuestionPreview: React.FC<Props> = ({ data, index }) => {
   return (
     <div className="question-preivew">
-      <QuestionMultipleChocie {...data} />
+      {data.subQuestions.length ? (
+        <QuestionGroupPreview {...data} />
+      ) : (
+        <QuestionMultipleChocie {...data} />
+      )}
     </div>
   );
 };

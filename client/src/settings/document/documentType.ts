@@ -1,14 +1,18 @@
-export const documentTypes: DocumentType[] = [
-  {
-    name: "Tài liệu học tập",
-    value: 0,
-  },
-  {
-    name: "Đề thi",
-    value: 1,
-  },
-];
+export enum DocumentTypeLabel {
+  DOCUMENT = 1,
+  EXAM = 0,
+}
 interface DocumentType {
-  name: string;
+  label: string;
   value: any;
 }
+export const documentTypes: DocumentType[] = [
+  {
+    label: "Tài liệu học tập",
+    value: DocumentTypeLabel.DOCUMENT,
+  },
+  {
+    label: "Đề thi",
+    value: DocumentTypeLabel.EXAM,
+  },
+];

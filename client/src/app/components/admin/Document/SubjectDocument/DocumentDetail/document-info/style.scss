@@ -17,9 +17,45 @@
     font-weight: bold;
     color: #747474;
   }
+  .image-editor {
+    position: absolute;
+    bottom: 0px;
+    margin: auto;
+    left: 50px;
+    color: white;
+    display: none;
+
+    .fileContainer {
+      background: unset !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      border-radius: 0 !important;
+      margin: 0 !important;
+      .chooseFileButton {
+        border-radius: 0 !important;
+      }
+    }
+  }
   .image-document {
     margin-right: 20px !important;
     margin-left: 5px;
+    position: relative;
+    cursor: pointer;
+
+    img {
+      object-fit: cover;
+      object-position: center;
+      margin: auto;
+      display: block;
+    }
+    &:hover {
+      img {
+        opacity: 0.6;
+      }
+      .image-editor {
+        display: inline-block !important;
+      }
+    }
     img {
       outline-style: double;
       outline-color: rgb(177, 176, 176);

@@ -16,6 +16,7 @@ const DocumentItem: React.FC<Props> = ({ document, onClick }) => {
             src={document.imageUrl || url}
             className="apartment-avatar"
             thumbnail
+            height={200}
           />
         </div>
         <div className="document-info">

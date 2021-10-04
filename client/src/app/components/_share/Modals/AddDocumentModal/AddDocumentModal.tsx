@@ -74,7 +74,6 @@ const AddDocumentModal: React.FC<Props> = (props) => {
             value={documentType}
             onChange={setDocumentType as any}
             options={documentTypes as any}
-            getOptionLabel={(o: any) => o.name}
           />
         </Form.Group>
         <Row className="mb-3">
