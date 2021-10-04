@@ -1,4 +1,5 @@
-﻿using Luyenthi.Core.Enums.Document;
+﻿using Luyenthi.Core.Enums;
+using Luyenthi.Core.Enums.Document;
 using Luyenthi.Domain.Base;
 using System;
 using System.Collections.Generic;
@@ -20,11 +21,12 @@ namespace Luyenthi.Domain
         public string ImageUrl { get; set; }
         public DocumentType DocumentType { get; set; }
         public DocumentStatus Status { get; set; } = DocumentStatus.Private;
+        public DocumentForm Form { get; set; } = DocumentForm.All;
+        public DocumentShuffleType ShuffleType { get; set; } = DocumentShuffleType.None;
+        public int Times { get; set; }
         public bool IsApprove { get; set; }
+        public string GoogleDocId { get; set; }
         public virtual List<QuestionSet> QuestionSets { get; set; }
-        public virtual List<Document> Childrens { get; set; }
-        public Guid? ParentId { get; set; }
-        public virtual Document Parent { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public Guid? CreatedBy { get; set; }

@@ -4,6 +4,7 @@ using Luyenthi.Core.Dtos;
 using Luyenthi.Core.Dtos.Document;
 using Luyenthi.Core.Dtos.GoogleDoc;
 using Luyenthi.Domain;
+using Luyenthi.EntityFrameworkCore;
 using Luyenthi.Services;
 using Luyenthi.Services.GoolgeAPI;
 using Microsoft.AspNetCore.Hosting;
@@ -22,6 +23,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
     public class DocumentController : Controller
     {
         private readonly DocumentService _documentService;
+        private readonly CloudinarySerivce _cloudinarySerivce;
         private readonly QuestionSetService _questionSetService;
         private readonly QuestionService _questionService;
         private readonly FileService _fileService;
@@ -34,7 +36,8 @@ namespace Luyenthi.HttpApi.Host.Controllers
             IWebHostEnvironment hostEnvironment,
             QuestionSetService questionSetService,
             QuestionService questionService,
-            IMapper mapper
+            CloudinarySerivce cloudinarySerivce,
+        IMapper mapper
             )
         {
             _documentService = documentService;
@@ -42,6 +45,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
             _hostingEnvironment = hostEnvironment;
             _questionSetService = questionSetService;
             _questionService = questionService;
+            _cloudinarySerivce = cloudinarySerivce ;
             _mapper = mapper;
         }
         [HttpPost("import-document")]
@@ -82,7 +86,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
                 for (int i = 0; i < doc.InlineObjects.Count; i++)
                 {
                     var inlineObject = doc.InlineObjects.Values.ToList()[i];
-                    uploadImages.Add(_fileService.DownLoadImageFromDoc(inlineObject, folderPath, "uploads/questions"));
+                    uploadImages.Add(_cloudinarySerivce.DownLoadImageFromDoc(inlineObject));
                 }
             }
             var tasks = uploadImages.ToArray();
@@ -91,10 +95,16 @@ namespace Luyenthi.HttpApi.Host.Controllers
             // parse doc
             var questionSetDatas = new ParseQuestionDocService(doc.Body.Content.ToList(), images, questionImport.DocumentId).Parse();
             var questionSets = _mapper.Map<List<QuestionSet>>(questionSetDatas);
+            document.GoogleDocId = questionImport.GoogleDocUrl;
+            //_documentRepository.UpdateEntity(document);
             // xóa các question set đã tạo
             _questionSetService.RemoveByDocumentId(questionImport.DocumentId);
             // xóa các question đã tạo 
             _questionSetService.CreateMany(questionSets);
+            // update document google Doc Id
+            // cập nhật document
+           
+            
             questionSets = DocumentHelper.MakeIndexQuestions(questionSets);
             return questionSets;
             //scope.Complete();
@@ -124,6 +134,15 @@ namespace Luyenthi.HttpApi.Host.Controllers
         {
             var documents = _documentService.GetAll(request);
             return _mapper.Map<List<DocumentTitleDto>>(documents);
+        }
+        [HttpPut]
+        public void UpdateById(DocumentUpdateDto documentUpdate)
+        {
+            if (documentUpdate.Id == Guid.Empty)
+            {
+                throw new KeyNotFoundException("Dữ liệu không hợp lệ");
+            } 
+            _documentService.Update(documentUpdate);
         }
     }
 }

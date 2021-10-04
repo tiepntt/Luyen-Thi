@@ -15,6 +15,7 @@ namespace Luyenthi.Core.Dtos
         public Guid DocumentId { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+        public string CorrectAnswer { get; set; }
         public virtual List<QuestionDto> Questions { get; set; }
     }
 }

@@ -48,9 +48,9 @@ namespace Luyenthi.Services
                         // bộ câu hỏi
                         foreach (Question subQ in question.SubQuestions)
                         {
-                            var contenQuestion = JsonConvert.SerializeObject(question.Content);
+                            var contenQuestion = JsonConvert.SerializeObject(subQ.Introduction);
                             contenQuestion = Regex.Replace(contenQuestion, @"(#{index})", curentIndex.ToString());
-                            question.Content = JsonConvert.DeserializeObject<List<ExpandoObject>>(contenQuestion);
+                            subQ.Introduction = JsonConvert.DeserializeObject<List<ExpandoObject>>(contenQuestion);
                             curentIndex++;
                         }
                     }

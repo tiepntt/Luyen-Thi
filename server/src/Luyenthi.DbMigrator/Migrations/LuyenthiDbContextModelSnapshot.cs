@@ -95,6 +95,12 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.Property<int>("DocumentType")
                         .HasColumnType("int");
 
+                    b.Property<int>("Form")
+                        .HasColumnType("int");
+
+                    b.Property<string>("GoogleDocId")
+                        .HasColumnType("longtext");
+
                     b.Property<Guid>("GradeId")
                         .HasColumnType("char(36)");
 
@@ -110,14 +116,17 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.Property<string>("NameNomarlize")
                         .HasColumnType("longtext");
 
-                    b.Property<Guid?>("ParentId")
-                        .HasColumnType("char(36)");
+                    b.Property<int>("ShuffleType")
+                        .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<Guid>("SubjectId")
                         .HasColumnType("char(36)");
+
+                    b.Property<int>("Times")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)");
@@ -128,8 +137,6 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("GradeId");
-
-                    b.HasIndex("ParentId");
 
                     b.HasIndex("SubjectId");
 
@@ -211,6 +218,9 @@ namespace Luyenthi.DbMigrator.Migrations
 
                     b.Property<Guid?>("LevelId")
                         .HasColumnType("char(36)");
+
+                    b.Property<string>("Options")
+                        .HasColumnType("longtext");
 
                     b.Property<int>("OrderNumber")
                         .HasColumnType("int");
@@ -633,10 +643,6 @@ namespace Luyenthi.DbMigrator.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Luyenthi.Domain.Document", "Parent")
-                        .WithMany("Childrens")
-                        .HasForeignKey("ParentId");
-
                     b.HasOne("Luyenthi.Domain.Subject", "Subject")
                         .WithMany()
                         .HasForeignKey("SubjectId")
@@ -644,8 +650,6 @@ namespace Luyenthi.DbMigrator.Migrations
                         .IsRequired();
 
                     b.Navigation("Grade");
-
-                    b.Navigation("Parent");
 
                     b.Navigation("Subject");
                 });
@@ -793,8 +797,6 @@ namespace Luyenthi.DbMigrator.Migrations
 
             modelBuilder.Entity("Luyenthi.Domain.Document", b =>
                 {
-                    b.Navigation("Childrens");
-
                     b.Navigation("QuestionSets");
                 });
 

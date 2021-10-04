@@ -20,6 +20,7 @@ namespace Luyenthi.Domain
         public dynamic Introduction { get; set; }
         public dynamic Solve { get; set; }
         public string CorrectAnswer { get; set; }
+        public string Options { get; set; }
         public QuestionStatus Status { get; set; } = QuestionStatus.Waiting;
         public int OrderNumber { get; set; }
         public virtual List<Question> SubQuestions { get; set; }
