@@ -8,9 +8,7 @@ namespace Luyenthi.Core.Enums.Document
 {
     public enum DocumentStatus
     {
-        Waiting, 
         Public,
         Private,
-        Cancel,
     }
 }

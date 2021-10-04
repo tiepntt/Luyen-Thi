@@ -10,5 +10,6 @@ namespace Luyenthi.Core
     {
         public Guid DocumentId { get; set; }
         public string GoogleDocId { get; set; }
+        public string GoogleDocUrl { get; set; }
     }
 }

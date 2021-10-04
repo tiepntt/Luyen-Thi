@@ -69,3 +69,7 @@ Update-Database
 ```sh
 mysql -u root -p luyenthi< dump.sql
 ```
+Dump data by **Command prompt** in `Luyenthi.DbMigrator>Data>`
+```sh
+mysqldump -t -u root -p luyenthi >dump.sql
+```

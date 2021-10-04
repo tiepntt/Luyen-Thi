@@ -64,6 +64,7 @@ namespace Luyenthi
             services.AddTransient<DocumentService>();
             services.AddTransient<QuestionService>();
             services.AddTransient<FileService>();
+            services.AddTransient<CloudinarySerivce>();
             services.AddTransient<QuestionSetService>();
            
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>

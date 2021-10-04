@@ -40,7 +40,6 @@ namespace Luyenthi.Services
             var document = _documentRepository.Find(s => s.Id == Id)
                 .Include(d => d.Subject)
                 .Include(d => d.Grade)
-                .Include(d => d.Parent)
                 .FirstOrDefault();
             return document;
         }
@@ -64,6 +63,28 @@ namespace Luyenthi.Services
                                             ).Take(request.Take).Skip(request.Skip).ToList();
             return documents;
         }
-        
+        public Document Update(DocumentUpdateDto documentUpdate) {
+
+            var document = _documentRepository.Get(documentUpdate.Id);
+            if(document == null)
+            {
+                throw new KeyNotFoundException("Không tìm thấy tài liệu");
+            }
+            document.GradeId = documentUpdate.GradeId;
+            document.SubjectId = documentUpdate.SubjectId;
+            document.GoogleDocId = documentUpdate.GoogleDocId;
+            document.ImageUrl = documentUpdate.ImageUrl;
+            document.Name = documentUpdate.Name;
+            document.ShuffleType = documentUpdate.ShuffleType;
+            document.Status = documentUpdate.Status;
+            document.Times = documentUpdate.Times;
+            document.Form = documentUpdate.Form;
+            document.Description = documentUpdate.Description;
+            _documentRepository.UpdateEntity(document);
+            return document;
+        }
+
+
+
     }
 }

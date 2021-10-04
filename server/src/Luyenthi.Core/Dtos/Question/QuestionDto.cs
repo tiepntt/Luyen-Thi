@@ -13,6 +13,7 @@ namespace Luyenthi.Core.Dtos
         public dynamic Introduction { get; set; }
         public dynamic Solve { get; set; }
         public int OrderNumber { get; set; }
+        public string CorrectAnswer { get; set; }
         public List<QuestionDto> SubQuestions { get; set; }
     }
 }

@@ -49,6 +49,7 @@ namespace Luyenthi.Services
                                             .Include(qs => qs.Questions)
                                             .ThenInclude(q => q.SubQuestions).ToList();
             // đánh index cho các question
+            // đánh index cho các question
             return questionSets;
         }
         public void RemoveByDocumentId(Guid documentId)

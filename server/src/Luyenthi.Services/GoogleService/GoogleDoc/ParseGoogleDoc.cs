@@ -127,7 +127,7 @@ namespace Luyenthi.Services
             {
                 // text thường
                 // thay các kí tự \$ thành các mã code
-                var text = StringToSymbols(element.TextRun.Content).Trim('\n','r');
+                var text = StringToSymbols(element.TextRun.Content).Trim('\n','\r');
                 // tách các phần có latex ra
                 var textElements = Regex.Split(text, @"(\$[^$]+\$)|(\$\$[^$]*?\$\$)").ToList();
                 var style = element.TextRun.TextStyle;
@@ -135,8 +135,8 @@ namespace Luyenthi.Services
                 textElements.ForEach(i =>
                 {
                     var text = i;
-                    text = Regex.Replace(text, @"(Câu\s+[0-9]+[^\s]\s{0,5})", "Câu #{index}.");
-                    text = Regex.Replace(text, @"(Question\s+[0-9]+[^\s]\s{0,5})", "Question #{index}.");
+                    text = Regex.Replace(text, @"(Câu\s+[0-9]+[^\s]\s{0,5})", "Câu #{index}. ");
+                    text = Regex.Replace(text, @"(Question\s+[0-9]+[^\s]\s{0,5})", "Question #{index}. ");
                     if (_isOption)
                     {
                      text = Regex.Replace(i, @"([АВСABCD]\s*?[\.|\․]\s{0,5})", "");  

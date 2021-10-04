@@ -298,8 +298,12 @@ namespace Luyenthi.DbMigrator.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     DocumentType = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
+                    Form = table.Column<int>(type: "int", nullable: false),
+                    ShuffleType = table.Column<int>(type: "int", nullable: false),
+                    Times = table.Column<int>(type: "int", nullable: false),
                     IsApprove = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    ParentId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    GoogleDocId = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
@@ -308,12 +312,6 @@ namespace Luyenthi.DbMigrator.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Documents", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Documents_Documents_ParentId",
-                        column: x => x.ParentId,
-                        principalTable: "Documents",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Documents_Grades_GradeId",
                         column: x => x.GradeId,
@@ -433,6 +431,8 @@ namespace Luyenthi.DbMigrator.Migrations
                     Solve = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CorrectAnswer = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Options = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Status = table.Column<int>(type: "int", nullable: false),
                     OrderNumber = table.Column<int>(type: "int", nullable: false),
@@ -566,11 +566,6 @@ namespace Luyenthi.DbMigrator.Migrations
                 name: "IX_Documents_GradeId",
                 table: "Documents",
                 column: "GradeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Documents_ParentId",
-                table: "Documents",
-                column: "ParentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Documents_SubjectId",
