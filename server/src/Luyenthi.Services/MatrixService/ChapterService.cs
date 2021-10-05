@@ -1,4 +1,5 @@
-﻿using Luyenthi.Domain;
+﻿using Luyenthi.Core.Dtos;
+using Luyenthi.Domain;
 using Luyenthi.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -42,8 +43,12 @@ namespace Luyenthi.Services
             _chapterRepository.Add(chapter);
             return chapter;
         }
-        public Chapter Update(Chapter chapter)
+        public Chapter Update(ChapterDto chapterUpdate)
         {
+            var chapter = _chapterRepository.Get(chapterUpdate.Id);
+            chapter.Name = chapterUpdate.Name;
+            chapter.SubjectId = chapterUpdate.SubjectId;
+            chapter.GradeId = chapterUpdate.GradeId;
             _chapterRepository.UpdateEntity(chapter);
             return chapter;
         }

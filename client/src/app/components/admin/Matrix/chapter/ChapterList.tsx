@@ -3,7 +3,10 @@ import ChapterItem from "app/components/matrix/chapter/chapterItem/ChapterItem";
 import BoxApp from "app/components/_share/Box/Box";
 import GradeDocumentBreadcubms from "app/components/_share/Breadcrumbs/GradeDocumentBreadcrubms/GradeDocumentBreadcubms";
 import AddChapterModal from "app/components/_share/Modals/AddChapterModal/AddChapterModal";
+import EditChapterModal from "app/components/_share/Modals/EditChapterModal/EditChapterModal";
+import SubmitModal from "app/components/_share/Modals/SubmitModal/SubmitModal";
 import { useChapters } from "hooks/Matrix/useChapters";
+import { Chapter } from "models/matrix/Chapter";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { GradeApi } from "services/api/grade-subject/gradeApi";
@@ -19,7 +22,16 @@ const ChapterList = () => {
   const grade = GradeApi.getGrade(gradeId);
   const subject = SubjectApi.getSubject(subjectId);
   const [showModal, setShowModal] = useState(false);
-  const { chapters, addChapter } = useChapters(grade.id, subject.id);
+  const [showModalEdit, setShowModalEdit] = useState(false);
+  const [showModalRemove, setShowModalRemove] = useState(false);
+  const {
+    chapters,
+    addChapter,
+    currentChapter,
+    setCurrentChappter,
+    updateChapter,
+    deleteChapter,
+  } = useChapters(grade.id, subject.id);
   const params = [
     {
       title: "Tài liệu",
@@ -34,6 +46,14 @@ const ChapterList = () => {
       href: ``,
     },
   ];
+  const showEditModal = (chapter: Chapter) => {
+    setCurrentChappter(chapter);
+    setShowModalEdit(true);
+  };
+  const showRemoveModal = (chapter: Chapter) => {
+    setCurrentChappter(chapter);
+    setShowModalRemove(true);
+  };
 
   return (
     <div className="subject-matrix">
@@ -48,7 +68,12 @@ const ChapterList = () => {
             <BoxApp>
               <div className="list-chapter">
                 {chapters.map((chapter, i) => (
-                  <ChapterItem key={i} chapter={chapter} />
+                  <ChapterItem
+                    key={i}
+                    chapter={chapter}
+                    onEditClick={() => showEditModal(chapter)}
+                    onRemoveClick={() => showRemoveModal(chapter)}
+                  />
                 ))}
               </div>
             </BoxApp>
@@ -63,6 +88,21 @@ const ChapterList = () => {
         grade={grade}
         subject={subject}
       />
+      <EditChapterModal
+        show={showModalEdit}
+        setShow={setShowModalEdit}
+        chapter={currentChapter}
+        onEditChapter={updateChapter}
+      />
+      <SubmitModal
+        onSubmit={() => deleteChapter(currentChapter as any)}
+        show={showModalRemove}
+        setShow={setShowModalRemove}
+      >
+        <span>
+          Xóa chương : <strong>{currentChapter?.name}</strong>
+        </span>
+      </SubmitModal>
     </div>
   );
 };

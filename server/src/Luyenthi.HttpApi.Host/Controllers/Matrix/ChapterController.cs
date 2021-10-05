@@ -30,11 +30,32 @@ namespace Luyenthi.HttpApi.Host.Controllers.Matrix
             var chapters = _chapterService.GetAll(gradeId, subjectId);
             return _mapper.Map<List<ChapterDto>>(chapters);
         }
+        [HttpGet("{id}")]
+        public ChapterDetailDto GetById(Guid id)
+        {
+            var chapter = _chapterService.GetById(id);
+            if(chapter == null)
+            {
+                throw new KeyNotFoundException("Không tìm thấy bản ghi");
+            }
+            return _mapper.Map<ChapterDetailDto>(chapter);
+        }
         [HttpPost]
         public ChapterDto Create(ChapterCreateDto chapterCreate)
         {
             var chapter = _mapper.Map<Chapter>(chapterCreate);
             chapter = _chapterService.Create(chapter);
+            return _mapper.Map<ChapterDto>(chapter);
+        }
+        [HttpDelete("{id}")] 
+        public void RemoveById(Guid id)
+        {
+            _chapterService.Remove(id);
+        }
+        [HttpPut]
+        public ChapterDto Update(ChapterDto chapterUpadte)
+        {
+            var chapter = _chapterService.Update(chapterUpadte);
             return _mapper.Map<ChapterDto>(chapter);
         }
     }
