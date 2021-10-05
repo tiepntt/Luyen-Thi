@@ -1,23 +1,5 @@
 .grade-document {
   .list-subject {
-    .subject-item {
-      margin: auto;
-      display: inline-flex;
-      width: 300px;
-      height: 80px;
-      background: #ffffff;
-      box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
-      vertical-align: middle;
-      text-align: center;
-      margin: 0 0px 15px 30px;
-      justify-content: center;
-      align-items: center;
-      user-select: none;
-      cursor: pointer;
-      &:hover {
-        background: rgb(255, 247, 231);
-      }
-    }
     .add-subject {
       background: #e9e9e9;
       &:hover {
@@ -32,5 +14,24 @@
     .subject-item {
       width: 44% !important;
     }
+  }
+}
+
+.subject-item {
+  margin: auto;
+  display: inline-flex;
+  width: 300px;
+  height: 80px;
+  background: #ffffff;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
+  vertical-align: middle;
+  text-align: center;
+  margin: 0 0px 15px 30px;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  cursor: pointer;
+  &:hover {
+    background: rgb(255, 247, 231);
   }
 }

@@ -1,0 +1,38 @@
+.chappter-item {
+  height: 100%;
+  background: #fffefe;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+  min-height: 50px;
+  font-size: 18px;
+  color: rgb(31, 30, 30);
+  font-weight: 500;
+  padding: 0 10px;
+  cursor: pointer;
+  &:hover {
+    background: rgb(248, 246, 246);
+    .chapter-name {
+      color: rgb(3, 103, 143) !important;
+    }
+    .chapter-icon {
+      color: green;
+    }
+  }
+  .chapter-name {
+    margin: auto 0;
+    text-align: left;
+  }
+  .chapter-icon {
+    margin: 0;
+    margin-right: 10px;
+    padding-top: 6px;
+    font-size: 27px;
+    color: rgb(3, 103, 143);
+    svg {
+      margin: auto;
+    }
+  }
+  .chapter-option {
+    justify-content: center;
+    align-items: center;
+  }
+}

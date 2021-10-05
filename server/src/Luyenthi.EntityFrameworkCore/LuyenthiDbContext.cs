@@ -79,12 +79,7 @@ namespace Luyenthi.EntityFrameworkCore
             builder.Entity<Subject>(e => {
                 e.HasIndex(i => i.Code).IsUnique();
             });
-            builder.Entity<Chapter>(e => {
-                e.HasIndex(i => i.Code).IsUnique();
-            });
-            builder.Entity<Unit>(e => {
-                e.HasIndex(i => i.Code).IsUnique();
-            });
+            
             builder.Entity<LevelQuestion>(e => {
                 e.HasIndex(i => i.Code).IsUnique();
             });
@@ -108,6 +103,11 @@ namespace Luyenthi.EntityFrameworkCore
                 );
                 b.HasMany(x => x.SubQuestions).WithOne(x => x.Parent)
                 .OnDelete(DeleteBehavior.Cascade);
+                b.HasOne(x => x.Chapter).WithMany(x => x.Questions)
+                .OnDelete(DeleteBehavior.SetNull);
+                b.HasOne(x => x.Unit).WithMany(x => x.Questions)
+                .OnDelete(DeleteBehavior.SetNull);
+                
             });
             
         }

@@ -10,9 +10,7 @@ namespace Luyenthi.Domain
     public class Chapter : IEntity<Guid>, IBaseEntity
     {
         public Guid Id { get; set; }
-
         public string Name { get; set; }
-        public string Code { get; set; }
         public string OrderNumber { get; set; }
         public Guid SubjectId { get; set; }
         public Subject Subject { get; set; }

@@ -30,5 +30,5 @@ export const gradeData: Grade[] = [
 export interface Grade {
   name: string;
   code: string;
-  id?: string;
+  id: string;
 }

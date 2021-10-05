@@ -6,7 +6,7 @@ import "./style.scss";
 const Document = () => {
   //   const { grades } = useGrades();
   return (
-    <div className="admin-document">
+    <div className="admin-wrap">
       <Switch>
         {routes.map((route, i) => (
           <Route key={i} {...route} />

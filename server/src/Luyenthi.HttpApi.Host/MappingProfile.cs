@@ -30,6 +30,14 @@ namespace Luyenthi.HttpApi.Host
             CreateMap<Subject, SubjectDto>();
             //grade
             CreateMap<Grade, GradeDto>();
+            // chapter
+            CreateMap<Chapter, ChapterDto>();
+            CreateMap<Chapter, ChapterDetailDto>();
+            CreateMap<ChapterCreateDto, Chapter>();
+            // unit 
+            CreateMap<Unit, UnitDetailDto>();
+            CreateMap<Unit, UnitDto>();
+            CreateMap<UnitCreateDto, Unit>();
         }
     }
 }

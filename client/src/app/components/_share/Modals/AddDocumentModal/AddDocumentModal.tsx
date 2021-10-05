@@ -103,7 +103,7 @@ const AddDocumentModal: React.FC<Props> = (props) => {
           Hủy
         </Button>
         <Button variant="primary" onClick={handleClickAddButton}>
-          Lưu
+          Thêm
         </Button>
       </Modal.Footer>
     </Modal>
