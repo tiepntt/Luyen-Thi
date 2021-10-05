@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Luyenthi.DbMigrator.Migrations
 {
     [DbContext(typeof(LuyenthiDbContext))]
-    [Migration("20211004173317_Initial")]
+    [Migration("20211005101634_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,9 +40,6 @@ namespace Luyenthi.DbMigrator.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("Code")
-                        .HasColumnType("varchar(255)");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
@@ -68,9 +65,6 @@ namespace Luyenthi.DbMigrator.Migrations
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Code")
-                        .IsUnique();
 
                     b.HasIndex("GradeId");
 
@@ -334,16 +328,10 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.Property<Guid>("ChapterId")
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("Code")
-                        .HasColumnType("varchar(255)");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<Guid?>("CreatedBy")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("GradeId")
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Name")
@@ -358,11 +346,6 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ChapterId");
-
-                    b.HasIndex("Code")
-                        .IsUnique();
-
-                    b.HasIndex("GradeId");
 
                     b.ToTable("Units");
                 });
@@ -660,7 +643,8 @@ namespace Luyenthi.DbMigrator.Migrations
                 {
                     b.HasOne("Luyenthi.Domain.Chapter", "Chapter")
                         .WithMany("Questions")
-                        .HasForeignKey("ChapterId");
+                        .HasForeignKey("ChapterId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("Luyenthi.Domain.Grade", "Grade")
                         .WithMany("Questions")
@@ -681,7 +665,8 @@ namespace Luyenthi.DbMigrator.Migrations
 
                     b.HasOne("Luyenthi.Domain.Unit", "Unit")
                         .WithMany("Questions")
-                        .HasForeignKey("UnitId");
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Chapter");
 
@@ -715,15 +700,7 @@ namespace Luyenthi.DbMigrator.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Luyenthi.Domain.Grade", "Grade")
-                        .WithMany()
-                        .HasForeignKey("GradeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Chapter");
-
-                    b.Navigation("Grade");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

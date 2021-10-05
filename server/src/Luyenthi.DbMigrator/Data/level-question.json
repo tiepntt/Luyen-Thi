@@ -1,0 +1,22 @@
+﻿[
+  {
+    "Id": "85f2b183-d760-407e-b1cd-9abe0e54c122",
+    "Name": "Nhận biết",
+    "Code": "nhan-biet"
+  },
+  {
+    "Id": "c072523a-3e53-4ea5-a493-1ad49c3d7d8b",
+    "Name": "Thông hiểu",
+    "Code": "thong-hieu"
+  },
+  {
+    "Id": "e3ddb686-5c8a-416e-bbd6-d9ed20f2e609",
+    "Name": "Vận dụng",
+    "Code": "van-dung"
+  },
+  {
+    "Id": "cb66d06b-7ce3-4c3e-a26d-7e39c993c50e",
+    "Name": "Vận dụng cao",
+    "Code": "van-dung-cao"
+  }
+]

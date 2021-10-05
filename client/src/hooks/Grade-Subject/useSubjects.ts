@@ -49,5 +49,5 @@ export const subjectData: Subject[] = [
 export interface Subject {
   name: string;
   code: string;
-  id?: string;
+  id: string;
 }

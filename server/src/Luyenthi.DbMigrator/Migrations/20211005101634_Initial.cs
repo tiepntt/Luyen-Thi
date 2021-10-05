@@ -252,8 +252,6 @@ namespace Luyenthi.DbMigrator.Migrations
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     Name = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Code = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
                     OrderNumber = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     SubjectId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
@@ -359,10 +357,7 @@ namespace Luyenthi.DbMigrator.Migrations
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     Name = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Code = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
                     ChapterId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    GradeId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
@@ -375,12 +370,6 @@ namespace Luyenthi.DbMigrator.Migrations
                         name: "FK_Units_Chapters_ChapterId",
                         column: x => x.ChapterId,
                         principalTable: "Chapters",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Units_Grades_GradeId",
-                        column: x => x.GradeId,
-                        principalTable: "Grades",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
@@ -449,7 +438,7 @@ namespace Luyenthi.DbMigrator.Migrations
                         column: x => x.ChapterId,
                         principalTable: "Chapters",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_Questions_Grades_GradeId",
                         column: x => x.GradeId,
@@ -479,7 +468,7 @@ namespace Luyenthi.DbMigrator.Migrations
                         column: x => x.UnitId,
                         principalTable: "Units",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -544,12 +533,6 @@ namespace Luyenthi.DbMigrator.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Chapters_Code",
-                table: "Chapters",
-                column: "Code",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -644,17 +627,6 @@ namespace Luyenthi.DbMigrator.Migrations
                 name: "IX_Units_ChapterId",
                 table: "Units",
                 column: "ChapterId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Units_Code",
-                table: "Units",
-                column: "Code",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Units_GradeId",
-                table: "Units",
-                column: "GradeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

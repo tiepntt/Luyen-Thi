@@ -16,13 +16,16 @@ namespace Luyenthi.HttpApi.Host.Controllers.Seeding
     {
         private readonly GradeRepository _gradeRepository;
         private readonly SubjectRepository _subjectRepository;
+        private readonly LevelQuestionRepository _levelQuestionRepository;
         public SeedController(
             GradeRepository gradeRepository,
-            SubjectRepository subjectRepository
+            SubjectRepository subjectRepository,
+            LevelQuestionRepository levelQuestionRepository
         )
         {
             _gradeRepository = gradeRepository;
             _subjectRepository = subjectRepository;
+            _levelQuestionRepository = levelQuestionRepository;
         }
         [HttpGet]
         public IActionResult Index() => View();
@@ -49,6 +52,18 @@ namespace Luyenthi.HttpApi.Host.Controllers.Seeding
             }
             return Ok();
         }
-        
+        [HttpPost("init-level-question")]
+        public dynamic InitLevelQuestion()
+        {
+            using (StreamReader r = new StreamReader(@"../Luyenthi.DbMigrator/Data/level-question.json"))
+            {
+                string json = r.ReadToEnd();
+                var levelQuestions = JsonConvert.DeserializeObject<List<LevelQuestion>>(json);
+                _levelQuestionRepository.AddRange(levelQuestions);
+            }
+            
+            return Ok();
+        }
+
     }
 }
