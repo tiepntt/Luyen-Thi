@@ -18,8 +18,12 @@ const ChapterItem: React.FC<Props> = ({
   onRemoveClick,
 }) => {
   return (
-    <div className="chappter-item d-flex" onClick={onClick}>
-      <div className="chapter-info d-flex" style={{ flexGrow: 1 }}>
+    <div className="chappter-item d-flex">
+      <div
+        className="chapter-info d-flex"
+        style={{ flexGrow: 1 }}
+        onClick={onClick}
+      >
         <div className="chapter-icon">
           <FontAwesomeIcon icon={faBookmark} />
         </div>

@@ -1,0 +1,72 @@
+.unit-item {
+  .unit-label {
+    height: 40px;
+    font-size: 18px;
+    .unit-info {
+      height: 100%;
+      vertical-align: middle;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+    }
+    .unit-icon {
+      margin-right: 8px;
+      font-size: 20px;
+      color: rgb(255, 187, 1);
+    }
+  }
+  .btn-options {
+    justify-content: center;
+    align-items: center;
+  }
+  .tempalte-question-list {
+    margin-right: 10px;
+    padding-left: 10px;
+    .template-question-show {
+      border-left: 1px solid rgb(187, 187, 187);
+      padding-left: 5px;
+    }
+  }
+  .btn-add-template-question {
+    background: rgb(173, 241, 241);
+    display: inline-block;
+    border-radius: 10px;
+
+    button {
+      text-decoration: none !important;
+      padding: 0.15rem 0.5rem !important;
+      color: teal;
+    }
+  }
+  .template-item {
+    margin-bottom: 3px;
+    .template-info {
+      min-height: 30px;
+      color: #0487a5;
+      justify-items: center;
+      align-items: center;
+      .tempalte-icon {
+        color: #0097a7;
+        margin-right: 5px;
+        padding-bottom: 1px;
+      }
+    }
+    .template-options {
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      .edit-icon {
+        color: #38c1f7;
+        &:hover {
+          color: royalblue !important;
+        }
+      }
+      .trash {
+        color: rgb(248, 132, 132);
+        &:hover {
+          color: red;
+        }
+      }
+    }
+  }
+}
