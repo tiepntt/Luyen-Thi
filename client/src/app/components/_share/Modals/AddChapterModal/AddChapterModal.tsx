@@ -39,7 +39,7 @@ const AddChapterModal: React.FC<Props> = (props) => {
     chapterApi.addChapter(chapter).then((res) => {
       setLoading(false);
       if (res.status === 200) {
-        onAddChapter && onAddChapter(chapter);
+        onAddChapter && onAddChapter(res.data);
         handleCloseModal();
         toastService.success();
       } else {

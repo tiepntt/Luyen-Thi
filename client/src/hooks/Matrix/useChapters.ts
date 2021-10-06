@@ -37,7 +37,7 @@ export const useChapters = (gradeId: string, subjectId: string) => {
     chapterApi.delete(chapter.id).then((res: any) => {
       if (res.status === 200) {
         toastService.success();
-        const newChapters = _.remove(chapters, chapter);
+        const newChapters = chapters.filter((c) => c.id !== chapter.id);
         setChapters(newChapters);
       } else {
         toastService.error(res.message);
