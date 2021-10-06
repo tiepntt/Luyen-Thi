@@ -17,12 +17,14 @@ const OptionQuestionEditor: React.FC<Props> = (props) => {
     focus,
     onClick,
     preElement,
+    value,
   } = props;
   const showHeader = () => onClick && onClick();
   return (
     <Box>
       <div className={className || ""} onClick={showHeader}>
         <TextEditor
+          value={value}
           placeholder={placeHolder}
           showHeader={focus}
           preElement={preElement}

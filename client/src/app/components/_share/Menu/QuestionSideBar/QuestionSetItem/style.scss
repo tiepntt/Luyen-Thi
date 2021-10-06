@@ -1,0 +1,37 @@
+.question-item-editor {
+  width: 100%;
+  margin-bottom: 10px;
+
+  .question-set-info {
+    min-height: 50px;
+    width: 100%;
+    // border-top: 6px solid #04b0d6;
+    background: #b8d0d5;
+    justify-content: center;
+    align-items: center;
+    padding: 4px 8px;
+    .question-set-name {
+      cursor: pointer;
+      font-weight: bold;
+      text-align: left;
+      padding-right: 4px;
+    }
+    .btn-options {
+      height: 100%;
+      border-left: 1px solid rgb(143, 141, 141);
+      padding-left: 6px;
+      * {
+        cursor: pointer;
+      }
+      .show-btn {
+        color: rgb(124, 116, 2);
+      }
+      .edit-btn {
+        color: royalblue;
+      }
+      .remove-btn {
+        color: rgb(150, 3, 3);
+      }
+    }
+  }
+}

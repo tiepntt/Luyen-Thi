@@ -1,8 +1,12 @@
+import { Question } from "models/question/Question";
 import React, { useState } from "react";
 import OptionQuestionEditor from "./OptionQuestionEditor";
 import "./style.scss";
 const ButtonCheck = () => <div className="option-Check"></div>;
-const QuestionSelectEditor = () => {
+interface Props {
+  question: Question;
+}
+const QuestionSelectEditor: React.FC<Props> = ({ question }) => {
   const [focusIndex, setFocusIndex] = useState("");
   return (
     <div className="question-select-editor">
@@ -10,7 +14,7 @@ const QuestionSelectEditor = () => {
         className="introduction-editor"
         placeHolder="Nhập nội dung câu hỏi"
         key={1}
-        value=""
+        value={question.introduction}
         focus={focusIndex === "introduction"}
         onClick={() => setFocusIndex("introduction")}
       />
@@ -22,7 +26,7 @@ const QuestionSelectEditor = () => {
             placeHolder="Đáp án A"
             className="option-question-editor"
             key={2}
-            value=""
+            value={question.content[0].content}
             focus={focusIndex === "optionA"}
             onClick={() => setFocusIndex("optionA")}
           />
@@ -33,7 +37,7 @@ const QuestionSelectEditor = () => {
             className="option-question-editor"
             placeHolder="Đáp án B"
             key={3}
-            value=""
+            value={question.content[1].content}
             focus={focusIndex === "optionB"}
             onClick={() => setFocusIndex("optionB")}
           />
@@ -44,7 +48,7 @@ const QuestionSelectEditor = () => {
             preElement={<ButtonCheck />}
             placeHolder="Đáp án C"
             key={4}
-            value=""
+            value={question.content[2].content}
             focus={focusIndex === "optionC"}
             onClick={() => setFocusIndex("optionC")}
           />
@@ -55,7 +59,7 @@ const QuestionSelectEditor = () => {
             preElement={<ButtonCheck />}
             placeHolder="Đáp án D"
             key={4}
-            value=""
+            value={question.content[3].content}
             focus={focusIndex === "optionD"}
             onClick={() => setFocusIndex("optionD")}
           />
@@ -65,7 +69,7 @@ const QuestionSelectEditor = () => {
         <OptionQuestionEditor
           placeHolder="Nhập giải thích cho câu hỏi"
           key={1}
-          value=""
+          value={question.solve || []}
           className="explain-question"
           focus={focusIndex === "explain"}
           onClick={() => setFocusIndex("explain")}
