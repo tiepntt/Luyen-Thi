@@ -38,6 +38,12 @@ namespace Luyenthi.HttpApi.Host
             CreateMap<Unit, UnitDetailDto>();
             CreateMap<Unit, UnitDto>();
             CreateMap<UnitCreateDto, Unit>();
+            CreateMap<UnitUpdateDto, Unit>();
+            // tempalteQuestion
+            CreateMap<TemplateQuestion, TemplateQuestionDto>();
+            CreateMap<TemplateQuestion, TemplateQuestionDetailDto>();
+            CreateMap<TemplateCreateDto, TemplateQuestion>();
+
         }
     }
 }

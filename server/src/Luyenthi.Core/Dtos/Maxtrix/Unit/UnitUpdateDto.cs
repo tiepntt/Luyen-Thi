@@ -7,12 +7,11 @@ using System.Threading.Tasks;
 
 namespace Luyenthi.Core.Dtos
 {
-    public class UnitDto
+    public class UnitUpdateDto
     {
         [Required]
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
-        public List<TemplateQuestionDto> TemplateQuestions { get; set; }
     }
 }

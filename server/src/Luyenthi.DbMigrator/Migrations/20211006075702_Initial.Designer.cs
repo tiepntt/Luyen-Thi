@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Luyenthi.DbMigrator.Migrations
 {
     [DbContext(typeof(LuyenthiDbContext))]
-    [Migration("20211005101634_Initial")]
+    [Migration("20211006075702_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -233,6 +233,9 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.Property<Guid?>("SubjectId")
                         .HasColumnType("char(36)");
 
+                    b.Property<Guid?>("TemplateQuestionId")
+                        .HasColumnType("char(36)");
+
                     b.Property<Guid?>("UnitId")
                         .HasColumnType("char(36)");
 
@@ -253,6 +256,8 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.HasIndex("ParentId");
 
                     b.HasIndex("SubjectId");
+
+                    b.HasIndex("TemplateQuestionId");
 
                     b.HasIndex("UnitId");
 
@@ -317,6 +322,28 @@ namespace Luyenthi.DbMigrator.Migrations
                         .IsUnique();
 
                     b.ToTable("Subjects");
+                });
+
+            modelBuilder.Entity("Luyenthi.Domain.TemplateQuestion", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<Guid>("UnitId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.HasIndex("UnitId");
+
+                    b.ToTable("TemplateQuestions");
                 });
 
             modelBuilder.Entity("Luyenthi.Domain.Unit", b =>
@@ -663,6 +690,11 @@ namespace Luyenthi.DbMigrator.Migrations
                         .WithMany("Questions")
                         .HasForeignKey("SubjectId");
 
+                    b.HasOne("Luyenthi.Domain.TemplateQuestion", "TemplateQuestion")
+                        .WithMany("Questions")
+                        .HasForeignKey("TemplateQuestionId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("Luyenthi.Domain.Unit", "Unit")
                         .WithMany("Questions")
                         .HasForeignKey("UnitId")
@@ -678,6 +710,8 @@ namespace Luyenthi.DbMigrator.Migrations
 
                     b.Navigation("Subject");
 
+                    b.Navigation("TemplateQuestion");
+
                     b.Navigation("Unit");
                 });
 
@@ -692,10 +726,21 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.Navigation("Document");
                 });
 
+            modelBuilder.Entity("Luyenthi.Domain.TemplateQuestion", b =>
+                {
+                    b.HasOne("Luyenthi.Domain.Unit", "Unit")
+                        .WithMany("TemplateQuestions")
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Unit");
+                });
+
             modelBuilder.Entity("Luyenthi.Domain.Unit", b =>
                 {
                     b.HasOne("Luyenthi.Domain.Chapter", "Chapter")
-                        .WithMany()
+                        .WithMany("Units")
                         .HasForeignKey("ChapterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -772,6 +817,8 @@ namespace Luyenthi.DbMigrator.Migrations
             modelBuilder.Entity("Luyenthi.Domain.Chapter", b =>
                 {
                     b.Navigation("Questions");
+
+                    b.Navigation("Units");
                 });
 
             modelBuilder.Entity("Luyenthi.Domain.Document", b =>
@@ -799,9 +846,16 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.Navigation("Questions");
                 });
 
+            modelBuilder.Entity("Luyenthi.Domain.TemplateQuestion", b =>
+                {
+                    b.Navigation("Questions");
+                });
+
             modelBuilder.Entity("Luyenthi.Domain.Unit", b =>
                 {
                     b.Navigation("Questions");
+
+                    b.Navigation("TemplateQuestions");
                 });
 #pragma warning restore 612, 618
         }

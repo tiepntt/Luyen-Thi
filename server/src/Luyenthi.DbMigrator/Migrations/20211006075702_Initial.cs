@@ -403,6 +403,27 @@ namespace Luyenthi.DbMigrator.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "TemplateQuestions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Name = table.Column<string>(type: "varchar(255)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    UnitId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TemplateQuestions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TemplateQuestions_Units_UnitId",
+                        column: x => x.UnitId,
+                        principalTable: "Units",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Questions",
                 columns: table => new
                 {
@@ -413,6 +434,7 @@ namespace Luyenthi.DbMigrator.Migrations
                     UnitId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     LevelId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     ParentId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    TemplateQuestionId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     Content = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Introduction = table.Column<string>(type: "longtext", nullable: true)
@@ -463,6 +485,12 @@ namespace Luyenthi.DbMigrator.Migrations
                         principalTable: "Subjects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Questions_TemplateQuestions_TemplateQuestionId",
+                        column: x => x.TemplateQuestionId,
+                        principalTable: "TemplateQuestions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_Questions_Units_UnitId",
                         column: x => x.UnitId,
@@ -598,6 +626,11 @@ namespace Luyenthi.DbMigrator.Migrations
                 column: "SubjectId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Questions_TemplateQuestionId",
+                table: "Questions",
+                column: "TemplateQuestionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Questions_UnitId",
                 table: "Questions",
                 column: "UnitId");
@@ -622,6 +655,17 @@ namespace Luyenthi.DbMigrator.Migrations
                 table: "Subjects",
                 column: "Code",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TemplateQuestions_Name",
+                table: "TemplateQuestions",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TemplateQuestions_UnitId",
+                table: "TemplateQuestions",
+                column: "UnitId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Units_ChapterId",
@@ -668,10 +712,13 @@ namespace Luyenthi.DbMigrator.Migrations
                 name: "LevelQuestions");
 
             migrationBuilder.DropTable(
-                name: "Units");
+                name: "TemplateQuestions");
 
             migrationBuilder.DropTable(
                 name: "Documents");
+
+            migrationBuilder.DropTable(
+                name: "Units");
 
             migrationBuilder.DropTable(
                 name: "Chapters");

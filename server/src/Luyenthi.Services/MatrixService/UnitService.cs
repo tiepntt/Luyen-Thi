@@ -1,4 +1,5 @@
-﻿using Luyenthi.Domain;
+﻿using Luyenthi.Core.Dtos;
+using Luyenthi.Domain;
 using Luyenthi.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -22,14 +23,20 @@ namespace Luyenthi.Services
             _unitRepository.Add(unit);
             return unit;
         }
-        public Unit Update(Unit unit)
+        public Unit Update(UnitUpdateDto unitUpdate)
         {
+            var unit = _unitRepository.Get(unitUpdate.Id);
+            if(unit == null)
+            {
+                throw new KeyNotFoundException("Không tìm thấy bản ghi");
+            }
+            unit.Name = unitUpdate.Name;
             _unitRepository.UpdateEntity(unit);
             return unit;
         }
         public List<Unit> GetAllByChapter(Guid? chapterId)
         {
-            var units = _unitRepository.Find(i => chapterId==Guid.Empty || i.ChapterId == chapterId).ToList();
+            var units = _unitRepository.Find(i => chapterId==Guid.Empty || i.ChapterId == chapterId).Include(u => u.TemplateQuestions).ToList();
             return units;
         }
         public Unit GetById(Guid id)
@@ -39,7 +46,12 @@ namespace Luyenthi.Services
         }
         public void RemoveById(Guid Id)
         {
-            _unitRepository.RemoveById(Id);
+            var unit = _unitRepository.Get(Id);
+            if(unit == null)
+            {
+                throw new KeyNotFoundException("Không tìm thấy bản ghi");
+            }
+            _unitRepository.RemoveEntity(unit);
         }
         
     }

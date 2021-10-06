@@ -63,6 +63,7 @@ namespace Luyenthi
             services.AddTransient<ChapterRepository>();
             services.AddTransient<UnitRepository>();
             services.AddTransient<LevelQuestionRepository>();
+            services.AddTransient<TemplateQuestionRepository>();
             // add transient service
             services.AddTransient<DocumentService>();
             services.AddTransient<QuestionService>();
@@ -71,6 +72,7 @@ namespace Luyenthi
             services.AddTransient<QuestionSetService>();
             services.AddTransient<ChapterService>();
             services.AddTransient<UnitService>();
+            services.AddTransient<TemplateQuestionService>();
            
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
                 {
