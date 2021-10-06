@@ -27,6 +27,7 @@ namespace Luyenthi.EntityFrameworkCore
         public DbSet<Chapter> Chapters { get; set; }
         public DbSet<Unit> Units { get; set; }
         public DbSet<LevelQuestion> LevelQuestions { get; set; }
+        public DbSet<TemplateQuestion> TemplateQuestions { get; set; }
 
         public LuyenthiDbContext(DbContextOptions<LuyenthiDbContext> options, IHttpContextAccessor httpContextAccessor) : base(options)
         {
@@ -78,11 +79,19 @@ namespace Luyenthi.EntityFrameworkCore
             });
             builder.Entity<Subject>(e => {
                 e.HasIndex(i => i.Code).IsUnique();
-            });
-            
+            }); 
             builder.Entity<LevelQuestion>(e => {
                 e.HasIndex(i => i.Code).IsUnique();
+            }); 
+            builder.Entity<Unit>(e => {
+                e.HasOne(u => u.Chapter).WithMany(c => c.Units).OnDelete(DeleteBehavior.Cascade);
             });
+            builder.Entity<TemplateQuestion>(e => {
+                e.HasIndex(i => i.Name).IsUnique();
+                e.HasOne(i => i.Unit).WithMany(u => u.TemplateQuestions).OnDelete(DeleteBehavior.Cascade);
+                
+            });
+            
             builder.Entity<Question>(b =>
             {
                 b.Property(x => x.Introduction).HasConversion(
@@ -107,7 +116,9 @@ namespace Luyenthi.EntityFrameworkCore
                 .OnDelete(DeleteBehavior.SetNull);
                 b.HasOne(x => x.Unit).WithMany(x => x.Questions)
                 .OnDelete(DeleteBehavior.SetNull);
-                
+                b.HasOne(x => x.TemplateQuestion).WithMany(x => x.Questions)
+                .OnDelete(DeleteBehavior.SetNull);
+
             });
             
         }

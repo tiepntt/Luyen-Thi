@@ -54,7 +54,12 @@ namespace Luyenthi.Services
         }
         public void Remove(Guid id)
         {
-            _chapterRepository.RemoveById(id);
+            var chapter = _chapterRepository.Get(id);
+            if(chapter == null)
+            {
+                throw new KeyNotFoundException("Không tìm thấy bản ghi");
+            }
+            _chapterRepository.RemoveEntity(chapter);
         }
     }
 }
