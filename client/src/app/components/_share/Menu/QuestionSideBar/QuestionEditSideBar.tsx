@@ -3,6 +3,8 @@ import { Hidden, Drawer, makeStyles, Theme, Box } from "@material-ui/core";
 import { useLocation } from "react-router-dom";
 import { QuestionSetDetail } from "models/questionSet/QuestionSetDetail";
 import QuestionSetItem from "./QuestionSetItem/QuestionSetItem";
+import "./style.scss";
+import { useDocumentEditContext } from "hooks/DocumentEditQuestionContext/DocumentEditContext";
 interface Props {
   onMobileClose: () => void;
   openMobile: boolean;
@@ -15,6 +17,7 @@ const QuestionEditSideBar: React.FC<Props> = ({
 }) => {
   const classes = useStyles();
   const location = useLocation();
+  const { showAddQuestionSetModal } = useDocumentEditContext();
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
@@ -28,6 +31,11 @@ const QuestionEditSideBar: React.FC<Props> = ({
         {questionSets.map((questionSet, i) => (
           <QuestionSetItem key={i} questionSet={questionSet} index={i} />
         ))}
+        <div className="question-set-add">
+          <div className="add-btn" onClick={showAddQuestionSetModal}>
+            Thêm phần
+          </div>
+        </div>
       </div>
     </Box>
   );

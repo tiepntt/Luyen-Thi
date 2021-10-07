@@ -9,16 +9,26 @@ import QuestionMatrixSideBar from "app/components/_share/Menu/QuestionMatrixSide
 import QuestionDocument from "app/components/admin/Document/SubjectDocument/DocumentDetail/question-documents/QuestionDocument";
 import QuestionEditor from "app/components/question/QuestionEditor/QuestionEditor";
 import { DocumentEditContext } from "hooks/DocumentEditQuestionContext/DocumentEditContext";
+import AddQuestionSetModal from "app/components/_share/Modals/AddQuestionSetModal/AddQuestionSetModal";
 const DocumentEditQuestion = () => {
   const { id } = useParams<Params>();
+  const [showModalAddQuestionSet, setShowModalAddQuestionSet] = useState(false);
   // const [documentInfo, setDocumentInfo] = useState<DocoumentTitle>();
-  const { question, questionSets, setQuestion, setQuestionSets } =
-    useQuestions(id);
+  const {
+    question,
+    questionSets,
+    setQuestion,
+    setQuestionSets,
+    addQuestionSet,
+    addQuestion,
+  } = useQuestions(id);
   const classes = useStyles();
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
   const value = {
     question: question as any,
     setQuestion,
+    showAddQuestionSetModal: () => setShowModalAddQuestionSet(true),
+    addQuestion,
   };
   return (
     <DocumentEditContext.Provider value={value}>
@@ -66,6 +76,11 @@ const DocumentEditQuestion = () => {
           </div>
         </div>
       </div>
+      <AddQuestionSetModal
+        show={showModalAddQuestionSet}
+        setShow={setShowModalAddQuestionSet}
+        onAdd={addQuestionSet}
+      />
     </DocumentEditContext.Provider>
   );
 };

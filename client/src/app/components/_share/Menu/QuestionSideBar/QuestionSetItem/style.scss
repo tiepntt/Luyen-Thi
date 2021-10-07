@@ -17,6 +17,8 @@
       text-align: left;
       padding-right: 4px;
       color: #404040;
+      min-height: 30px;
+      width: 100%;
       font-style: italic;
     }
     .btn-options {
@@ -35,6 +37,31 @@
       .remove-btn {
         color: rgb(150, 3, 3);
       }
+    }
+  }
+  .question-add-btn {
+    text-align: center;
+    background: white;
+    &:hover {
+      background: rgb(203, 238, 238);
+    }
+    cursor: pointer;
+    user-select: none;
+    .icon {
+      color: #aaa4a4;
+      font-size: 25px;
+    }
+    .label-add {
+      color: #bebebe;
+    }
+  }
+  .add-btns {
+    margin: 5px;
+    &.question-add-btn:first-child {
+      border-left: 1px solid red;
+    }
+    &.question-add-btn:last-child {
+      border-right: 1px solid red;
     }
   }
 }

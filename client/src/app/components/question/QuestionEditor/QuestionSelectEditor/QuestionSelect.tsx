@@ -125,7 +125,7 @@ const intQuestion = (question: Question) => {
   }
   if (!questionContent.content) {
     questionContent.content = [
-      { name: "A", content: initDefaultValue([]) as any, isTrue: true },
+      { name: "A", content: initDefaultValue([]) as any },
     ];
   }
   if (!questionContent.solve || questionContent.solve.length) {

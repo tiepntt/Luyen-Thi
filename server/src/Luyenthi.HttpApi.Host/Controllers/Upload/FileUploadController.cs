@@ -14,24 +14,22 @@ namespace Luyenthi.HttpApi.Host.Controllers.Upload
     public class FileUploadController : Controller
     {
         private readonly FileService _fileService;
-        private readonly CloudinarySerivce _cloudinarySerivce;
         public FileUploadController(
-            FileService fileService,
-            CloudinarySerivce cloudinarySerivce)
+            FileService fileService)
         {
             _fileService = fileService;
-            _cloudinarySerivce = cloudinarySerivce;
         }
         [HttpPost("image")]
         public async Task<FileDto> UploadImage(IFormCollection formData)
         {
             var file = formData.Files.FirstOrDefault();
             var fileResult = new FileDto { };
+            var cloundinaryService = CloudinarySerivce.GetService();
             using (var ms = new MemoryStream())
             {
                 file.CopyTo(ms);
                 var fileBytes = ms.ToArray();
-                var imageResult = await _cloudinarySerivce.UploadImage(fileBytes );
+                var imageResult = await CloudinarySerivce.UploadImage(cloundinaryService,fileBytes,"Luyenthi");
                 fileResult.Path = imageResult.SecureUrl.AbsoluteUri;
             }
             return fileResult;

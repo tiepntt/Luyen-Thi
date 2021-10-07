@@ -1,3 +1,4 @@
+import { useDocumentEditContext } from "hooks/DocumentEditQuestionContext/DocumentEditContext";
 import { Question } from "models/question/Question";
 import React from "react";
 import { useHistory, useParams } from "react-router";
@@ -9,14 +10,15 @@ interface Props {
 const QuestionImagePreview: React.FC<Props> = (props) => {
   const { question, index } = props;
   const history = useHistory();
-  const { id, questionId = "" } = useParams<any>();
+  const { id } = useParams<any>();
+  const currentQuestion = useDocumentEditContext().question;
   const selectQuestion = () => {
     history.push(`/document/${id}/questions-edit/${question.id}`);
   };
   return (
     <div
       className={`question-image-preview d-flex ${
-        questionId === question.id && "active"
+        currentQuestion.id === question.id && "active"
       }`}
     >
       <div className="question-check-icon"></div>

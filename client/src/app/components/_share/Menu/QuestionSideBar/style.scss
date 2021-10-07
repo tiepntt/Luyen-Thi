@@ -1,0 +1,17 @@
+.question-set-list {
+  .question-set-add {
+    .add-btn {
+      margin: 10px;
+      background: cornflowerblue;
+      padding: 10px 20px;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+      &:hover {
+        background: cornflowerblue;
+      }
+    }
+  }
+}

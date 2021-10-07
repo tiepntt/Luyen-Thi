@@ -7,7 +7,9 @@ export const useQuestions = (documentId: string) => {
   const [questionSets, setQuestionSets] = useState<QuestionSetDetail[]>([]);
   const [question, setQuestion] = useState<Question>();
   // const getQuestionSets = () => {};
-
+  const addQuestionSet = (questionSet: QuestionSetDetail) => {
+    setQuestionSets([...questionSets, questionSet]);
+  };
   const removeQuestionSet = (questionSetId: string) => {};
   // const removeQuestion = (questionSetId: string, questionId: string) => {};
   // const updateQuestion = (questionSetId: string, question: Question) => {};
@@ -19,11 +21,19 @@ export const useQuestions = (documentId: string) => {
       }
     });
   }, [documentId]);
+  const addQuestion = (questionSetId: string, question: Question) => {
+    let newQuestionSets = [...questionSets];
+    const index = questionSets.findIndex((i) => i.id === questionSetId);
+    newQuestionSets[index].questions.push(question);
+    setQuestionSets(newQuestionSets);
+  };
   return {
     questionSets,
     removeQuestionSet,
     question,
     setQuestion,
     setQuestionSets,
+    addQuestionSet,
+    addQuestion,
   };
 };

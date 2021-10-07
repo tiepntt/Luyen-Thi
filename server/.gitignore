@@ -258,7 +258,6 @@ src/IPay.DbMigrator/Logs/*
 .vscode
 .config
 appsettings.Development.json
-Credentials/
 [Aa]udios/
 
 Logs/

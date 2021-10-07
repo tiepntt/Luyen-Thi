@@ -54,10 +54,9 @@ Start project
 npm start
 ```
 
-- Servcer :
-  Coppy folder /Credentials to **server/Luyenthi.HttpApi.Host/**
+- Server
 
-Update in **Package Manager Console** at Project `Luyenthi.DbMigrator`
+Update Migration in **Package Manager Console** at Project `Luyenthi.DbMigrator`
 
 ```sh
 Update-Database

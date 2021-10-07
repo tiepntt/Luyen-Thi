@@ -1,4 +1,4 @@
-﻿using Luyenthi.Core.Enums.Question;
+﻿using Luyenthi.Core.Enums;
 using Luyenthi.Domain.Base;
 using System;
 using System.Collections.Generic;
@@ -17,12 +17,14 @@ namespace Luyenthi.Domain
         public Guid? LevelId { get; set; }
         public Guid? ParentId { get; set; }
         public Guid? TemplateQuestionId { get; set; }
+        public int? NumberQuestion { get; set; } = 1;
         public dynamic Content { get; set; }
         public dynamic Introduction { get; set; }
         public dynamic Solve { get; set; }
         public string CorrectAnswer { get; set; }
         public string Options { get; set; }
         public QuestionStatus Status { get; set; } = QuestionStatus.Waiting;
+        public QuestionType Type { get; set; } = QuestionType.QuestionMultipleChoice;
         public int OrderNumber { get; set; }
         public virtual List<Question> SubQuestions { get; set; }
         public virtual Question Parent { get; set; }

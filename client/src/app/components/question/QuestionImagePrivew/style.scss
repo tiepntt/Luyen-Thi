@@ -8,6 +8,9 @@
   &:hover {
     background: rgb(229, 237, 240);
   }
+  &.active {
+    background: rgb(218, 233, 250);
+  }
   .question-check-icon {
     display: inline-block;
     border-radius: 50%;

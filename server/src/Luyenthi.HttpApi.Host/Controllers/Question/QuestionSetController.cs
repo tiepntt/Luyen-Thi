@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Luyenthi.Core.Dtos;
+using Luyenthi.Domain;
 using Luyenthi.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -28,6 +29,20 @@ namespace Luyenthi.HttpApi.Host.Controllers
             var questionSets = _questionSetService.GetByDocumentId(documentId);
             questionSets = DocumentHelper.MakeIndexQuestions(questionSets);
             return _mapper.Map<List<QuestionSetDetailDto>>(questionSets);
+        }
+        [HttpPost]
+        public QuestionSetDetailDto CreateQuestionSet(QuestionSetCreateDto questionSetCreate)
+        {
+            var questionSet = _mapper.Map<QuestionSet>(questionSetCreate);
+            questionSet = _questionSetService.Create(questionSet);
+            return _mapper.Map<QuestionSetDetailDto>(questionSet);
+        }
+        [HttpPost("{questionSetId}/add-question")]
+        public QuestionDto AddQuestion(Guid questionSetId, QuestionCreateDto questionCreate)
+        {
+            var question = _mapper.Map<Question>(questionCreate);
+            question = _questionSetService.AddQuestion(question, questionSetId);
+            return _mapper.Map<QuestionDto>(question);
         }
     }
 }
