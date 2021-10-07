@@ -60,9 +60,9 @@ const OptionEditor: React.FC<Props> = ({ selection }) => {
     <div className="option-editor">
       <div className="tool-bar">
         {/* Buttons for character styles */}
-        {CHARACTER_STYLES.map(({ value, icon }) => (
+        {CHARACTER_STYLES.map(({ value, icon }, i) => (
           <ToolBarButton
-            key={value}
+            key={i}
             icon={icon}
             isActive={isMarkActive(editor as any, value)}
             onMouseDown={(e: any) => {

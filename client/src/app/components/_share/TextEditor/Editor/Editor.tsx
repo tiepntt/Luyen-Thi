@@ -1,7 +1,6 @@
 import { TextEditorContext } from "hooks/TextEditorContext/TextEditorContext";
 import React, { useEffect, useMemo, useState } from "react";
 import { createEditor } from "slate";
-import { withHistory } from "slate-history";
 import { Editable, ReactEditor, Slate, withReact } from "slate-react";
 import { withImages } from "../Elements/ImageElement/withImage";
 import { withKatex } from "../Elements/KatexElement/WithKatex";
@@ -11,6 +10,7 @@ import OptionEditor from "../Options/OptionEditor";
 import { useEditorConfig } from "../_hook/TextEditorConfig";
 import useSelection from "../_hook/useSelection";
 import "./style.scss";
+import { withHistory } from "./withHistory";
 interface Props {
   document: any;
   onChange: (value: any) => void;

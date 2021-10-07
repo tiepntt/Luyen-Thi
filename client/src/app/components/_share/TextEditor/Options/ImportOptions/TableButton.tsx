@@ -55,11 +55,12 @@ const TableButton = () => {
             {Array(8)
               .fill(null)
               .map((_, indexRow) => (
-                <div className="table-row-item-list-editor">
+                <div className="table-row-item-list-editor" key={indexRow}>
                   {Array(8)
                     .fill(null)
                     .map((_, indexCol) => (
                       <div
+                        key={indexCol}
                         className={`table-cell-item-list-editor ${
                           indexRow < tableInfo.row &&
                           indexCol < tableInfo.colum &&

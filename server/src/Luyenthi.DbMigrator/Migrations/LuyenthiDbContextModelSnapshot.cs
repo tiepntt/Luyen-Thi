@@ -213,6 +213,9 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.Property<Guid?>("LevelId")
                         .HasColumnType("char(36)");
 
+                    b.Property<int?>("NumberQuestion")
+                        .HasColumnType("int");
+
                     b.Property<string>("Options")
                         .HasColumnType("longtext");
 
@@ -234,6 +237,9 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.Property<Guid?>("TemplateQuestionId")
                         .HasColumnType("char(36)");
 
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
                     b.Property<Guid?>("UnitId")
                         .HasColumnType("char(36)");
 
@@ -251,11 +257,15 @@ namespace Luyenthi.DbMigrator.Migrations
 
                     b.HasIndex("LevelId");
 
+                    b.HasIndex("NumberQuestion");
+
                     b.HasIndex("ParentId");
 
                     b.HasIndex("SubjectId");
 
                     b.HasIndex("TemplateQuestionId");
+
+                    b.HasIndex("Type");
 
                     b.HasIndex("UnitId");
 

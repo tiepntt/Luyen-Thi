@@ -300,7 +300,12 @@ const DocumentEditInfo: React.FC<Props> = ({ documentId }) => {
                   />
                 </Form.Group>
                 <div className="btn-update text-center">
-                  <Button className="mx-2" variant="outline-warning">
+                  <Button
+                    className="mx-2"
+                    variant="outline-warning"
+                    href={`/document/${document.id}/questions-edit`}
+                    target="_blank"
+                  >
                     Sửa dữ liệu
                   </Button>
                   <Button

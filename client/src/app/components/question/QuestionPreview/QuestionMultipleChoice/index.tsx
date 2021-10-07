@@ -35,7 +35,6 @@ const QuestionMultipleChocie: React.FC<Question> = (question) => {
       } else {
         newScale.width = optionBoxWidth - 25;
       }
-      console.log(optionBoxWidth, lengthMax);
 
       setScaleSize(newScale);
     }, 500);

@@ -435,6 +435,7 @@ namespace Luyenthi.DbMigrator.Migrations
                     LevelId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     ParentId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     TemplateQuestionId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    NumberQuestion = table.Column<int>(type: "int", nullable: true),
                     Content = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Introduction = table.Column<string>(type: "longtext", nullable: true)
@@ -446,6 +447,7 @@ namespace Luyenthi.DbMigrator.Migrations
                     Options = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Status = table.Column<int>(type: "int", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
                     OrderNumber = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
@@ -616,6 +618,11 @@ namespace Luyenthi.DbMigrator.Migrations
                 column: "LevelId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Questions_NumberQuestion",
+                table: "Questions",
+                column: "NumberQuestion");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Questions_ParentId",
                 table: "Questions",
                 column: "ParentId");
@@ -629,6 +636,11 @@ namespace Luyenthi.DbMigrator.Migrations
                 name: "IX_Questions_TemplateQuestionId",
                 table: "Questions",
                 column: "TemplateQuestionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Questions_Type",
+                table: "Questions",
+                column: "Type");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Questions_UnitId",

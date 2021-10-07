@@ -2,6 +2,7 @@
 using CloudinaryDotNet.Actions;
 using Google.Apis.Docs.v1.Data;
 using Luyenthi.Core.Dtos.GoogleDoc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,15 +16,27 @@ namespace Luyenthi.Services
 {
     public class CloudinarySerivce
     {
-        private Cloudinary _cloudinary;
-        public WebClient _webClient { get; set; }
+       
         public CloudinarySerivce()
         {
-            _webClient = new WebClient();
-            _cloudinary = new Cloudinary(new Account {Cloud= "nguyentiep", ApiKey= "458933818533949", ApiSecret= "X26joMtt0oOXoYqjj87l13gIzR8" });
+            
+            
         }
-        public async Task<ImageUploadResult> UploadImage(byte[] bytes)
+        public static Cloudinary GetService()
         {
+            Account account = new Account();
+            using (var stream =
+                new StreamReader("Credentials/Cloundinary/account.json"))
+            {
+                string json = stream.ReadToEnd();
+                account = JsonConvert.DeserializeObject<Account>(json);
+            }
+             var _cloudinary = new Cloudinary(account);
+            return _cloudinary;
+        }
+        public static async Task<ImageUploadResult> UploadImage(Cloudinary cloudinary, byte[] bytes,string folder)
+        {
+            var _webClient = new WebClient();
             var md5 = new MD5CryptoServiceProvider();
             Stream stream = new MemoryStream(bytes);
             
@@ -34,15 +47,16 @@ namespace Luyenthi.Services
             {
                 File = new FileDescription(imageName, stream),
                 PublicId = imageName, 
-                Folder ="Luyenthi"
+                Folder = folder
             };
-            var uploadResult =await _cloudinary.UploadAsync(uploadParams);
+            var uploadResult =await cloudinary.UploadAsync(uploadParams);
             return uploadResult;
         }
-        public async Task<ImageDto> DownLoadImageFromDoc(InlineObject inlineObject)
+        public static async Task<ImageDto> DownLoadImageFromDoc(Cloudinary cloudinary,InlineObject inlineObject)
         {
             try
             {
+                var _webClient = new WebClient();
                 var md5 = new MD5CryptoServiceProvider();
                 string imageUri = inlineObject.InlineObjectProperties.EmbeddedObject.ImageProperties.ContentUri;
                 double Width = (double)inlineObject.InlineObjectProperties.EmbeddedObject.Size.Width.Magnitude;
@@ -60,7 +74,7 @@ namespace Luyenthi.Services
                     PublicId = imageName,
                     Folder = "Luyenthi/Questions"
                 };
-                var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+                var uploadResult = await cloudinary.UploadAsync(uploadParams);
                 return new ImageDto
                 {
                     Id = Id,

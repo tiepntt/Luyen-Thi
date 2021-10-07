@@ -23,29 +23,23 @@ namespace Luyenthi.HttpApi.Host.Controllers
     public class DocumentController : Controller
     {
         private readonly DocumentService _documentService;
-        private readonly CloudinarySerivce _cloudinarySerivce;
         private readonly QuestionSetService _questionSetService;
         private readonly QuestionService _questionService;
-        private readonly FileService _fileService;
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IMapper _mapper;
 
         public DocumentController(
             DocumentService documentService,
-            FileService fileService,
             IWebHostEnvironment hostEnvironment,
             QuestionSetService questionSetService,
             QuestionService questionService,
-            CloudinarySerivce cloudinarySerivce,
         IMapper mapper
             )
         {
             _documentService = documentService;
-            _fileService = fileService;
             _hostingEnvironment = hostEnvironment;
             _questionSetService = questionSetService;
             _questionService = questionService;
-            _cloudinarySerivce = cloudinarySerivce ;
             _mapper = mapper;
         }
         [HttpPost("import-document")]
@@ -62,6 +56,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
         public async Task<dynamic> ImportQuestion(QuestionImportDto questionImport)
         {
             //using TransactionScope scope = new TransactionScope();
+            var cloundinaryService = CloudinarySerivce.GetService();
             if (questionImport.DocumentId == Guid.Empty || questionImport.GoogleDocId == "")
             {
                 throw new Exception("Dữ liệu không hợp lệ");
@@ -86,7 +81,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
                 for (int i = 0; i < doc.InlineObjects.Count; i++)
                 {
                     var inlineObject = doc.InlineObjects.Values.ToList()[i];
-                    uploadImages.Add(_cloudinarySerivce.DownLoadImageFromDoc(inlineObject));
+                    uploadImages.Add(CloudinarySerivce.DownLoadImageFromDoc(cloundinaryService,inlineObject));
                 }
             }
             var tasks = uploadImages.ToArray();

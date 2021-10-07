@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Luyenthi.Core.Enums.Question
+namespace Luyenthi.Core.Enums
 {
     public enum QuestionType
     {
         QuestionMultipleChoice,
-        QuestionSet
+        QuestionGroup
     }
 }

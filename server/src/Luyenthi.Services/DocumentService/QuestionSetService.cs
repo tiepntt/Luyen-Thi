@@ -26,6 +26,7 @@ namespace Luyenthi.Services
         }
         public QuestionSet Create(QuestionSet questionSet)
         {
+            questionSet.Questions = new List<Question>();
             _questionSetRepository.Add(questionSet);
             return questionSet;
         }
@@ -66,6 +67,17 @@ namespace Luyenthi.Services
             questions.AddRange(subQuestions);
             _questionRepository.RemoveRange(questions);
             _questionSetRepository.RemoveRange(questionSets);
+        }
+        public Question AddQuestion(Question question, Guid id)
+        {
+            var questionSet = _questionSetRepository.Find(i => i.Id==id).Include(i=>i.Questions).FirstOrDefault();
+            if(questionSet == null)
+            {
+                throw new KeyNotFoundException("Không tìm thấy bản ghi");
+            }
+            questionSet.Questions.Add(question);
+            _questionSetRepository.UpdateEntity(questionSet);
+            return question;
         }
         
     }

@@ -1,4 +1,5 @@
-﻿using Luyenthi.Domain;
+﻿using Luyenthi.Core.Enums;
+using Luyenthi.Domain;
 using Luyenthi.Domain.Base;
 using Luyenthi.Domain.User;
 using Microsoft.AspNetCore.Http;
@@ -59,6 +60,20 @@ namespace Luyenthi.EntityFrameworkCore
                             break;
                     }
                 }
+                if (changedEntity.Entity is Question questionEntity)
+                {
+                    switch (changedEntity.State)
+                    {
+                        case EntityState.Added:
+                            questionEntity.NumberQuestion = questionEntity.SubQuestions.Count == 0 ? 1 : questionEntity.SubQuestions.Count;
+                            questionEntity.Type = questionEntity.Type == QuestionType.QuestionGroup || questionEntity.SubQuestions.Count == 1 ? QuestionType.QuestionGroup : QuestionType.QuestionMultipleChoice;
+                            break;
+                        case EntityState.Modified:
+                            questionEntity.NumberQuestion = questionEntity.SubQuestions.Count == 0 ? 1 : questionEntity.SubQuestions.Count;
+                            questionEntity.Type = questionEntity.Type == QuestionType.QuestionGroup || questionEntity.SubQuestions.Count == 1 ? QuestionType.QuestionGroup : QuestionType.QuestionMultipleChoice;
+                            break;
+                    }
+                }
             }
 
             return base.SaveChanges();
@@ -94,6 +109,8 @@ namespace Luyenthi.EntityFrameworkCore
             
             builder.Entity<Question>(b =>
             {
+                b.HasIndex(x => x.Type);
+                b.HasIndex(x => x.NumberQuestion);
                 b.Property(x => x.Introduction).HasConversion(
                        v => JsonConvert.SerializeObject(v as object),
                        v => JsonConvert.DeserializeObject<List<ExpandoObject>>(v)

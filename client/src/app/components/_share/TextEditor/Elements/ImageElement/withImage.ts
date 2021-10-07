@@ -12,11 +12,6 @@ export const withImages = (editor: ReactEditor) => {
     return element.type === "image" ? true : isInline(element);
   };
 
-  editor.insertBreak = () => {
-    const text = { text: "" };
-    const image = { type: "paragraph", children: [text] };
-    Transforms.insertNodes(editor, image);
-  };
   editor.insertData = (data) => {
     const text = data.getData("text/plain");
     const { files } = data;
@@ -41,7 +36,6 @@ export const withImages = (editor: ReactEditor) => {
       insertData(data);
     }
   };
-
 
   return editor;
 };
