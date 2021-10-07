@@ -6,10 +6,11 @@ import React, { useState } from "react";
 import "./style.scss";
 interface Props {
   questionSet: QuestionSetDetail;
+  index: number;
 }
 const QuestionSetItem: React.FC<Props> = (props) => {
-  const { questionSet } = props;
-  const [showQueston, setShowQueston] = useState(false);
+  const { questionSet, index } = props;
+  const [showQueston, setShowQueston] = useState(!index);
   return (
     <div className="question-item-editor">
       <div className="question-set-info d-flex">

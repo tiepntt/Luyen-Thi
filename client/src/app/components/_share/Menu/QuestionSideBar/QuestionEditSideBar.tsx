@@ -26,7 +26,7 @@ const QuestionEditSideBar: React.FC<Props> = ({
     <Box height="100%" display="flex" flexDirection="column">
       <div className="question-set-list">
         {questionSets.map((questionSet, i) => (
-          <QuestionSetItem key={i} questionSet={questionSet} />
+          <QuestionSetItem key={i} questionSet={questionSet} index={i} />
         ))}
       </div>
     </Box>
@@ -70,9 +70,9 @@ const useStyles: any = makeStyles((theme: Theme) => ({
     width: 375,
     top: 64,
     height: "calc(100% - 64px)",
-    paddingLeft: 12,
-    paddingRight: 12,
-    paddingTop: 10,
+    // paddingLeft: 12,
+    // paddingRight: 12,
+    // paddingTop: 10,
     backgroundColor: "#F6F5F5",
   },
   avatar: {

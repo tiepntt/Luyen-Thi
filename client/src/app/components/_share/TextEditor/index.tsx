@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Editor from "./Editor/Editor";
 import "./style.scss";
 interface Props {
@@ -12,6 +12,10 @@ const TextEditor: React.FC<Props> = (props) => {
   const [document, setDocument] = useState(
     value.length === 0 ? ExampleDocument : value
   );
+
+  useEffect(() => {
+    setDocument(value.length === 0 ? ExampleDocument : value);
+  }, [value]);
   return (
     <div className="text-editor">
       <div className="main-editor">
@@ -25,6 +29,6 @@ export default TextEditor;
 const ExampleDocument = [
   {
     type: "paragraph",
-    children: [{ text: "" }],
+    children: [{ text: " " }],
   },
 ];

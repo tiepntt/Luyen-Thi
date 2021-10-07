@@ -28,8 +28,12 @@ export function toggleBlockType(editor: any, value: string) {
   );
 }
 export const isMarkActive = (editor: ReactEditor, format: string) => {
-  const marks = Editor.marks(editor);
-  return marks ? (marks as any)[format] === true : false;
+  try {
+    const marks = Editor.marks(editor);
+    return marks ? (marks as any)[format] === true : false;
+  } catch {
+    return false;
+  }
 };
 export enum AlignType {
   LEFT = "left",

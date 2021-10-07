@@ -76,25 +76,29 @@ interface LeftProp {
   };
 }
 const renderLeaf: React.FC<LeftProp> = (props) => {
-  const { leaf, children, attributes } = props;
-  let el = <>{children}</>;
-  if (leaf.bold) {
-    el = <strong>{el}</strong>;
-  }
+  try {
+    const { leaf, children, attributes } = props;
+    let el = <>{children}</>;
+    if (leaf.bold) {
+      el = <strong>{el}</strong>;
+    }
 
-  if (leaf.code) {
-    el = <code>{el}</code>;
-  }
+    if (leaf.code) {
+      el = <code>{el}</code>;
+    }
 
-  if (leaf.italic) {
-    el = <em>{el}</em>;
-  }
+    if (leaf.italic) {
+      el = <em>{el}</em>;
+    }
 
-  if (leaf.underline) {
-    el = <u>{el}</u>;
-  }
+    if (leaf.underline) {
+      el = <u>{el}</u>;
+    }
 
-  return <span {...attributes}>{el}</span>;
+    return <span {...attributes}>{el}</span>;
+  } catch (e) {
+    return <span></span>;
+  }
 };
 const KeyBindings = {
   onKeyDown: (editor: any, event: any) => {
