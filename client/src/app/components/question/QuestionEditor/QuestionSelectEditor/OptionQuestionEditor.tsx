@@ -5,7 +5,7 @@ interface Props {
   value: any;
   className?: string;
   placeHolder?: string;
-  onChange?: (value: string) => void;
+  onChange: (value: string) => void;
   onClick?: () => void;
   focus?: boolean;
   preElement?: any;
@@ -18,20 +18,23 @@ const OptionQuestionEditor: React.FC<Props> = (props) => {
     onClick,
     preElement,
     value,
+    onChange,
   } = props;
   const showHeader = () => onClick && onClick();
   return (
     <Box>
       <div className={className || ""} onClick={showHeader}>
         <TextEditor
-          value={value}
+          document={value as any}
           placeholder={placeHolder}
           showHeader={focus}
           preElement={preElement}
+          setDocument={onChange}
         />
       </div>
     </Box>
   );
 };
+
 
 export default OptionQuestionEditor;

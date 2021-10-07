@@ -52,12 +52,12 @@ export const withTables = (editor: ReactEditor) => {
     deleteForward(unit);
   };
 
-  editor.insertBreak = () => {
-    const text = { text: "" };
-    const { selection } = editor;
-    const image = { type: "paragraph", children: [text] };
-    Transforms.insertNodes(editor, image, { at: selection } as any);
-  };
+  // editor.insertBreak = () => {
+  //   const text = { text: "" };
+  //   const { selection } = editor;
+  //   const image = { type: "paragraph", children: [text] };
+  //   Transforms.insertNodes(editor, image, { at: selection } as any);
+  // };
 
   return editor;
 };

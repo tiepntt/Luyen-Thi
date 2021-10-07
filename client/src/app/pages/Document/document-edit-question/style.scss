@@ -3,7 +3,8 @@
   .side-bar-question-list {
     height: calc(100vh);
   }
-  .admin-document-questions {
+  .admin-document-questions,
+  .edit-question {
     height: calc(100vh - 64px) !important;
     padding-bottom: 10px;
   }
@@ -12,6 +13,7 @@
     padding: 0px 50px !important;
   }
   .edit-question {
+    overflow: auto;
     padding: 20px 20px !important;
   }
 }
@@ -27,6 +29,7 @@
   .main-content-document {
     margin-top: 5px;
     padding: 16px 24px;
+    background: #f6f5f5;
   }
 }
 @media screen and (max-width: 600px) {

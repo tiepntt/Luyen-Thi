@@ -1,8 +1,26 @@
 .introduction-editor,
 .explain-question {
-  min-height: 150px;
+  min-height: 100px;
+  .row {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .row > [class*="col-"] {
+    display: flex;
+    flex-direction: column;
+  }
+  // .box-layout {
+  //   vertical-align: middle;
+  //   justify-items: center;
+  //   align-items: center;
+  //   display: flex;
+  //   width: 100%;
+  // }
 }
 .option-question-editor {
+  width: 100%;
   // min-height: 60px;
 }
 .option-Check {
@@ -17,7 +35,25 @@
   margin-left: 5px;
   // margin-top: 5px;
   cursor: pointer;
-  &:active {
-    background: greenyellow;
+
+  &.active {
+    background: rgb(9, 170, 219);
+  }
+}
+.question-select-editor {
+  margin-bottom: 10px;
+}
+.top-bar-question {
+  display: flex;
+  background: white;
+  min-height: 50px;
+  align-items: center;
+  justify-content: right;
+  padding: 5px 10px;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
+  margin-bottom: 2px;
+  border-top: 5px solid rgb(1, 126, 148);
+  &.question-group {
+    border-top: 5px solid rgb(207, 171, 10);
   }
 }

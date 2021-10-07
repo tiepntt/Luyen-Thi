@@ -46,7 +46,6 @@ export function getTextBlockStyle(editor: any) {
   if (selection == null) {
     return null;
   }
-
   const topLevelBlockNodesInSelection = Editor.nodes(editor, {
     at: editor.selection,
     mode: "highest",

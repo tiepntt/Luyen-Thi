@@ -40,12 +40,8 @@ const Editor: React.FC<Props> = ({
   const [selection, setSelection] = useSelection(editor);
 
   const onChangeHandler = (document: any) => {
-    try {
-      onChange(document);
-      (setSelection as any)(editor.selection);
-    } catch (e) {
-      console.log(e);
-    }
+    onChange(document);
+    (setSelection as any)(editor.selection);
   };
   useEffect(() => {
     if (!showHeader) {

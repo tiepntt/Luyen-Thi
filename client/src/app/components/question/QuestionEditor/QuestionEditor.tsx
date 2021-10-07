@@ -27,7 +27,7 @@ const QuestionEditor = () => {
     <div className="question-editor">
       {question &&
         (question.subQuestions.length ? (
-          <QuestionGroupEditor />
+          <QuestionGroupEditor question={question} />
         ) : (
           <QuestionSelect question={question} />
         ))}
