@@ -2,8 +2,14 @@ import TemplatePreview from "app/components/_share/TemplatePreview";
 import { Question } from "models/question/Question";
 import React, { createRef, useEffect, useState } from "react";
 import "./style.scss";
-
-const QuestionMultipleChocie: React.FC<Question> = (question) => {
+interface Props {
+  question: Question;
+  questionSetId: string;
+}
+const QuestionMultipleChocie: React.FC<Props> = ({
+  questionSetId,
+  question,
+}) => {
   const { content = [], introduction = [], correctAnswer } = question;
   const [optionsRef] = useState(createRef<HTMLDivElement>());
   const [boxRefs] = useState<any[]>(
@@ -37,7 +43,7 @@ const QuestionMultipleChocie: React.FC<Question> = (question) => {
       }
 
       setScaleSize(newScale);
-    }, 500);
+    });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, content);

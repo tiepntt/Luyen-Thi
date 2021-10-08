@@ -33,13 +33,16 @@ const QuestionGroupEditor: React.FC<Props> = ({ question }) => {
   //   newQuestion.correctAnswer = options[index].name;
   //   setQuestionContent(newQuestion);
   // };
+  const removeQuestion = () => {};
   return (
     <div className="question-edit-group">
       <div className="top-bar-question question-group">
         <Button variant="outline-primary" className="mx-2">
           Lưu
         </Button>
-        <Button variant="outline-danger">Xóa</Button>
+        <Button variant="outline-danger" onClick={removeQuestion}>
+          Xóa
+        </Button>
       </div>
       <div className="group-content">
         <OptionQuestionEditor
@@ -58,7 +61,11 @@ const QuestionGroupEditor: React.FC<Props> = ({ question }) => {
         />
       </div>
       {questionContent.subQuestions.map((subQuestion, i) => (
-        <QuestionSelectEditor key={i} question={subQuestion} />
+        <QuestionSelectEditor
+          key={i}
+          question={subQuestion}
+          questionParentId={questionContent.id}
+        />
       ))}
       <div className="add-option">Thêm câu hỏi</div>
     </div>

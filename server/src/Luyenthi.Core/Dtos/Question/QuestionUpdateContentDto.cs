@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Luyenthi.Core.Dtos
 {
-    public class QuestionSetUpdateDto
+    public class QuestionUpdateContentDto
     {
         public Guid Id { get; set; }
-        public bool Show { get; set; }
-        public string Name { get; set; }
+        public dynamic Content { get; set; }
+        public dynamic Introduction { get; set; }
+        public dynamic Solve { get; set; }
     }
 }

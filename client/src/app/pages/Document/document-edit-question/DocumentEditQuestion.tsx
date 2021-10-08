@@ -10,6 +10,7 @@ import QuestionDocument from "app/components/admin/Document/SubjectDocument/Docu
 import QuestionEditor from "app/components/question/QuestionEditor/QuestionEditor";
 import { DocumentEditContext } from "hooks/DocumentEditQuestionContext/DocumentEditContext";
 import AddQuestionSetModal from "app/components/_share/Modals/AddQuestionSetModal/AddQuestionSetModal";
+import QuestionSetEdit from "app/components/question-set/QuestionSetEdit/QuestionSetEdit";
 const DocumentEditQuestion = () => {
   const { id } = useParams<Params>();
   const [showModalAddQuestionSet, setShowModalAddQuestionSet] = useState(false);
@@ -21,6 +22,9 @@ const DocumentEditQuestion = () => {
     setQuestionSets,
     addQuestionSet,
     addQuestion,
+    removeQuestionSet,
+    updateQuestionSet,
+    loading,
   } = useQuestions(id);
   const classes = useStyles();
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
@@ -29,6 +33,9 @@ const DocumentEditQuestion = () => {
     setQuestion,
     showAddQuestionSetModal: () => setShowModalAddQuestionSet(true),
     addQuestion,
+    removeQuestionSet,
+    updateQuestionSet,
+    loading,
   };
   return (
     <DocumentEditContext.Provider value={value}>
@@ -53,11 +60,20 @@ const DocumentEditQuestion = () => {
                               documentId={id}
                               questionSets={questionSets}
                               setQuestionSets={setQuestionSets}
+                              loading={loading}
                             />
                           </div>
                         </Route>
                         <Route
-                          path="/document/:id/questions-edit/:questionId"
+                          path="/document/:id/questions-edit/:questionSetId"
+                          exact={true}
+                        >
+                          <div className="edit-question ">
+                            <QuestionSetEdit />
+                          </div>
+                        </Route>
+                        <Route
+                          path="/document/:id/questions-edit/:questionSetId/:questionId"
                           exact={true}
                         >
                           <div className="edit-question ">
@@ -111,7 +127,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   content: {
     flex: "1 1 auto",
     height: "100%",
-    overflow: "auto",
+    overflowY: "auto",
+    overflowX: "hidden",
   },
 })) as any;
 

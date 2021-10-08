@@ -1,4 +1,4 @@
-import { faEdit, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import QuestionImagePreview from "app/components/question/QuestionImagePrivew/QuestionImagePreview";
 import { useDocumentEditContext } from "hooks/DocumentEditQuestionContext/DocumentEditContext";
@@ -47,19 +47,18 @@ const QuestionSetItem: React.FC<Props> = (props) => {
         <div
           className="question-set-name"
           style={{ flexGrow: 1 }}
-          onClick={() => setShowQueston(!showQueston)}
+          onClick={() => {
+            setShowQueston(!showQueston);
+            history.push(
+              `/document/${questionSet.documentId}/questions-edit/${questionSet.id}`
+            );
+          }}
         >
           {questionSet.name}
         </div>
         <div className="btn-options ">
           <div className="show-btn mx-1 mb-1">
-            <FontAwesomeIcon icon={faEye} />
-          </div>
-          <div className="edit-btn mx-1 mb-1">
-            <FontAwesomeIcon icon={faEdit} />
-          </div>
-          <div className="remove-btn mx-1 mt-2">
-            <FontAwesomeIcon icon={faTrash} />
+            <FontAwesomeIcon icon={questionSet.show ? faEye : faEyeSlash} />
           </div>
         </div>
       </div>
@@ -72,6 +71,7 @@ const QuestionSetItem: React.FC<Props> = (props) => {
                   key={i}
                   question={question}
                   index={i + 1}
+                  questionSetId={questionSet.id}
                 />
               );
             })}

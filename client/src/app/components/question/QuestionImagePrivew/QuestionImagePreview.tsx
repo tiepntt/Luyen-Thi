@@ -6,19 +6,22 @@ import "./style.scss";
 interface Props {
   question: Question;
   index: number;
+  questionSetId: string;
 }
 const QuestionImagePreview: React.FC<Props> = (props) => {
-  const { question, index } = props;
+  const { question, index, questionSetId } = props;
   const history = useHistory();
   const { id } = useParams<any>();
   const currentQuestion = useDocumentEditContext().question;
   const selectQuestion = () => {
-    history.push(`/document/${id}/questions-edit/${question.id}`);
+    history.push(
+      `/document/${id}/questions-edit/${questionSetId}/${question.id}`
+    );
   };
   return (
     <div
       className={`question-image-preview d-flex ${
-        currentQuestion.id === question.id && "active"
+        currentQuestion?.id === question.id && "active"
       }`}
     >
       <div className="question-check-icon"></div>

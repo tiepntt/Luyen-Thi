@@ -19,6 +19,11 @@ namespace Luyenthi.Services
 
         }
         // getById
+        public Question GetById(Guid Id)
+        {
+            var question = _questionRepository.Get(Id);
+            return question;
+        }
         public Question GetQuestion(Guid Id)
         {
             var question = _questionRepository.Find(q => q.Id == Id)
@@ -37,10 +42,34 @@ namespace Luyenthi.Services
             _questionRepository.AddRange(questions);
             return questions;
         }
-
+        public Question GetInQuestionSet(Guid Id, QuestionSet questionSet)
+        {
+            var question = _questionRepository.Find(i => i.Id == Id && i.QuestionSets.Contains(questionSet)).Include(i => i.QuestionSets)
+                .FirstOrDefault();
+            return question;
+        }
+        public List<Question> GetInQuestionSet(QuestionSet questionSet)
+        {
+            var questions = _questionRepository.Find(i => i.QuestionSets.Contains(questionSet)).Include(i => i.QuestionSets)
+                .ToList();
+            return questions;
+        }
         // update question Data
+        public Question Update(Question question)
+        {
+            _questionRepository.UpdateEntity(question);
+            return question;
+        }
+        
         // remove question
-        
-        
+        public void Remove(Question question)
+        {
+            _questionRepository.Remove(question);
+        }
+        public void Remove(List<Question> questions)
+        {
+            _questionRepository.RemoveRange(questions);
+        }
+
     }
 }

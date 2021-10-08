@@ -3,14 +3,20 @@ import React, { useEffect, useState } from "react";
 import OptionQuestionEditor from "./OptionQuestionEditor";
 import "./style.scss";
 import { Button } from "react-bootstrap";
+import { useParams } from "react-router-dom";
+import { questionSetApi } from "services/api/document/questionSetApi";
 
 interface Props {
   question: Question;
   questionParentId?: string;
 }
-const QuestionSelectEditor: React.FC<Props> = ({ question }) => {
+const QuestionSelectEditor: React.FC<Props> = ({
+  question,
+  questionParentId,
+}) => {
   const [focusIndex, setFocusIndex] = useState("");
   const [questionContent, setQuestionContent] = useState(intQuestion(question));
+  const { questionSetId } = useParams<any>();
   useEffect(() => {
     setQuestionContent(intQuestion(question));
   }, [question]);
@@ -31,14 +37,25 @@ const QuestionSelectEditor: React.FC<Props> = ({ question }) => {
     newQuestion.correctAnswer = options[index].name;
     setQuestionContent(newQuestion);
   };
-
+  const update = () => {};
+  const remove = () => {
+    if (questionParentId) {
+    } else {
+      questionSetApi.removeQuestion(questionSetId, question.id).then((res) => {
+        if (res.status === 200) {
+        }
+      });
+    }
+  };
   return (
     <div className="question-select-editor">
       <div className="top-bar-question ">
-        <Button variant="outline-primary" className="mx-2">
+        <Button variant="outline-primary" className="mx-2" onClick={update}>
           Lưu
         </Button>
-        <Button variant="outline-danger">Xóa</Button>
+        <Button variant="outline-danger" onClick={remove}>
+          Xóa
+        </Button>
       </div>
       <OptionQuestionEditor
         className="introduction-editor "

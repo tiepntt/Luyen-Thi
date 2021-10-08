@@ -1,3 +1,4 @@
+import Loading from "app/components/_share/Loadding/Loading";
 import { useDocumentEditContext } from "hooks/DocumentEditQuestionContext/DocumentEditContext";
 import React, { useEffect } from "react";
 import { useParams } from "react-router";
@@ -10,6 +11,7 @@ const QuestionEditor = () => {
   const { question, setQuestion } = useDocumentEditContext();
   const { questionId } = useParams<any>();
   const getQuestion = () => {
+    setQuestion(null as any);
     questionApi.get(questionId).then((res) => {
       if (res.status === 200) {
         setQuestion(res.data);
@@ -25,12 +27,15 @@ const QuestionEditor = () => {
   }, [questionId]);
   return (
     <div className="question-editor">
-      {question &&
-        (question.subQuestions.length ? (
+      {question ? (
+        question.subQuestions.length ? (
           <QuestionGroupEditor question={question} />
         ) : (
           <QuestionSelect question={question} />
-        ))}
+        )
+      ) : (
+        <Loading />
+      )}
     </div>
   );
 };

@@ -36,5 +36,4 @@ const OptionQuestionEditor: React.FC<Props> = (props) => {
   );
 };
 
-
 export default OptionQuestionEditor;

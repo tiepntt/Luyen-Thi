@@ -3,3 +3,8 @@ export interface QuestionSetCreate {
   show: boolean;
   documentId: string;
 }
+export interface QuestionSet {
+  name: string;
+  show: boolean;
+  id: string;
+}
