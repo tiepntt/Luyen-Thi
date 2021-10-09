@@ -66,7 +66,7 @@ Update-Database
   Import by **Command prompt** in `Luyenthi.DbMigrator>Data>`
 
 ```sh
-mysql -u root -p luyenthi< dump.sql
+mysql -u root -p luyenthi > dump.sql
 ```
 Dump data by **Command prompt** in `Luyenthi.DbMigrator>Data>`
 ```sh
