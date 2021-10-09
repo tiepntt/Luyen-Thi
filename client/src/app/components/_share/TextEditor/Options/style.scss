@@ -14,11 +14,15 @@
     cursor: pointer;
     font-weight: 400;
     color: rgb(94, 92, 92);
+
     background: white;
     &:hover,
     &.active {
       border-color: blue;
       color: blue;
+    }
+    * {
+      cursor: pointer;
     }
   }
 }

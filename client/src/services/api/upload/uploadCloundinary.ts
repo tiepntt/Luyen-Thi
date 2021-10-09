@@ -7,4 +7,9 @@ export const uploadApi = {
     formData.append("file", file);
     return api.post(`${baseUrl}/image`, formData);
   },
+  uploadQuestion: (file: any) => {
+    let formData = new FormData();
+    formData.append("file", file);
+    return api.post(`${baseUrl}/image/question`, formData);
+  },
 };

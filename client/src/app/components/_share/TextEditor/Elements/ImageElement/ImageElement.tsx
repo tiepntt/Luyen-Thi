@@ -12,7 +12,15 @@ const ImageElement: React.FC<Props> = ({ element, attributes, children }) => {
   return (
     <div {...attributes}>
       <div className="d-inline-block" contentEditable={false}>
-        <Image src={element.url} width={400} height={300} />
+        <Image
+          src={element.url}
+          width={"auto"}
+          height={"auto"}
+          style={{
+            maxWidth: "80%",
+            maxHeight: 300,
+          }}
+        />
       </div>
       {children}
     </div>
