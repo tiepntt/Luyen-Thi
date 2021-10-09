@@ -3,8 +3,11 @@ import React, { useEffect, useState } from "react";
 import OptionQuestionEditor from "./OptionQuestionEditor";
 import "./style.scss";
 import { Button } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { questionSetApi } from "services/api/document/questionSetApi";
+import { questionApi } from "services/api/question/question";
+import { toastService } from "services/toast";
+import { useDocumentEditContext } from "hooks/DocumentEditQuestionContext/DocumentEditContext";
 
 interface Props {
   question: Question;
@@ -16,7 +19,10 @@ const QuestionSelectEditor: React.FC<Props> = ({
 }) => {
   const [focusIndex, setFocusIndex] = useState("");
   const [questionContent, setQuestionContent] = useState(intQuestion(question));
-  const { questionSetId } = useParams<any>();
+  const { questionSetId, id } = useParams<any>();
+  const { updateQuestion, removeQuestion, removeSubQuestion } =
+    useDocumentEditContext();
+  const history = useHistory();
   useEffect(() => {
     setQuestionContent(intQuestion(question));
   }, [question]);
@@ -37,12 +43,41 @@ const QuestionSelectEditor: React.FC<Props> = ({
     newQuestion.correctAnswer = options[index].name;
     setQuestionContent(newQuestion);
   };
-  const update = () => {};
+  const update = () => {
+    // update question Content
+    questionApi
+      .updateContent({
+        content: questionContent.content,
+        introduction: questionContent.introduction,
+        solve: questionContent.solve,
+        id: questionContent.id,
+        correctAnswer: questionContent.correctAnswer,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          updateQuestion(questionSetId, res.data);
+          toastService.success("Cập nhật dữ liệu thành công");
+        } else {
+          toastService.error(res.data.message);
+        }
+      });
+  };
   const remove = () => {
     if (questionParentId) {
+      questionApi.remove(questionContent.id).then((res) => {
+        if (res.status === 200) {
+          toastService.success("Đã xóa");
+          removeSubQuestion(questionContent.id);
+        }
+      });
     } else {
       questionSetApi.removeQuestion(questionSetId, question.id).then((res) => {
         if (res.status === 200) {
+          toastService.success("Đã xóa");
+          removeQuestion(questionSetId, question.id);
+          history.push(`/document/${id}/questions-edit/${questionSetId}`);
+        } else {
+          toastService.error(res.data.message);
         }
       });
     }

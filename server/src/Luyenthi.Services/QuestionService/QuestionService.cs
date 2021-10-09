@@ -44,7 +44,7 @@ namespace Luyenthi.Services
         }
         public Question GetInQuestionSet(Guid Id, QuestionSet questionSet)
         {
-            var question = _questionRepository.Find(i => i.Id == Id && i.QuestionSets.Contains(questionSet)).Include(i => i.QuestionSets)
+            var question = _questionRepository.Find(i => i.Id == Id).Include(i => i.QuestionSets)
                 .FirstOrDefault();
             return question;
         }

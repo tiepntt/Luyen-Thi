@@ -8,8 +8,9 @@ import Select from "react-select";
 import "./style.scss";
 import { questionSetShows } from "settings/question-set/questionSetShows";
 import QuestionSetPreview from "../QuestionSetPreview";
-import Loading from "app/components/_share/Loadding/Loading";
+import Loading from "app/components/_share/StaticLayout/Loading";
 import { useDocumentEditContext } from "hooks/DocumentEditQuestionContext/DocumentEditContext";
+import NoData from "app/components/_share/StaticLayout/NoData";
 
 const QuestionSetEdit = () => {
   const { questionSetId } = useParams<any>();
@@ -101,11 +102,13 @@ const QuestionSetEdit = () => {
             </div>
           </div>
           <hr />
-          {questionSet.questions && questionSet.questions.length && (
+          {questionSet.questions && questionSet.questions.length ? (
             <div className="questions-set-preview mt-3">
               <div className="label text-center">Dữ liệu câu hỏi</div>
               <QuestionSetPreview data={questionSet} />
             </div>
+          ) : (
+            <NoData />
           )}
         </div>
       ) : (

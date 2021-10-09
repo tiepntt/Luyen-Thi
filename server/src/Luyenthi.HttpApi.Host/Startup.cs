@@ -51,7 +51,12 @@ namespace Luyenthi
                 options.EnableSensitiveDataLogging();
             }
              );
-            
+            services.AddDistributedRedisCache(option =>
+            {
+                option.Configuration = "127.0.0.1";
+                option.InstanceName = "master";
+            });
+
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddOptions();
             // repository

@@ -1,6 +1,6 @@
 import QuestionSetPreview from "app/components/question-set/QuestionSetPreview";
 import BoxApp from "app/components/_share/Box/Box";
-import Loading from "app/components/_share/Loadding/Loading";
+import Loading from "app/components/_share/StaticLayout/Loading";
 import ImportQuestionSetModal from "app/components/_share/Modals/ImportQuestionSetModal/ImportQuestionSetModal";
 import { QuestionSetDetail } from "models/questionSet/QuestionSetDetail";
 import React, { useState } from "react";

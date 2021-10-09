@@ -23,10 +23,12 @@ namespace Luyenthi.HttpApi.Host
             CreateMap<QuestionCreateDto, Question>();
             CreateMap<QuestionGdocDto, Question>();
             CreateMap<Question, QuestionDto>();
+            CreateMap<Question, QuestionMatrixDto>();
             // question set
             CreateMap<QuestionSetGdocDto, QuestionSet>();
             CreateMap<QuestionSetCreateDto, QuestionSet>();
             CreateMap<QuestionSet, QuestionSetDetailDto>();
+            CreateMap<QuestionSet, QuestionMatrixDto>();
             // subject
             CreateMap<Subject, SubjectDto>();
             //grade

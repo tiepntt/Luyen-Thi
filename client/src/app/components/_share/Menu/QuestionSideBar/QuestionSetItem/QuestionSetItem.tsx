@@ -3,12 +3,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import QuestionImagePreview from "app/components/question/QuestionImagePrivew/QuestionImagePreview";
 import { useDocumentEditContext } from "hooks/DocumentEditQuestionContext/DocumentEditContext";
 import {
+  defaultQuestionGroup,
   defaultQuestionMultipleChocie,
   QuestionCreate,
 } from "models/question/Question";
 import { QuestionSetDetail } from "models/questionSet/QuestionSetDetail";
-import React, { useState } from "react";
-import { useHistory, useParams } from "react-router";
+import React, { useEffect, useState } from "react";
+import { useHistory, useLocation, useParams } from "react-router";
 import { questionSetApi } from "services/api/document/questionSetApi";
 import { toastService } from "services/toast";
 import "./style.scss";
@@ -18,23 +19,32 @@ interface Props {
 }
 const QuestionSetItem: React.FC<Props> = (props) => {
   const { questionSet, index } = props;
-  const [showQueston, setShowQueston] = useState(!index);
+  const { id, questionSetId = "" } = useParams<any>();
+  const [showQueston, setShowQueston] = useState(
+    !index || questionSet.id === questionSetId
+  );
   const { addQuestion } = useDocumentEditContext();
   const history = useHistory();
-  const { id } = useParams<any>();
+  const location = useLocation();
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]);
+
   const createQuestionSelect = () => {
     const question = { ...defaultQuestionMultipleChocie };
     createQuestion(question);
   };
   const createQuestionGroup = () => {
-    const question = { ...defaultQuestionMultipleChocie };
+    const question = { ...defaultQuestionGroup };
     createQuestion(question);
   };
   const createQuestion = (question: QuestionCreate) => {
     questionSetApi.addQuestion(questionSet.id, question).then((res) => {
       if (res.status === 200) {
         toastService.success();
-        history.push(`/document/${id}/questions-edit/${res.data.id}`);
+        history.push(
+          `/document/${id}/questions-edit/${questionSet.id}/${res.data.id}`
+        );
         addQuestion(questionSet.id, res.data);
       } else {
         toastService.error(res.data.massage);

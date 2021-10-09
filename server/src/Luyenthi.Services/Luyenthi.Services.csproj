@@ -11,6 +11,7 @@
     <PackageReference Include="Google.Apis.Docs.v1" Version="1.55.0.2379" />
     <PackageReference Include="Google.Apis.Drive.v2" Version="1.55.0.2397" />
     <PackageReference Include="Google.Apis.Sheets.v4" Version="1.55.0.2371" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Luyenthi.Core.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ namespace Luyenthi.Core
         public int OrderNumber { get; set; }
         public string CorrectAnswer { get; set; }
         public List<QuestionGdocDto> SubQuestions { get; set; }
+        public QuestionType Type { get; set; }
 
     }
 }

@@ -30,6 +30,12 @@ namespace Luyenthi.HttpApi.Host.Controllers.Matrix
             var templateQuestion = _templateQuestionService.GetById(Id);
             return _mapper.Map<TemplateQuestionDetailDto>(templateQuestion);
         }
+        [HttpGet("get-in-unit/{id}")]
+        public List<TemplateQuestionDetailDto> GetByUnitId(Guid Id)
+        {
+            var templateQuestions = _templateQuestionService.GetAllByUnitId(Id);
+            return _mapper.Map<List<TemplateQuestionDetailDto>>(templateQuestions);
+        }
         [HttpPut]
         public TemplateQuestionDto Update(TemplateQuestionDto templateQuestionUpdate)
         {

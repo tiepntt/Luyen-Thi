@@ -27,6 +27,8 @@ export const questionSetApi = {
     });
   },
   removeQuestion: (questionSetId: string, questionId: string) => {
-    return api.delete(`${baseUrl}/${questionSetId}/add-question/${questionId}`);
+    return api.delete(
+      `${baseUrl}/${questionSetId}/remove-question/${questionId}`
+    );
   },
 };

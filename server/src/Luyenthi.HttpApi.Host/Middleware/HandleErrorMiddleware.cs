@@ -25,7 +25,6 @@ namespace Luyenthi.HttpApi.Host.Middleware
             {
                 var response = context.Response;
                 response.ContentType = "application/json";
-
                 switch (error)
                 {
                     case KeyNotFoundException e:

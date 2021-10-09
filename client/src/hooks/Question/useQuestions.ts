@@ -43,6 +43,38 @@ export const useQuestions = (documentId: string) => {
     newQuestionSets[index].questions.push(question);
     setQuestionSets(newQuestionSets);
   };
+  const updateQuestion = (questionSetId: string, question: Question) => {
+    let newQuestionSets = [...questionSets];
+    const index = questionSets.findIndex((i) => i.id === questionSetId);
+    if (index === -1) return;
+    let indexQuestion = questionSets[index].questions.findIndex(
+      (i) => i.id === question.id
+    );
+    if (indexQuestion === -1) return;
+    newQuestionSets[index].questions[indexQuestion] = question;
+
+    setQuestionSets(newQuestionSets);
+  };
+  const removeQuestion = (questionSetId: string, questionid: string) => {
+    let newQuestionSets = [...questionSets];
+    const index = questionSets.findIndex((i) => i.id === questionSetId);
+    if (index === -1) return;
+    let indexQuestion = questionSets[index].questions.findIndex(
+      (i) => i.id === questionid
+    );
+    if (indexQuestion === -1) return;
+    newQuestionSets[index].questions = newQuestionSets[index].questions.filter(
+      (i) => i.id !== questionid
+    );
+    setQuestionSets(newQuestionSets);
+  };
+  const removeSubQuestion = (subQuestionId: string) => {
+    const newQuestion = { ...question };
+    newQuestion.subQuestions = newQuestion.subQuestions?.filter(
+      (i) => i.id !== subQuestionId
+    );
+    setQuestion(newQuestion as any);
+  };
 
   return {
     loading,
@@ -54,5 +86,8 @@ export const useQuestions = (documentId: string) => {
     addQuestionSet,
     addQuestion,
     updateQuestionSet,
+    updateQuestion,
+    removeQuestion,
+    removeSubQuestion,
   };
 };

@@ -1,6 +1,7 @@
 ﻿using Google.Apis.Docs.v1.Data;
 using Luyenthi.Core;
 using Luyenthi.Core.Dtos.GoogleDoc;
+using Luyenthi.Core.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,7 +66,9 @@ namespace Luyenthi.Services
                 {
                     OrderNumber = index,
                     Introduction = introduction,
-                    SubQuestions = subQuestion
+                    SubQuestions = subQuestion, 
+                    Type = QuestionType.QuestionGroup
+
                 };
             }
             else
@@ -89,6 +92,7 @@ namespace Luyenthi.Services
             var options = GoogleDocHelper.SplitOptions(contentElement);
             question.CorrectAnswer = options.FirstOrDefault(i => i.isTrue).Name;
             question.OrderNumber = index;
+            question.Type = QuestionType.QuestionMultipleChoice;
             question.Content = options.Select(i =>
             {
                 var option = new ParseDoc(i.Content, _images, true).Parse();

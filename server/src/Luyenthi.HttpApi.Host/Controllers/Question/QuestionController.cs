@@ -49,6 +49,12 @@ namespace Luyenthi.HttpApi.Host.Controllers
             var question = _questionService.GetQuestion(questionId);
             return _mapper.Map<QuestionDto>(question);
         }
+        [HttpGet("{questionId}/matrix")]
+        public QuestionMatrixDto GetQuestionMatrix(Guid questionId)
+        {
+            var question = _questionService.GetById(questionId);
+            return _mapper.Map<QuestionMatrixDto>(question);
+        }
         [HttpDelete("{id}")]
         public void DeleteQuestion (Guid id)
         {
@@ -60,8 +66,8 @@ namespace Luyenthi.HttpApi.Host.Controllers
              _questionService.Remove(question);
             
         }
-        [HttpPut()]
-        public QuestionDto UpdateQuestion(QuestionUpdateContentDto questionUpdate)
+        [HttpPut("update-content")]
+        public QuestionDto UpdateQuestionContent(QuestionUpdateContentDto questionUpdate)
         {
             var question = _questionService.GetQuestion(questionUpdate.Id);
             if (question == null)
@@ -71,44 +77,45 @@ namespace Luyenthi.HttpApi.Host.Controllers
             question.Content = questionUpdate.Content;
             question.Solve = questionUpdate.Solve;
             question.Introduction = questionUpdate.Introduction;
+            question.CorrectAnswer = questionUpdate.CorrectAnswer;
             question = _questionService.Update(question);
             return _mapper.Map<QuestionDto>(question);
 
         }
         [HttpPut("update-matrix")]
-        public QuestionDto UpdateMatrixQuestion(QuestionUpdateMatrixDto questionUpdateMatrixDto)
+        public QuestionMatrixDto UpdateMatrixQuestion(QuestionMatrixDto questionUpdateMatrixDto)
         {
             var question = _questionService.GetQuestion(questionUpdateMatrixDto.Id);
             if (question == null)
             {
-                throw new KeyNotFoundException("Không tìm thấy bản ghi");
+                throw new KeyNotFoundException("Không tìm thấy câu hỏi");
             }
             question.GradeId = questionUpdateMatrixDto.GradeId;
             question.SubjectId = questionUpdateMatrixDto.SubjectId;
             question.ChapterId = questionUpdateMatrixDto.ChapterId;
             question.UnitId = questionUpdateMatrixDto.UnitId;
+            question.LevelId = questionUpdateMatrixDto.LevelId;
             question.TemplateQuestionId = questionUpdateMatrixDto.TemplateQuestionId;
             
             question = _questionService.Update(question);
-            return _mapper.Map<QuestionDto>(question);
+            return _mapper.Map<QuestionMatrixDto>(question);
 
         }
         [HttpPut("add-to-bank/{id}")]
-        public QuestionDto AddToBank(Guid id)
+        public QuestionMatrixDto AddToBank(Guid id)
         {
             var question = _questionService.GetById(id);
             question.Status = QuestionStatus.Used;
             question = _questionService.Update(question);
-            return _mapper.Map<QuestionDto>(question);
+            return _mapper.Map<QuestionMatrixDto>(question);
 
         }
         [HttpDelete("remove-from-bank/{id}")]
-        public QuestionDto RemoveFromBank(Guid id)
+        public void RemoveFromBank(Guid id)
         {
             var question = _questionService.GetById(id);
             question.Status = QuestionStatus.Waiting;
             question = _questionService.Update(question);
-            return _mapper.Map<QuestionDto>(question);
         }
     }
 }

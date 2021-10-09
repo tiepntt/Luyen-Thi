@@ -8,11 +8,15 @@ export const useChapters = (gradeId: string, subjectId: string) => {
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [currentChapter, setCurrentChappter] = useState<Chapter>();
   const getChappter = () => {
-    chapterApi.getChapter(gradeId, subjectId).then((res) => {
-      if (res.status === 200) {
-        setChapters(res.data);
-      }
-    });
+    if (gradeId && subjectId) {
+      chapterApi.getChapter(gradeId, subjectId).then((res) => {
+        if (res.status === 200) {
+          setChapters(res.data);
+        }
+      });
+    } else {
+      setChapters([]);
+    }
   };
   const addChapter = (chapter: Chapter) => {
     setChapters([...chapters, chapter]);
