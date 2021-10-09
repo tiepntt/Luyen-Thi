@@ -11,6 +11,7 @@ namespace Luyenthi.Core.Dtos
         public dynamic Introduction { get; set; }
         public dynamic Solve { get; set; }
         public QuestionType Type { get; set; }
+        public Guid ParentId { get; set; }
         public List<QuestionCreateDto> SubQuestions { get; set; }
     }
 }

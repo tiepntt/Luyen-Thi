@@ -6,14 +6,15 @@ import "./style.scss";
 interface Props {
   data: Question;
   index?: number;
+  questionSetId: string;
 }
-const QuestionPreview: React.FC<Props> = ({ data, index }) => {
+const QuestionPreview: React.FC<Props> = ({ data, index, questionSetId }) => {
   return (
     <div className="question-preivew">
       {data.subQuestions.length ? (
-        <QuestionGroupPreview {...data} />
+        <QuestionGroupPreview question={data} questionSetId={questionSetId} />
       ) : (
-        <QuestionMultipleChocie {...data} />
+        <QuestionMultipleChocie question={data} questionSetId={questionSetId} />
       )}
     </div>
   );

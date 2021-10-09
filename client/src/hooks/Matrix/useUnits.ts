@@ -3,8 +3,8 @@ import { Unit } from "models/matrix/Unit";
 import { useEffect, useState } from "react";
 import { unitApi } from "services/api/matrix/unit";
 
-export const useUnits = () => {
-  const [chapterId, setChappterId] = useState("");
+export const useUnits = (chapteIdInput?: string) => {
+  const [chapterId, setChappterId] = useState(chapteIdInput || "");
   const [units, setUnits] = useState<Unit[]>([]);
   const [curentUnit, setCurentUnit] = useState<Unit>();
   const getUnits = () => {

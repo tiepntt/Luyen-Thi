@@ -62,9 +62,6 @@ export const setupAxios = () => {
         case 403:
           message = "Bạn không thể thực hiện chức năng này!";
           break;
-        case 404:
-          message = "Không tồn tại!";
-          break;
         case 500:
           message = "Có lỗi xảy ra!";
           break;

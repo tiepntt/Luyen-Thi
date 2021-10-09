@@ -3,14 +3,26 @@ import React, { useEffect, useState } from "react";
 import OptionQuestionEditor from "./OptionQuestionEditor";
 import "./style.scss";
 import { Button } from "react-bootstrap";
+import { useHistory, useParams } from "react-router-dom";
+import { questionSetApi } from "services/api/document/questionSetApi";
+import { questionApi } from "services/api/question/question";
+import { toastService } from "services/toast";
+import { useDocumentEditContext } from "hooks/DocumentEditQuestionContext/DocumentEditContext";
 
 interface Props {
   question: Question;
   questionParentId?: string;
 }
-const QuestionSelectEditor: React.FC<Props> = ({ question }) => {
+const QuestionSelectEditor: React.FC<Props> = ({
+  question,
+  questionParentId,
+}) => {
   const [focusIndex, setFocusIndex] = useState("");
   const [questionContent, setQuestionContent] = useState(intQuestion(question));
+  const { questionSetId, id } = useParams<any>();
+  const { updateQuestion, removeQuestion, removeSubQuestion } =
+    useDocumentEditContext();
+  const history = useHistory();
   useEffect(() => {
     setQuestionContent(intQuestion(question));
   }, [question]);
@@ -31,14 +43,54 @@ const QuestionSelectEditor: React.FC<Props> = ({ question }) => {
     newQuestion.correctAnswer = options[index].name;
     setQuestionContent(newQuestion);
   };
-
+  const update = () => {
+    // update question Content
+    questionApi
+      .updateContent({
+        content: questionContent.content,
+        introduction: questionContent.introduction,
+        solve: questionContent.solve,
+        id: questionContent.id,
+        correctAnswer: questionContent.correctAnswer,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          updateQuestion(questionSetId, res.data);
+          toastService.success("Cập nhật dữ liệu thành công");
+        } else {
+          toastService.error(res.data.message);
+        }
+      });
+  };
+  const remove = () => {
+    if (questionParentId) {
+      questionApi.remove(questionContent.id).then((res) => {
+        if (res.status === 200) {
+          toastService.success("Đã xóa");
+          removeSubQuestion(questionContent.id);
+        }
+      });
+    } else {
+      questionSetApi.removeQuestion(questionSetId, question.id).then((res) => {
+        if (res.status === 200) {
+          toastService.success("Đã xóa");
+          removeQuestion(questionSetId, question.id);
+          history.push(`/document/${id}/questions-edit/${questionSetId}`);
+        } else {
+          toastService.error(res.data.message);
+        }
+      });
+    }
+  };
   return (
     <div className="question-select-editor">
       <div className="top-bar-question ">
-        <Button variant="outline-primary" className="mx-2">
+        <Button variant="outline-primary" className="mx-2" onClick={update}>
           Lưu
         </Button>
-        <Button variant="outline-danger">Xóa</Button>
+        <Button variant="outline-danger" onClick={remove}>
+          Xóa
+        </Button>
       </div>
       <OptionQuestionEditor
         className="introduction-editor "

@@ -8,10 +8,10 @@ interface Props {
 const QuestionSetPreview: React.FC<Props> = ({ data }) => {
   return (
     <div className="question-set-preview">
-      <div className="question-set-title">{data.name}</div>
+      {data.show && <div className="question-set-title">{data.name}</div>}
       <div className="questions-preview">
         {data.questions.map((question, i) => (
-          <QuestionPreview key={i} data={question} />
+          <QuestionPreview key={i} data={question} questionSetId={data.id} />
         ))}
       </div>
     </div>

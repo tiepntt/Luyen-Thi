@@ -18,7 +18,7 @@ namespace Luyenthi.Core.Dtos.GoogleDoc
     {
         public string Type { get; } = "katex";
         public string Content { get; set; }
-        public List<TextElement> children = new List<TextElement>() { new TextElement { Text = "" } };
+        public List<TextElement> children = new List<TextElement> { new TextElement { Text = "" } };
     }
     public class ImageLink:Element
     {

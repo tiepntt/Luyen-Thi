@@ -75,7 +75,6 @@ namespace Luyenthi.HttpApi.Host.Controllers
             var doc = await GoogleDocApi.GetDocument(docService, questionImport.GoogleDocId);
             // download image
             List<Task<ImageDto>> uploadImages = new List<Task<ImageDto>>();
-            var folderPath = Path.Combine(_hostingEnvironment.WebRootPath, "uploads/questions");
             if (doc.InlineObjects != null)
             {
                 for (int i = 0; i < doc.InlineObjects.Count; i++)

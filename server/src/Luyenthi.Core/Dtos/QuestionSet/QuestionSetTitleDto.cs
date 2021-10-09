@@ -8,5 +8,8 @@ namespace Luyenthi.Core.Dtos.QuestionSet
 {
     public class QuestionSetTitleDto
     {
+        public Guid Id { get; set; }
+        public bool Show { get; set; }
+        public string Name { get; set; }
     }
 }

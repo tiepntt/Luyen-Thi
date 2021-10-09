@@ -1,5 +1,6 @@
 import QuestionSetPreview from "app/components/question-set/QuestionSetPreview";
 import BoxApp from "app/components/_share/Box/Box";
+import Loading from "app/components/_share/StaticLayout/Loading";
 import ImportQuestionSetModal from "app/components/_share/Modals/ImportQuestionSetModal/ImportQuestionSetModal";
 import { QuestionSetDetail } from "models/questionSet/QuestionSetDetail";
 import React, { useState } from "react";
@@ -8,11 +9,13 @@ interface Props {
   documentId: string;
   questionSets?: QuestionSetDetail[];
   setQuestionSets: (value: any) => void;
+  loading?: boolean;
 }
 const QuestionDocument: React.FC<Props> = ({
   documentId,
   questionSets,
   setQuestionSets,
+  loading = false,
 }) => {
   const [showModal, setShowModal] = useState(false);
 
@@ -44,16 +47,20 @@ const QuestionDocument: React.FC<Props> = ({
       <div className="admin-document-questions">
         <div className="preview-document-question">
           <div className="label-document">DỮ LIỆU CÂU HỎI</div>
-          {questionSets && (
-            <div className="question-document">
-              {!questionSets.length ? (
-                <ImportQuestionSet />
-              ) : (
-                questionSets.map((questionSet, i) => (
-                  <QuestionSetPreview key={i} data={questionSet} />
-                ))
-              )}
-            </div>
+          {!loading ? (
+            questionSets && (
+              <div className="question-document">
+                {!questionSets.length ? (
+                  <ImportQuestionSet />
+                ) : (
+                  questionSets.map((questionSet, i) => (
+                    <QuestionSetPreview key={i} data={questionSet} />
+                  ))
+                )}
+              </div>
+            )
+          ) : (
+            <Loading />
           )}
         </div>
       </div>

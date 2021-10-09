@@ -66,5 +66,34 @@ namespace Luyenthi.Services
             }
             return questionSets;
         }
+        public static QuestionSet MakeIndexQuestionSet(QuestionSet questionSetInput)
+        {
+            var curentIndex = 1;
+            var questionSet = questionSetInput;
+            // var questionSet 
+            foreach (Question question in questionSet.Questions)
+            {
+                if (question.SubQuestions != null && question.SubQuestions.Count > 0)
+                {
+                    // bộ câu hỏi
+                    foreach (Question subQ in question.SubQuestions)
+                    {
+                        var contenQuestion = JsonConvert.SerializeObject(subQ.Introduction);
+                        contenQuestion = Regex.Replace(contenQuestion, @"(#{index})", curentIndex.ToString());
+                        subQ.Introduction = JsonConvert.DeserializeObject<List<ExpandoObject>>(contenQuestion);
+                        curentIndex++;
+                    }
+                }
+                else
+                {
+                    //câu hỏi thường
+                    var contenQuestion = JsonConvert.SerializeObject(question.Introduction);
+                    contenQuestion = Regex.Replace(contenQuestion, @"(#{index})", curentIndex.ToString());
+                    question.Introduction = JsonConvert.DeserializeObject<List<ExpandoObject>>(contenQuestion);
+                    curentIndex++;
+                }
+            }
+            return questionSet;
+        }
     }
 }

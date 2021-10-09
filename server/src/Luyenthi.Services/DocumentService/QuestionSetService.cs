@@ -16,6 +16,7 @@ namespace Luyenthi.Services
     {
         private readonly QuestionSetRepository _questionSetRepository;
         private readonly QuestionRepository _questionRepository;
+        
         public QuestionSetService(
             QuestionSetRepository questionSetRepository,
             QuestionRepository questionRepository
@@ -24,11 +25,25 @@ namespace Luyenthi.Services
             _questionSetRepository = questionSetRepository;
             _questionRepository = questionRepository;
         }
+        public QuestionSet GetById(Guid Id)
+        {
+            var questionSet = _questionSetRepository.Get(Id);
+            return questionSet;
+        }
         public QuestionSet Create(QuestionSet questionSet)
         {
             questionSet.Questions = new List<Question>();
             _questionSetRepository.Add(questionSet);
             return questionSet;
+        }
+        public QuestionSet Update(QuestionSet questionSet)
+        {
+            _questionSetRepository.UpdateEntity(questionSet);
+            return questionSet;
+        }
+        public void Remove(QuestionSet questionSet)
+        {
+            _questionSetRepository.Remove(questionSet);
         }
         public List<QuestionSet> CreateMany(List<QuestionSet> questionSets)
         {
@@ -53,8 +68,19 @@ namespace Luyenthi.Services
             // đánh index cho các question
             return questionSets;
         }
+        public QuestionSet GetDetail(Guid id)
+        {
+            var questionSet = _questionSetRepository.Find(questionSet => questionSet.Id == id)
+                                            .Include(qs => qs.Document)
+                                            .Include(qs => qs.Questions)
+                                            .ThenInclude(q => q.SubQuestions).FirstOrDefault();
+            // đánh index cho các question
+            // đánh index cho các question
+            return questionSet;
+        }
         public void RemoveByDocumentId(Guid documentId)
         {
+            // chỉ sử dụng cho import
             var questionSets = _questionSetRepository.Find(qs => qs.DocumentId == documentId)
                 .Include(i => i.Questions)
                 .ThenInclude(i=>i.SubQuestions).ToList();
@@ -79,6 +105,7 @@ namespace Luyenthi.Services
             _questionSetRepository.UpdateEntity(questionSet);
             return question;
         }
+        
         
     }
 }

@@ -1,4 +1,5 @@
 import { initDefaultValue } from "app/components/question/QuestionEditor/QuestionSelectEditor/QuestionSelect";
+import { QuestionStatus } from "settings/question/questionStatus";
 import { QuestionType } from "settings/question/questionType";
 
 export interface Question {
@@ -19,6 +20,32 @@ export interface QuestionCreate {
   subQuestions: Question[];
   correctAnswer: string;
   type: QuestionType;
+  parentId?: string;
+}
+export interface QuestionContent {
+  id: string;
+  content: any;
+  introduction: any;
+  solve: any;
+  correctAnswer: string;
+}
+export interface QuestionMatrix {
+  id: string;
+  gradeId: any;
+  subjectId: any;
+  chapterId: any;
+  unitId: any;
+  templateQuestionId: any;
+}
+export interface MatrixQuestion {
+  id: string;
+  gradeId: any;
+  subjectId: any;
+  chapterId: any;
+  unitId: any;
+  levelId: string;
+  templateQuestionId: any;
+  status: QuestionStatus;
 }
 interface OptionQuestion {
   name: string;

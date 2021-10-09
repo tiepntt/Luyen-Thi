@@ -10,25 +10,17 @@ import QuestionDocument from "app/components/admin/Document/SubjectDocument/Docu
 import QuestionEditor from "app/components/question/QuestionEditor/QuestionEditor";
 import { DocumentEditContext } from "hooks/DocumentEditQuestionContext/DocumentEditContext";
 import AddQuestionSetModal from "app/components/_share/Modals/AddQuestionSetModal/AddQuestionSetModal";
+import QuestionSetEdit from "app/components/question-set/QuestionSetEdit/QuestionSetEdit";
 const DocumentEditQuestion = () => {
   const { id } = useParams<Params>();
   const [showModalAddQuestionSet, setShowModalAddQuestionSet] = useState(false);
   // const [documentInfo, setDocumentInfo] = useState<DocoumentTitle>();
-  const {
-    question,
-    questionSets,
-    setQuestion,
-    setQuestionSets,
-    addQuestionSet,
-    addQuestion,
-  } = useQuestions(id);
+  const documentState = useQuestions(id);
   const classes = useStyles();
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
   const value = {
-    question: question as any,
-    setQuestion,
+    ...(documentState as any),
     showAddQuestionSetModal: () => setShowModalAddQuestionSet(true),
-    addQuestion,
   };
   return (
     <DocumentEditContext.Provider value={value}>
@@ -38,7 +30,7 @@ const DocumentEditQuestion = () => {
           <QuestionEditSideBar
             onMobileClose={() => setMobileNavOpen(false)}
             openMobile={isMobileNavOpen}
-            questionSets={questionSets}
+            questionSets={documentState.questionSets}
           />
           <div className={classes.wrapper}>
             <div className={classes.contentContainer}>
@@ -51,13 +43,22 @@ const DocumentEditQuestion = () => {
                           <div className="preview-questions ">
                             <QuestionDocument
                               documentId={id}
-                              questionSets={questionSets}
-                              setQuestionSets={setQuestionSets}
+                              questionSets={documentState.questionSets}
+                              setQuestionSets={documentState.setQuestionSets}
+                              loading={documentState.loading}
                             />
                           </div>
                         </Route>
                         <Route
-                          path="/document/:id/questions-edit/:questionId"
+                          path="/document/:id/questions-edit/:questionSetId"
+                          exact={true}
+                        >
+                          <div className="edit-question ">
+                            <QuestionSetEdit />
+                          </div>
+                        </Route>
+                        <Route
+                          path="/document/:id/questions-edit/:questionSetId/:questionId"
                           exact={true}
                         >
                           <div className="edit-question ">
@@ -67,7 +68,14 @@ const DocumentEditQuestion = () => {
                       </Switch>
                     </Grid>
                     <Grid item xl={3} lg={4} md={12}>
-                      <QuestionMatrixSideBar />
+                      <Switch>
+                        <Route
+                          path="/document/:id/questions-edit/:questionSetId/:questionId"
+                          exact={true}
+                        >
+                          <QuestionMatrixSideBar />
+                        </Route>
+                      </Switch>
                     </Grid>
                   </Grid>
                 </div>
@@ -79,7 +87,7 @@ const DocumentEditQuestion = () => {
       <AddQuestionSetModal
         show={showModalAddQuestionSet}
         setShow={setShowModalAddQuestionSet}
-        onAdd={addQuestionSet}
+        onAdd={documentState.addQuestionSet}
       />
     </DocumentEditContext.Provider>
   );
@@ -111,7 +119,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   content: {
     flex: "1 1 auto",
     height: "100%",
-    overflow: "auto",
+    overflowY: "auto",
+    overflowX: "hidden",
   },
 })) as any;
 

@@ -69,8 +69,16 @@ namespace Luyenthi.EntityFrameworkCore
                             questionEntity.Type = questionEntity.Type == QuestionType.QuestionGroup || questionEntity.SubQuestions.Count == 1 ? QuestionType.QuestionGroup : QuestionType.QuestionMultipleChoice;
                             break;
                         case EntityState.Modified:
-                            questionEntity.NumberQuestion = questionEntity.SubQuestions.Count == 0 ? 1 : questionEntity.SubQuestions.Count;
-                            questionEntity.Type = questionEntity.Type == QuestionType.QuestionGroup || questionEntity.SubQuestions.Count == 1 ? QuestionType.QuestionGroup : QuestionType.QuestionMultipleChoice;
+                            if(questionEntity.SubQuestions != null)
+                            {
+                                questionEntity.NumberQuestion = questionEntity.SubQuestions.Count == 0 ? 1 : questionEntity.SubQuestions.Count;
+                                questionEntity.Type = questionEntity.Type == QuestionType.QuestionGroup || questionEntity.SubQuestions.Count == 1 ? QuestionType.QuestionGroup : QuestionType.QuestionMultipleChoice;
+                            }
+                            
+                            if (questionEntity.QuestionSets != null && questionEntity.QuestionSets.Count  == 0)
+                            {
+                                base.Remove(questionEntity);
+                            }
                             break;
                     }
                 }

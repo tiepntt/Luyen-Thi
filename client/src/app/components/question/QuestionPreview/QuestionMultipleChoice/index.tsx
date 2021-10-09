@@ -2,12 +2,18 @@ import TemplatePreview from "app/components/_share/TemplatePreview";
 import { Question } from "models/question/Question";
 import React, { createRef, useEffect, useState } from "react";
 import "./style.scss";
-
-const QuestionMultipleChocie: React.FC<Question> = (question) => {
+interface Props {
+  question: Question;
+  questionSetId: string;
+}
+const QuestionMultipleChocie: React.FC<Props> = ({
+  questionSetId,
+  question,
+}) => {
   const { content = [], introduction = [], correctAnswer } = question;
   const [optionsRef] = useState(createRef<HTMLDivElement>());
   const [boxRefs] = useState<any[]>(
-    Array(content.length)
+    Array(content ? content.length : 0)
       .fill(null)
       .map(() => createRef())
   );
@@ -37,7 +43,7 @@ const QuestionMultipleChocie: React.FC<Question> = (question) => {
       }
 
       setScaleSize(newScale);
-    }, 500);
+    });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, content);
@@ -49,35 +55,37 @@ const QuestionMultipleChocie: React.FC<Question> = (question) => {
   return (
     <div className="question-multiple-choice" id={`qid-${question.id}`}>
       <div className="question-introduction">
-        {introduction.map((element, i) => (
-          <TemplatePreview key={i} {...element} />
-        ))}
+        {introduction &&
+          introduction.map((element, i) => (
+            <TemplatePreview key={i} {...element} />
+          ))}
       </div>
       <div
         id={`qidotp-${question.id}`}
         className="question-options"
         ref={optionsRef}
       >
-        {content.map((option, i) => (
-          <div
-            className="option-item d-inline-flex"
-            style={getScale()}
-            ref={boxRefs[i]}
-          >
+        {content &&
+          content.map((option, i) => (
             <div
-              className={`name-option ${
-                correctAnswer === option.name && "correct-answer"
-              }`}
+              className="option-item d-inline-flex"
+              style={getScale()}
+              ref={boxRefs[i]}
             >
-              {option.name}
+              <div
+                className={`name-option ${
+                  correctAnswer === option.name && "correct-answer"
+                }`}
+              >
+                {option.name}
+              </div>
+              <div className="content-option">
+                {option.content.map((element, i_option) => (
+                  <TemplatePreview key={i_option} {...element} />
+                ))}
+              </div>
             </div>
-            <div className="content-option">
-              {option.content.map((element, i_option) => (
-                <TemplatePreview key={i_option} {...element} />
-              ))}
-            </div>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
   );

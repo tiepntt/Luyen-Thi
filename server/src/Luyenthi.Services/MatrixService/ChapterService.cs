@@ -22,8 +22,8 @@ namespace Luyenthi.Services
         public List<Chapter> GetAll(Guid? gradeId, Guid? subjectId )
         {
             var chapters = _chapterRepository
-                .Find(i => (gradeId == Guid.Empty || i.GradeId == gradeId) &&
-                    (subjectId == Guid.Empty || i.SubjectId == subjectId))
+                .Find(i => ( i.GradeId == gradeId) &&
+                    ( i.SubjectId == subjectId))
                 .Include(i => i.Subject)
                 .Include(i => i.Grade).ToList();
             return chapters;

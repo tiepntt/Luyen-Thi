@@ -156,5 +156,6 @@ namespace Luyenthi.EntityFrameworkCore
             Context.Entry(entityToUpdate).State = EntityState.Modified;
             Context.SaveChanges();
         }
+       
     }
 }
