@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Luyenthi.Services.Settings
+namespace Luyenthi.Services
 {
     public class AppSettings
     {

@@ -34,5 +34,24 @@ namespace Luyenthi.HttpApi.Host.Controllers.Upload
             }
             return fileResult;
         }
+        [HttpPost("image/question")]
+        public async Task<FileDto> UploadImageQuestion(IFormCollection formData)
+        {
+            var file = formData.Files.FirstOrDefault();
+            var fileResult = new FileDto { };
+            var cloundinaryService = CloudinarySerivce.GetService();
+            if(file == null)
+            {
+                throw new KeyNotFoundException("Không có file nào được chọn");
+            }
+            using (var ms = new MemoryStream())
+            {
+                file.CopyTo(ms);
+                var fileBytes = ms.ToArray();
+                var imageResult = await CloudinarySerivce.UploadImage(cloundinaryService, fileBytes, "Luyenthi/Questions");
+                fileResult.Path = imageResult.SecureUrl.AbsoluteUri;
+            }
+            return fileResult;
+        }
     }
 }
