@@ -1,7 +1,6 @@
 using Luyenthi.Domain.User;
 using Luyenthi.EntityFrameworkCore;
 using Luyenthi.Services;
-using Luyenthi.Services.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -77,6 +76,7 @@ namespace Luyenthi
             services.AddTransient<QuestionSetService>();
             services.AddTransient<ChapterService>();
             services.AddTransient<UnitService>();
+            services.AddTransient<JwtService>();
             services.AddTransient<TemplateQuestionService>();
            
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
@@ -165,7 +165,7 @@ namespace Luyenthi
 
             app.UseAuthorization();
             app.UseMiddleware<HandleErrorMiddleware>();
-
+            app.UseMiddleware<JwtMiddleware>();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
