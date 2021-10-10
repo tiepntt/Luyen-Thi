@@ -20,11 +20,11 @@ namespace Luyenthi.EntityFrameworkCore
                 UserName = "admin",
                 FirstName = "Tiệp",
                 LastName = "Nguyễn",
-                Email = "Admin@Admin.com",
+                Email = "nguyenthaitiep206@gmail.com",
                 PhoneNumber = "0819200620",
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
-                BirthDay = new DateTime(1980, 1, 1),
+                BirthDay = new DateTime(2000, 6, 20),
             };
 
             admin.PasswordHash = PassGenerate(admin);

@@ -446,6 +446,9 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<string>("Provider")
+                        .HasColumnType("varchar(255)");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("longtext");
 
@@ -471,7 +474,36 @@ namespace Luyenthi.DbMigrator.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
 
+                    b.HasIndex("UserName")
+                        .IsUnique();
+
+                    b.HasIndex("Provider", "Email")
+                        .IsUnique();
+
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("cb3850a2-0a32-4cee-a175-08df5ec6169b"),
+                            AccessFailedCount = 0,
+                            BirthDay = new DateTime(2000, 6, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ConcurrencyStamp = "58ba7fed-34bd-4b5b-9ef0-8e093cbcf60a",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "nguyenthaitiep206@gmail.com",
+                            EmailConfirmed = true,
+                            FirstName = "Tiệp",
+                            Gender = 0,
+                            LastName = "Nguyễn",
+                            LockoutEnabled = false,
+                            PasswordHash = "AQAAAAEAACcQAAAAEKU5h2rB6Gz9PWvhptuQ/ZM4AphclxwR0w5XuZGOFp3FNhyI6HJe1DRhTF9xkkh0pA==",
+                            PhoneNumber = "0819200620",
+                            PhoneNumberConfirmed = true,
+                            Provider = "luyenthi",
+                            TwoFactorEnabled = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -499,6 +531,29 @@ namespace Luyenthi.DbMigrator.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("daf39ce6-9c5f-495e-af95-810df7f64e40"),
+                            ConcurrencyStamp = "839735b1-1598-4069-a099-28336b106a6b",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = new Guid("f25e6a5a-2ce9-4273-9bd3-3b71755add19"),
+                            ConcurrencyStamp = "b77fb687-5858-4850-91d5-22f666518d9e",
+                            Name = "Teacher",
+                            NormalizedName = "TEACHER"
+                        },
+                        new
+                        {
+                            Id = new Guid("fcdea3ce-afe0-4fff-b32c-6c28309ec12e"),
+                            ConcurrencyStamp = "09ae7f02-cbbb-4839-b755-4ac211bb92a6",
+                            Name = "Student",
+                            NormalizedName = "STUDENT"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -579,6 +634,13 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = new Guid("cb3850a2-0a32-4cee-a175-08df5ec6169b"),
+                            RoleId = new Guid("daf39ce6-9c5f-495e-af95-810df7f64e40")
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>

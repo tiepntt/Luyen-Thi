@@ -114,7 +114,13 @@ namespace Luyenthi.EntityFrameworkCore
                 e.HasOne(i => i.Unit).WithMany(u => u.TemplateQuestions).OnDelete(DeleteBehavior.Cascade);
                 
             });
-            
+            builder.Entity<ApplicationUser>().HasIndex(user => new {
+                user.Provider,
+                user.Email
+            }).IsUnique(); builder.Entity<ApplicationUser>().HasIndex(user => new {
+                user.UserName,
+            }).IsUnique();
+
             builder.Entity<Question>(b =>
             {
                 b.HasIndex(x => x.Type);
@@ -169,9 +175,9 @@ namespace Luyenthi.EntityFrameworkCore
                         b => b.HasOne<Subject>().WithMany().HasForeignKey("SubjectId")
                    );
 
-            //builder.ApplyConfiguration(new RoleConfiguration());
-            //builder.ApplyConfiguration(new AdminConfiguration());
-            //builder.ApplyConfiguration(new UserWithRolesConfig());
+            builder.ApplyConfiguration(new RoleConfiguration());
+            builder.ApplyConfiguration(new AdminConfiguration());
+            builder.ApplyConfiguration(new UserWithRolesConfig());
 
         }
         private void SeedGradeAndSubject(ModelBuilder builder)

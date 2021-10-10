@@ -163,7 +163,6 @@ namespace Luyenthi
 
             app.UseRouting();
 
-            app.UseAuthorization();
             app.UseMiddleware<HandleErrorMiddleware>();
             app.UseMiddleware<JwtMiddleware>();
             app.UseEndpoints(endpoints =>
