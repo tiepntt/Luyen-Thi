@@ -2,6 +2,7 @@
 using Luyenthi.Core;
 using Luyenthi.Core.Dtos;
 using Luyenthi.Domain;
+using Luyenthi.Domain.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,7 +47,9 @@ namespace Luyenthi.HttpApi.Host
             CreateMap<TemplateQuestion, TemplateQuestionDto>();
             CreateMap<TemplateQuestion, TemplateQuestionDetailDto>();
             CreateMap<TemplateCreateDto, TemplateQuestion>();
-
+            // user
+            CreateMap<ApplicationUser, UserInfoDto>();
+            CreateMap<UserRequestRegister, ApplicationUser>();
         }
     }
 }

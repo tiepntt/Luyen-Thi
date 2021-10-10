@@ -74,7 +74,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
             {
                 throw new KeyNotFoundException("Không tìm thấy bản ghi");
             }
-            question.Content = questionUpdate.Content;
+            question.Content =questionUpdate.Content;
             question.Solve = questionUpdate.Solve;
             question.Introduction = questionUpdate.Introduction;
             question.CorrectAnswer = questionUpdate.CorrectAnswer;

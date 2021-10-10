@@ -17,7 +17,6 @@ namespace Luyenthi.Services
     {
         private readonly AppSettings _appSettings;
         private readonly UserManager<ApplicationUser> _userManager;
-
         public JwtService(
             IOptions<AppSettings> appSettings,
             UserManager<ApplicationUser> userManager

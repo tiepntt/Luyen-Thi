@@ -9,6 +9,7 @@ namespace Luyenthi.Domain.User
 {
     public class ApplicationUser : IdentityUser<Guid>, IBaseEntity
     {
+        public string Provider { get; set; } = "luyenthi";
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get ; set ; }
         public Guid? CreatedBy { get ; set ; }

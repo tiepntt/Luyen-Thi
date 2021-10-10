@@ -3,7 +3,7 @@ import { faImage } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Form } from "react-bootstrap";
 import { useSlateStatic } from "slate-react";
-import { insertImage, isImageUrl } from "../../Elements/ImageElement/withImage";
+import { insertImage } from "../../Elements/ImageElement/withImage";
 import { uploadApi } from "services/api/upload/uploadCloundinary";
 import { toastService } from "services/toast";
 
