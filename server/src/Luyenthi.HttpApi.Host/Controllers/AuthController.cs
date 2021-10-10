@@ -13,6 +13,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Transactions;
 
+
 namespace Luyenthi.HttpApi.Host
 {
     [ApiController]
@@ -23,17 +24,20 @@ namespace Luyenthi.HttpApi.Host
         private readonly IMapper _mapper;
         private readonly JwtService _jwtService;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IMailService _mailService;
         public AuthController(
             UserManager<ApplicationUser> userManager,
             JwtService jwtService,
             SignInManager<ApplicationUser> signInManager,
-            IMapper mapper
+            IMapper mapper,
+            IMailService mailService
             )
         {
             _userManager = userManager;
             _jwtService = jwtService;
             _signInManager = signInManager;
             _mapper = mapper;
+            _mailService = mailService;
         }
         [HttpPost("login")]
         public async Task<UserResponseLogin> Login(UserRequestLogin requestLogin)
@@ -130,6 +134,19 @@ namespace Luyenthi.HttpApi.Host
         public async Task<UserResponseLogin> LoginByGoogle()
         {
             throw new BadRequestException("Thông tin không hợp lệ");
+        }
+        [HttpPost("send-mail")]
+        public async Task<IActionResult> SendMail(SendMailDto mailRequest)
+        {
+            try
+            {
+                await _mailService.SendMailAsync(mailRequest);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
         }
     }
 }

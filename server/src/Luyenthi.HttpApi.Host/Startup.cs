@@ -38,6 +38,7 @@ namespace Luyenthi
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.AddHttpContextAccessor();
             services.AddDbContext<LuyenthiDbContext>(options =>
             {
@@ -78,6 +79,7 @@ namespace Luyenthi
             services.AddTransient<UnitService>();
             services.AddTransient<JwtService>();
             services.AddTransient<TemplateQuestionService>();
+            services.AddTransient<IMailService, Services.MailService>();
            
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
                 {
