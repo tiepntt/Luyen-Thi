@@ -1,11 +1,11 @@
 .admin-page .makeStyles-wrapper-2 {
-  padding-top: 64px;
   height: calc(100vh);
   width: calc(100vw) !important;
   background: #fafafa !important;
 }
 .admin-wrap {
   width: 100%;
+  padding-top: 64px;
   position: relative;
   .main-content-document {
     margin-top: 5px;
@@ -19,12 +19,15 @@
 }
 
 @media only screen and (min-width: 1280px) {
-  .admin-page .makeStyles-wrapper-2 {
+  .admin-wrap {
     padding-top: 64px;
   }
 }
 @media only screen and (max-width: 600px) {
-  .admin-page .makeStyles-wrapper-2 {
+  .admin-wrap {
     padding-top: 56px !important;
   }
+}
+.admin-page {
+  width: 100%;
 }

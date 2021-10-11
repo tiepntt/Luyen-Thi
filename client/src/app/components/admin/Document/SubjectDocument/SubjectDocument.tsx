@@ -1,6 +1,6 @@
 import GradeDocumentBreadcubms from "app/components/_share/Breadcrumbs/GradeDocumentBreadcrubms/GradeDocumentBreadcubms";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import DocumentList from "./DocumentList/DocumentList";
 import { GradeApi } from "services/api/grade-subject/gradeApi";
 import { SubjectApi } from "services/api/grade-subject/subecjtApi";
@@ -40,6 +40,7 @@ const SubjectDocument = () => {
     gradeId: grade.id,
     subjectId: subject.id,
   });
+  const location = useLocation();
   const getDocuments = () => {
     documentApi.getAll(request).then((res: any) => {
       if (res.status === 200) {
@@ -53,7 +54,7 @@ const SubjectDocument = () => {
   useEffect(() => {
     getDocuments();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [request]);
+  }, [location.pathname]);
   return (
     <div className="subject-document">
       <GradeDocumentBreadcubms
