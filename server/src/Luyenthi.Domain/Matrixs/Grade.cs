@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace Luyenthi.Domain
 {
-   
     public class Grade : IEntity<Guid>
     {
         public Guid Id { get; set; }

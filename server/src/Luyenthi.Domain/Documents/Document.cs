@@ -27,6 +27,7 @@ namespace Luyenthi.Domain
         public bool IsApprove { get; set; }
         public string GoogleDocId { get; set; }
         public virtual List<QuestionSet> QuestionSets { get; set; }
+        public virtual List<DocumentHistory> DocumentHistories { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public Guid? CreatedBy { get; set; }

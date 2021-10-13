@@ -19,10 +19,11 @@ namespace Luyenthi.EntityFrameworkCore
     public class LuyenthiDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-
         public DbSet<Question> Questions { get; set; }
+        public DbSet<QuestionHistory> QuestionHistories { get; set; }
         public DbSet<QuestionSet> QuestionSets { get; set; }
         public DbSet<Document> Documents { get; set; }
+        public DbSet<DocumentHistory> DocumentHistories { get; set; }
         public DbSet<Grade> Grades { get; set; }
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Chapter> Chapters { get; set; }
@@ -149,9 +150,26 @@ namespace Luyenthi.EntityFrameworkCore
                 .OnDelete(DeleteBehavior.SetNull);
                 b.HasOne(x => x.TemplateQuestion).WithMany(x => x.Questions)
                 .OnDelete(DeleteBehavior.SetNull);
-
             });
-            
+            builder.Entity<DocumentHistory>(d =>
+            {
+                d.HasOne(x => x.Document).WithMany(x => x.DocumentHistories)
+                .OnDelete(DeleteBehavior.SetNull);
+                d.HasOne(x => x.User).WithMany(x => x.DocumentHistories)
+                .HasForeignKey(x => x.CreatedBy)
+                .OnDelete(DeleteBehavior.Cascade);
+                
+            });
+            builder.Entity<QuestionHistory>(b =>
+            {
+                b.HasOne(x => x.DocumentHistory).WithMany(x => x.QuestionHistories)
+                .OnDelete(DeleteBehavior.SetNull);
+                b.HasOne(x => x.User).WithMany(x => x.QuestionHistories)
+                .HasForeignKey(x => x.CreatedBy)
+                .OnDelete(DeleteBehavior.Cascade);
+                b.HasOne(x => x.Question).WithMany(x => x.QuestionHistories)
+                .OnDelete(DeleteBehavior.Cascade);
+            });
         }
         public void RelationShipConfiguration(ModelBuilder builder)
         {
@@ -175,16 +193,9 @@ namespace Luyenthi.EntityFrameworkCore
                         b => b.HasOne<Subject>().WithMany().HasForeignKey("SubjectId")
                    );
 
-            builder.ApplyConfiguration(new RoleConfiguration());
-            builder.ApplyConfiguration(new AdminConfiguration());
-            builder.ApplyConfiguration(new UserWithRolesConfig());
-
-        }
-        private void SeedGradeAndSubject(ModelBuilder builder)
-        {
-            // seeding project
-            
-            //builder.Entity<GradeSubject>().HasData(gradeSubjects);
+            //builder.ApplyConfiguration(new RoleConfiguration());
+            //builder.ApplyConfiguration(new AdminConfiguration());
+            //builder.ApplyConfiguration(new UserWithRolesConfig());
 
         }
     }

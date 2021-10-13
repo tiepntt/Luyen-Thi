@@ -378,6 +378,39 @@ namespace Luyenthi.DbMigrator.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "DocumentHistories",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    UpdatedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    StartTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    EndTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    NumberCorrect = table.Column<int>(type: "int", nullable: false),
+                    NumberIncorrect = table.Column<int>(type: "int", nullable: false),
+                    DocumentId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DocumentHistories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DocumentHistories_AspNetUsers_CreatedBy",
+                        column: x => x.CreatedBy,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DocumentHistories_Documents_DocumentId",
+                        column: x => x.DocumentId,
+                        principalTable: "Documents",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "QuestionSets",
                 columns: table => new
                 {
@@ -505,6 +538,45 @@ namespace Luyenthi.DbMigrator.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "QuestionHistories",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    QuestionId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    DocumentHistoryId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    Answer = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    AnswerStatus = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    UpdatedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QuestionHistories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_QuestionHistories_AspNetUsers_CreatedBy",
+                        column: x => x.CreatedBy,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_QuestionHistories_DocumentHistories_DocumentHistoryId",
+                        column: x => x.DocumentHistoryId,
+                        principalTable: "DocumentHistories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
+                    table.ForeignKey(
+                        name: "FK_QuestionHistories_Questions_QuestionId",
+                        column: x => x.QuestionId,
+                        principalTable: "Questions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "QuestionSetQuestion",
                 columns: table => new
                 {
@@ -529,26 +601,6 @@ namespace Luyenthi.DbMigrator.Migrations
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[,]
-                {
-                    { new Guid("daf39ce6-9c5f-495e-af95-810df7f64e40"), "839735b1-1598-4069-a099-28336b106a6b", "Admin", "ADMIN" },
-                    { new Guid("f25e6a5a-2ce9-4273-9bd3-3b71755add19"), "b77fb687-5858-4850-91d5-22f666518d9e", "Teacher", "TEACHER" },
-                    { new Guid("fcdea3ce-afe0-4fff-b32c-6c28309ec12e"), "09ae7f02-cbbb-4839-b755-4ac211bb92a6", "Student", "STUDENT" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "BirthDay", "ConcurrencyStamp", "CreatedAt", "CreatedBy", "Email", "EmailConfirmed", "FirstName", "Gender", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Provider", "SecurityStamp", "TwoFactorEnabled", "UpdatedAt", "UpdatedBy", "UserName" },
-                values: new object[] { new Guid("cb3850a2-0a32-4cee-a175-08df5ec6169b"), 0, new DateTime(2000, 6, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "58ba7fed-34bd-4b5b-9ef0-8e093cbcf60a", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "nguyenthaitiep206@gmail.com", true, "Tiệp", 0, "Nguyễn", false, null, null, null, "AQAAAAEAACcQAAAAEKU5h2rB6Gz9PWvhptuQ/ZM4AphclxwR0w5XuZGOFp3FNhyI6HJe1DRhTF9xkkh0pA==", "0819200620", true, "luyenthi", null, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "admin" });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUserRoles",
-                columns: new[] { "RoleId", "UserId" },
-                values: new object[] { new Guid("daf39ce6-9c5f-495e-af95-810df7f64e40"), new Guid("cb3850a2-0a32-4cee-a175-08df5ec6169b") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -610,6 +662,16 @@ namespace Luyenthi.DbMigrator.Migrations
                 column: "SubjectId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DocumentHistories_CreatedBy",
+                table: "DocumentHistories",
+                column: "CreatedBy");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DocumentHistories_DocumentId",
+                table: "DocumentHistories",
+                column: "DocumentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Documents_GradeId",
                 table: "Documents",
                 column: "GradeId");
@@ -635,6 +697,21 @@ namespace Luyenthi.DbMigrator.Migrations
                 table: "LevelQuestions",
                 column: "Code",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QuestionHistories_CreatedBy",
+                table: "QuestionHistories",
+                column: "CreatedBy");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QuestionHistories_DocumentHistoryId",
+                table: "QuestionHistories",
+                column: "DocumentHistoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QuestionHistories_QuestionId",
+                table: "QuestionHistories",
+                column: "QuestionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Questions_ChapterId",
@@ -740,19 +817,25 @@ namespace Luyenthi.DbMigrator.Migrations
                 name: "GradeSubjects");
 
             migrationBuilder.DropTable(
+                name: "QuestionHistories");
+
+            migrationBuilder.DropTable(
                 name: "QuestionSetQuestion");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "DocumentHistories");
 
             migrationBuilder.DropTable(
                 name: "Questions");
 
             migrationBuilder.DropTable(
                 name: "QuestionSets");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "LevelQuestions");

@@ -70,5 +70,5 @@ mysql -u root -p luyenthi > dump.sql
 ```
 Dump data by **Command prompt** in `Luyenthi.DbMigrator>Data>`
 ```sh
-mysqldump -u root -p luyenthi -t --complete-insert >dump.sql
+mysqldump -u root  -p luyenthi -t --complete-insert --ignore-table=luyenthi.table1 > dump.sql
 ```
