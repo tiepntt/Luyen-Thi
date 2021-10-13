@@ -11,9 +11,9 @@ export const UserReducer = (
 ) => {
   switch (action.type) {
     case UserActcion.LogOut:
-      return state;
+      return { token: "" };
     case UserActcion.Login:
-      return state;
+      return { ...action.payload };
     default:
       return state;
   }

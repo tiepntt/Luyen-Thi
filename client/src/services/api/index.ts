@@ -1,6 +1,7 @@
 import axios from "axios";
 import { CommonFunction } from "redux/common/action";
 import { store } from "redux/store";
+import { UserFunction } from "redux/user/action";
 import { history } from "services/history";
 import { toastService } from "services/toast";
 
@@ -52,6 +53,7 @@ export const setupAxios = () => {
           store.dispatch(
             CommonFunction.setRedirectPath(window.location.pathname)
           );
+          store.dispatch(UserFunction.logout());
           history.push("/auth/login");
           message = "Phiên đăng nhập đã hết hạn!";
           break;

@@ -4,11 +4,11 @@ export enum UserActcion {
   Login = "Login",
   LogOut = "Logout",
 }
-export const UserRedux = {
+export const UserFunction = {
   login: (user: User) => {
     return { type: UserActcion.Login, payload: user };
   },
-  logout: (user: User) => {
-    return { type: UserActcion.Login, payload: user };
+  logout: () => {
+    return { type: UserActcion.Login };
   },
 };
