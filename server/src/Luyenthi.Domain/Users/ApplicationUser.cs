@@ -18,5 +18,7 @@ namespace Luyenthi.Domain.User
         public string LastName { get; set; }
         public DateTime BirthDay { get; set; }
         public Gender Gender { get; set; }
+        public virtual List<DocumentHistory> DocumentHistories { get; set; }
+        public virtual List<QuestionHistory> QuestionHistories { get; set; }
     }
 }

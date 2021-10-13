@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.IdentityModel.SecurityTokenService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,9 @@ namespace Luyenthi.HttpApi.Host.Middleware
                         response.StatusCode = (int)HttpStatusCode.NotFound;
                         break;
                     case BadHttpRequestException e:
+                        response.StatusCode = (int)HttpStatusCode.BadRequest;
+                        break;
+                    case BadRequestException e: 
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;
                     default:

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Luyenthi.DbMigrator.Migrations
 {
     [DbContext(typeof(LuyenthiDbContext))]
-    [Migration("20211010023903_Initial")]
+    [Migration("20211013210305_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -137,6 +137,49 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.HasIndex("SubjectId");
 
                     b.ToTable("Documents");
+                });
+
+            modelBuilder.Entity("Luyenthi.Domain.DocumentHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid?>("DocumentId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("NumberCorrect")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumberIncorrect")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("DocumentId");
+
+                    b.ToTable("DocumentHistories");
                 });
 
             modelBuilder.Entity("Luyenthi.Domain.Grade", b =>
@@ -272,6 +315,47 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.HasIndex("UnitId");
 
                     b.ToTable("Questions");
+                });
+
+            modelBuilder.Entity("Luyenthi.Domain.QuestionHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Answer")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("AnswerStatus")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid?>("DocumentHistoryId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("QuestionId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("DocumentHistoryId");
+
+                    b.HasIndex("QuestionId");
+
+                    b.ToTable("QuestionHistories");
                 });
 
             modelBuilder.Entity("Luyenthi.Domain.QuestionSet", b =>
@@ -483,29 +567,6 @@ namespace Luyenthi.DbMigrator.Migrations
                         .IsUnique();
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("cb3850a2-0a32-4cee-a175-08df5ec6169b"),
-                            AccessFailedCount = 0,
-                            BirthDay = new DateTime(2000, 6, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "58ba7fed-34bd-4b5b-9ef0-8e093cbcf60a",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "nguyenthaitiep206@gmail.com",
-                            EmailConfirmed = true,
-                            FirstName = "Tiệp",
-                            Gender = 0,
-                            LastName = "Nguyễn",
-                            LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEKU5h2rB6Gz9PWvhptuQ/ZM4AphclxwR0w5XuZGOFp3FNhyI6HJe1DRhTF9xkkh0pA==",
-                            PhoneNumber = "0819200620",
-                            PhoneNumberConfirmed = true,
-                            Provider = "luyenthi",
-                            TwoFactorEnabled = false,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            UserName = "admin"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -533,29 +594,6 @@ namespace Luyenthi.DbMigrator.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("daf39ce6-9c5f-495e-af95-810df7f64e40"),
-                            ConcurrencyStamp = "839735b1-1598-4069-a099-28336b106a6b",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = new Guid("f25e6a5a-2ce9-4273-9bd3-3b71755add19"),
-                            ConcurrencyStamp = "b77fb687-5858-4850-91d5-22f666518d9e",
-                            Name = "Teacher",
-                            NormalizedName = "TEACHER"
-                        },
-                        new
-                        {
-                            Id = new Guid("fcdea3ce-afe0-4fff-b32c-6c28309ec12e"),
-                            ConcurrencyStamp = "09ae7f02-cbbb-4839-b755-4ac211bb92a6",
-                            Name = "Student",
-                            NormalizedName = "STUDENT"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -636,13 +674,6 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = new Guid("cb3850a2-0a32-4cee-a175-08df5ec6169b"),
-                            RoleId = new Guid("daf39ce6-9c5f-495e-af95-810df7f64e40")
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
@@ -738,6 +769,24 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.Navigation("Subject");
                 });
 
+            modelBuilder.Entity("Luyenthi.Domain.DocumentHistory", b =>
+                {
+                    b.HasOne("Luyenthi.Domain.User.ApplicationUser", "User")
+                        .WithMany("DocumentHistories")
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Luyenthi.Domain.Document", "Document")
+                        .WithMany("DocumentHistories")
+                        .HasForeignKey("DocumentId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Document");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Luyenthi.Domain.Question", b =>
                 {
                     b.HasOne("Luyenthi.Domain.Chapter", "Chapter")
@@ -785,6 +834,31 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.Navigation("TemplateQuestion");
 
                     b.Navigation("Unit");
+                });
+
+            modelBuilder.Entity("Luyenthi.Domain.QuestionHistory", b =>
+                {
+                    b.HasOne("Luyenthi.Domain.User.ApplicationUser", "User")
+                        .WithMany("QuestionHistories")
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Luyenthi.Domain.DocumentHistory", "DocumentHistory")
+                        .WithMany("QuestionHistories")
+                        .HasForeignKey("DocumentHistoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("Luyenthi.Domain.Question", "Question")
+                        .WithMany("QuestionHistories")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DocumentHistory");
+
+                    b.Navigation("Question");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Luyenthi.Domain.QuestionSet", b =>
@@ -895,7 +969,14 @@ namespace Luyenthi.DbMigrator.Migrations
 
             modelBuilder.Entity("Luyenthi.Domain.Document", b =>
                 {
+                    b.Navigation("DocumentHistories");
+
                     b.Navigation("QuestionSets");
+                });
+
+            modelBuilder.Entity("Luyenthi.Domain.DocumentHistory", b =>
+                {
+                    b.Navigation("QuestionHistories");
                 });
 
             modelBuilder.Entity("Luyenthi.Domain.Grade", b =>
@@ -910,6 +991,8 @@ namespace Luyenthi.DbMigrator.Migrations
 
             modelBuilder.Entity("Luyenthi.Domain.Question", b =>
                 {
+                    b.Navigation("QuestionHistories");
+
                     b.Navigation("SubQuestions");
                 });
 
@@ -928,6 +1011,13 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.Navigation("Questions");
 
                     b.Navigation("TemplateQuestions");
+                });
+
+            modelBuilder.Entity("Luyenthi.Domain.User.ApplicationUser", b =>
+                {
+                    b.Navigation("DocumentHistories");
+
+                    b.Navigation("QuestionHistories");
                 });
 #pragma warning restore 612, 618
         }
