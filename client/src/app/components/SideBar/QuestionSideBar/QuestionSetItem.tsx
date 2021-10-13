@@ -42,9 +42,7 @@ const QuestionSetItem: React.FC<Props> = (props) => {
     questionSetApi.addQuestion(questionSet.id, question).then((res) => {
       if (res.status === 200) {
         toastService.success();
-        history.push(
-          `/document/${id}/questions-edit/${questionSet.id}/${res.data.id}`
-        );
+        history.push(`/editor/document/${id}/${questionSet.id}/${res.data.id}`);
         addQuestion(questionSet.id, res.data);
       } else {
         toastService.error(res.data.massage);
@@ -60,7 +58,7 @@ const QuestionSetItem: React.FC<Props> = (props) => {
           onClick={() => {
             setShowQueston(!showQueston);
             history.push(
-              `/document/${questionSet.documentId}/questions-edit/${questionSet.id}`
+              `/editor/document/${questionSet.documentId}/${questionSet.id}`
             );
           }}
         >

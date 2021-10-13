@@ -14,7 +14,7 @@ const AppLayout: React.FC = ({ children }) => {
     setShowHeader,
     setShowFooter,
   };
-  const [isMobileNavOpen, setMobileNavOpen] = useState(false);
+  const [, setMobileNavOpen] = useState(false);
 
   return (
     <AppContext.Provider value={value}>
@@ -25,9 +25,7 @@ const AppLayout: React.FC = ({ children }) => {
           </div>
         )}
         <div className="app-content">{children}</div>
-        <div className="footer">
-          <AppFooter />
-        </div>
+        <div className="footer">{showFooter && <AppFooter />}</div>
       </div>
     </AppContext.Provider>
   );

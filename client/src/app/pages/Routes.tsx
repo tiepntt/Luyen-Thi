@@ -1,9 +1,11 @@
+import DocumentEditQuestion from "app/components/admin/document/document-edit-question/DocumentEditQuestion";
 import { useAppContext } from "hooks/AppContext/AppContext";
 import React, { useEffect } from "react";
 import { Redirect, Route, Switch } from "react-router";
 
 import NotFoundPage from "./404/NotFound";
 import AdminPage from "./Admin/Admin";
+import AuthPage from "./Auth/Auth";
 import DocumentPage from "./Document/Document";
 import HomePage from "./Home/Home";
 import ProfilePage from "./Profile/Profile";
@@ -20,14 +22,10 @@ const routes: RouterProps[] = [
     path: "/",
     component: HomePage,
     exact: true,
-    showHeader: true,
-    showFooter: true,
   },
   {
     path: "/home",
     component: HomePage,
-    showHeader: true,
-    showFooter: true,
   },
   {
     path: "/admin",
@@ -38,35 +36,35 @@ const routes: RouterProps[] = [
   {
     path: "/profile",
     component: ProfilePage,
-    showHeader: true,
-    showFooter: true,
   },
   {
-    path: "/de-thi",
+    path: "/document",
     component: DocumentPage,
-    showHeader: true,
-    showFooter: true,
     exact: true,
   },
   {
-    path: "/lop-hoc",
+    path: "/class-room",
     component: DocumentPage,
-    showHeader: true,
-    showFooter: true,
     exact: true,
   },
   {
-    path: "/on-luyen",
+    path: "/practice",
     component: DocumentPage,
-    showHeader: true,
-    showFooter: true,
     exact: true,
   },
   {
     path: "/404",
     component: NotFoundPage,
-    showHeader: true,
-    showFooter: true,
+  },
+  {
+    path: "/editor/document/:id",
+    component: DocumentEditQuestion,
+    showHeader: false,
+    showFooter: false,
+  },
+  {
+    path: "/auth",
+    component: AuthPage,
   },
 ];
 const Routes: React.FC = () => {
@@ -84,8 +82,8 @@ const Routes: React.FC = () => {
 const RouterComponent: React.FC<RouterProps> = (props) => {
   const { setShowFooter, setShowHeader } = useAppContext();
   useEffect(() => {
-    setShowHeader(props.showHeader || false);
-    setShowFooter(props.showFooter || false);
+    setShowHeader(props.showHeader || true);
+    setShowFooter(props.showFooter || true);
   });
   return <>{React.createElement(props.component)}</>;
 };

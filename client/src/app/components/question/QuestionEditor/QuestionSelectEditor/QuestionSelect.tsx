@@ -75,7 +75,7 @@ const QuestionSelectEditor: React.FC<Props> = ({
         if (res.status === 200) {
           toastService.success("Đã xóa");
           removeQuestion(questionSetId, question.id);
-          history.push(`/document/${id}/questions-edit/${questionSetId}`);
+          history.push(`/editor/document/${id}/${questionSetId}`);
         } else {
           toastService.error(res.data.message);
         }

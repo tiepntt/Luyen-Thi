@@ -1,5 +1,4 @@
 import BoxApp from "app/components/_share/Box/Box";
-import { useDocumentDetailContext } from "hooks/Document/DocumentDetailContext";
 import { useGrades } from "hooks/Grade-Subject/useGrades";
 import { useSubjects } from "hooks/Grade-Subject/useSubjects";
 import { DocumentUpdateInfo } from "models/document/DocumentUpdateInfo";
@@ -16,6 +15,7 @@ import { getIdFromUrl, IsGoogleDocUrl } from "utils/urlFunction";
 import "./style.scss";
 import { uploadApi } from "services/api/upload/uploadCloundinary";
 import UploadImageForm from "app/components/_share/Form/UploadImage/UploadImageForm";
+import { useDocumentDetailContext } from "hooks/Document/DocumentDetailContext";
 interface Props {
   documentId: string;
 }
@@ -303,7 +303,7 @@ const DocumentEditInfo: React.FC<Props> = ({ documentId }) => {
                   <Button
                     className="mx-2"
                     variant="outline-warning"
-                    href={`/document/${document.id}/questions-edit`}
+                    href={`/editor/document/${document.id}`}
                     target="_blank"
                   >
                     Sửa dữ liệu

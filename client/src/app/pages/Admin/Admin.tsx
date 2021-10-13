@@ -1,5 +1,5 @@
 import { makeStyles, Theme } from "@material-ui/core";
-import AdminSideBar from "app/components/_share/Menu/AdminSideBar/AdminSideBar";
+import AdminSideBar from "app/components/SideBar/AdminSideBar/AdminSideBar";
 import AdminTopBar from "app/components/_share/Menu/AdminTopBar/AdminTopBar";
 import React, { useState } from "react";
 import { Redirect, Route, Switch } from "react-router";

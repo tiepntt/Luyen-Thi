@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import { Grid, makeStyles, Theme } from "@material-ui/core";
 import "./style.scss";
 import DocumentTopBar from "app/components/_share/Menu/DocumentTopBar/DocumentTopBar";
-import QuestionEditSideBar from "app/components/_share/Menu/QuestionSideBar/QuestionEditSideBar";
 import { Route, Switch, useParams } from "react-router";
 import { useQuestions } from "hooks/Question/useQuestions";
-import QuestionMatrixSideBar from "app/components/_share/Menu/QuestionMatrixSideBar/QuestionMatrixSideBar";
-import QuestionDocument from "app/components/admin/Document/SubjectDocument/DocumentDetail/question-documents/QuestionDocument";
+import QuestionMatrixSideBar from "app/components/SideBar/QuestionMatrixSideBar/QuestionMatrixSideBar";
+import QuestionDocument from "app/components/admin/document/SubjectDocument/DocumentDetail/question-documents/QuestionDocument";
 import QuestionEditor from "app/components/question/QuestionEditor/QuestionEditor";
 import { DocumentEditContext } from "hooks/DocumentEditQuestionContext/DocumentEditContext";
 import AddQuestionSetModal from "app/components/_share/Modals/AddQuestionSetModal/AddQuestionSetModal";
 import QuestionSetEdit from "app/components/question-set/QuestionSetEdit/QuestionSetEdit";
-const DocumentEditQuestion = () => {
+import QuestionEditSideBar from "app/components/SideBar/QuestionSideBar/QuestionEditSideBar";
+const DocumentEditQuestion: React.FC = () => {
   const { id } = useParams<Params>();
   const [showModalAddQuestionSet, setShowModalAddQuestionSet] = useState(false);
   // const [documentInfo, setDocumentInfo] = useState<DocoumentTitle>();
@@ -39,7 +39,7 @@ const DocumentEditQuestion = () => {
                   <Grid container>
                     <Grid item xl={9} lg={8} md={12}>
                       <Switch>
-                        <Route path="/document/:id/questions-edit" exact={true}>
+                        <Route path="/editor/document/:id/" exact={true}>
                           <div className="preview-questions ">
                             <QuestionDocument
                               documentId={id}
@@ -50,7 +50,7 @@ const DocumentEditQuestion = () => {
                           </div>
                         </Route>
                         <Route
-                          path="/document/:id/questions-edit/:questionSetId"
+                          path="/editor/document/:id/:questionSetId"
                           exact={true}
                         >
                           <div className="edit-question ">
@@ -58,7 +58,7 @@ const DocumentEditQuestion = () => {
                           </div>
                         </Route>
                         <Route
-                          path="/document/:id/questions-edit/:questionSetId/:questionId"
+                          path="/editor/document/:id/:questionSetId/:questionId"
                           exact={true}
                         >
                           <div className="edit-question ">
@@ -70,7 +70,7 @@ const DocumentEditQuestion = () => {
                     <Grid item xl={3} lg={4} md={12}>
                       <Switch>
                         <Route
-                          path="/document/:id/questions-edit/:questionSetId/:questionId"
+                          path="/editor/document/:id/:questionSetId/:questionId"
                           exact={true}
                         >
                           <QuestionMatrixSideBar />
@@ -107,6 +107,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     flex: "1 1 auto",
     overflow: "hidden",
+    paddingTop: 64,
     [theme.breakpoints.up("lg")]: {
       paddingLeft: 375,
     },

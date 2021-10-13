@@ -34,21 +34,21 @@ const AppNavbar: React.FC<Props> = ({ className, onMobileNavOpen, rest }) => {
                 Trang chủ
               </NavLink>
               <NavLink
-                to="/de-thi"
+                to="/document"
                 activeClassName="active"
                 className="navbar-item"
               >
                 Đề thi
               </NavLink>
               <NavLink
-                to="/on-luyen"
+                to="/practice"
                 activeClassName="active"
                 className="navbar-item"
               >
                 Luyện thi
               </NavLink>
               <NavLink
-                to="/lop-hoc"
+                to="/class-room"
                 activeClassName="active"
                 className="navbar-item"
               >

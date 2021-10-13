@@ -1,9 +1,10 @@
 import GradeNavbar from "app/components/_share/Menu/GradeNavbar/GradeNavbar";
 import { useSubjects } from "hooks/Grade-Subject/useSubjects";
 import React from "react";
-import SubjectItem from "./SubjectItem";
+
 import { Col, Row } from "react-bootstrap";
 import { useHistory, useLocation } from "react-router";
+import SubjectItem from "./SubjectItem";
 
 const GradeDocument = () => {
   const { subjects } = useSubjects();

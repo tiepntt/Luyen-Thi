@@ -3,10 +3,10 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import "./style.scss";
 import { useParams } from "react-router";
 import Select from "react-select";
-import Loading from "../../StaticLayout/Loading";
 import { QuestionStatus } from "settings/question/questionStatus";
 import { Guid } from "utils/guidFunction";
 import { useQuestionMatrix } from "hooks/Question/useQuestionMatrix";
+import Loading from "app/components/_share/StaticLayout/Loading";
 
 const QuestionMatrixSideBar = () => {
   const { questionId } = useParams<any>();
