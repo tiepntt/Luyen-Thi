@@ -2,7 +2,6 @@ import DocumentEditQuestion from "app/components/admin/document/document-edit-qu
 import { useAppContext } from "hooks/AppContext/AppContext";
 import React, { useEffect } from "react";
 import { Redirect, Route, Switch } from "react-router";
-
 import NotFoundPage from "./404/NotFound";
 import AdminPage from "./Admin/Admin";
 import AuthPage from "./Auth/Auth";
