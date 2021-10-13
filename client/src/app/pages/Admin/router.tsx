@@ -1,5 +1,5 @@
 import Dashboard from "app/components/admin/Dashboard/Dashboard";
-import Document from "app/components/admin/Document/Document";
+import Document from "app/components/admin/document/Document";
 import Matrix from "app/components/admin/Matrix/Matrix";
 import Profile from "app/components/admin/Profile/Profile";
 import TemplateExam from "app/components/admin/TemplateExam/TemplateExam";

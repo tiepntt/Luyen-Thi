@@ -49,7 +49,7 @@ const QuestionSetEdit = () => {
       questionSetApi.remove(questionSetId).then((res) => {
         if (res.status === 200) {
           toastService.success("Đã xóa");
-          history.push(`/document/${questionSet?.documentId}/questions-edit`);
+          history.push(`/editor/document/${questionSet?.documentId}`);
           removeQuestionSet(questionSetId);
           return;
         } else {

@@ -1,4 +1,8 @@
 import axios from "axios";
+import { CommonFunction } from "redux/common/action";
+import { store } from "redux/store";
+import { UserFunction } from "redux/user/action";
+import { history } from "services/history";
 import { toastService } from "services/toast";
 
 const axiosInstance = axios.create({
@@ -8,21 +12,10 @@ const axiosInstance = axios.create({
 
 export const setupAxios = () => {
   const requestHandler = (request: any) => {
-    // const {
-    //   auth: { authToken, tenant, language },
-    // } = store.getState();
-
-    // if (authToken) {
-    //   request.headers.Authorization = `Bearer ${authToken}`;
-    // }
-
-    // if (language) {
-    //   request.headers["Accept-Language"] = language;
-    // }
-
-    // if (tenant) {
-    //   request.headers.__tenant = tenant.tenantId;
-    // }
+    const authToken = localStorage.getItem("token");
+    if (authToken) {
+      request.headers.Authorization = `Bearer ${authToken}`;
+    }
 
     return request;
   };
@@ -57,7 +50,12 @@ export const setupAxios = () => {
     } else {
       switch (status) {
         case 401:
-          message = "Bạn cần đăng nhập để thực hiện chức năng này!";
+          store.dispatch(
+            CommonFunction.setRedirectPath(window.location.pathname)
+          );
+          store.dispatch(UserFunction.logout());
+          history.push("/auth/login");
+          message = "Phiên đăng nhập đã hết hạn!";
           break;
         case 403:
           message = "Bạn không thể thực hiện chức năng này!";

@@ -1,0 +1,71 @@
+#search-header {
+  background-image: url("https://mogi.vn/content/images/home/home-bg-d.jpg");
+  text-align: center;
+  background-size: auto;
+  padding-right: 1px;
+  display: block;
+  // height: auto;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  .border {
+    background-color: rgba(40, 40, 46, 0.6);
+    padding: 10px;
+    border: none !important;
+    border-radius: 4px;
+  }
+  h1 {
+    margin: 10px;
+    text-align: left;
+    font-size: 30px;
+    font-weight: bold;
+    color: #ffffff;
+  }
+  .input-group-text {
+    background-color: white !important;
+    border: 0 !important;
+  }
+  .input-group-prepend {
+    border: 0 white;
+  }
+  .drop-down {
+    background-color: white;
+    width: 100%;
+    padding: 0;
+    padding-left: 10px;
+    height: 100%;
+    font-size: 0.95rem;
+    border-radius: 5px;
+    text-align: left;
+    font-family: Helvetica;
+  }
+
+  .drop-down :hover {
+    border: none;
+  }
+  .col-4,
+  .col-12,
+  .col-lg-2,
+  .col-6 {
+    padding: 0;
+  }
+  .col-12,
+  .col-6 {
+    padding-left: 2px;
+    height: 40px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+  }
+  .container {
+    padding: 0;
+  }
+}
+@media only screen and (max-width: 800px) {
+  .search-header {
+    padding-top: 5px !important;
+    .header-search-title {
+      display: none !important;
+    }
+    height: auto !important;
+    padding-bottom: 0 !important;
+  }
+}

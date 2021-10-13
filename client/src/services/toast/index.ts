@@ -7,6 +7,6 @@ export const toastService = {
     toast.error(message || "Thất bại");
   },
   warning: (message?: string) => {
-    toast.error(message || "Có lỗi xảy ra");
+    toast.warning(message || "Có lỗi xảy ra");
   },
 };

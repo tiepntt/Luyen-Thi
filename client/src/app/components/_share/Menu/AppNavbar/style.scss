@@ -1,0 +1,24 @@
+.app-nav-bar {
+  background: white !important;
+  box-shadow: -1px 2px 4px rgba(0, 0, 0, 0.25) !important;
+  color: rgb(2, 34, 61) !important;
+  position: sticky !important;
+
+  .navbar-item {
+    text-decoration: none;
+    font-size: 18px;
+    margin: 0 10px;
+    color: #959191;
+  }
+  .active {
+    color: #006970;
+  }
+  .auth-button {
+    button {
+      background: #019176 !important;
+      border: none !important;
+    }
+  }
+  &.sticky {
+  }
+}

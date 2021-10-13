@@ -1,23 +1,31 @@
-import DocumentEditQuestion from "./document-edit-question/DocumentEditQuestion";
+import DocumentExam from "./document-exam/DocumentExam";
+import DocumentPreivew from "./document-preview/DocumentPreivew";
+import DocumentSearch from "./document-search/DocumentSearch";
 
 export const routes = [
   {
     path: "/document",
-    exact: true,
-    component: DocumentEditQuestion,
-  },
-  {
-    path: "document/:id/preview",
-    component: DocumentEditQuestion,
+    component: DocumentSearch,
     exact: true,
   },
   {
-    path: "/document/:id/detail",
-    component: DocumentEditQuestion,
+    path: "/document/exam",
+    component: DocumentSearch,
     exact: true,
   },
   {
-    path: "/document/:id/questions-edit",
-    component: DocumentEditQuestion,
+    path: "/document/",
+    component: DocumentSearch,
+    exact: true,
+  },
+  {
+    path: "/document/:id/preview",
+    exact: true,
+    component: DocumentPreivew,
+  },
+  {
+    path: "/document/:id",
+    exact: true,
+    component: DocumentExam,
   },
 ];
