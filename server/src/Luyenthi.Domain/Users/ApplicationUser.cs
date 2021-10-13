@@ -18,5 +18,6 @@ namespace Luyenthi.Domain.User
         public string LastName { get; set; }
         public DateTime BirthDay { get; set; }
         public Gender Gender { get; set; }
+        public string? ActiveCode { get; set; }
     }
 }

@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Transactions;
+using System.Security.Cryptography;
+using System.Text;
 
 
 namespace Luyenthi.HttpApi.Host
@@ -48,15 +50,15 @@ namespace Luyenthi.HttpApi.Host
             if (isEmail)
             {
                 // đăng nhập bằng email
-                user = await  _userManager.FindByEmailAsync(userName);
-                if(user != null)
+                user = await _userManager.FindByEmailAsync(userName);
+                if (user != null)
                 {
                     userName = user.UserName;
                 }
             }
             else
             {
-                user  = await _userManager.FindByNameAsync(userName);
+                user = await _userManager.FindByNameAsync(userName);
             }
             var processLogin = await _signInManager.PasswordSignInAsync(
                 userName, requestLogin.Password, false, lockoutOnFailure: false
@@ -74,7 +76,7 @@ namespace Luyenthi.HttpApi.Host
                 AccessToken = token,
                 UserInfo = userInfo
             };
-            
+
         }
         [HttpPost("register")]
         public async Task<UserResponseLogin> Register(UserRequestRegister requestRegister)
@@ -91,9 +93,14 @@ namespace Luyenthi.HttpApi.Host
                 throw new BadRequestException("Tên đăng nhập đã tồn tại");
             }
             var user = _mapper.Map<ApplicationUser>(requestRegister);
+
             user.CreatedAt = DateTime.Now;
             user.CreatedAt = DateTime.Now;
             user.Provider = "luyenthi";
+
+            string activeCode = MutationService.GenerateActiveCode();
+            user.ActiveCode = HashingService.Md5Encrypt(activeCode);
+
             var proccessUser = await _userManager.CreateAsync(user, requestRegister.Password);
             if (!proccessUser.Succeeded)
             {
@@ -104,6 +111,13 @@ namespace Luyenthi.HttpApi.Host
             {
                 throw new BadRequestException($"Lỗi cấp quyền người dùng");
             }
+
+            SendMailDto mailRequest = new();
+            mailRequest.ToEmail = user.Email;
+            mailRequest.Subject = "Mã kích hoạt tài khoản";
+            mailRequest.Body = $"Mã kích hoạt tài khoản: {activeCode}";
+            await _mailService.SendMailAsync(mailRequest);
+
             var token = _jwtService.GenarateToken(user);
             var userInfo = _mapper.Map<UserInfoDto>(user);
             var userLoginInfo = new UserLoginInfo("luyenthi", requestRegister.Email, "luyenthi".ToUpperInvariant());
@@ -135,7 +149,7 @@ namespace Luyenthi.HttpApi.Host
         {
             throw new BadRequestException("Thông tin không hợp lệ");
         }
-        [HttpPost("send-mail")]
+        [HttpPost("send-maisl")]
         public async Task<IActionResult> SendMail(SendMailDto mailRequest)
         {
             try
@@ -143,10 +157,91 @@ namespace Luyenthi.HttpApi.Host
                 await _mailService.SendMailAsync(mailRequest);
                 return Ok();
             }
-            catch(Exception ex)
+            catch (Exception)
             {
                 throw;
             }
+        }
+        [Authorize]
+        [HttpPost("active-account")]
+        [Consumes("application/json")]
+        public async Task<IActionResult> ActiveAccount(UserActiveAccount body)
+        {
+            ApplicationUser userContext = (ApplicationUser)HttpContext.Items["User"];
+            var email = userContext.Email;
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user != null && user.ActiveCode != null)
+            {
+                string decodeCipher = HashingService.Md5Decrypt(user.ActiveCode);
+                if (decodeCipher == body.ActiveCode)
+                {
+                    user.EmailConfirmed = true;
+                    user.ActiveCode = null;
+                    await _userManager.UpdateAsync(user);
+                    return Ok();
+                }
+                else
+                {
+                    throw new BadRequestException("Active account failed");
+                }
+            }
+            else
+            {
+                throw new UnauthorizedAccessException($"Unauthorized");
+            }
+        }
+
+        [HttpPost("forget-password")]
+        [Consumes("application/json")]
+        public async Task ForgetPassword(UserForgetPassword body)
+        {
+            var email = body.Email.Trim();
+            if (string.IsNullOrEmpty(email))
+            {
+                throw new BadRequestException("Email can not be blank");
+            }
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                throw new BadRequestException("User not found");
+            }
+            string password = MutationService.GeneratePassword();
+            user.PasswordHash = password;
+            string hashPassword = _userManager.PasswordHasher.HashPassword(user, password);
+            user.PasswordHash = hashPassword;
+            await Task.WhenAll(
+                _userManager.UpdateAsync(user),
+                _mailService.SendMailAsync(new SendMailDto {
+                    ToEmail = email,
+                    Subject = "Quên mật khẩu",
+                    Body=$"Mật khẩu mới: {password}"}
+                    )
+                );
+        }
+
+        [Authorize]
+        [HttpPut("change-password")]
+        [Consumes("application/json")]
+        public async Task<IActionResult> ResetPassword(UserResetPassword body)
+        {
+            ApplicationUser userContext = (ApplicationUser)HttpContext.Items["User"];
+            if (userContext == null)
+            {
+                throw new UnauthorizedAccessException();
+            }
+            if (body.NewPassword != body.ConfirmPassword)
+            {
+                throw new BadRequestException("Not match");
+            }
+            var user = await _userManager.FindByIdAsync(userContext.Id.ToString());
+            if (user == null)
+            {
+                throw new BadRequestException("User not found");
+            }
+            string hashPassword = _userManager.PasswordHasher.HashPassword(user, body.ConfirmPassword);
+            user.PasswordHash = hashPassword;
+            await _userManager.UpdateAsync(user);
+            return Ok();
         }
     }
 }

@@ -80,6 +80,8 @@ namespace Luyenthi
             services.AddTransient<JwtService>();
             services.AddTransient<TemplateQuestionService>();
             services.AddTransient<IMailService, Services.MailService>();
+            services.AddTransient<HashingService>();
+            services.AddTransient<MutationService>();
            
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
                 {
@@ -164,6 +166,8 @@ namespace Luyenthi
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseMiddleware<HandleErrorMiddleware>();
             app.UseMiddleware<JwtMiddleware>();
