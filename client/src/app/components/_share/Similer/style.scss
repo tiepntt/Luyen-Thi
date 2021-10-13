@@ -1,0 +1,21 @@
+.similar {
+  border-radius: 5px;
+  text-align: left;
+  border: 1px solid #aaaaaa;
+  .title {
+    font-weight: bold;
+    font-size: 0.95rem;
+    padding: 7px 0 7px 25px;
+  }
+  ul {
+    padding-left: 10px;
+    list-style: none;
+    font-size: 0.85rem;
+    li {
+      span {
+        font-size: 0.75rem;
+        margin-left: 15px;
+      }
+    }
+  }
+}

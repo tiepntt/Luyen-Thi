@@ -1,0 +1,19 @@
+.auto-complete {
+  .MuiOutlinedInput-adornedEnd {
+    padding: 0 !important;
+  }
+  .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"]
+    .MuiAutocomplete-input {
+    padding: 5.5px 4px 9.5px 4px !important;
+  }
+  .MuiInputBase-root.MuiOutlinedInput-root.MuiAutocomplete-inputRoot.MuiInputBase-fullWidth.MuiInputBase-formControl.MuiInputBase-adornedEnd.MuiOutlinedInput-adornedEnd {
+    margin-top: 5px !important;
+    border: none !important;
+  }
+  input {
+    border: none !important;
+  }
+  .MuiAutocomplete-endAdornment {
+    top: 1px !important;
+  }
+}

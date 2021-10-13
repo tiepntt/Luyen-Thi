@@ -35,8 +35,8 @@ const AppFooter = () => {
               </span>
             </div>
           </Col>
-          <Col lg={4} md={6} className="mt-2">
-            <div className="label mb-3">Đề thi theo môn</div>
+          <Col lg={4} md={6} className="mt-3">
+            <div className="label mb-2">Đề thi theo môn</div>
             <Row>
               <Col lg={6} md={6} xs={6}>
                 <div className="mt-1">Toán học</div>
@@ -52,21 +52,21 @@ const AppFooter = () => {
               </Col>
             </Row>
           </Col>
-          <Col lg={2} md={6} xs={6} className="mt-2">
+          <Col lg={2} md={6} xs={6} className="mt-3">
             <Row>
-              <div className="label mb-3">Ôn luyện</div>
+              <div className="label mb-2">Ôn luyện</div>
               <div className="mt-1">Lớp 10</div>
               <div className="mt-1">Lớp 11</div>
               <div className="mt-1">Lớp 12</div>
               <div className="mt-1">Ôn thi THPT Quốc gia</div>
             </Row>
           </Col>
-          <Col lg={2} md={6} xs={6} className="mt-2">
+          <Col lg={2} md={6} xs={6} className="mt-3">
             <Row>
-              <div className="label mb-3">Hỗ trợ</div>
+              <div className="label mb-2">Hỗ trợ</div>
               <div className="mt-1">Báo cáo</div>
               <div className="mt-1">Hướng dẫn sử dụng</div>
-              <div className="mt-1">Giáo dục công dân</div>
+              <div className="mt-1">Nhóm hỗ trợ học tập</div>
             </Row>
           </Col>
         </Row>

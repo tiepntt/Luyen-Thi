@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import { Hidden, Drawer, makeStyles, Theme, Box } from "@material-ui/core";
 import { useLocation } from "react-router-dom";
 import { QuestionSetDetail } from "models/questionSet/QuestionSetDetail";
-import QuestionSetItem from "./QuestionSetItem/QuestionSetItem";
 import "./style.scss";
 import { useDocumentEditContext } from "hooks/DocumentEditQuestionContext/DocumentEditContext";
+import QuestionSetItem from "./QuestionSetItem";
 interface Props {
   onMobileClose: () => void;
   openMobile: boolean;

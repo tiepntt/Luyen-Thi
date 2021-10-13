@@ -3,7 +3,7 @@ import { useSubjects } from "hooks/Grade-Subject/useSubjects";
 import React from "react";
 import { Col, Row } from "react-bootstrap";
 import { useHistory, useLocation } from "react-router-dom";
-import SubjectItem from "../../Document/GradeDocument/SubjectItem";
+import SubjectItem from "../../document/GradeDocument/SubjectItem";
 
 const ListSubjectMatrix = () => {
   const { subjects } = useSubjects();

@@ -14,9 +14,7 @@ const QuestionImagePreview: React.FC<Props> = (props) => {
   const { id } = useParams<any>();
   const currentQuestion = useDocumentEditContext().question;
   const selectQuestion = () => {
-    history.push(
-      `/document/${id}/questions-edit/${questionSetId}/${question.id}`
-    );
+    history.push(`/editor/document/${id}/${questionSetId}/${question.id}`);
   };
   return (
     <div
