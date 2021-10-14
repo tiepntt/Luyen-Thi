@@ -13,8 +13,6 @@ export const CommonReducer = (
 ) => {
   switch (action.type) {
     case CommonAction.SetRedirectPath:
-      console.log(state);
-
       return { ...state, redirectPath: action.payload?.redirectPath };
     case CommonAction.RemoveRedirectPath:
       return { ...state, redirectPath: "/" };

@@ -31,7 +31,7 @@ export const setupAxios = () => {
     } else {
       toastService.error("Một lỗi không mong muốn đã xảy ra");
     }
-    return Promise.reject(error);
+    return errorRes;
   };
   interface ResponseError {
     error: any;

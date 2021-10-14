@@ -10,11 +10,11 @@ export interface User {
   birthDay: Date;
   gender: Gender;
   roles: Role[];
-  emailConfirm: boolean;
-  token?: string;
+  emailConfirmed: boolean;
+  avatarUrl?: string;
 }
 
 export interface UserRedux {
-  token: string;
-  user?: User;
+  accessToken: string;
+  userInfo?: User;
 }
