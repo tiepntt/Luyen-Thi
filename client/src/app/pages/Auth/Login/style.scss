@@ -1,0 +1,34 @@
+.login {
+  box-shadow: 1px 1px 13px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+  padding: 20px 10px;
+  margin: 100px 300px;
+  .link {
+    cursor: pointer;
+    color: #0035f2;
+  }
+
+  .header-login {
+    color: #007972;
+  }
+  .login-another {
+    color: white;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    .title-move-register {
+      color: black;
+    }
+  }
+  .group-submit-login {
+    display: flex;
+    justify-content: space-between;
+    .button-submit-login {
+      background: #007972;
+      color: white;
+    }
+    .link {
+      transform: translateY(25%);
+    }
+  }
+}
