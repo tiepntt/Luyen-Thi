@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import { QuestionSetDetail } from "models/questionSet/QuestionSetDetail";
 import "./style.scss";
 import { useDocumentEditContext } from "hooks/DocumentEditQuestionContext/DocumentEditContext";
-import QuestionSetItem from "./QuestionSetItem";
+import QuestionSetItem from "./QuestionSetItem/QuestionSetItem";
 interface Props {
   onMobileClose: () => void;
   openMobile: boolean;

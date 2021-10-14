@@ -79,10 +79,11 @@ const Routes: React.FC = () => {
   );
 };
 const RouterComponent: React.FC<RouterProps> = (props) => {
+  const { showFooter = true, showHeader = true } = props;
   const { setShowFooter, setShowHeader } = useAppContext();
   useEffect(() => {
-    setShowHeader(props.showHeader || true);
-    setShowFooter(props.showFooter || true);
+    setShowHeader(showHeader);
+    setShowFooter(showFooter);
   });
   return <>{React.createElement(props.component)}</>;
 };

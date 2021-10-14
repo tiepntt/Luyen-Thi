@@ -28,14 +28,14 @@
 .admin-wrap {
   width: 100%;
   position: relative;
-  .main-content-document {
+  .admin-main-content {
     margin-top: 5px;
     padding: 16px 24px;
     background: #f6f5f5;
   }
 }
 @media screen and (max-width: 600px) {
-  .main-content-document {
+  .admin-main-content {
     padding: 5px !important;
   }
 }
