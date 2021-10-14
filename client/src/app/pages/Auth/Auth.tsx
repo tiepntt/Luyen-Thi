@@ -1,20 +1,33 @@
-import React, { useState } from "react";
+import { UserRedux } from "models/user/userInfo";
+import React, { useEffect } from "react";
+import { Container } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { Route, Switch } from "react-router";
+import { RootState } from "redux/store";
+import { history } from "services/history";
 import Login from "./Login/Login";
 import Register from "./Register/Register";
 
 const AuthPage = (props: any) => {
-  const [haveAccount, setHaveAccount] = useState(true);
+  const user = useSelector<RootState, UserRedux>(
+    (root: RootState) => root.UserReducer
+  );
+  useEffect(() => {
+    if (user && user.user) {
+      history.push("/");
+    }
+  });
   return (
-    <div>
-      {haveAccount ? (
-        <Login
-          onHide={props.onHide}
-          onMoveToRegister={() => setHaveAccount(false)}
-        />
-      ) : (
-        <Register onMoveToLogin={() => setHaveAccount(true)} />
-      )}
-    </div>
+    <Container>
+      <Switch>
+        <Route path="/auth/login" exact>
+          <Login />
+        </Route>
+        <Route path="/auth/register" exact>
+          <Register />
+        </Route>
+      </Switch>
+    </Container>
   );
 };
 
