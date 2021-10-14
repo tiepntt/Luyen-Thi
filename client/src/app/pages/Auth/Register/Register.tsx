@@ -6,9 +6,14 @@ import * as Yup from "yup";
 import DatePicker from "react-datepicker";
 import "./style.scss";
 import _ from "lodash";
+import { authApi } from "services/api/auth/auth";
+import { toastService } from "services/toast";
+import { useDispatch } from "react-redux";
+import { UserFunction } from "redux/user/action";
 
 const Register = (props: any) => {
   const [isSubmit, setIsSubmit] = useState(false);
+  const dispatch = useDispatch();
   const formik = useFormik({
     validationSchema: SignInSchema,
     initialValues: {
@@ -21,25 +26,27 @@ const Register = (props: any) => {
       phoneNumber: "",
       birthDay: new Date(),
     },
-    onSubmit: (values) => {
-      console.log(values);
-      props.onMoveToLogin();
-    },
+    onSubmit: (values) => {},
   });
   const onSubmit = (event: any) => {
     event.preventDefault();
     setIsSubmit(true);
     if (_.isEmpty(formik.errors)) {
-      console.log("tru");
+      authApi.register(formik.values).then((res) => {
+        if (res.status === 200) {
+          dispatch(UserFunction.login(res.data));
+        } else {
+          toastService.error(res.data.message);
+        }
+      });
     } else {
-      console.log("fasle");
     }
   };
   return (
     <div className="register">
       <Form className="m-4" onSubmit={onSubmit}>
         <h2 className="text-center header-register">Tạo tài khoản</h2>
-        <Row>
+        <Row className="mt-3">
           <Form.Group
             as={Col}
             md={6}
@@ -209,12 +216,13 @@ const Register = (props: any) => {
               onChange={(date: any) =>
                 formik.setValues({ ...formik.values, birthDay: date })
               }
+              name="birthDay"
               maxDate={new Date()}
               dateFormat="dd/MM/yyyy"
             />
           </Form.Group>
         </Row>
-        <div className="text-center">
+        <div className="text-center mt-3">
           <Button className="button-submit-register m-2" type="submit">
             Đăng ký
           </Button>

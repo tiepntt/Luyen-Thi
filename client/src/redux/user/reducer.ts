@@ -1,9 +1,9 @@
-import { UserRedux } from "models/user/userInfo";
+import { User, UserRedux } from "models/user/userInfo";
 import { ActionReducer } from "redux/model";
 import { UserActcion } from "./action";
 
 const initialState: UserRedux = {
-  token: "",
+  accessToken: "",
 };
 export const UserReducer = (
   state = initialState,
@@ -11,9 +11,18 @@ export const UserReducer = (
 ) => {
   switch (action.type) {
     case UserActcion.LogOut:
+      localStorage.removeItem("token");
       return { token: "" };
     case UserActcion.Login:
+      localStorage.setItem("token", action.payload?.accessToken as any);
       return { ...action.payload };
+    case UserActcion.EmailConfirm:
+      let userInfo = { ...state }.userInfo;
+
+      return {
+        ...state,
+        userInfo: { ...(userInfo as User), emailConfirmed: true },
+      };
     default:
       return state;
   }

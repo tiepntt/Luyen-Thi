@@ -5,6 +5,11 @@ import { useFormik } from "formik";
 import { object, string } from "yup";
 import { Link } from "react-router-dom";
 import "./style.scss";
+import { authApi } from "services/api/auth/auth";
+import { toastService } from "services/toast";
+import _ from "lodash";
+import { useDispatch } from "react-redux";
+import { UserFunction } from "redux/user/action";
 
 const SignInSchema = object().shape({
   username: string().required("Bạn chưa nhập tên đăng nhập"),
@@ -16,6 +21,7 @@ const SignInSchema = object().shape({
 const Login = (props: any) => {
   const [isSubmit, setIsSubmit] = useState(false);
 
+  const dispatch = useDispatch();
   const formik = useFormik({
     validationSchema: SignInSchema,
     initialValues: {
@@ -30,11 +36,21 @@ const Login = (props: any) => {
   const onSubmit = (event: any) => {
     event.preventDefault();
     setIsSubmit(true);
+    if (_.isEmpty(formik.errors)) {
+      authApi.login(formik.values).then((res) => {
+        if (res.status === 200) {
+          dispatch(UserFunction.login(res.data));
+        } else {
+          toastService.error(res.data.message);
+        }
+      });
+    }
   };
+
   return (
     <div className="login">
-      <Form className="m-4" onSubmit={onSubmit}>
-        <h2 className="text-center header-login mb-3">Đăng nhập</h2>
+      <Form className="m-2" onSubmit={onSubmit}>
+        <h2 className="text-center header-login mb-4">Đăng nhập</h2>
         <Row>
           <Col lg={7} id="info-login">
             <Form.Group controlId="formBasicUsername" className="text-left">
@@ -71,7 +87,6 @@ const Login = (props: any) => {
                 variant="success"
                 className="button-submit-login"
                 type="submit"
-                href="/auth/login"
               >
                 Đăng nhập
               </Button>

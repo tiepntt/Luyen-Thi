@@ -10,7 +10,7 @@ export const useRoles = (roles: Role[]) => {
     (state) => state.UserReducer
   );
   const history = useHistory();
-  const userRoles = userReducer.user?.roles;
+  const userRoles = userReducer.userInfo?.roles;
 
   useEffect(() => {
     if (userRoles) {

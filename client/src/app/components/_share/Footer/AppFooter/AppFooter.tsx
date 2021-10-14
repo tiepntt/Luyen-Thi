@@ -21,7 +21,7 @@ const AppFooter = () => {
               <span className="icon-label">
                 <FontAwesomeIcon icon={faEnvelope} />
               </span>
-              <span>nguyenthaitiep206@gmail.com</span>
+              <span>luyenthisp@gmail.com</span>
             </div>
             <div className="d-flex mt-2 social">
               <span className="icon-social">
