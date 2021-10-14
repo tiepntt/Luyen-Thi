@@ -1,26 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 
 import { useFormik } from "formik";
-import * as Yup from "yup";
-import { useHistory } from "react-router-dom";
+import { object, string } from "yup";
+import { Link } from "react-router-dom";
 import "./style.scss";
 
-const SignInSchema = Yup.object().shape({
-  username: Yup.string()
-    .max(50, "Tên đăng nhập quá dài")
-    .required("Bạn chưa nhập tên đăng nhập"),
-  password: Yup.string()
+const SignInSchema = object().shape({
+  username: string().required("Bạn chưa nhập tên đăng nhập"),
+  password: string()
     .min(4, "Mật khẩu cần trên 4 ký tự")
-    .max(50, "Mật khẩu quá dàu")
     .required("Bạn chưa nhập mật khẩu"),
 });
 
 const Login = (props: any) => {
-  const history = useHistory();
-  const moveToDashBoard = () => {
-    history.push("/dashboard");
-  };
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const formik = useFormik({
     validationSchema: SignInSchema,
@@ -29,70 +23,73 @@ const Login = (props: any) => {
       password: "",
     },
     onSubmit: (values) => {
-      console.log(values);
-      moveToDashBoard();
+      setIsSubmit(true);
+      // moveToDashBoard();
     },
   });
-
+  const onSubmit = (event: any) => {
+    event.preventDefault();
+    setIsSubmit(true);
+  };
   return (
     <div className="login">
-      <Form className="m-4" onSubmit={formik.handleSubmit}>
-        <h2 className="text-center header-login">Đăng nhập</h2>
+      <Form className="m-4" onSubmit={onSubmit}>
+        <h2 className="text-center header-login mb-3">Đăng nhập</h2>
         <Row>
-          <Col>
+          <Col lg={7} id="info-login">
             <Form.Group controlId="formBasicUsername" className="text-left">
-              <Form.Label>Tên đăng nhập: </Form.Label>
               <Form.Control
                 type="text"
                 onChange={formik.handleChange}
                 name="username"
                 value={formik.values.username}
-                isInvalid={!!formik.errors.username}
+                isInvalid={!!formik.errors.username && isSubmit}
                 placeholder="Tên đăng nhập"
               />
-              <Form.Control.Feedback type="invalid">
-                {formik.errors.username}
+              <Form.Control.Feedback type="invalid" className="ac">
+                {(isSubmit && formik.errors.username) || ""}
               </Form.Control.Feedback>
-              <br />
             </Form.Group>
-            <Form.Group controlId="formBasicPassword" className="text-left">
-              <Form.Label>Mật khẩu: </Form.Label>
+            <Form.Group
+              controlId="formBasicPassword"
+              className="text-left mt-1"
+            >
               <Form.Control
                 type="password"
                 onChange={formik.handleChange}
                 name="password"
-                isInvalid={!!formik.errors.password}
+                isInvalid={!!formik.errors.password && isSubmit}
                 value={formik.values.password}
                 placeholder="Mật khẩu"
               />
               <Form.Control.Feedback type="invalid">
-                {formik.errors.password}
+                {(isSubmit && formik.errors.password) || ""}
               </Form.Control.Feedback>
-              <br />
             </Form.Group>
-            <div className="group-submit-login">
+            <div className="group-submit-login mt-1">
               <Button
                 variant="success"
                 className="button-submit-login"
                 type="submit"
+                href="/auth/login"
               >
                 Đăng nhập
               </Button>
               <div className="link">Quên mật khẩu ?</div>
             </div>
           </Col>
-          <Col className="login-another">
+          <Col className="login-another" lg={5}>
             <Button variant="primary" className="m-2 p-2">
               Đăng nhập với Facebook
             </Button>
             <Button variant="danger" className="m-2 p-2">
               Đăng nhập với Gmail
             </Button>
-            <div className="title-move-register  m-2 p-2">
+            <div className="title-move-register ">
               Bạn chưa có tài khoản? &nbsp;
-              <span className="link" onClick={props.onMoveToRegister}>
+              <Link className="link" to="/auth/register">
                 Đăng ký
-              </span>
+              </Link>
             </div>
           </Col>
         </Row>

@@ -478,6 +478,9 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("ActiveCode")
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime>("BirthDay")
                         .HasColumnType("datetime(6)");
 

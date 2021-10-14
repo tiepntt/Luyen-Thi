@@ -166,9 +166,6 @@ namespace Luyenthi
             app.UseStaticFiles();
 
             app.UseRouting();
-            app.UseAuthentication();
-            app.UseAuthorization();
-
             app.UseMiddleware<HandleErrorMiddleware>();
             app.UseMiddleware<JwtMiddleware>();
             app.UseEndpoints(endpoints =>

@@ -112,10 +112,7 @@ namespace Luyenthi.HttpApi.Host
                 throw new BadRequestException($"Lỗi cấp quyền người dùng");
             }
 
-            SendMailDto mailRequest = new();
-            mailRequest.ToEmail = user.Email;
-            mailRequest.Subject = "Mã kích hoạt tài khoản";
-            mailRequest.Body = $"Mã kích hoạt tài khoản: {activeCode}";
+            var mailRequest = MailForm.FormActiveEmail(user, activeCode);
             await _mailService.SendMailAsync(mailRequest);
 
             var token = _jwtService.GenarateToken(user);

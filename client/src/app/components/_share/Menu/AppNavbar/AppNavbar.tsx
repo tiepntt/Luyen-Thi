@@ -56,8 +56,12 @@ const AppNavbar: React.FC<Props> = ({ className, onMobileNavOpen, rest }) => {
               </NavLink>
             </div>
             <div className="auth-button">
-              <Button className="mx-2">Đăng nhập</Button>
-              <Button className="mx-2"> Đăng ký</Button>
+              <Button className="mx-2" href="/auth/login">
+                Đăng nhập
+              </Button>
+              <Button className="mx-2" href="/auth/register">
+                Đăng ký
+              </Button>
             </div>
           </Hidden>
           <Hidden lgUp>
