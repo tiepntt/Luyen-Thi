@@ -1,20 +1,20 @@
-import LoginForm from "app/components/_share/Form/LoginFrom/LoginForm";
-import RegisterForm from "app/components/_share/Form/RegisterForm/RegisterForm";
-import React from "react";
-import { Container } from "react-bootstrap";
-import { Redirect, Route, Switch } from "react-router";
-import "./style.scss";
-const AuthPage = () => {
+import React, { useState } from "react";
+import Login from "./Login/Login";
+import Register from "./Register/Register";
+
+const AuthPage = (props: any) => {
+  const [haveAccount, setHaveAccount] = useState(true);
   return (
-    <Container className="h-100">
-      <div className="auth-page">
-        <Switch>
-          <Route path="/auth/login" exact component={LoginForm} />
-          <Route path="/auth/register" exact component={RegisterForm} />
-          <Redirect to="/" />
-        </Switch>
-      </div>
-    </Container>
+    <div>
+      {haveAccount ? (
+        <Login
+          onHide={props.onHide}
+          onMoveToRegister={() => setHaveAccount(false)}
+        />
+      ) : (
+        <Register onMoveToLogin={() => setHaveAccount(true)} />
+      )}
+    </div>
   );
 };
 
