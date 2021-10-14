@@ -3,29 +3,9 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import DatePicker from "react-datepicker";
 import "./style.scss";
-
-const SignInSchema = Yup.object().shape({
-  lastName: Yup.string().required("Bạn chưa nhập họ và tên"),
-  firstName: Yup.string().required("Bạn chưa nhập tên"),
-  username: Yup.string()
-    .matches(
-      /^[aA0-zZ9]+$/,
-      "Tên đăng không nhập chứa ký tự đặc biệt và khoảng trắng"
-    )
-    .max(16, "Tên đăng nhập quá dài")
-    .required("Trường này không được bỏ trống"),
-  password: Yup.string()
-    .min(4, "Mật khẩu cần trên 4 ký tự")
-    .max(50, "Mật khẩu quá dàu")
-    .required("Bạn chưa nhập mật khẩu"),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password"), null], "Mật khẩu không trùng khớp!")
-    .required("Required"),
-  email: Yup.string()
-    .email("Email không đúng định dạng")
-    .required("Email không được bỏ trống"),
-});
+import _ from "lodash";
 
 const Register = (props: any) => {
   const [isSubmit, setIsSubmit] = useState(false);
@@ -39,6 +19,7 @@ const Register = (props: any) => {
       confirmPassword: "",
       email: "",
       phoneNumber: "",
+      birthDay: new Date(),
     },
     onSubmit: (values) => {
       console.log(values);
@@ -48,6 +29,11 @@ const Register = (props: any) => {
   const onSubmit = (event: any) => {
     event.preventDefault();
     setIsSubmit(true);
+    if (_.isEmpty(formik.errors)) {
+      console.log("tru");
+    } else {
+      console.log("fasle");
+    }
   };
   return (
     <div className="register">
@@ -187,21 +173,47 @@ const Register = (props: any) => {
             </Form.Control.Feedback>
           </Form.Group>
         </Row>
-        <Form.Group controlId="formBasicPhoneNumber" className="text-left">
-          <Form.Label>
-            Số điện thoại <span className="text-require">*</span>
-          </Form.Label>
-          <Form.Control
-            type="text"
-            onChange={formik.handleChange}
-            name="phoneNumber"
-            isInvalid={!!formik.errors.phoneNumber && isSubmit}
-            value={formik.values.phoneNumber}
-          />
-          <Form.Control.Feedback type="invalid">
-            {formik.errors.phoneNumber}
-          </Form.Control.Feedback>
-        </Form.Group>
+        <Row>
+          <Form.Group
+            as={Col}
+            md={6}
+            sm={6}
+            controlId="formBasicPhoneNumber"
+            className="text-left"
+          >
+            <Form.Label>
+              Số điện thoại <span className="text-require">*</span>
+            </Form.Label>
+            <Form.Control
+              type="text"
+              onChange={formik.handleChange}
+              name="phoneNumber"
+              isInvalid={!!formik.errors.phoneNumber && isSubmit}
+              value={formik.values.phoneNumber}
+            />
+            <Form.Control.Feedback type="invalid">
+              {formik.errors.phoneNumber}
+            </Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group
+            as={Col}
+            md={6}
+            sm={6}
+            controlId="formBasicPhoneNumber"
+            className="text-left"
+          >
+            <Form.Label>Ngày sinh</Form.Label>
+            <Form.Control
+              as={DatePicker}
+              selected={formik.values.birthDay}
+              onChange={(date: any) =>
+                formik.setValues({ ...formik.values, birthDay: date })
+              }
+              maxDate={new Date()}
+              dateFormat="dd/MM/yyyy"
+            />
+          </Form.Group>
+        </Row>
         <div className="text-center">
           <Button className="button-submit-register m-2" type="submit">
             Đăng ký
@@ -219,3 +231,27 @@ const Register = (props: any) => {
 };
 
 export default Register;
+const SignInSchema = Yup.object().shape({
+  lastName: Yup.string().required("Bạn chưa nhập họ và tên"),
+  firstName: Yup.string().required("Bạn chưa nhập tên"),
+  username: Yup.string()
+    .matches(
+      /^[aA0-zZ9]+$/,
+      "Tên đăng không nhập chứa ký tự đặc biệt và khoảng trắng"
+    )
+    .max(16, "Tên đăng nhập quá dài")
+    .required("Trường này không được bỏ trống"),
+  password: Yup.string()
+    .min(4, "Mật khẩu cần trên 4 ký tự")
+    .max(50, "Mật khẩu quá dàu")
+    .required("Bạn chưa nhập mật khẩu"),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref("password"), null], "Mật khẩu không trùng khớp!")
+    .required("Required"),
+  email: Yup.string()
+    .email("Email không đúng định dạng")
+    .required("Email không được bỏ trống"),
+  phoneNumber: Yup.string()
+    .matches(/^0[0-9]+/, "Số điện thoại không hợp lệ")
+    .required("Không được bỏ trống phần này"),
+});

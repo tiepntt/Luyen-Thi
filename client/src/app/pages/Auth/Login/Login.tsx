@@ -71,6 +71,7 @@ const Login = (props: any) => {
                 variant="success"
                 className="button-submit-login"
                 type="submit"
+                href="/auth/login"
               >
                 Đăng nhập
               </Button>
