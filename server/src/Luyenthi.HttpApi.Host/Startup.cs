@@ -21,6 +21,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Luyenthi.HttpApi.Host;
 using Luyenthi.HttpApi.Host.Middleware;
+using Hangfire;
+using Hangfire.MySql;
 
 namespace Luyenthi
 {
@@ -97,6 +99,27 @@ namespace Luyenthi
                 .AddEntityFrameworkStores<LuyenthiDbContext>()
                 .AddDefaultTokenProviders();
             services.AddAutoMapper(c => c.AddProfile<MappingProfile>(), typeof(Startup));
+            services.AddHangfire(configuration =>
+            {
+                configuration.UseStorage(
+                    new MySqlStorage(
+                        Configuration.GetConnectionString("Hangfire"),
+                        new MySqlStorageOptions
+                        {
+                            TablesPrefix = "Hangfire"
+                        }
+                    )
+                ).UseSerializerSettings(
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                    }
+                );
+            });
+
+            services.AddHangfireServer(
+                options => options.WorkerCount = Environment.ProcessorCount * 2
+            );
             services.AddCors();
             services.AddControllers()
 
@@ -132,6 +155,8 @@ namespace Luyenthi
                 });
             });
             
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -171,6 +196,7 @@ namespace Luyenthi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHangfireDashboard();
             });
         }
     }
