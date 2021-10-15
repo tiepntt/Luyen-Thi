@@ -1,5 +1,5 @@
 import { Grid } from "@material-ui/core";
-import DocumentItem from "app/components/Document/DocumentIem/DocumentItem";
+import DocumentItem from "app/components/document/DocumentIem/DocumentItem";
 import _ from "lodash";
 import { DocumentTitle } from "models/document/DocumentTitle";
 import React from "react";

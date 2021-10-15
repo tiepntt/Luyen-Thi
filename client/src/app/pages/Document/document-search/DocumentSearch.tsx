@@ -1,6 +1,6 @@
 import { Grid } from "@material-ui/core";
-import DocumentLabel from "app/components/Document/DocumentLabel";
-import { DocumentSearchSidebar } from "app/components/SideBar/DocumentSearchSidebar/DocumentSearchSidebar";
+import DocumentLabel from "app/components/document/DocumentLabel";
+import { DocumentSearchSidebar } from "app/components/sideBar/DocumentSearchSidebar/DocumentSearchSidebar";
 import DocumentBreadcumbs from "app/components/_share/Breadcrumbs/DocumentBreadcumbs";
 import DocumentSearchForm from "app/components/_share/Form/DocumentSearchForm/DocumentSearchForm";
 import { AppPagination } from "app/components/_share/Pagination/Pagination";
