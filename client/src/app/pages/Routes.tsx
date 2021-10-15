@@ -1,4 +1,4 @@
-import DocumentEditQuestion from "app/components/admin/document/document-edit-question/DocumentEditQuestion";
+import DocumentEditQuestion from "app/components/admin/Document/document-edit-question/DocumentEditQuestion";
 import { useAppContext } from "hooks/AppContext/AppContext";
 import React, { useEffect } from "react";
 import { Redirect, Route, Switch } from "react-router";

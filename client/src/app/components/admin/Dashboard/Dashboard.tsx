@@ -8,7 +8,7 @@ import { UserCheck } from "react-feather";
 import {
   gradeCounts,
   subjectCounts,
-} from "app/components/SideBar/DocumentSearchSidebar/DocumentSearchSidebar";
+} from "app/components/sideBar/DocumentSearchSidebar/DocumentSearchSidebar";
 import ActionUser from "./ActionUser";
 
 const Dashboard = () => {

@@ -1,0 +1,67 @@
+.HeaderItem {
+  box-shadow: 0 1px 2px rgba(138, 138, 138, 1);
+  top: 0;
+  width: 100%;
+  position: fixed;
+  padding: 0;
+  // display: block;-webkit-box-shadow: 0px 2px 0px 0px rgba(138,138,138,1);
+  z-index: 100;
+  .navbar-custom {
+    .text-navbar {
+      color: white;
+    }
+    padding: 0 !important;
+    background-color: #009177 !important;
+    color: white;
+    .notification-icon {
+      margin-right: 20px !important;
+      margin-top: 4px;
+    }
+    .dropdown-toggle.nav-link {
+      padding: 0.5rem 8px !important;
+    }
+  }
+  .name-app {
+    font-family: "Times New Roman", Times, serif;
+    font-weight: bolder;
+    font-size: 2rem;
+  }
+  .post-button {
+    background-color: white;
+    border: black 1px solid;
+    color: black;
+    font-size: 0.8rem;
+  }
+  text-align: left;
+  .avatar-group {
+    text-decoration: none;
+    text-decoration-color: beige;
+    color: #009177;
+    width: 100px;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    .name {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      margin-right: 10px;
+    }
+  }
+  @media only screen and (max-width: 800px) {
+    .avatar-group {
+      margin-left: 43%;
+    }
+  }
+}
+@media only screen and (min-width: 992px) {
+  .navbar-mobile {
+    display: none !important;
+  }
+}
+@media only screen and (max-width: 991px) {
+  .navbar-custom {
+    display: none !important;
+  }
+}
