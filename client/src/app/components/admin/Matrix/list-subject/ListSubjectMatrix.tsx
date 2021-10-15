@@ -28,9 +28,6 @@ const ListSubjectMatrix = () => {
                   onClick={() => onSelectSubject(subject.code)}
                 />
               ))}
-              <div className="subject-item add-subject">
-                <span>Thêm mới +</span>
-              </div>
             </div>
           </Col>
           <Col lg={4} md={12}>

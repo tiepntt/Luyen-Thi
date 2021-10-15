@@ -34,7 +34,7 @@ const AuthPage = (props: any) => {
     dispatch(UserFunction.activeAccount());
   };
   return (
-    <Container>
+    <Container style={{ paddingTop: 130 }}>
       <Switch>
         <Route path="/auth/login" exact>
           <Login />

@@ -30,7 +30,14 @@ namespace Luyenthi.EntityFrameworkCore
         public DbSet<Unit> Units { get; set; }
         public DbSet<LevelQuestion> LevelQuestions { get; set; }
         public DbSet<TemplateQuestion> TemplateQuestions { get; set; }
-
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<TargetUserNotification> TargetUserNotifications { get; set; }
+        public DbSet<TemplateDocument> TemplateDocuments { get; set; }
+        public DbSet<TemplateQuestionSet> TemplateQuestionSets { get; set; }
+        public DbSet<TemplateQuestionGenerate> TemplateQuestionGenerates { get; set; }
+        public DbSet<TemplateLevelGenarate> TemplateLevelGenarates { get; set; }
+        
+      
         public LuyenthiDbContext(DbContextOptions<LuyenthiDbContext> options, IHttpContextAccessor httpContextAccessor) : base(options)
         {
             this._httpContextAccessor = httpContextAccessor;
@@ -170,6 +177,26 @@ namespace Luyenthi.EntityFrameworkCore
                 b.HasOne(x => x.Question).WithMany(x => x.QuestionHistories)
                 .OnDelete(DeleteBehavior.Cascade);
             });
+            builder.Entity<Notification>(b =>
+            {
+                b.Property(x => x.Content).HasConversion(
+                       v => JsonConvert.SerializeObject(v as object),
+                       v => JsonConvert.DeserializeObject<ExpandoObject>(v)
+                   );
+            });
+            builder.Entity<TargetUserNotification>(b =>
+            {
+                b.Property(x => x.Payload).HasConversion(
+                       v => JsonConvert.SerializeObject(v as object),
+                       v => JsonConvert.DeserializeObject<ExpandoObject>(v)
+                   );
+            }); 
+            builder.Entity<TemplateQuestionSet>(b =>
+            {
+                b.HasOne(x => x.TemplateDocument).WithMany(x => x.TemplateQuestionSets)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+            
         }
         public void RelationShipConfiguration(ModelBuilder builder)
         {
@@ -179,8 +206,8 @@ namespace Luyenthi.EntityFrameworkCore
                .WithMany(x => x.QuestionSets)
                .UsingEntity<QuestionSetQuestion>(
                    "QuestionSetQuestion",
-                   j => j.HasOne<Question>().WithMany().HasForeignKey("QuestionId"),
-                   j => j.HasOne<QuestionSet>().WithMany().HasForeignKey("QuestionSetId")
+                   j => j.HasOne<Question>().WithMany().HasForeignKey( x=> x.QuestionSetId),
+                   j => j.HasOne<QuestionSet>().WithMany().HasForeignKey(x => x.QuestionSetId)
                    );
 
             builder.SharedTypeEntity<GradeSubject>("GradeSubjects");
@@ -189,10 +216,9 @@ namespace Luyenthi.EntityFrameworkCore
                    .WithMany(b => b.Subjects)
                    .UsingEntity<GradeSubject>(
                         "GradeSubjects",
-                        b => b.HasOne<Grade>().WithMany().HasForeignKey("GradeId"),
-                        b => b.HasOne<Subject>().WithMany().HasForeignKey("SubjectId")
+                        b => b.HasOne<Grade>().WithMany().HasForeignKey(x => x.GradeId),
+                        b => b.HasOne<Subject>().WithMany().HasForeignKey(x => x.SubjectId)
                    );
-
             //builder.ApplyConfiguration(new RoleConfiguration());
             //builder.ApplyConfiguration(new AdminConfiguration());
             //builder.ApplyConfiguration(new UserWithRolesConfig());

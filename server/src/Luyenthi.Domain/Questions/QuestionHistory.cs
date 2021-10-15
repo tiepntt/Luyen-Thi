@@ -16,7 +16,9 @@ namespace Luyenthi.Domain
         [Required]
         public Guid QuestionId { get; set; }
         public Guid? DocumentHistoryId { get; set; }
+        public Guid? QuestionSetId { get; set; }
         public virtual DocumentHistory DocumentHistory { get; set; }
+        public virtual QuestionSet QuestionSet { get; set; }
         public Question Question { get; set; }
         public string Answer { get; set; }
         public ApplicationUser User { get; set; }
