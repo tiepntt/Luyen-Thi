@@ -10,6 +10,7 @@ import { RootState } from "redux/store";
 import { useSelector } from "react-redux";
 import { UserRedux } from "models/user/userInfo";
 import Notification from "../../Badge/Notification/Notification";
+import UserBadge from "../../Badge/UserBadge/UserBadge";
 interface Props {
   className?: string;
   onMobileNavOpen: () => void;
@@ -74,6 +75,7 @@ const AppNavbar: React.FC<Props> = ({ className, onMobileNavOpen, rest }) => {
             ) : (
               <div className="user-info">
                 <Notification />
+                <UserBadge />
               </div>
             )}
           </Hidden>
