@@ -10,5 +10,6 @@ namespace Luyenthi.Services
     public interface IMailService
     {
         Task SendMailAsync(SendMailDto mailRequest);
+        void SendMail(SendMailDto mailRequest);
     }
 }

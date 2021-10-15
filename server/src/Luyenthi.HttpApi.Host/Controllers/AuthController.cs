@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 using System.Security.Cryptography;
 using System.Text;
-
+using Hangfire;
 
 namespace Luyenthi.HttpApi.Host
 {
@@ -88,9 +88,16 @@ namespace Luyenthi.HttpApi.Host
                 throw new BadRequestException("Thông tin không hợp lệ");
             }
             var accountUser = await _userManager.FindByNameAsync(requestRegister.UserName);
+
+
             if (accountUser != null)
             {
                 throw new BadRequestException("Tên đăng nhập đã tồn tại");
+            }
+            accountUser = await _userManager.FindByLoginAsync("luyenthi", requestRegister.Email);
+            if (accountUser != null)
+            {
+                throw new BadRequestException("Email đã được sử dụng");
             }
             var user = _mapper.Map<ApplicationUser>(requestRegister);
 
@@ -111,10 +118,6 @@ namespace Luyenthi.HttpApi.Host
             {
                 throw new BadRequestException($"Lỗi cấp quyền người dùng");
             }
-
-            var mailRequest = MailForm.FormActiveEmail(user, activeCode);
-            await _mailService.SendMailAsync(mailRequest);
-
             var token = _jwtService.GenarateToken(user);
             var userInfo = _mapper.Map<UserInfoDto>(user);
             var userLoginInfo = new UserLoginInfo("luyenthi", requestRegister.Email, "luyenthi".ToUpperInvariant());
@@ -124,6 +127,8 @@ namespace Luyenthi.HttpApi.Host
             scope.Dispose();
             if (loginResult.Succeeded)
             {
+                var mailRequest = MailForm.FormActiveEmail(user, activeCode);
+                BackgroundJob.Enqueue(() => _mailService.SendMail(mailRequest));
                 return new UserResponseLogin
                 {
                     AccessToken = token,
@@ -134,7 +139,6 @@ namespace Luyenthi.HttpApi.Host
             {
                 throw new BadRequestException($"Lỗi khởi tạo người dùng");
             }
-
         }
         [HttpPost("login-facebook")]
         public async Task<UserResponseLogin> LoginByFacebook()
@@ -146,12 +150,26 @@ namespace Luyenthi.HttpApi.Host
         {
             throw new BadRequestException("Thông tin không hợp lệ");
         }
-        [HttpPost("send-maisl")]
-        public async Task<IActionResult> SendMail(SendMailDto mailRequest)
+
+        [Authorize]
+        [HttpPut("resend-active-code")]
+        public async Task<IActionResult> SendMail()
         {
             try
             {
-                await _mailService.SendMailAsync(mailRequest);
+                var user = (ApplicationUser)HttpContext.Items["User"];
+                var userAccount = await _userManager.FindByNameAsync(user.UserName);
+                if (userAccount == null)
+                {
+                    throw new KeyNotFoundException("Người dùng không tồn tại");
+                }
+                //genarate active code
+                string activeCode = MutationService.GenerateActiveCode();
+                userAccount.ActiveCode = HashingService.Md5Encrypt(activeCode);
+                var mailRequest = MailForm.FormActiveEmail(userAccount, activeCode);
+                await _userManager.UpdateAsync(userAccount);
+                BackgroundJob.Enqueue(() => _mailService.SendMailAsync(mailRequest));
+
                 return Ok();
             }
             catch (Exception)
@@ -165,9 +183,17 @@ namespace Luyenthi.HttpApi.Host
         public async Task<IActionResult> ActiveAccount(UserActiveAccount body)
         {
             ApplicationUser userContext = (ApplicationUser)HttpContext.Items["User"];
-            var email = userContext.Email;
-            var user = await _userManager.FindByEmailAsync(email);
-            if (user != null && user.ActiveCode != null)
+            var userName = userContext.UserName;
+            var user = await _userManager.FindByNameAsync(userName);
+            if (user == null)
+            {
+                throw new KeyNotFoundException("Không tìm thấy người dùng");
+            }
+            if (user.EmailConfirmed)
+            {
+                return Ok();
+            }
+                if (user.ActiveCode != null)
             {
                 string decodeCipher = HashingService.Md5Decrypt(user.ActiveCode);
                 if (decodeCipher == body.ActiveCode)
@@ -208,10 +234,12 @@ namespace Luyenthi.HttpApi.Host
             user.PasswordHash = hashPassword;
             await Task.WhenAll(
                 _userManager.UpdateAsync(user),
-                _mailService.SendMailAsync(new SendMailDto {
+                _mailService.SendMailAsync(new SendMailDto
+                {
                     ToEmail = email,
                     Subject = "Quên mật khẩu",
-                    Body=$"Mật khẩu mới: {password}"}
+                    Body = $"Mật khẩu mới: {password}"
+                }
                     )
                 );
         }
