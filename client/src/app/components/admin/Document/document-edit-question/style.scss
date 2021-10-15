@@ -6,7 +6,7 @@
   }
   .admin-document-questions,
   .edit-question {
-    height: calc(100vh - 64px) !important;
+    max-height: calc(100vh - 64px) !important;
     padding-bottom: 10px;
   }
 

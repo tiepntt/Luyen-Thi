@@ -1,0 +1,84 @@
+.user-badge {
+  #dropdown-user {
+    display: inline-flex !important;
+    padding: 0 !important;
+    background: #dffcfc !important;
+    border-radius: 50px;
+    border: none !important;
+    padding: 4px 6px !important;
+
+    .info-user {
+      color: #8f8f8f;
+      justify-self: center;
+      justify-content: center;
+      align-items: center;
+      font-size: 17px;
+      font-weight: bold;
+      span {
+        margin-left: 10px;
+        padding-right: 10px;
+      }
+    }
+    &:focus {
+      box-shadow: none !important;
+    }
+  }
+  .dropdown-toggle::after {
+    display: none !important;
+    margin-left: 0.255em;
+    vertical-align: 0.255em;
+    content: "";
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent;
+  }
+  .dropdown-menu {
+    transform: translate(60px, 40px) !important;
+    width: max-content !important;
+    padding: 0 !important;
+  }
+  .user-menu-item {
+    text-align: center;
+    padding: 10px 0px;
+    .info-name {
+      color: #000000;
+      font-size: 20px;
+    }
+    .info-role {
+      color: #00c1ec;
+      font-weight: bold;
+    }
+    border-bottom: 1px solid #d4d1d1;
+  }
+  .dropdown-item.active {
+    background: none !important;
+  }
+  .dropdown-item:focus {
+    background: none !important;
+  }
+  .options {
+    user-select: none;
+    border-bottom: 1px solid #d4d1d1;
+    position: relative;
+  }
+  .item-option {
+    text-decoration: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: #000000;
+    padding: 6px 10px;
+    padding-right: 40px !important;
+    text-align: left;
+    &:hover {
+      color: #08578b;
+    }
+    .icon {
+      font-size: 24px;
+    }
+    span {
+      margin-left: 10px;
+    }
+  }
+}

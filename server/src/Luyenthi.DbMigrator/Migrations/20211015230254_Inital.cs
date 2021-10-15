@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Luyenthi.DbMigrator.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Inital : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -110,6 +110,26 @@ namespace Luyenthi.DbMigrator.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_LevelQuestions", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Notifications",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Content = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Type = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    UpdatedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Notifications", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -252,6 +272,35 @@ namespace Luyenthi.DbMigrator.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "TargetUserNotifications",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    UserId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Payload = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Seen = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    NotificationId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TargetUserNotifications", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TargetUserNotifications_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TargetUserNotifications_Notifications_NotificationId",
+                        column: x => x.NotificationId,
+                        principalTable: "Notifications",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Chapters",
                 columns: table => new
                 {
@@ -357,6 +406,38 @@ namespace Luyenthi.DbMigrator.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "TemplateDocuments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Name = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    GradeId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    SubjectId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    UpdatedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TemplateDocuments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TemplateDocuments_Grades_GradeId",
+                        column: x => x.GradeId,
+                        principalTable: "Grades",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TemplateDocuments_Subjects_SubjectId",
+                        column: x => x.SubjectId,
+                        principalTable: "Subjects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Units",
                 columns: table => new
                 {
@@ -436,6 +517,28 @@ namespace Luyenthi.DbMigrator.Migrations
                         name: "FK_QuestionSets_Documents_DocumentId",
                         column: x => x.DocumentId,
                         principalTable: "Documents",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "TemplateQuestionSets",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Name = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Show = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    TemplateDocumentId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TemplateQuestionSets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TemplateQuestionSets_TemplateDocuments_TemplateDocumentId",
+                        column: x => x.TemplateDocumentId,
+                        principalTable: "TemplateDocuments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
@@ -542,12 +645,60 @@ namespace Luyenthi.DbMigrator.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "TemplateQuestionGenerates",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    GradeId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    ChapterId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    UnitId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    TemplateQuestionId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    TemplateQuestionSetId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TemplateQuestionGenerates", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TemplateQuestionGenerates_Chapters_ChapterId",
+                        column: x => x.ChapterId,
+                        principalTable: "Chapters",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TemplateQuestionGenerates_Grades_GradeId",
+                        column: x => x.GradeId,
+                        principalTable: "Grades",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TemplateQuestionGenerates_TemplateQuestions_TemplateQuestion~",
+                        column: x => x.TemplateQuestionId,
+                        principalTable: "TemplateQuestions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TemplateQuestionGenerates_TemplateQuestionSets_TemplateQuest~",
+                        column: x => x.TemplateQuestionSetId,
+                        principalTable: "TemplateQuestionSets",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TemplateQuestionGenerates_Units_UnitId",
+                        column: x => x.UnitId,
+                        principalTable: "Units",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "QuestionHistories",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     QuestionId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     DocumentHistoryId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    QuestionSetId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     Answer = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     AnswerStatus = table.Column<int>(type: "int", nullable: false),
@@ -577,6 +728,12 @@ namespace Luyenthi.DbMigrator.Migrations
                         principalTable: "Questions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_QuestionHistories_QuestionSets_QuestionSetId",
+                        column: x => x.QuestionSetId,
+                        principalTable: "QuestionSets",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -592,8 +749,8 @@ namespace Luyenthi.DbMigrator.Migrations
                 {
                     table.PrimaryKey("PK_QuestionSetQuestion", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_QuestionSetQuestion_Questions_QuestionId",
-                        column: x => x.QuestionId,
+                        name: "FK_QuestionSetQuestion_Questions_QuestionSetId",
+                        column: x => x.QuestionSetId,
                         principalTable: "Questions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -601,6 +758,34 @@ namespace Luyenthi.DbMigrator.Migrations
                         name: "FK_QuestionSetQuestion_QuestionSets_QuestionSetId",
                         column: x => x.QuestionSetId,
                         principalTable: "QuestionSets",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "TemplateLevelGenarates",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Count = table.Column<int>(type: "int", nullable: false),
+                    OrderNumber = table.Column<int>(type: "int", nullable: false),
+                    LevelQuestionId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    TemplateQuestionGenerateId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TemplateLevelGenarates", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TemplateLevelGenarates_LevelQuestions_LevelQuestionId",
+                        column: x => x.LevelQuestionId,
+                        principalTable: "LevelQuestions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TemplateLevelGenarates_TemplateQuestionGenerates_TemplateQue~",
+                        column: x => x.TemplateQuestionGenerateId,
+                        principalTable: "TemplateQuestionGenerates",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
@@ -718,6 +903,11 @@ namespace Luyenthi.DbMigrator.Migrations
                 column: "QuestionId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_QuestionHistories_QuestionSetId",
+                table: "QuestionHistories",
+                column: "QuestionSetId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Questions_ChapterId",
                 table: "Questions",
                 column: "ChapterId");
@@ -763,11 +953,6 @@ namespace Luyenthi.DbMigrator.Migrations
                 column: "UnitId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_QuestionSetQuestion_QuestionId",
-                table: "QuestionSetQuestion",
-                column: "QuestionId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_QuestionSetQuestion_QuestionSetId",
                 table: "QuestionSetQuestion",
                 column: "QuestionSetId");
@@ -784,6 +969,61 @@ namespace Luyenthi.DbMigrator.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_TargetUserNotifications_NotificationId",
+                table: "TargetUserNotifications",
+                column: "NotificationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TargetUserNotifications_UserId",
+                table: "TargetUserNotifications",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TemplateDocuments_GradeId",
+                table: "TemplateDocuments",
+                column: "GradeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TemplateDocuments_SubjectId",
+                table: "TemplateDocuments",
+                column: "SubjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TemplateLevelGenarates_LevelQuestionId",
+                table: "TemplateLevelGenarates",
+                column: "LevelQuestionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TemplateLevelGenarates_TemplateQuestionGenerateId",
+                table: "TemplateLevelGenarates",
+                column: "TemplateQuestionGenerateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TemplateQuestionGenerates_ChapterId",
+                table: "TemplateQuestionGenerates",
+                column: "ChapterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TemplateQuestionGenerates_GradeId",
+                table: "TemplateQuestionGenerates",
+                column: "GradeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TemplateQuestionGenerates_TemplateQuestionId",
+                table: "TemplateQuestionGenerates",
+                column: "TemplateQuestionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TemplateQuestionGenerates_TemplateQuestionSetId",
+                table: "TemplateQuestionGenerates",
+                column: "TemplateQuestionSetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TemplateQuestionGenerates_UnitId",
+                table: "TemplateQuestionGenerates",
+                column: "UnitId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TemplateQuestions_Name",
                 table: "TemplateQuestions",
                 column: "Name",
@@ -793,6 +1033,11 @@ namespace Luyenthi.DbMigrator.Migrations
                 name: "IX_TemplateQuestions_UnitId",
                 table: "TemplateQuestions",
                 column: "UnitId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TemplateQuestionSets_TemplateDocumentId",
+                table: "TemplateQuestionSets",
+                column: "TemplateDocumentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Units_ChapterId",
@@ -827,6 +1072,12 @@ namespace Luyenthi.DbMigrator.Migrations
                 name: "QuestionSetQuestion");
 
             migrationBuilder.DropTable(
+                name: "TargetUserNotifications");
+
+            migrationBuilder.DropTable(
+                name: "TemplateLevelGenarates");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -839,19 +1090,31 @@ namespace Luyenthi.DbMigrator.Migrations
                 name: "QuestionSets");
 
             migrationBuilder.DropTable(
+                name: "Notifications");
+
+            migrationBuilder.DropTable(
+                name: "TemplateQuestionGenerates");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "LevelQuestions");
 
             migrationBuilder.DropTable(
-                name: "TemplateQuestions");
-
-            migrationBuilder.DropTable(
                 name: "Documents");
 
             migrationBuilder.DropTable(
+                name: "TemplateQuestions");
+
+            migrationBuilder.DropTable(
+                name: "TemplateQuestionSets");
+
+            migrationBuilder.DropTable(
                 name: "Units");
+
+            migrationBuilder.DropTable(
+                name: "TemplateDocuments");
 
             migrationBuilder.DropTable(
                 name: "Chapters");

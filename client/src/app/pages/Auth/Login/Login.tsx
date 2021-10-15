@@ -20,7 +20,7 @@ const SignInSchema = object().shape({
 
 const Login = (props: any) => {
   const [isSubmit, setIsSubmit] = useState(false);
-
+  const [loadding, setLoadding] = useState(false);
   const dispatch = useDispatch();
   const formik = useFormik({
     validationSchema: SignInSchema,
@@ -37,7 +37,9 @@ const Login = (props: any) => {
     event.preventDefault();
     setIsSubmit(true);
     if (_.isEmpty(formik.errors)) {
+      setLoadding(true);
       authApi.login(formik.values).then((res) => {
+        setLoadding(false);
         if (res.status === 200) {
           dispatch(UserFunction.login(res.data));
         } else {
@@ -84,11 +86,12 @@ const Login = (props: any) => {
             </Form.Group>
             <div className="group-submit-login mt-1">
               <Button
+                disabled={loadding}
                 variant="success"
                 className="button-submit-login"
                 type="submit"
               >
-                Đăng nhập
+                {loadding ? "Đang đăng nhập" : "Đăng nhập"}
               </Button>
               <div className="link">Quên mật khẩu ?</div>
             </div>

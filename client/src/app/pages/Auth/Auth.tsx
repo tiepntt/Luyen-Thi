@@ -7,7 +7,6 @@ import { Route, Switch } from "react-router";
 import { AppCommon } from "redux/common/reducer";
 import { RootState } from "redux/store";
 import { UserFunction } from "redux/user/action";
-import { history } from "services/history";
 import Login from "./Login/Login";
 import Register from "./Register/Register";
 
@@ -27,7 +26,7 @@ const AuthPage = (props: any) => {
     }
     if (userRedux.userInfo && userRedux.userInfo.emailConfirmed) {
       // popup vetify email code
-      history.push(commonState.redirectPath);
+      window.location.href = commonState.redirectPath;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userRedux]);
@@ -35,7 +34,7 @@ const AuthPage = (props: any) => {
     dispatch(UserFunction.activeAccount());
   };
   return (
-    <Container>
+    <Container style={{ paddingTop: 130 }}>
       <Switch>
         <Route path="/auth/login" exact>
           <Login />
