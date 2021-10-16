@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Switch } from "react-router";
 import "./style.scss";
 import { routes } from "./router";
+import { Redirect } from "react-router-dom";
 
 const DocumentPage: React.FC = () => {
   return (
@@ -10,6 +11,7 @@ const DocumentPage: React.FC = () => {
         {routes.map((route, i) => (
           <Route key={i} {...route} />
         ))}
+        <Redirect to="/404"></Redirect>
       </Switch>
     </div>
   );

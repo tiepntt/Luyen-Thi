@@ -39,17 +39,17 @@ const routes: RouterProps[] = [
   {
     path: "/document",
     component: DocumentPage,
-    exact: true,
+    exact: false,
   },
   {
     path: "/class-room",
     component: DocumentPage,
-    exact: true,
+    exact: false,
   },
   {
     path: "/practice",
     component: DocumentPage,
-    exact: true,
+    exact: false,
   },
   {
     path: "/404",

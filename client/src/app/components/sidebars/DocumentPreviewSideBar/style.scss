@@ -1,0 +1,23 @@
+.preview-sidebar {
+  .label-sidebar {
+    font-size: 24px;
+    font-weight: bold;
+    padding: 24px 0px 24px 24px;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .list-question-index {
+    padding: 10px 20px;
+    text-align: center;
+  }
+  .question-index-item {
+    display: inline-flex;
+    cursor: pointer;
+    width: 3.2rem;
+    height: 3.2rem;
+    background-color: whitesmoke;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    margin: 6px 10px;
+  }
+}

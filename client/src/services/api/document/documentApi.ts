@@ -10,6 +10,9 @@ export const documentApi = {
   getAll: (request: DocumentGetAllRequest) => {
     return api.post(`${baseUrl}/getAll`, { ...request });
   },
+  getPreview: (id: string) => {
+    return api.get(`${baseUrl}/preview/${id}`);
+  },
   getById: (id: string) => {
     return api.get(`${baseUrl}/${id}`);
   },

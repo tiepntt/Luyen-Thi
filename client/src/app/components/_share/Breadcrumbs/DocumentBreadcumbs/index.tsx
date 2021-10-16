@@ -6,10 +6,15 @@ import "./style.scss";
 interface Props {
   params?: Param[];
   rootPath?: string;
+  className?: string;
 }
-const DocumentBreadcumbs: React.FC<Props> = ({ params, rootPath }) => {
+const DocumentBreadcumbs: React.FC<Props> = ({
+  params,
+  rootPath,
+  className = "document-breadcrumbs",
+}) => {
   return (
-    <div id="document-breadcrumbs" className="d-inline-flex">
+    <div className={`d-inline-flex ${className}`}>
       {params?.map(({ title, href }, i) => (
         <div
           className={`param-item ${i === params.length - 1 ? "last" : ""}`}
