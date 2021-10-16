@@ -1,0 +1,15 @@
+#document-preview {
+  margin-bottom: 20px;
+  .document-main {
+    box-shadow: -1px 1px 4px 0px rgba(0, 0, 0, 0.2);
+  }
+  .document-preview-sidebar {
+    box-shadow: -1px 1px 4px 0px rgba(0, 0, 0, 0.2);
+  }
+  .document-preview {
+    position: relative;
+    padding: 10px 20px;
+    // height: 100vh;
+    // overflow-y: auto;
+  }
+}

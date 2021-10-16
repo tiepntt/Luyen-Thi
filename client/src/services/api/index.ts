@@ -27,8 +27,7 @@ export const setupAxios = () => {
   const errorHandler = (error: any) => {
     const errorRes = error.response;
     if (errorRes) {
-      showError({ error: errorRes.data || {}, status: errorRes.status });
-      return errorRes;
+      return showError({ error: errorRes.data || {}, status: errorRes.status });
     } else {
       toastService.error("Một lỗi không mong muốn đã xảy ra");
     }
@@ -68,8 +67,7 @@ export const setupAxios = () => {
           break;
       }
     }
-
-    toastService.error(`${message}`);
+    return { data: { message }, status };
   };
 
   axiosInstance.interceptors.request.use((request) => requestHandler(request));

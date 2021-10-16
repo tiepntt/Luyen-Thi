@@ -3,6 +3,7 @@ using Luyenthi.Core;
 using Luyenthi.Core.Dtos;
 using Luyenthi.Core.Dtos.Document;
 using Luyenthi.Core.Dtos.GoogleDoc;
+using Luyenthi.Core.Enums;
 using Luyenthi.Domain;
 using Luyenthi.EntityFrameworkCore;
 using Luyenthi.Services;
@@ -41,6 +42,25 @@ namespace Luyenthi.HttpApi.Host.Controllers
             _questionSetService = questionSetService;
             _questionService = questionService;
             _mapper = mapper;
+        }
+        [HttpGet("preview/{Id}")]
+        public DocumentPreviewDto GetPreview(Guid Id)
+        {
+            var document = _documentService.GetById(Id);
+            var questionSets = _questionSetService.GetByDocumentId(Id);
+            var numberQuestion = questionSets.SelectMany(i => i.Questions)
+                .SelectMany(q => q.Type == QuestionType.QuestionGroup ? q.SubQuestions : new List<Question> { q })
+                .Count();
+            questionSets = DocumentHelper.MakeIndexQuestions(questionSets);
+            return new DocumentPreviewDto
+            {
+                Id = document.Id,
+                Name = document.Name,
+                Times=document.Times,
+                Description = document.Description,
+                NumberQuestion = numberQuestion,
+                QuestionSets = _mapper.Map<List<QuestionSetDetailDto>>(questionSets)
+            };
         }
         [HttpPost("import-document")]
         public  dynamic ImportDocument(DocumentImportRequestDto request)
@@ -138,5 +158,6 @@ namespace Luyenthi.HttpApi.Host.Controllers
             } 
             _documentService.Update(documentUpdate);
         }
+        
     }
 }

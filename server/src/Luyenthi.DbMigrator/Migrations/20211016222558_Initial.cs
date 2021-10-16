@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Luyenthi.DbMigrator.Migrations
 {
-    public partial class Inital : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -749,8 +749,8 @@ namespace Luyenthi.DbMigrator.Migrations
                 {
                     table.PrimaryKey("PK_QuestionSetQuestion", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_QuestionSetQuestion_Questions_QuestionSetId",
-                        column: x => x.QuestionSetId,
+                        name: "FK_QuestionSetQuestion_Questions_QuestionId",
+                        column: x => x.QuestionId,
                         principalTable: "Questions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -951,6 +951,11 @@ namespace Luyenthi.DbMigrator.Migrations
                 name: "IX_Questions_UnitId",
                 table: "Questions",
                 column: "UnitId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QuestionSetQuestion_QuestionId",
+                table: "QuestionSetQuestion",
+                column: "QuestionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_QuestionSetQuestion_QuestionSetId",

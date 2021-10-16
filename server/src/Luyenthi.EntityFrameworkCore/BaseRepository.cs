@@ -58,6 +58,10 @@ namespace Luyenthi.EntityFrameworkCore
         {
             return Entities.Where(predicate);
         }
+        public int Count(Expression<Func<TEntity, bool>> predicate)
+        {
+            return Entities.Where(predicate).Count();
+        }
         public TEntity FindOne(Expression<Func<TEntity, bool>> predicate)
         {
             return Entities.Where(predicate).FirstOrDefault();

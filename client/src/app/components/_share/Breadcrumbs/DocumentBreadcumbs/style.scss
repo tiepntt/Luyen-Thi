@@ -1,4 +1,4 @@
-#document-breadcrumbs {
+.document-breadcrumbs {
   font-size: 17px;
   .param-item {
     display: inline-block;
@@ -18,6 +18,29 @@
     font-weight: bold;
     a {
       color: #146199 !important;
+    }
+  }
+}
+.document-banner-breadcrumbs {
+  font-size: 17px;
+  .param-item {
+    display: inline-block;
+    a {
+      text-decoration: none;
+      color: #c4cfdd !important ;
+    }
+    span {
+      color: #c4cfdd !important;
+    }
+  }
+  .first {
+    // font-weight: bold;
+    color: #c4cfdd !important;
+  }
+  .last {
+    // font-weight: bold;
+    a {
+      color: #c4cfdd !important;
     }
   }
 }

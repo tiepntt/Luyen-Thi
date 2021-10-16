@@ -206,7 +206,7 @@ namespace Luyenthi.EntityFrameworkCore
                .WithMany(x => x.QuestionSets)
                .UsingEntity<QuestionSetQuestion>(
                    "QuestionSetQuestion",
-                   j => j.HasOne<Question>().WithMany().HasForeignKey( x=> x.QuestionSetId),
+                   j => j.HasOne<Question>().WithMany().HasForeignKey( x=> x.QuestionId),
                    j => j.HasOne<QuestionSet>().WithMany().HasForeignKey(x => x.QuestionSetId)
                    );
 

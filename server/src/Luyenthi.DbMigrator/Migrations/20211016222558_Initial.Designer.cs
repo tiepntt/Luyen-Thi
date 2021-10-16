@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Luyenthi.DbMigrator.Migrations
 {
     [DbContext(typeof(LuyenthiDbContext))]
-    [Migration("20211015230254_Inital")]
-    partial class Inital
+    [Migration("20211016222558_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -897,6 +897,8 @@ namespace Luyenthi.DbMigrator.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("QuestionId");
+
                     b.HasIndex("QuestionSetId");
 
                     b.ToTable("QuestionSetQuestion");
@@ -1241,7 +1243,7 @@ namespace Luyenthi.DbMigrator.Migrations
                 {
                     b.HasOne("Luyenthi.Domain.Question", null)
                         .WithMany()
-                        .HasForeignKey("QuestionSetId")
+                        .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

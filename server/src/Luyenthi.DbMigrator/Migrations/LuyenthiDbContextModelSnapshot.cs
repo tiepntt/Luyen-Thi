@@ -895,6 +895,8 @@ namespace Luyenthi.DbMigrator.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("QuestionId");
+
                     b.HasIndex("QuestionSetId");
 
                     b.ToTable("QuestionSetQuestion");
@@ -1239,7 +1241,7 @@ namespace Luyenthi.DbMigrator.Migrations
                 {
                     b.HasOne("Luyenthi.Domain.Question", null)
                         .WithMany()
-                        .HasForeignKey("QuestionSetId")
+                        .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -70,6 +70,11 @@ namespace Luyenthi.Services
         {
             _questionRepository.RemoveRange(questions);
         }
+        public int CountQuestion(Guid documentId)
+        {
+        
+            return 1;
+        }
 
     }
 }
