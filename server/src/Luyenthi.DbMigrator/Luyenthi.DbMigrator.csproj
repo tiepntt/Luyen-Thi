@@ -5,10 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="Google.Apis.Auth" Version="1.55.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.10" />

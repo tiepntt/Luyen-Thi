@@ -15,6 +15,9 @@ using System.Transactions;
 using System.Security.Cryptography;
 using System.Text;
 using Hangfire;
+using Luyenthi.Core.Dtos.User;
+using Google.Apis.Auth;
+using System.Net.Http;
 
 namespace Luyenthi.HttpApi.Host
 {
@@ -141,16 +144,109 @@ namespace Luyenthi.HttpApi.Host
             }
         }
         [HttpPost("login-facebook")]
-        public async Task<UserResponseLogin> LoginByFacebook()
+        public async Task<UserResponseLogin> LoginByFacebook(ProviderLoginRequest request)
         {
-            throw new BadRequestException("Thông tin không hợp lệ");
+            var userFacebook = await VerifyFacebookTokenAsync(request.IdToken);
+            if (userFacebook == null)
+            {
+                throw new BadRequestException("Thông tin không hợp lệ");
+            }
+            return await UserResponseLoginProvider(userFacebook);
         }
-        [HttpPost("login-google")]
-        public async Task<UserResponseLogin> LoginByGoogle()
+        private async Task<ApplicationUser> VerifyFacebookTokenAsync(string token)
         {
-            throw new BadRequestException("Thông tin không hợp lệ");
+            var user = new ApplicationUser();
+            var client = new HttpClient();
+
+            var verifyTokenEndPoint = string.Format("https://graph.facebook.com/me?access_token={0}&fields=first_name,last_name,email,picture", token);
+
+            var uri = new Uri(verifyTokenEndPoint);
+            var response = await client.GetAsync(uri);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                var userObj = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(content);
+
+                if (userObj != null)
+                {
+                    //token is from our App
+                    user.Email = (string)userObj["email"];
+                    user.UserName = (string)userObj["email"];
+                    user.FirstName = (string)userObj["first_name"];
+                    user.LastName = (string)userObj["last_name"];
+                }
+
+                return user;
+            }
+            return user;
         }
 
+        [HttpPost("login-google")]
+        public async Task<UserResponseLogin> LoginByGoogle(ProviderLoginRequest request)
+        {
+            var user = new ApplicationUser();
+            GoogleJsonWebSignature.Payload payload;
+            var clientId = "1031836054677-q8fg2l94a2hvpjjgplp163f4svp3qjgc.apps.googleusercontent.com";
+            try
+            {
+                payload = await GoogleJsonWebSignature.ValidateAsync(request.IdToken, new GoogleJsonWebSignature.ValidationSettings
+                {
+                    Audience = new[] { clientId }
+                });
+            }
+            catch
+            {
+                throw new BadRequestException("Thông tin không hợp lệ");
+            }
+            var requestRegister = new ApplicationUser()
+            {
+                Email = payload.Email,
+                UserName = payload.Email,
+                FirstName = payload.Name,
+            };
+            return await UserResponseLoginProvider(requestRegister);
+        }
+        private async Task<UserResponseLogin> UserResponseLoginProvider(ApplicationUser requestRegister)
+        {
+            var isEmail = UserHelper.ValidateEmail(requestRegister.Email);
+            if (!isEmail) throw new BadRequestException("Thông tin không hợp lệ");
+
+            var user = new ApplicationUser();
+            user = await _userManager.FindByEmailAsync(requestRegister.Email);
+            if (user == null)
+            {
+
+                requestRegister.CreatedAt = DateTime.Now;
+                requestRegister.Provider = "luyenthi";
+                var proccessUser = await _userManager.CreateAsync(user);
+                if (!proccessUser.Succeeded)
+                {
+                    throw new BadRequestException($"Lỗi tạo người dùng");
+                }
+                var processRole = await _userManager.AddToRoleAsync(user, Role.Student);
+                if (!processRole.Succeeded)
+                {
+                    throw new BadRequestException($"Lỗi cấp quyền người dùng");
+                }
+                user = requestRegister;
+                var userLoginInfo = new UserLoginInfo("luyenthi", requestRegister.Email, "luyenthi".ToUpperInvariant());
+                var loginResult = await _userManager.AddLoginAsync(user, userLoginInfo);
+                if (!loginResult.Succeeded)
+                {
+                    throw new BadRequestException($"Lỗi khởi tạo người dùng");
+                }
+            }
+            // genarate token
+            var token = _jwtService.GenarateToken(user);
+            var userInfo = _mapper.Map<UserInfoDto>(user);
+            userInfo.Roles = (await _userManager.GetRolesAsync(user)).ToList();
+            return new UserResponseLogin
+            {
+                AccessToken = token,
+                UserInfo = userInfo
+            };
+        }
         [Authorize]
         [HttpPut("resend-active-code")]
         public async Task<IActionResult> SendMail()
