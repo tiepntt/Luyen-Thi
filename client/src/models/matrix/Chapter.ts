@@ -1,5 +1,5 @@
-import { Grade } from "hooks/Grade-Subject/useGrades";
-import { Subject } from "hooks/Grade-Subject/useSubjects";
+import { Grade } from "./Grade";
+import { Subject } from "./Subject";
 
 export interface Chapter {
   name: string;

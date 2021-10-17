@@ -342,7 +342,6 @@ namespace Luyenthi.HttpApi.Host
 
         [Authorize]
         [HttpPut("change-password")]
-        [Consumes("application/json")]
         public async Task<IActionResult> ResetPassword(UserResetPassword body)
         {
             ApplicationUser userContext = (ApplicationUser)HttpContext.Items["User"];
@@ -363,6 +362,21 @@ namespace Luyenthi.HttpApi.Host
             user.PasswordHash = hashPassword;
             await _userManager.UpdateAsync(user);
             return Ok();
+        }
+        [Authorize]
+        [HttpPost("check-password")]
+        public async Task<IActionResult> CheckPassword(UserPasswordRequest user)
+        {
+            ApplicationUser userContext = (ApplicationUser)HttpContext.Items["User"];
+            var checkPass =await  _userManager.CheckPasswordAsync(userContext, user.Password);
+            if (checkPass)
+            {
+                return Ok();
+            }
+            else
+            {
+                throw new KeyNotFoundException("Mật khẩu không chính xác");
+            }
         }
     }
 }

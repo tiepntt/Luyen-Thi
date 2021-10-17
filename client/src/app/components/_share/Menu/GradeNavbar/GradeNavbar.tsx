@@ -1,5 +1,6 @@
 import { Button, ListItem } from "@material-ui/core";
-import { Grade, useGrades } from "hooks/Grade-Subject/useGrades";
+import { useGrades } from "hooks/Grade-Subject/useGrades";
+import { Grade } from "models/matrix/Grade";
 import React, { useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import "./style.scss";

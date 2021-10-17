@@ -1,13 +1,19 @@
 import { AppContext, AppModels } from "hooks/AppContext/AppContext";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import AppNavbar from "app/components/_share/Menu/AppNavbar/AppNavbar";
 import AppFooter from "app/components/_share/Footer/AppFooter/AppFooter";
 import "./style.scss";
+import { Grade } from "models/matrix/Grade";
+import { Subject } from "models/matrix/Subject";
+import { homeApi } from "services/api/home";
+import { toastService } from "services/toast";
 
 const AppLayout: React.FC = ({ children }) => {
   const [showHeader, setShowHeader] = useState(true);
   const [showFooter, setShowFooter] = useState(true);
+  const [grades, setGrades] = useState<Grade[]>([]);
+  const [subjects, setSubjects] = useState<Subject[]>([]);
 
   const [, setMobileNavOpen] = useState(false);
   const scrollTop = () => {
@@ -21,12 +27,24 @@ const AppLayout: React.FC = ({ children }) => {
         });
     } catch (e) {}
   };
+  useEffect(() => {
+    homeApi.load().then((res) => {
+      if (res.status === 200) {
+        setGrades(res.data.grades);
+        setSubjects(res.data.subjects);
+      } else {
+        toastService.error(res.data.message);
+      }
+    });
+  }, []);
   const value: AppModels = {
     showHeader,
     showFooter,
     setShowHeader,
     setShowFooter,
     scrollTop,
+    grades,
+    subjects,
   };
   return (
     <AppContext.Provider value={value}>

@@ -10,6 +10,9 @@ import { toastService } from "services/toast";
 import _ from "lodash";
 import { useDispatch } from "react-redux";
 import { UserFunction } from "redux/user/action";
+import { useRedirectAuth } from "hooks/User/useRedirectAuth";
+import GoogleLogin from "react-google-login";
+import FacebookLogin from "react-facebook-login";
 
 const SignInSchema = object().shape({
   username: string().required("Bạn chưa nhập tên đăng nhập"),
@@ -19,6 +22,7 @@ const SignInSchema = object().shape({
 });
 
 const Login = (props: any) => {
+  useRedirectAuth();
   const [isSubmit, setIsSubmit] = useState(false);
   const [loadding, setLoadding] = useState(false);
   const dispatch = useDispatch();
@@ -48,7 +52,12 @@ const Login = (props: any) => {
       });
     }
   };
-
+  const responseGoogle = (response: any) => {
+    console.log(response.tokenId);
+  };
+  const responseFacebook = (response: any) => {
+    console.log(response.tokenId);
+  };
   return (
     <div className="login">
       <Form className="m-2" onSubmit={onSubmit}>
@@ -100,9 +109,34 @@ const Login = (props: any) => {
             <Button variant="primary" className="m-2 p-2">
               Đăng nhập với Facebook
             </Button>
-            <Button variant="danger" className="m-2 p-2">
-              Đăng nhập với Gmail
-            </Button>
+            {/* <GoogleLoginButton>
+              <Button variant="danger" className="m-2 p-2">
+                Đăng nhập với Google
+              </Button>
+            </GoogleLoginButton> */}
+            {/* <FacebookLogin
+              appId="1025132464323769"
+              autoLoad
+              callback={responseFacebook}
+              
+            /> */}
+            <GoogleLogin
+              clientId="493969128226-4va3ueqj1lk3b1rlus79sarpbii887ro.apps.googleusercontent.com"
+              buttonText="Login"
+              render={(renderProps) => (
+                <Button
+                  variant="danger"
+                  className="m-2 p-2"
+                  onClick={renderProps.onClick}
+                >
+                  Đăng nhập với Google
+                </Button>
+              )}
+              isSignedIn={false}
+              onSuccess={responseGoogle}
+              onFailure={responseGoogle}
+              cookiePolicy={"single_host_origin"}
+            />
             <div className="title-move-register ">
               Bạn chưa có tài khoản? &nbsp;
               <Link className="link" to="/auth/register">

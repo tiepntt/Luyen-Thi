@@ -1,5 +1,6 @@
 import { Grid } from "@material-ui/core";
 import GradeDocumentBreadcubms from "app/components/_share/Breadcrumbs/GradeDocumentBreadcrubms/GradeDocumentBreadcubms";
+import { useAppContext } from "hooks/AppContext/AppContext";
 import { DocumentDetailContext } from "hooks/Document/DocumentDetailContext";
 import { DocumentDetail } from "models/document/DocumentDetail";
 import { QuestionSetDetail } from "models/questionSet/QuestionSetDetail";
@@ -7,8 +8,6 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { documentApi } from "services/api/document/documentApi";
 import { questionSetApi } from "services/api/document/questionSetApi";
-import { GradeApi } from "services/api/grade-subject/gradeApi";
-import { SubjectApi } from "services/api/grade-subject/subecjtApi";
 import DocumentEditInfo from "./document-info";
 import QuestionDocument from "./question-documents/QuestionDocument";
 import "./style.scss";
@@ -19,8 +18,9 @@ interface Param {
 }
 const DocumentDetailAdmin = () => {
   const { gradeId, subjectId, documentId } = useParams<Param>();
-  const grade = GradeApi.getGrade(gradeId);
-  const subject = SubjectApi.getSubject(subjectId);
+  const { grades, subjects } = useAppContext();
+  const subject = subjects.find((s) => s.code === subjectId);
+  const grade = grades.find((s) => s.code === gradeId);
   const [document, setDocument] = useState<DocumentDetail>();
   const [questionSets, setQuestionSets] = useState<QuestionSetDetail[]>();
   const getQuestionDocument = () => {
@@ -36,12 +36,12 @@ const DocumentDetailAdmin = () => {
       href: "/admin/document",
     },
     {
-      title: grade.name,
-      href: `/admin/document/${grade.code}`,
+      title: grade?.name || "",
+      href: `/admin/document/${grade?.code}`,
     },
     {
-      title: subject.name,
-      href: `/admin/document/${grade.code}/${subject.code}`,
+      title: subject?.name || "",
+      href: `/admin/document/${grade?.code}/${subject?.code}`,
     },
     {
       title: document?.name || "",

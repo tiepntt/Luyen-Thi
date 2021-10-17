@@ -5,9 +5,9 @@ const HomePage: React.FC = () => {
     <div id="home-page">
       {/* <Container className="content-home-page"> */}
       <div className="content-home-page">
-        <div className="block-carousels">
-          {/* <Image src="/assets/images/home-page/app-carousels.png" /> */}
-        </div>
+        {/* <div className="block-carousels">
+          <Image src="/assets/images/home-page/app-carousels.png" />
+        </div> */}
       </div>
       {/* </Container> */}
     </div>

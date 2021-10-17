@@ -1,6 +1,6 @@
-import { Grade } from "hooks/Grade-Subject/useGrades";
-import { Subject } from "hooks/Grade-Subject/useSubjects";
 import { ChapterCreate } from "models/matrix/Chapter";
+import { Grade } from "models/matrix/Grade";
+import { Subject } from "models/matrix/Subject";
 import React, { useState } from "react";
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import { chapterApi } from "services/api/matrix/chapter";

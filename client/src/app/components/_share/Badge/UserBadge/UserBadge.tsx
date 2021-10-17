@@ -61,7 +61,11 @@ const UserBadge = () => {
             </Dropdown.Item>
           </div>
           <div>
-            <Dropdown.Item className="item-option">
+            <Dropdown.Item
+              className="item-option"
+              as={NavLink}
+              to="/auth/change-password"
+            >
               <span className="label-item">Đổi mật khẩu</span>
             </Dropdown.Item>
             <Dropdown.Item className="item-option" onClick={logout}>

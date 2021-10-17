@@ -5,7 +5,6 @@ import { Redirect, Route, Switch } from "react-router";
 import NotFoundPage from "./404/NotFound";
 import AdminPage from "./Admin/Admin";
 import AuthPage from "./Auth/Auth";
-import ChangePassword from "./Auth/ChangePassword/ChangePassword";
 import DocumentPage from "./Document/Document";
 import HomePage from "./Home/Home";
 import ProfilePage from "./Profile/Profile";
@@ -55,10 +54,6 @@ const routes: RouterProps[] = [
   {
     path: "/404",
     component: NotFoundPage,
-  },
-  {
-    path: "/change-password",
-    component: ChangePassword,
   },
   {
     path: "/editor/document/:id",

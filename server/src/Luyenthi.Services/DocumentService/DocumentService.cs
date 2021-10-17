@@ -1,6 +1,7 @@
 ﻿using Google.Apis.Docs.v1;
 using Luyenthi.Core;
 using Luyenthi.Core.Dtos;
+using Luyenthi.Core.Enums;
 using Luyenthi.Domain;
 using Luyenthi.EntityFrameworkCore;
 using Luyenthi.Services.GoolgeAPI;
@@ -81,6 +82,25 @@ namespace Luyenthi.Services
             document.DocumentType = documentUpdate.DocumentType;
             _documentRepository.UpdateEntity(document);
             return document;
+        }
+        public async Task<List<DocumentGradeDto>> CountByGrade(bool IsApprove = true,
+            DocumentStatus status = DocumentStatus.Public)
+        {
+            var documents = _documentRepository
+                .Find(d => d.IsApprove == IsApprove && d.Status == status)
+                .Include(x => x.Grade)
+                .AsEnumerable()
+                .GroupBy(x => x.Grade)
+                .Select(x => new DocumentGradeDto
+                {
+                    Id = x.Key.Id,
+                    Name = x.Key.Name,
+                    Code = x.Key.Code,
+                    Total = x.Count()
+                })
+                .ToList();
+
+            return documents ;
         }
     }
 }
