@@ -1,6 +1,6 @@
 export enum DocumentTypeLabel {
-  DOCUMENT = 1,
-  EXAM = 0,
+  DOCUMENT = 2,
+  EXAM = 1,
 }
 interface DocumentType {
   label: string;
@@ -9,12 +9,12 @@ interface DocumentType {
 }
 export const documentTypes: DocumentType[] = [
   {
-    id: "1",
+    id: "2",
     label: "Tài liệu học tập",
     value: DocumentTypeLabel.DOCUMENT,
   },
   {
-    id: "2",
+    id: "1",
     label: "Đề thi",
     value: DocumentTypeLabel.EXAM,
   },

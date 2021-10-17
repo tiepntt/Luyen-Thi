@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Luyenthi.Core.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,8 @@ namespace Luyenthi.Core.Dtos
         public string ImageUrl { get; set; }
         public Guid Id { get; set; }
         public string Description { get; set; }
-        
+        public int NumberDo { get; set; }
+        public DocumentType DocumentType { get; set; }
+        public DateTime CreateAt { get; set; }
     }
 }

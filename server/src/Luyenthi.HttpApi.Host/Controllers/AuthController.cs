@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Luyenthi.Core.Dtos;
-using Luyenthi.Core.Enums.User;
+using Luyenthi.Core.Enums;
 using Luyenthi.Domain.User;
 using Luyenthi.HttpApi.Host.Helpers;
 using Luyenthi.Services;

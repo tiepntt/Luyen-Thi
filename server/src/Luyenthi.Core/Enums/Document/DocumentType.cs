@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Luyenthi.Core.Enums.Document
+namespace Luyenthi.Core.Enums
 {
     public enum DocumentType
     {
-        Exam,
-        Document
+        Exam = 1,
+        Document = 2
     }
 }

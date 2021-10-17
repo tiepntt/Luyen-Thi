@@ -32,7 +32,7 @@ const AddDocumentModal: React.FC<Props> = (props) => {
     documentApi
       .create({
         name: documentName,
-        type: Number((documentType as any).value),
+        documentType: Number((documentType as any).value),
         description: documentDescription,
         gradeId: grade.id,
         subjectId: subject.id,

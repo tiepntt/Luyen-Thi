@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Luyenthi.Core.Enums.GoogleDoc
+namespace Luyenthi.Core.Enums
 {
     public  class ParagraphHeading
     {

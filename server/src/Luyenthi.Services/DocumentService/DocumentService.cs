@@ -1,8 +1,6 @@
 ﻿using Google.Apis.Docs.v1;
 using Luyenthi.Core;
 using Luyenthi.Core.Dtos;
-using Luyenthi.Core.Dtos.Document;
-using Luyenthi.Core.Dtos.GoogleDoc;
 using Luyenthi.Domain;
 using Luyenthi.EntityFrameworkCore;
 using Luyenthi.Services.GoolgeAPI;
@@ -80,11 +78,9 @@ namespace Luyenthi.Services
             document.Times = documentUpdate.Times;
             document.Form = documentUpdate.Form;
             document.Description = documentUpdate.Description;
+            document.DocumentType = documentUpdate.DocumentType;
             _documentRepository.UpdateEntity(document);
             return document;
         }
-
-
-
     }
 }

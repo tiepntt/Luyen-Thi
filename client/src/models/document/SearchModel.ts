@@ -1,9 +1,9 @@
 export interface SearchModel {
-  take: number;
-  skip: number;
+  take?: number;
+  skip?: number;
   key?: string;
-  gradeId?: string;
-  subjectId?: string;
+  gradeCode?: string;
+  subjectCode?: string;
   type?: DocumentType;
   page?: number;
 }

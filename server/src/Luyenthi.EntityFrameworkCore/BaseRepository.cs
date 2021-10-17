@@ -7,6 +7,11 @@ using System.Linq.Expressions;
 
 namespace Luyenthi.EntityFrameworkCore
 {
+    public class TotalAndRecords<T>
+    {
+        public int Total { get; set; }
+        public IQueryable<T> Records { get; set; }
+    }
     public class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         protected readonly LuyenthiDbContext Context;
@@ -58,10 +63,6 @@ namespace Luyenthi.EntityFrameworkCore
         {
             return Entities.Where(predicate);
         }
-        public int Count(Expression<Func<TEntity, bool>> predicate)
-        {
-            return Entities.Where(predicate).Count();
-        }
         public TEntity FindOne(Expression<Func<TEntity, bool>> predicate)
         {
             return Entities.Where(predicate).FirstOrDefault();
@@ -69,6 +70,10 @@ namespace Luyenthi.EntityFrameworkCore
         public IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate, int take, int skip)
         {
             return Entities.Where(predicate).Take(take).Skip(skip);
+        }
+        public DbSet<TEntity> Entity()
+        {
+            return Entities;
         }
 
         /// <summary>

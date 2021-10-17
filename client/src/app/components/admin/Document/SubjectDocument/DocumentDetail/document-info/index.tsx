@@ -71,6 +71,18 @@ const DocumentEditInfo: React.FC<Props> = ({ documentId }) => {
       }
     });
   };
+  const approveDocument = () => {
+    setUpdateEnable(false);
+    documentApi.approve(documentDetail.id).then((res) => {
+      setUpdateEnable(true);
+      if (res.status === 200) {
+        setDocumentDetail({ ...documentDetail, isApprove: true });
+        toastService.success();
+      } else {
+        toastService.error(res.data);
+      }
+    });
+  };
   useEffect(() => {
     setDocumentDetail(document);
   }, [document]);
@@ -267,6 +279,7 @@ const DocumentEditInfo: React.FC<Props> = ({ documentId }) => {
                   className="mx-2"
                   variant="success"
                   disabled={!updateEnable}
+                  onClick={approveDocument}
                 >
                   Duyệt
                 </Button>
