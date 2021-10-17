@@ -36,7 +36,9 @@
     text-align: left;
 
     .document-item-title {
+      text-decoration: none;
       font-size: 1rem;
+      display: block;
       height: 50px;
       overflow: hidden;
       text-align: justify;
@@ -88,6 +90,7 @@
 
   .props-img {
     max-width: 250px;
+    min-width: 250px;
     height: 100%;
     position: relative;
 

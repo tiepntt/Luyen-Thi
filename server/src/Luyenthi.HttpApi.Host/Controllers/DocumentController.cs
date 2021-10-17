@@ -10,6 +10,7 @@ using Luyenthi.Services;
 using Luyenthi.Services.GoolgeAPI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,6 +28,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
         private readonly QuestionSetService _questionSetService;
         private readonly QuestionService _questionService;
         private readonly IWebHostEnvironment _hostingEnvironment;
+        private readonly DocumentRepository _documentRepository;
         private readonly IMapper _mapper;
 
         public DocumentController(
@@ -34,6 +36,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
             IWebHostEnvironment hostEnvironment,
             QuestionSetService questionSetService,
             QuestionService questionService,
+            DocumentRepository documentRepository,
         IMapper mapper
             )
         {
@@ -41,6 +44,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
             _hostingEnvironment = hostEnvironment;
             _questionSetService = questionSetService;
             _questionService = questionService;
+            _documentRepository = documentRepository;
             _mapper = mapper;
         }
         [HttpGet("preview/{Id}")]
@@ -56,20 +60,66 @@ namespace Luyenthi.HttpApi.Host.Controllers
             {
                 Id = document.Id,
                 Name = document.Name,
-                Times=document.Times,
+                Times = document.Times,
                 Description = document.Description,
                 NumberQuestion = numberQuestion,
                 QuestionSets = _mapper.Map<List<QuestionSetDetailDto>>(questionSets)
             };
         }
-        [HttpPost("import-document")]
-        public  dynamic ImportDocument(DocumentImportRequestDto request)
+        [HttpGet]
+        public DocumentSearchResponse GetDocuments([FromQuery] DocumentQuery query)
         {
-            if(request.GoogleDocId == "")
+            // lấy tất cả theo kênh tìm kiếm
+            var result = new DocumentSearchResponse();
+             
+            var documents = _documentRepository.Find(
+                d =>
+                d.IsApprove == true &&
+                d.Status == DocumentStatus.Public &&
+                (query.Type == null || d.DocumentType==query.Type)&&
+                (query.GradeCode == null || query.GradeCode == d.Grade.Code) &&
+                (query.SubjectCode == null || query.SubjectCode == d.Subject.Code) &&
+                (EF.Functions.Like(d.Name, $"%{query.Key}%") || EF.Functions.Like(d.NameNomarlize, $"%{query.Key}%"))
+            )
+            .Include(i => i.Grade)
+            .Include(i => i.Subject)
+            .OrderByDescending(i => i.CreatedAt)
+            .Skip(query.Skip)
+            .Take(query.Take)
+            .Select(d => new DocumentTitleDto
+            {
+                Id = d.Id,
+                Description = d.Description,
+                ImageUrl = d.ImageUrl,
+                NumberDo = d.DocumentHistories.Count(),
+                Name = d.Name,
+                DocumentType=d.DocumentType,
+                CreateAt = d.CreatedAt
+            })
+            .ToList();
+            var documentCount = _documentRepository.Find(
+                d =>
+                d.IsApprove == true &&
+                d.Status == DocumentStatus.Public &&
+                (query.Type == null || d.DocumentType == query.Type) &&
+                (query.GradeCode == null || query.GradeCode == d.Grade.Code) &&
+                (query.SubjectCode == null || query.SubjectCode == d.Subject.Code) &&
+                (EF.Functions.Like(d.Name, $"%{query.Key}%") || EF.Functions.Like(d.NameNomarlize, $"%{query.Key}%"))
+            )
+            .Include(i => i.Grade)
+            .Include(i => i.Subject).Count();
+            result.Documents = documents;
+            result.Total = documentCount;
+            return result;
+        }
+        [HttpPost("import-document")]
+        public dynamic ImportDocument(DocumentImportRequestDto request)
+        {
+            if (request.GoogleDocId == "")
             {
                 throw new Exception("Không tìm thấy GoogleDocId");
             }
-            
+
             return null;
         }
         [HttpPost("import-questions")]
@@ -83,7 +133,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
             }
             var docService = GoogleDocApi.GetService();
             var document = _documentService.GetById(questionImport.DocumentId);
-            if(document == null)
+            if (document == null)
             {
                 throw new KeyNotFoundException("Không tìm thấy tài liệu");
             }
@@ -100,7 +150,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
                 for (int i = 0; i < doc.InlineObjects.Count; i++)
                 {
                     var inlineObject = doc.InlineObjects.Values.ToList()[i];
-                    uploadImages.Add(CloudinarySerivce.DownLoadImageFromDoc(cloundinaryService,inlineObject));
+                    uploadImages.Add(CloudinarySerivce.DownLoadImageFromDoc(cloundinaryService, inlineObject));
                 }
             }
             var tasks = uploadImages.ToArray();
@@ -117,13 +167,13 @@ namespace Luyenthi.HttpApi.Host.Controllers
             _questionSetService.CreateMany(questionSets);
             // update document google Doc Id
             // cập nhật document
-           
-            
+
+
             questionSets = DocumentHelper.MakeIndexQuestions(questionSets);
             return questionSets;
             //scope.Complete();
             //scope.Dispose();
-            
+
         }
         [HttpPost]
         public DocumentDto Create(DocumentCreateDto document)
@@ -141,7 +191,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
         [HttpDelete("{documentId}")]
         public void DeleteById(Guid documentId)
         {
-             _documentService.RemoveById(documentId);
+            _documentService.RemoveById(documentId);
         }
         [HttpPost("getAll")]
         public List<DocumentTitleDto> GetByGradeAndSubject(DocumentGetByGradeSubjectDto request)
@@ -155,9 +205,20 @@ namespace Luyenthi.HttpApi.Host.Controllers
             if (documentUpdate.Id == Guid.Empty)
             {
                 throw new KeyNotFoundException("Dữ liệu không hợp lệ");
-            } 
+            }
             _documentService.Update(documentUpdate);
         }
-        
+        [HttpPatch("approve/{id}")]
+        public void Approve(Guid id)
+        {
+            var document = _documentService.GetById(id);
+            if(document == null)
+            {
+                throw new KeyNotFoundException("Không tìm thấy bản ghi");
+            }
+            document.IsApprove = true;
+            _documentRepository.UpdateEntity(document);
+        }
+
     }
 }

@@ -4,34 +4,45 @@ import {
   faHeart,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { DocumentTitle } from "models/document/DocumentTitle";
 import React from "react";
 import { Button, Image } from "react-bootstrap";
+import { DocumentTypeLabel } from "settings/document/documentType";
+import moment from "moment";
 import "./style.scss";
-interface Props {}
-const DocumentLabel: React.FC<Props> = (props) => {
+interface Props {
+  document: DocumentTitle;
+}
+const DocumentLabel: React.FC<Props> = ({ document }) => {
   return (
     <div className="document-label">
       <div className="props-img">
-        <Image src={url} className="document-avatar" thumbnail />
+        <Image
+          src={document.imageUrl || url}
+          className="document-avatar"
+          thumbnail
+        />
         <div className="icon-seen">
           <FontAwesomeIcon icon={faEye} />
-          <span>100</span>
+          <span>{document.numberDo || 1}</span>
         </div>
       </div>
       <div className="info">
-        <div className="document-item-title">
-          Đề thi thử THPT Quốc gia năm 2021 môn toán trường THPT Chu văn An -
-          Thái Bình
-        </div>
-        <div className="desription">
-          Đề thi năm trong bộ đề thi thử đợt 3 của sở GD và ĐT Thanh Hoá
-        </div>
+        <a
+          className="document-item-title"
+          href={`/document/${document.id}/preview`}
+        >
+          {document.name}
+        </a>
+        <div className="desription">{document.description}</div>
         <div className="d-flex document-type-date d-flex">
           <div className="document-type" style={{ flexGrow: 1 }}>
-            Đề thi thử
+            {document.documentType === DocumentTypeLabel.DOCUMENT
+              ? "Tài liệu chuyên đề"
+              : "Đề thi"}
           </div>
           <div className="date">
-            <span>22 / 09 / 2021</span>
+            <span>{moment(document.createAt).format("DD/MM/YYYY")}</span>
           </div>
         </div>
         <div className="d-flex document-options">

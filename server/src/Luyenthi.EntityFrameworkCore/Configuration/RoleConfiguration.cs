@@ -1,4 +1,4 @@
-﻿using Luyenthi.Core.Enums.User;
+﻿using Luyenthi.Core.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

@@ -1,5 +1,4 @@
 ﻿using Luyenthi.Core.Enums;
-using Luyenthi.Core.Enums.Document;
 using Luyenthi.Domain.Base;
 using System;
 using System.Collections.Generic;

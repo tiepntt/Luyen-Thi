@@ -1,7 +1,7 @@
-export interface DocoumentTitle {
+export interface DocumentCreate {
   name: string;
   gradeId?: string;
   subjectId?: string;
   description: string;
-  type: number;
+  documentType: number;
 }

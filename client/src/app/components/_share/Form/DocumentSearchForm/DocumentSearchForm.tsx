@@ -14,7 +14,6 @@ import "./style.scss";
 interface Props {
   onChangeCondition: (key: string, value: any) => void;
   filter?: SearchModel;
-  onChangeFilter: (e: any) => void;
 }
 const DocumentSearchForm: React.FC<Props> = (props) => {
   const { onChangeCondition, filter } = props;
@@ -61,21 +60,23 @@ const DocumentSearchForm: React.FC<Props> = (props) => {
             <Col lg={2} xs={6}>
               <DropDownInput
                 input={grades as any}
-                value={filter?.gradeId || 0}
+                value={filter?.gradeCode || 0}
                 onSelect={(e) => {
-                  onChangeCondition("gradeId", e);
+                  onChangeCondition("gradeCode", e);
                 }}
                 label="Lớp"
+                getValue="code"
               />
             </Col>
             <Col lg={2} xs={6}>
               <DropDownInput
                 input={subjects as any}
-                value={filter?.subjectId || 0}
+                value={filter?.subjectCode || 0}
                 onSelect={(e) => {
-                  onChangeCondition("subjectId", e);
+                  onChangeCondition("subjectCode", e);
                 }}
                 label="Môn học"
+                getValue="code"
               />
             </Col>
           </Row>

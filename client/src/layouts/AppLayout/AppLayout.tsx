@@ -8,14 +8,26 @@ import "./style.scss";
 const AppLayout: React.FC = ({ children }) => {
   const [showHeader, setShowHeader] = useState(true);
   const [showFooter, setShowFooter] = useState(true);
+
+  const [, setMobileNavOpen] = useState(false);
+  const scrollTop = () => {
+    try {
+      let element = document.getElementById("app");
+      element &&
+        element.scrollIntoView({
+          block: "start",
+          inline: "start",
+          behavior: "smooth",
+        });
+    } catch (e) {}
+  };
   const value: AppModels = {
     showHeader,
     showFooter,
     setShowHeader,
     setShowFooter,
+    scrollTop,
   };
-  const [, setMobileNavOpen] = useState(false);
-
   return (
     <AppContext.Provider value={value}>
       <div id="app">

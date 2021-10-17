@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Luyenthi.Core.Enums.Document
+namespace Luyenthi.Core.Enums
 {
     public enum DocumentStatus
     {
-        Public,
         Private,
+        Public,
     }
 }
