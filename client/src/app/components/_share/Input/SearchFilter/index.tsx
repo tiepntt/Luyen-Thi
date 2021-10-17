@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import "./style.scss";
@@ -7,13 +7,17 @@ interface Props {
   input?: { name?: string }[];
   onChange?: (e: string) => void;
   placeHolder?: string;
+  inputValue: string;
 }
 
 export const SearchFilterInput = (props: Props) => {
-  const { onSelect, input, onChange, placeHolder } = props;
+  const { onSelect, input, onChange, placeHolder, inputValue } = props;
   const [value, setValue] = React.useState({
     name: "",
   });
+  useEffect(() => {
+    setValue({ name: inputValue });
+  }, [inputValue]);
   return (
     <Autocomplete
       className="auto-complete"
@@ -61,7 +65,12 @@ export const SearchFilterInput = (props: Props) => {
       clearOnEscape
       renderOption={(option) => option.name}
       renderInput={(params) => (
-        <TextField {...params} placeholder={placeHolder} variant="outlined" />
+        <TextField
+          {...params}
+          placeholder={placeHolder}
+          variant="outlined"
+          value={inputValue}
+        />
       )}
     />
   );

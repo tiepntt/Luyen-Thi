@@ -38,6 +38,7 @@ const DocumentSearchForm: React.FC<Props> = (props) => {
                   <FontAwesomeIcon icon={faSearch} size="sm" />
                 </IconButton>
                 <SearchFilterInput
+                  inputValue={filter?.key || ""}
                   onChange={() => {}}
                   onSelect={(e: any) => {
                     onChangeCondition("key", e?.name || e);

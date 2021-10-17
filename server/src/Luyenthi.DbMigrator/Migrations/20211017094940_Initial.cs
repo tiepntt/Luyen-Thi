@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Luyenthi.DbMigrator.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Inital : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -339,9 +339,9 @@ namespace Luyenthi.DbMigrator.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    Name = table.Column<string>(type: "longtext", nullable: true)
+                    Name = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    NameNomarlize = table.Column<string>(type: "longtext", nullable: true)
+                    NameNomarlize = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     SubjectId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     GradeId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
@@ -749,8 +749,8 @@ namespace Luyenthi.DbMigrator.Migrations
                 {
                     table.PrimaryKey("PK_QuestionSetQuestion", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_QuestionSetQuestion_Questions_QuestionId",
-                        column: x => x.QuestionId,
+                        name: "FK_QuestionSetQuestion_Questions_QuestionSetId",
+                        column: x => x.QuestionSetId,
                         principalTable: "Questions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -951,11 +951,6 @@ namespace Luyenthi.DbMigrator.Migrations
                 name: "IX_Questions_UnitId",
                 table: "Questions",
                 column: "UnitId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_QuestionSetQuestion_QuestionId",
-                table: "QuestionSetQuestion",
-                column: "QuestionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_QuestionSetQuestion_QuestionSetId",

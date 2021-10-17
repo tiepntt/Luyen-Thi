@@ -190,13 +190,13 @@ namespace Luyenthi.EntityFrameworkCore
                        v => JsonConvert.SerializeObject(v as object),
                        v => JsonConvert.DeserializeObject<ExpandoObject>(v)
                    );
-            }); 
+            });
             builder.Entity<TemplateQuestionSet>(b =>
             {
                 b.HasOne(x => x.TemplateDocument).WithMany(x => x.TemplateQuestionSets)
                     .OnDelete(DeleteBehavior.Cascade);
             });
-            
+
         }
         public void RelationShipConfiguration(ModelBuilder builder)
         {
