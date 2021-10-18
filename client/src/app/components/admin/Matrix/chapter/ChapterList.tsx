@@ -5,12 +5,11 @@ import GradeDocumentBreadcubms from "app/components/_share/Breadcrumbs/GradeDocu
 import AddChapterModal from "app/components/_share/Modals/AddChapterModal/AddChapterModal";
 import EditChapterModal from "app/components/_share/Modals/EditChapterModal/EditChapterModal";
 import SubmitModal from "app/components/_share/Modals/SubmitModal/SubmitModal";
+import { useAppContext } from "hooks/AppContext/AppContext";
 import { useChapters } from "hooks/Matrix/useChapters";
 import { Chapter } from "models/matrix/Chapter";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { GradeApi } from "services/api/grade-subject/gradeApi";
-import { SubjectApi } from "services/api/grade-subject/subecjtApi";
 import ChapterUnits from "./ChapterUnits";
 import "./style.scss";
 
@@ -20,8 +19,9 @@ interface Param {
 }
 const ChapterList = () => {
   const { gradeId, subjectId } = useParams<Param>();
-  const grade = GradeApi.getGrade(gradeId);
-  const subject = SubjectApi.getSubject(subjectId);
+  const { grades, subjects } = useAppContext();
+  const subject = subjects.find((s) => s.code === subjectId);
+  const grade = grades.find((s) => s.code === gradeId);
   const [showModal, setShowModal] = useState(false);
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [showModalRemove, setShowModalRemove] = useState(false);
@@ -33,18 +33,18 @@ const ChapterList = () => {
     setCurrentChappter,
     updateChapter,
     deleteChapter,
-  } = useChapters(grade.id, subject.id);
+  } = useChapters(grade?.id || "", subject?.id || "");
   const params = [
     {
       title: "Ma trận đề thi",
       href: "/admin/matrix",
     },
     {
-      title: grade.name,
-      href: `/admin/matrix/${grade.code}`,
+      title: grade?.name || "",
+      href: `/admin/matrix/${grade?.code}`,
     },
     {
-      title: `${subject.name} - Chương trình đào tạo`,
+      title: `${subject?.name} - Chương trình đào tạo`,
       href: ``,
     },
   ];
@@ -90,13 +90,15 @@ const ChapterList = () => {
           </Grid>
         </Grid>
       </div>
-      <AddChapterModal
-        show={showModal}
-        setShow={setShowModal}
-        onAddChapter={addChapter}
-        grade={grade}
-        subject={subject}
-      />
+      {grade && subject && (
+        <AddChapterModal
+          show={showModal}
+          setShow={setShowModal}
+          onAddChapter={addChapter}
+          grade={grade}
+          subject={subject}
+        />
+      )}
       <EditChapterModal
         show={showModalEdit}
         setShow={setShowModalEdit}

@@ -5,13 +5,13 @@ import "./style.scss";
 import { Book, Folder } from "@material-ui/icons";
 import { Budget } from "./Bugget";
 import { UserCheck } from "react-feather";
-import {
-  gradeCounts,
-  subjectCounts,
-} from "app/components/sidebars/DocumentSearchSidebar/DocumentSearchSidebar";
 import ActionUser from "./ActionUser";
+import { useGrades } from "hooks/Grade-Subject/useGrades";
+import { useSubjects } from "hooks/Grade-Subject/useSubjects";
 
 const Dashboard = () => {
+  const { grades } = useGrades();
+  const { subjects } = useSubjects();
   return (
     <div className="admin-wrap">
       <div className="admin-main-content admin-dash-board">
@@ -100,10 +100,10 @@ const Dashboard = () => {
           </Grid>
           <Grid item lg={3} md={12}>
             <Grid item className="mb-2" lg={12}>
-              <Similar title="Tài liệu theo lớp" list={gradeCounts} />
+              <Similar title="Tài liệu theo lớp" list={grades} />
             </Grid>
             <Grid lg={12}>
-              <Similar title="Tài liệu theo môn học" list={subjectCounts} />
+              <Similar title="Tài liệu theo môn học" list={subjects} />
             </Grid>
           </Grid>
         </Grid>

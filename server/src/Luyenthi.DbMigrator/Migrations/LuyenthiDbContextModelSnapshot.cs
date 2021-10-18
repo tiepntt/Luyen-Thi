@@ -943,13 +943,13 @@ namespace Luyenthi.DbMigrator.Migrations
             modelBuilder.Entity("Luyenthi.Domain.Document", b =>
                 {
                     b.HasOne("Luyenthi.Domain.Grade", "Grade")
-                        .WithMany()
+                        .WithMany("Documents")
                         .HasForeignKey("GradeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Luyenthi.Domain.Subject", "Subject")
-                        .WithMany()
+                        .WithMany("Documents")
                         .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1277,6 +1277,8 @@ namespace Luyenthi.DbMigrator.Migrations
 
             modelBuilder.Entity("Luyenthi.Domain.Grade", b =>
                 {
+                    b.Navigation("Documents");
+
                     b.Navigation("Questions");
                 });
 
@@ -1299,6 +1301,8 @@ namespace Luyenthi.DbMigrator.Migrations
 
             modelBuilder.Entity("Luyenthi.Domain.Subject", b =>
                 {
+                    b.Navigation("Documents");
+
                     b.Navigation("Questions");
                 });
 

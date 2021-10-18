@@ -12,7 +12,7 @@ import "./style.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons";
 interface Props {
-  list?: { id: any; name: string; count: number }[];
+  list?: { id: any; name: string; total?: number; code: string }[];
   title: string;
   onClick?: (value: number) => void;
 }
@@ -46,7 +46,7 @@ export const Similar = (props: Props) => {
                 <ListItemText
                   primary={
                     <div className={classes.itemText}>
-                      {item.name} ({item.count})
+                      {item.name} ({item.total})
                     </div>
                   }
                 />

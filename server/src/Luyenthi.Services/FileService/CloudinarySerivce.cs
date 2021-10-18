@@ -78,8 +78,8 @@ namespace Luyenthi.Services
                 return new ImageDto
                 {
                     Id = Id,
-                    Height = (int)Height,
-                    Width = (int)Width,
+                    Height = (int)(Height * 1.5),
+                    Width = (int)(Width * 1.5),
                     Url = uploadResult.SecureUrl.AbsoluteUri
                 };
             }

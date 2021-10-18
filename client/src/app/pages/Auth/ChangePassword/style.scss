@@ -1,32 +1,30 @@
 .changePassword {
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
-    border-radius: 10px;
-    padding: 20px 10px;
-    margin: auto;
-    max-width: 700px;
-    margin-top: 20vh;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  padding: 20px 10px;
+  margin: auto;
+  max-width: 500px;
+  .link {
+    cursor: pointer;
+    color: #0035f2;
+    text-decoration: none !important;
+  }
+  .header {
+    color: #007972;
+  }
+  .form {
+    margin: 30px 20px;
+  }
+  .group-submit-login {
+    display: flex;
+    justify-content: space-between;
+    .button-submit-login {
+      background: #007972;
+      color: white;
+    }
     .link {
-      cursor: pointer;
-      color: #0035f2;
+      transform: translateY(25%);
       text-decoration: none !important;
     }
-    .header {
-      color: #007972;
-    }
-    .form {
-      margin: 30px 20px;
-    }
-    .group-submit-login {
-      display: flex;
-      justify-content: space-between;
-      .button-submit-login {
-        background: #007972;
-        color: white;
-      }
-      .link {
-        transform: translateY(25%);
-        text-decoration: none !important;
-      }
-    }
+  }
 }
-  

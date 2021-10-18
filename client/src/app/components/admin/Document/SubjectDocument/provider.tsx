@@ -1,5 +1,5 @@
-import { Grade } from "hooks/Grade-Subject/useGrades";
-import { Subject } from "hooks/Grade-Subject/useSubjects";
+import { Grade } from "models/matrix/Grade";
+import { Subject } from "models/matrix/Subject";
 import React, { useContext } from "react";
 export interface SubjectDocumentModels {
   grade: Grade;

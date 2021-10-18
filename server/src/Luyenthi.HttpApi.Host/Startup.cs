@@ -31,7 +31,7 @@ namespace Luyenthi
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            
+
         }
 
         public IConfiguration Configuration { get; }
@@ -51,8 +51,8 @@ namespace Luyenthi
 
                 );
                 options.EnableSensitiveDataLogging();
-            }
-             );
+            },ServiceLifetime.Transient
+            );
             services.AddDistributedRedisCache(option =>
             {
                 option.Configuration = "127.0.0.1";
@@ -84,7 +84,9 @@ namespace Luyenthi
             services.AddTransient<IMailService, Services.MailService>();
             services.AddTransient<HashingService>();
             services.AddTransient<MutationService>();
-           
+            services.AddTransient<GradeService>();
+            services.AddTransient<SubjectService>();
+
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
                 {
                     options.User.RequireUniqueEmail = false;
@@ -126,7 +128,7 @@ namespace Luyenthi
             .AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver(); 
+                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
             services.AddSwaggerGen(c =>
             {
@@ -154,7 +156,7 @@ namespace Luyenthi
                     }
                 });
             });
-            
+
 
 
         }

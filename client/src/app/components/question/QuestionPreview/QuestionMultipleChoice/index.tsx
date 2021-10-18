@@ -49,7 +49,7 @@ const QuestionMultipleChocie: React.FC<Props> = ({
   }, content);
   const getScale = () => ({
     width: scaleSize?.width || "auto",
-    height: "auto",
+    height: scaleSize?.height || "auto",
     minWidth: 100,
   });
   return (

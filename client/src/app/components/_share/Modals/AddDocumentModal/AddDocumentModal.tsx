@@ -1,5 +1,3 @@
-import { Grade } from "hooks/Grade-Subject/useGrades";
-import { Subject } from "hooks/Grade-Subject/useSubjects";
 import React, { useState } from "react";
 import Select from "react-select";
 import "./style.scss";
@@ -7,6 +5,8 @@ import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import { documentTypes } from "settings/document/documentType";
 import { documentApi } from "services/api/document/documentApi";
 import { toastService } from "services/toast";
+import { Grade } from "models/matrix/Grade";
+import { Subject } from "models/matrix/Subject";
 interface Props {
   show: boolean;
   setShow: (show: boolean) => void;

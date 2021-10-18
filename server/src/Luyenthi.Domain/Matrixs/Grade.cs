@@ -17,5 +17,6 @@ namespace Luyenthi.Domain
         public int OrderNumber { get; set; }
         public virtual List<Subject> Subjects { get; set; }
         public virtual List<Question> Questions { get; set; }
+        public virtual List<Document> Documents { get; set; }
     }
 }

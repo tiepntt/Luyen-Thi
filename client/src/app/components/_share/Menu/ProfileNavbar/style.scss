@@ -1,0 +1,50 @@
+.profile-user-navbar {
+  background: #ffffff;
+  border-bottom: 4px solid #eae5e5;
+  height: 48px;
+  padding-top: 2px;
+  .profile-item {
+    width: max-content;
+    display: inline-block;
+    padding: 0 !important;
+    &:hover:after {
+      transform: scaleX(1);
+    }
+
+    .active {
+      color: rgb(10, 110, 128) !important;
+    }
+    .profile-item-buton {
+      font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+      cursor: pointer;
+      color: #c0c0c0;
+      padding: 0px 20px;
+      user-select: none;
+      width: 100%;
+      height: 42px;
+      text-transform: none !important;
+      background: none !important;
+      font-size: 1rem !important;
+      &:hover {
+        color: rgb(10, 110, 128);
+      }
+    }
+  }
+  .profile-item::after {
+    display: block;
+    content: "";
+    width: 100%;
+    border-bottom: solid 4px #e19626;
+    transform: scaleX(0);
+    transition: transform 250ms ease-in-out;
+    transform-origin: 0% 50% !important;
+  }
+  .profile-item.active::after {
+    transform: scaleX(1) !important;
+  }
+  @media only screen and (max-width: 425px) {
+    .profile-item-buton {
+      padding: 0px 10px !important;
+    }
+  }
+}

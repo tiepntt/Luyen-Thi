@@ -10,8 +10,10 @@ import { authApi } from "services/api/auth/auth";
 import { toastService } from "services/toast";
 import { useDispatch } from "react-redux";
 import { UserFunction } from "redux/user/action";
+import { useRedirectAuth } from "hooks/User/useRedirectAuth";
 
 const Register = (props: any) => {
+  useRedirectAuth();
   const [isSubmit, setIsSubmit] = useState(false);
   const dispatch = useDispatch();
   const formik = useFormik({

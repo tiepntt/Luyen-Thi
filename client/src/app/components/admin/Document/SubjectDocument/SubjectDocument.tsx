@@ -2,20 +2,20 @@ import GradeDocumentBreadcubms from "app/components/_share/Breadcrumbs/GradeDocu
 import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import DocumentList from "./DocumentList/DocumentList";
-import { GradeApi } from "services/api/grade-subject/gradeApi";
-import { SubjectApi } from "services/api/grade-subject/subecjtApi";
 import AddDocumentModal from "app/components/_share/Modals/AddDocumentModal/AddDocumentModal";
 import { DocumentTitle } from "models/document/DocumentTitle";
 import { DocumentGetAllRequest } from "models/document/DocumentGetAll";
 import { documentApi } from "services/api/document/documentApi";
+import { useAppContext } from "hooks/AppContext/AppContext";
 interface Param {
   gradeId: string;
   subjectId: string;
 }
 const SubjectDocument = () => {
   const { gradeId, subjectId } = useParams<Param>();
-  const grade = GradeApi.getGrade(gradeId);
-  const subject = SubjectApi.getSubject(subjectId);
+  const { grades, subjects } = useAppContext();
+  const subject = subjects.find((s) => s.code === subjectId);
+  const grade = grades.find((s) => s.code === gradeId);
   const [showModal, setShowModal] = useState(false);
   const [showAddButton] = useState(true);
   const params = [
@@ -24,11 +24,11 @@ const SubjectDocument = () => {
       href: "/admin/document",
     },
     {
-      title: grade.name,
-      href: `/admin/document/${grade.code}`,
+      title: grade?.name || "",
+      href: `/admin/document/${grade?.code}`,
     },
     {
-      title: subject.name,
+      title: subject?.name || "",
       href: ``,
     },
   ];
@@ -37,8 +37,8 @@ const SubjectDocument = () => {
     take: 5,
     skip: 0,
     key: "",
-    gradeId: grade.id,
-    subjectId: subject.id,
+    gradeId: grade?.id,
+    subjectId: subject?.id,
   });
   const location = useLocation();
   const getDocuments = () => {
@@ -65,13 +65,15 @@ const SubjectDocument = () => {
       <div className="main-content-document">
         <DocumentList documents={documents} />
       </div>
-      <AddDocumentModal
-        grade={grade}
-        subject={subject}
-        show={showModal}
-        setShow={setShowModal}
-        onAddDocument={addDocument as any}
-      />
+      {grade && subject && (
+        <AddDocumentModal
+          grade={grade}
+          subject={subject}
+          show={showModal}
+          setShow={setShowModal}
+          onAddDocument={addDocument as any}
+        />
+      )}
     </div>
   );
 };

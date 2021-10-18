@@ -3,7 +3,7 @@ import { DocumentGetAllRequest } from "models/document/DocumentGetAll";
 import { DocumentUpdateInfo } from "models/document/DocumentUpdateInfo";
 import { SearchModel } from "models/document/SearchModel";
 import api from "..";
-const baseUrl = "/Document";
+const baseUrl = "/document";
 export const documentApi = {
   create: (document: DocumentCreate) => {
     return api.post(baseUrl, document);

@@ -1,4 +1,4 @@
-import { Subject } from "hooks/Grade-Subject/useSubjects";
+import { Subject } from "models/matrix/Subject";
 import React from "react";
 import "./style.scss";
 interface Props {
