@@ -29,6 +29,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
         private readonly QuestionService _questionService;
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly DocumentRepository _documentRepository;
+        private readonly DocumentHistoryRepository _documentHistoryRepository;
         private readonly IMapper _mapper;
 
         public DocumentController(
@@ -37,6 +38,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
             QuestionSetService questionSetService,
             QuestionService questionService,
             DocumentRepository documentRepository,
+            DocumentHistoryRepository documentHistoryRepository,
         IMapper mapper
             )
         {
@@ -45,6 +47,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
             _questionSetService = questionSetService;
             _questionService = questionService;
             _documentRepository = documentRepository;
+            _documentHistoryRepository = documentHistoryRepository;
             _mapper = mapper;
         }
         [HttpGet("preview/{Id}")]
@@ -133,13 +136,14 @@ namespace Luyenthi.HttpApi.Host.Controllers
             }
             var docService = GoogleDocApi.GetService();
             var document = _documentService.GetById(questionImport.DocumentId);
+            var documentHistory = _documentHistoryRepository.FindOne(i => i.DocumentId == questionImport.DocumentId);
             if (document == null)
             {
                 throw new KeyNotFoundException("Không tìm thấy tài liệu");
             }
-            if (document.IsApprove)
+            if (documentHistory != null)
             {
-                throw new Exception("Bạn không thể sử dụng chức năng này");
+                throw new Exception("Tài liệu này đã được sử dụng");
             }
             // xóa toàn bộ các question ở trong document
             var doc = await GoogleDocApi.GetDocument(docService, questionImport.GoogleDocId);

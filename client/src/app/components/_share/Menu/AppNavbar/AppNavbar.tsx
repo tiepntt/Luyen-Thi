@@ -75,7 +75,7 @@ const AppNavbar: React.FC<Props> = ({ className, onMobileNavOpen, rest }) => {
             ) : (
               <div className="user-info">
                 <Notification />
-                <UserBadge />
+                <UserBadge user={userRedux.userInfo as any} />
               </div>
             )}
           </Hidden>

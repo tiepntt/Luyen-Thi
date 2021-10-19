@@ -15,4 +15,8 @@ namespace Luyenthi.Services
         public string Secret { get; set; }
         public int Expires { get; set; }
     }
+    public class GoogleAuthSettings
+    {
+
+    }
 }

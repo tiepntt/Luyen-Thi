@@ -2,14 +2,18 @@ import { Avatar } from "@material-ui/core";
 import React from "react";
 import "./style.scss";
 import { Dropdown } from "react-bootstrap";
-import "./style.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { UserFunction } from "redux/user/action";
 import { history } from "services/history";
-const UserBadge = () => {
+import { User } from "models/user/userInfo";
+import { getRoles } from "settings/user/role";
+interface Props {
+  user: User;
+}
+const UserBadge: React.FC<Props> = ({ user }) => {
   const dispatch = useDispatch();
   const logout = () => {
     dispatch(UserFunction.logout());
@@ -20,15 +24,15 @@ const UserBadge = () => {
       <Dropdown>
         <Dropdown.Toggle id="dropdown-user" className="d-flex">
           <div className="info-user d-flex">
-            <Avatar style={{ width: 30, height: 30 }} />
-            <span>Tiệp</span>
+            <Avatar style={{ width: 30, height: 30 }} src={user.avatarUrl} />
+            <span>{user.firstName}</span>
           </div>
         </Dropdown.Toggle>
 
         <Dropdown.Menu align="right">
           <div className="user-menu-item">
-            <div className="info-name">Nguyễn Thái Tiệp</div>
-            <div className="info-role">Quản trị</div>
+            <div className="info-name">{`${user.lastName} ${user.firstName}`}</div>
+            <div className="info-role">{getRoles(user.roles)?.name}</div>
           </div>
           <div className="options">
             <Dropdown.Item
