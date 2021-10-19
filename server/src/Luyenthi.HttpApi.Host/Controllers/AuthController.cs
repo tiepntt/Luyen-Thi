@@ -18,6 +18,7 @@ using Hangfire;
 using Luyenthi.Core.Dtos.User;
 using Google.Apis.Auth;
 using System.Net.Http;
+using Microsoft.Extensions.Options;
 
 namespace Luyenthi.HttpApi.Host
 {
@@ -30,11 +31,13 @@ namespace Luyenthi.HttpApi.Host
         private readonly JwtService _jwtService;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IMailService _mailService;
+        private readonly AuthSettings _authSettings;
         public AuthController(
             UserManager<ApplicationUser> userManager,
             JwtService jwtService,
             SignInManager<ApplicationUser> signInManager,
             IMapper mapper,
+            IOptions<AuthSettings> options,
             IMailService mailService
             )
         {
@@ -43,6 +46,7 @@ namespace Luyenthi.HttpApi.Host
             _signInManager = signInManager;
             _mapper = mapper;
             _mailService = mailService;
+            _authSettings = options.Value;
         }
         [HttpPost("login")]
         public async Task<UserResponseLogin> Login(UserRequestLogin requestLogin)
@@ -151,14 +155,14 @@ namespace Luyenthi.HttpApi.Host
             {
                 throw new BadRequestException("Thông tin không hợp lệ");
             }
-            return await UserResponseLoginProvider(userFacebook);
+            return await UserResponseLoginProvider(userFacebook,"facebook");
         }
         private async Task<ApplicationUser> VerifyFacebookTokenAsync(string token)
         {
             var user = new ApplicationUser();
             var client = new HttpClient();
 
-            var verifyTokenEndPoint = string.Format("https://graph.facebook.com/me?access_token={0}&fields=first_name,last_name,email,picture", token);
+            var verifyTokenEndPoint = string.Format("https://graph.facebook.com/me?access_token={0}&fields=first_name,last_name,email,picture,id", token);
 
             var uri = new Uri(verifyTokenEndPoint);
             var response = await client.GetAsync(uri);
@@ -166,15 +170,18 @@ namespace Luyenthi.HttpApi.Host
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
-                var userObj = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(content);
+                var userObj = Newtonsoft.Json.JsonConvert.DeserializeObject<FacebookLoginResponse>(content);
 
                 if (userObj != null)
                 {
                     //token is from our App
-                    user.Email = (string)userObj["email"];
-                    user.UserName = (string)userObj["email"];
-                    user.FirstName = (string)userObj["first_name"];
-                    user.LastName = (string)userObj["last_name"];
+                    user.Email = userObj.email;
+                    user.UserName = userObj.email;
+                    user.FirstName = userObj.first_name;
+                    user.LastName = userObj.last_name;
+                    user.EmailConfirmed = true;
+                    user.AvatarUrl = userObj.picture.Data.url;
+                    user.CreatedAt = DateTime.Now;
                 }
 
                 return user;
@@ -185,14 +192,14 @@ namespace Luyenthi.HttpApi.Host
         [HttpPost("login-google")]
         public async Task<UserResponseLogin> LoginByGoogle(ProviderLoginRequest request)
         {
+            using TransactionScope scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
             var user = new ApplicationUser();
             GoogleJsonWebSignature.Payload payload;
-            var clientId = "1031836054677-q8fg2l94a2hvpjjgplp163f4svp3qjgc.apps.googleusercontent.com";
             try
             {
                 payload = await GoogleJsonWebSignature.ValidateAsync(request.IdToken, new GoogleJsonWebSignature.ValidationSettings
                 {
-                    Audience = new[] { clientId }
+                    Audience = new[] { _authSettings.Google.ClientId }
                 });
             }
             catch
@@ -203,44 +210,60 @@ namespace Luyenthi.HttpApi.Host
             {
                 Email = payload.Email,
                 UserName = payload.Email,
-                FirstName = payload.Name,
+                FirstName = payload.GivenName,
+                LastName = payload.FamilyName,
+                AvatarUrl = payload.Picture,
+                EmailConfirmed = true,
+                CreatedAt = DateTime.Now
+                
             };
-            return await UserResponseLoginProvider(requestRegister);
+            var loginResponse =  await UserResponseLoginProvider(requestRegister, "google");
+            scope.Complete();
+            scope.Dispose();
+            return loginResponse;
         }
-        private async Task<UserResponseLogin> UserResponseLoginProvider(ApplicationUser requestRegister)
+        private async Task<UserResponseLogin> UserResponseLoginProvider(
+            ApplicationUser requestRegister,string provider)
         {
             var isEmail = UserHelper.ValidateEmail(requestRegister.Email);
             if (!isEmail) throw new BadRequestException("Thông tin không hợp lệ");
 
-            var user = new ApplicationUser();
-            user = await _userManager.FindByEmailAsync(requestRegister.Email);
+            var user = await _userManager.FindByEmailAsync(requestRegister.Email);
             if (user == null)
             {
 
                 requestRegister.CreatedAt = DateTime.Now;
-                requestRegister.Provider = "luyenthi";
-                var proccessUser = await _userManager.CreateAsync(user);
+                requestRegister.Provider = provider;
+                var proccessUser = await _userManager.CreateAsync(requestRegister);
                 if (!proccessUser.Succeeded)
                 {
                     throw new BadRequestException($"Lỗi tạo người dùng");
                 }
-                var processRole = await _userManager.AddToRoleAsync(user, Role.Student);
+                var processRole = await _userManager.AddToRoleAsync(requestRegister, Role.Student);
                 if (!processRole.Succeeded)
                 {
                     throw new BadRequestException($"Lỗi cấp quyền người dùng");
                 }
-                user = requestRegister;
-                var userLoginInfo = new UserLoginInfo("luyenthi", requestRegister.Email, "luyenthi".ToUpperInvariant());
-                var loginResult = await _userManager.AddLoginAsync(user, userLoginInfo);
+                var userLoginInfo = new UserLoginInfo(provider, requestRegister.Email, provider.ToUpperInvariant());
+                var loginResult = await _userManager.AddLoginAsync(requestRegister, userLoginInfo);
                 if (!loginResult.Succeeded)
                 {
                     throw new BadRequestException($"Lỗi khởi tạo người dùng");
                 }
             }
+            else
+            {
+                requestRegister = user;
+                if (!requestRegister.EmailConfirmed)
+                {
+                    requestRegister.EmailConfirmed = true;
+                    await _userManager.UpdateAsync(requestRegister);
+                }
+            }
             // genarate token
-            var token = _jwtService.GenarateToken(user);
-            var userInfo = _mapper.Map<UserInfoDto>(user);
-            userInfo.Roles = (await _userManager.GetRolesAsync(user)).ToList();
+            var token = _jwtService.GenarateToken(requestRegister);
+            var userInfo = _mapper.Map<UserInfoDto>(requestRegister);
+            userInfo.Roles = (await _userManager.GetRolesAsync(requestRegister)).ToList();
             return new UserResponseLogin
             {
                 AccessToken = token,
@@ -275,7 +298,6 @@ namespace Luyenthi.HttpApi.Host
         }
         [Authorize]
         [HttpPost("active-account")]
-        [Consumes("application/json")]
         public async Task<IActionResult> ActiveAccount(UserActiveAccount body)
         {
             ApplicationUser userContext = (ApplicationUser)HttpContext.Items["User"];
@@ -311,7 +333,6 @@ namespace Luyenthi.HttpApi.Host
         }
 
         [HttpPost("forget-password")]
-        [Consumes("application/json")]
         public async Task ForgetPassword(UserForgetPassword body)
         {
             var email = body.Email.Trim();

@@ -40,6 +40,7 @@ namespace Luyenthi
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            services.Configure<AuthSettings>(Configuration.GetSection("AuthSettings"));
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.AddHttpContextAccessor();
             services.AddDbContext<LuyenthiDbContext>(options =>
@@ -66,6 +67,7 @@ namespace Luyenthi
             services.AddTransient<QuestionRepository>();
             services.AddTransient<SubjectRepository>();
             services.AddTransient<DocumentRepository>();
+            services.AddTransient<DocumentHistoryRepository>();
             services.AddTransient<QuestionSetRepository>();
             services.AddTransient<ChapterRepository>();
             services.AddTransient<UnitRepository>();

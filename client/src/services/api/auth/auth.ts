@@ -5,6 +5,12 @@ export const authApi = {
   login: (account: LoginModel) => {
     return api.post(`${baseUrl}/login`, { ...account });
   },
+  loginGoogle: (idToken: string) => {
+    return api.post(`${baseUrl}/login-google`, { idToken });
+  },
+  loginFacebook: (idToken: string) => {
+    return api.post(`${baseUrl}/login-facebook`, { idToken });
+  },
   checkPassword: (password: string) => {
     return api.post(`${baseUrl}/check-password`, { password });
   },
