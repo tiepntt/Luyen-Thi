@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Luyenthi.Core.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ namespace Luyenthi.Core.Dtos
         public string Description { get; set; }
         public int NumberQuestion {get;set;}
         public int Times {get;set;}
+        public DocumentType DocumentType { get;set;}
         public List<QuestionSetDetailDto> QuestionSets { get; set; }
         // history question
     }

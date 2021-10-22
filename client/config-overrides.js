@@ -20,5 +20,12 @@ module.exports = function override(config, env) {
     include: path.resolve(__dirname, "src"),
     use: [{ loader: require.resolve("wasm-loader"), options: {} }],
   });
+  // config.module.rules.push({
+  //   test: /\.svg/,
+  //   use: {
+  //     loader: "svg-url-loader",
+  //     options: {},
+  //   },
+  // });
   return config;
 };

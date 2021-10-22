@@ -19,12 +19,17 @@ namespace Luyenthi.HttpApi.Host
             CreateMap<Document, DocumentDto>();
             CreateMap<Document, DocumentGetDto>();
             CreateMap<Document, DocumentTitleDto>();
-           
+            CreateMap<Document, DocumentPreviewDto>();
+            // documentHistory
+            CreateMap<DocumentHistory, DocumentHistoryDto>();
+
             // question
             CreateMap<QuestionCreateDto, Question>();
             CreateMap<QuestionGdocDto, Question>();
             CreateMap<Question, QuestionDto>();
             CreateMap<Question, QuestionMatrixDto>();
+            CreateMap<QuestionHistory, QuestionHistoryDto>();
+            CreateMap<QuestionHistoryRequestDto, QuestionHistory>();
             // question set
             CreateMap<QuestionSetGdocDto, QuestionSet>();
             CreateMap<QuestionSetCreateDto, QuestionSet>();

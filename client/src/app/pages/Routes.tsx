@@ -6,6 +6,7 @@ import NotFoundPage from "./404/NotFound";
 import AdminPage from "./Admin/Admin";
 import AuthPage from "./Auth/Auth";
 import DocumentPage from "./Document/Document";
+import DocumentExam from "./Document/document-exam/DocumentExam";
 import HomePage from "./Home/Home";
 import ProfilePage from "./Profile/Profile";
 interface RouterProps {
@@ -37,10 +38,18 @@ const routes: RouterProps[] = [
     component: ProfilePage,
   },
   {
+    path: "/document/:id",
+    component: DocumentExam,
+    exact: true,
+    showHeader: false,
+    showFooter: false,
+  },
+  {
     path: "/document",
     component: DocumentPage,
     exact: false,
   },
+
   {
     path: "/class-room",
     component: DocumentPage,
