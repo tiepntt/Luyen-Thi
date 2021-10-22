@@ -1,8 +1,8 @@
 #document-exam-sidebar {
-  margin-top: 5px;
-  margin-left: 50px;
   height: 100%;
-  border-left: 0.5px rgba(173, 175, 175, 0.61) solid;
+  overflow-y: auto;
+  border-right: 0.5px rgba(173, 175, 175, 0.61) solid;
+  top: 0;
 
   .label {
     margin-right: 30px;
@@ -23,21 +23,32 @@
     }
   }
   .index-list {
-    padding: 10px 20px;
-    margin-top: 20px;
+    padding: 10px 10px;
+    margin-top: 10px;
   }
   .question-index-list {
     text-align: center;
     .question-index-item {
       display: inline-flex;
       cursor: pointer;
-      width: 3rem;
-      height: 3rem;
+      width: 2.4rem;
+      height: 2.4rem;
       background-color: whitesmoke;
       justify-content: center;
       align-items: center;
       border-radius: 4px;
-      margin: 6px 10px;
+      margin: 6px 9px;
+      &.has-answer {
+        color: #c6c6c6;
+      }
+      &.correct {
+        color: white !important;
+        background-color: green;
+      }
+      &.incorrect {
+        color: white !important;
+        background-color: rgb(153, 65, 24);
+      }
     }
   }
   .btn-option {

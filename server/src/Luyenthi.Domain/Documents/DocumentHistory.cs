@@ -1,4 +1,5 @@
-﻿using Luyenthi.Domain.Base;
+﻿using Luyenthi.Core.Enums;
+using Luyenthi.Domain.Base;
 using Luyenthi.Domain.User;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ namespace Luyenthi.Domain
         public DateTime EndTime { get; set; }
         public int NumberCorrect { get; set; } = 0;
         public int NumberIncorrect { get; set; } = 0;
+        public DocumentHistoryStatus Status { get; set; }
         public Guid? DocumentId { get; set; }
         public virtual Document Document { get; set; }
         public virtual List<QuestionHistory> QuestionHistories {get;set;}

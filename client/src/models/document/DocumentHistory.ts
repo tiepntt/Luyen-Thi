@@ -6,7 +6,7 @@ export interface DocumentHistory {
   documentId?: string;
   startTime?: Date;
   endTime?: Date;
-  questionHistories?: QuestionHistory[];
+  questionHistories: QuestionHistory[];
   numberCorrect?: boolean;
   status: DocumentHistoryStatus;
 }

@@ -1,4 +1,3 @@
-import DocumentExam from "./document-exam/DocumentExam";
 import DocumentPreivew from "./document-preview/DocumentPreivew";
 import DocumentSearch from "./document-search/DocumentSearch";
 

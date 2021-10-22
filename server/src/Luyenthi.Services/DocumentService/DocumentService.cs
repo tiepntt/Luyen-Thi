@@ -42,6 +42,36 @@ namespace Luyenthi.Services
                 .FirstOrDefault();
             return document;
         }
+        public async Task<Document> GetDetailById(Guid Id)
+        {
+            var document =  await _documentRepository.Find(s => s.Id == Id)
+                .Select(d => new Document
+                {
+                    Id = d.Id,
+                    Name = d.Name,
+                    Description = d.Description,
+                    DocumentType = d.DocumentType,
+                    QuestionSets = d.QuestionSets
+                                    .Select(qs => new QuestionSet { 
+                                        Show = qs.Show,
+                                        Name = qs.Name,
+                                        Questions = qs.Questions.Select(q => new Question
+                                        {
+                                            Id = q.Id,
+                                            Introduction = q.Introduction,
+                                            Content = q.Content,
+                                            SubQuestions = q.SubQuestions.Select(sq => new Question {
+                                                Id = q.Id,
+                                                Introduction = q.Introduction,
+                                                Content = q.Content,
+                                                ParentId = q.ParentId
+                                            }).ToList()
+                                        }).ToList()
+                                    }).ToList()
+                })
+                .FirstOrDefaultAsync();
+            return document;
+        }
         public void RemoveById(Guid id)
         {
             var document = _documentRepository.Get(id);

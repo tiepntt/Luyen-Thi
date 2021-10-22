@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Luyenthi.Core.Enums
 {
-    public enum AnswerStatus
+    public enum DocumentHistoryStatus
     {
-        Temp,
-        InCorrect,
-        Correct,
-       
+        Open,
+        Doing,
+        Close,
     }
 }

@@ -65,6 +65,7 @@ namespace Luyenthi
             // repository
             services.AddTransient<GradeRepository>();
             services.AddTransient<QuestionRepository>();
+            services.AddTransient<QuestionHistoryRepository>();
             services.AddTransient<SubjectRepository>();
             services.AddTransient<DocumentRepository>();
             services.AddTransient<DocumentHistoryRepository>();
@@ -73,6 +74,7 @@ namespace Luyenthi
             services.AddTransient<UnitRepository>();
             services.AddTransient<LevelQuestionRepository>();
             services.AddTransient<TemplateQuestionRepository>();
+            
             // add transient service
             services.AddTransient<DocumentService>();
             services.AddTransient<QuestionService>();
@@ -87,7 +89,9 @@ namespace Luyenthi
             services.AddTransient<HashingService>();
             services.AddTransient<MutationService>();
             services.AddTransient<GradeService>();
-            services.AddTransient<SubjectService>();
+            services.AddTransient<SubjectService>(); 
+            services.AddTransient<DocumentHistoryService>();
+            services.AddTransient<QuestionHistoryService>();
 
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
                 {

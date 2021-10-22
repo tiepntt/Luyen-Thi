@@ -1,5 +1,6 @@
 import { QuestionSetDetail } from "models/questionSet/QuestionSetDetail";
 import { DocumentFormLabel } from "settings/document/documentForm";
+import { DocumentTypeLabel } from "settings/document/documentType";
 
 export interface DocumentCreate {
   name: string;
@@ -14,4 +15,5 @@ export interface DocumentExam {
   questionSets: QuestionSetDetail[];
   form?: DocumentFormLabel;
   times: number;
+  documentType: DocumentTypeLabel;
 }

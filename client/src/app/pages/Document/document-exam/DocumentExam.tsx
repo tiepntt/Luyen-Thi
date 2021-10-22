@@ -1,4 +1,5 @@
 import { Grid } from "@material-ui/core";
+import DocumentExamContent from "app/components/documents/DocumentExamContent";
 import DocumentExamSidebar from "app/components/sidebars/DocumentExamSidebar";
 import DocumentExamTopbar from "app/components/_share/Menu/DocumentExamTopBar";
 import { useAppContext } from "hooks/AppContext/AppContext";
@@ -10,31 +11,51 @@ import {
 import React, { useEffect } from "react";
 import { Container } from "react-bootstrap";
 import { useParams } from "react-router";
+import { DocumentHistoryStatus } from "settings/document/documentHistory";
 import "./style.scss";
 const DocumentExam = () => {
   const { showHeader, setShowHeader } = useAppContext();
   const { id } = useParams<any>();
-  const { documentHistory, document } = useDocumentExam(id);
+  const {
+    documentHistory,
+    document,
+    times,
+    userAnswerIndex,
+    answerQuestionIndex,
+  } = useDocumentExam(id);
   useEffect(() => {
     if (showHeader) {
       setShowHeader(false);
-      console.log(showHeader);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showHeader]);
   const questionHistoriesValue = {
     questionHistories: documentHistory?.questionHistories || [],
+    disable: !(
+      documentHistory && documentHistory.status !== DocumentHistoryStatus.Doing
+    ),
+    setQuestionHistoryIndex: answerQuestionIndex,
+    userAnswerIndex: userAnswerIndex,
   } as HistoriesQuestionModel;
   return (
-    <div className="h-100" id="document-exam-page">
-      <DocumentExamTopbar />
+    <div id="document-exam-page">
+      <DocumentExamTopbar document={document} />
       <Container>
         <HistoryQuestions.Provider value={questionHistoriesValue}>
           <div className="document-exam-main">
             <Grid container className="h-100">
-              <Grid item lg={8} md={8}></Grid>
-              <Grid item lg={4} md={4} className="h-100">
-                <DocumentExamSidebar />
+              <Grid item lg={3} md={4} className="h-100">
+                <DocumentExamSidebar
+                  documentHistory={documentHistory}
+                  times={times}
+                />
+              </Grid>
+              <Grid item lg={9} md={8}>
+                <div className="exam-content">
+                  <DocumentExamContent
+                    questionSets={document?.questionSets || []}
+                  />
+                </div>
               </Grid>
             </Grid>
           </div>

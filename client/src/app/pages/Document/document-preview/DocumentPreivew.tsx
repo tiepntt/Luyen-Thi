@@ -57,7 +57,7 @@ const DocumentPreivew = () => {
                   times={document?.times || 60}
                 />
               </Grid>
-              <Grid item lg={8} md={4} sm={12}>
+              <Grid item lg={8} md={8} sm={12}>
                 <div className="top-options"></div>
                 <div className="document-preview">
                   {document?.questionSets.map((qs, i) => (

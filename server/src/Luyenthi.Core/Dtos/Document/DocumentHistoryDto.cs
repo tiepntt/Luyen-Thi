@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Luyenthi.Core.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,5 +14,7 @@ namespace Luyenthi.Core.Dtos
         public DateTime EndTime { get; set; }
         public int NumberCorrect { get; set; } = 0;
         public int NumberIncorrect { get; set; } = 0;
+        public DocumentHistoryStatus Status { get; set; }
+        public List<QuestionHistoryDto> QuestionHistories { get; set; }
     }
 }

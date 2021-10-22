@@ -51,10 +51,10 @@ namespace Luyenthi.HttpApi.Host.Controllers
             _mapper = mapper;
         }
         [HttpGet("preview/{Id}")]
-        public DocumentPreviewDto GetPreview(Guid Id)
+        public async  Task<DocumentPreviewDto> GetPreview(Guid Id)
         {
-            var document = _documentService.GetById(Id);
-            var questionSets = _questionSetService.GetByDocumentId(Id);
+            var document = await  _documentService.GetDetailById(Id);
+            var questionSets = document.QuestionSets;
             var numberQuestion = questionSets.SelectMany(i => i.Questions)
                 .SelectMany(q => q.Type == QuestionType.QuestionGroup ? q.SubQuestions : new List<Question> { q })
                 .Count();

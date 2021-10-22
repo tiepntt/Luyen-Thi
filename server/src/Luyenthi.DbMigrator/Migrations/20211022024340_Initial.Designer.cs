@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Luyenthi.DbMigrator.Migrations
 {
     [DbContext(typeof(LuyenthiDbContext))]
-    [Migration("20211017201249_Initial")]
+    [Migration("20211022024340_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -153,7 +153,6 @@ namespace Luyenthi.DbMigrator.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<Guid?>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("char(36)");
 
                     b.Property<Guid?>("DocumentId")
@@ -170,6 +169,9 @@ namespace Luyenthi.DbMigrator.Migrations
 
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)");
@@ -966,8 +968,7 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.HasOne("Luyenthi.Domain.User.ApplicationUser", "User")
                         .WithMany("DocumentHistories")
                         .HasForeignKey("CreatedBy")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Luyenthi.Domain.Document", "Document")
                         .WithMany("DocumentHistories")
