@@ -6,11 +6,8 @@
 
   <ItemGroup>
     <Compile Remove="Dtos\NewFolder1\**" />
-    <Compile Remove="Dtos\NewFolder\**" />
     <EmbeddedResource Remove="Dtos\NewFolder1\**" />
-    <EmbeddedResource Remove="Dtos\NewFolder\**" />
     <None Remove="Dtos\NewFolder1\**" />
-    <None Remove="Dtos\NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>

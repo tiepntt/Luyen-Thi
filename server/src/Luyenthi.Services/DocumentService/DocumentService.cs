@@ -83,24 +83,7 @@ namespace Luyenthi.Services
             _documentRepository.UpdateEntity(document);
             return document;
         }
-        public async Task<List<DocumentGradeDto>> CountByGrade(bool IsApprove = true,
-            DocumentStatus status = DocumentStatus.Public)
-        {
-            var documents = _documentRepository
-                .Find(d => d.IsApprove == IsApprove && d.Status == status)
-                .Include(x => x.Grade)
-                .AsEnumerable()
-                .GroupBy(x => x.Grade)
-                .Select(x => new DocumentGradeDto
-                {
-                    Id = x.Key.Id,
-                    Name = x.Key.Name,
-                    Code = x.Key.Code,
-                    Total = x.Count()
-                })
-                .ToList();
-
-            return documents ;
-        }
+        
+        
     }
 }

@@ -1,0 +1,20 @@
+.document-exam-topbar {
+  height: 64px;
+  background: white;
+  box-shadow: 0px 2px 4px rgba(94, 93, 93, 0.25);
+  .topbar-content {
+    justify-content: center;
+    align-items: center;
+  }
+  .name-document {
+    padding: 0 10px;
+    h5 {
+      margin: auto;
+      color: #019176;
+    }
+  }
+  .logo {
+    display: inline-block;
+    min-width: 100px;
+  }
+}

@@ -13,6 +13,7 @@
 - [.Net Core 5.0](https://docs.microsoft.com/en-us/ef/core/)
 - [ReactJs 17.0](https://reactjs.org/docs/getting-started.html)
 - [Mysql 8.0](https://dev.mysql.com/downloads/)
+- [NodeJs v14](https://nodejs.org/en/download/)
 
 ## Installation
 
@@ -45,13 +46,13 @@ MyProject
   Install dependencies
 
 ```sh
-npm install
+yarn install
 ```
 
 Start project
 
 ```sh
-npm start
+yarn start
 ```
 
 - Server

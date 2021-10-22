@@ -223,6 +223,6 @@ namespace Luyenthi.HttpApi.Host.Controllers
             document.IsApprove = true;
             _documentRepository.UpdateEntity(document);
         }
-
+        
     }
 }

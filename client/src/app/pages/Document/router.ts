@@ -9,11 +9,6 @@ export const routes = [
     exact: true,
   },
   {
-    path: "/document/exam",
-    component: DocumentSearch,
-    exact: true,
-  },
-  {
     path: "/document/",
     component: DocumentSearch,
     exact: true,
@@ -22,10 +17,5 @@ export const routes = [
     path: "/document/:id/preview",
     exact: true,
     component: DocumentPreivew,
-  },
-  {
-    path: "/document/:id",
-    exact: true,
-    component: DocumentExam,
   },
 ];
