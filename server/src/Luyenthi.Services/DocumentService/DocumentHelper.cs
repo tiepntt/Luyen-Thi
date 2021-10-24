@@ -95,5 +95,10 @@ namespace Luyenthi.Services
             }
             return questionSet;
         }
+        public static int CountQuestions(List<QuestionSet> questionSets)
+        {
+            var count =(int)questionSets.SelectMany(qs => qs.Questions).Sum(i => i.NumberQuestion);
+            return count;
+        } 
     }
 }

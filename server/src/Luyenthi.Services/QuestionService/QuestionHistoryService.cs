@@ -19,6 +19,10 @@ namespace Luyenthi.Services
 
             _questionHistoryRepository = questionHistoryRepository;
         }
+        public void UpdateMany(List<QuestionHistory> questionHistories)
+        {
+            _questionHistoryRepository.UpdateMany(questionHistories);
+        }
         public async Task<QuestionHistory> CreateOrUpdate(QuestionHistory questionHistory, Guid userId)
         {
             if(questionHistory.Id == Guid.Empty)
@@ -36,6 +40,7 @@ namespace Luyenthi.Services
                 if(history != null)
                 {
                     history.Answer = questionHistory.Answer;
+                    history.AnswerStatus = questionHistory.AnswerStatus;
                     _questionHistoryRepository.UpdateEntity(history);
                     return history;
                 }

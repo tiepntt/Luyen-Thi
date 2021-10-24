@@ -5,21 +5,26 @@ import { Button, Image } from "react-bootstrap";
 import { QuestionHistory } from "models/question/QuestionHistory";
 import { DocumentHistory } from "models/document/DocumentHistory";
 import { TimeFunction } from "utils/timeFunction";
-import { QuestionHistoryStatus } from "settings/question/questionHistoryStatus";
+import { DocumentHistoryStatus } from "settings/document/documentHistory";
+import { getClassStatusQuestion } from "utils/questionFunction";
 interface Props {
   documentHistory?: DocumentHistory;
   times: number;
+  onSubmit: () => void;
+  onReset: () => void;
 }
 const DocumentExamSidebar: React.FC<Props> = ({
   documentHistory,
   times = 0,
+  onSubmit,
+  onReset,
 }) => {
   const scrollIntoView = (id: string) => {
     try {
       const element = document.getElementById(`qid-${id}`);
       element &&
         element.scrollIntoView({
-          block: "center",
+          block: "start",
           inline: "center",
           behavior: "smooth",
         });
@@ -27,17 +32,7 @@ const DocumentExamSidebar: React.FC<Props> = ({
   };
   const getClassIndexQuestion = (question: QuestionHistory) => {
     let classNameIndex = question.answer ? "has-answer" : "";
-    switch (question.status) {
-      case QuestionHistoryStatus.Correct:
-        classNameIndex += "correct";
-        break;
-      case QuestionHistoryStatus.Incorrect:
-        classNameIndex += "incorrect";
-        break;
-      case QuestionHistoryStatus.Temp:
-        break;
-    }
-    return classNameIndex;
+    return `${classNameIndex} ${getClassStatusQuestion(question)}`;
   };
   return (
     <div id="document-exam-sidebar">
@@ -66,7 +61,19 @@ const DocumentExamSidebar: React.FC<Props> = ({
         </div>
       </div>
       <div className="btn-option">
-        <Button className="btn-submit">Nộp bài</Button>
+        {documentHistory?.status !== DocumentHistoryStatus.Close ? (
+          <Button
+            className="btn-submit"
+            onClick={onSubmit}
+            disabled={documentHistory?.status !== DocumentHistoryStatus.Doing}
+          >
+            Nộp bài
+          </Button>
+        ) : (
+          <Button className="btn-submit" onClick={onReset}>
+            Làm lại
+          </Button>
+        )}
       </div>
     </div>
   );

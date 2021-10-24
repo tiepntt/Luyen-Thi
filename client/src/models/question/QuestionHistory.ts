@@ -6,6 +6,6 @@ export interface QuestionHistory {
   questionSetId?: string;
   documentId?: string;
   documentHistoryId?: string;
-  status?: QuestionHistoryStatus;
+  answerStatus?: QuestionHistoryStatus;
   answer?: string;
 }

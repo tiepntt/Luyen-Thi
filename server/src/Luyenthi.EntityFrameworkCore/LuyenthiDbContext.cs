@@ -170,7 +170,7 @@ namespace Luyenthi.EntityFrameworkCore
             builder.Entity<QuestionHistory>(b =>
             {
                 b.HasOne(x => x.DocumentHistory).WithMany(x => x.QuestionHistories)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Cascade);
                 b.HasOne(x => x.User).WithMany(x => x.QuestionHistories)
                 .HasForeignKey(x => x.CreatedBy)
                 .OnDelete(DeleteBehavior.Cascade);

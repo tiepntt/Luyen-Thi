@@ -22,6 +22,8 @@ const DocumentExam = () => {
     times,
     userAnswerIndex,
     answerQuestionIndex,
+    submit,
+    reset,
   } = useDocumentExam(id);
   useEffect(() => {
     if (showHeader) {
@@ -48,6 +50,8 @@ const DocumentExam = () => {
                 <DocumentExamSidebar
                   documentHistory={documentHistory}
                   times={times}
+                  onSubmit={submit}
+                  onReset={reset}
                 />
               </Grid>
               <Grid item lg={9} md={8}>

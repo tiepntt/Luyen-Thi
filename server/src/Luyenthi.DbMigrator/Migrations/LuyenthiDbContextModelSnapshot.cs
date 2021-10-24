@@ -1037,7 +1037,7 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.HasOne("Luyenthi.Domain.DocumentHistory", "DocumentHistory")
                         .WithMany("QuestionHistories")
                         .HasForeignKey("DocumentHistoryId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Luyenthi.Domain.Question", "Question")
                         .WithMany("QuestionHistories")
