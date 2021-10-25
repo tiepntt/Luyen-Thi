@@ -27,7 +27,18 @@ export const setupAxios = () => {
   const errorHandler = (error: any) => {
     const errorRes = error.response;
     if (errorRes) {
-      return showError({ error: errorRes.data || {}, status: errorRes.status });
+      if (errorRes.status === 401) {
+        store.dispatch(
+          CommonFunction.setRedirectPath(window.location.pathname)
+        );
+        store.dispatch(UserFunction.logout());
+        history.push("/auth/login");
+      } else {
+        return showError({
+          error: errorRes.data || {},
+          status: errorRes.status,
+        });
+      }
     } else {
       toastService.error("Một lỗi không mong muốn đã xảy ra");
     }
@@ -50,13 +61,8 @@ export const setupAxios = () => {
     } else {
       switch (status) {
         case 401:
-          store.dispatch(
-            CommonFunction.setRedirectPath(window.location.pathname)
-          );
-          store.dispatch(UserFunction.logout());
-          history.push("/auth/login");
           message = "Phiên đăng nhập đã hết hạn!";
-          break;
+          return;
         case 403:
           message = "Bạn không thể thực hiện chức năng này!";
           break;

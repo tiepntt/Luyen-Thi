@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Luyenthi.DbMigrator.Migrations
 {
     [DbContext(typeof(LuyenthiDbContext))]
-    [Migration("20211022024340_Initial")]
+    [Migration("20211024024454_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1039,7 +1039,7 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.HasOne("Luyenthi.Domain.DocumentHistory", "DocumentHistory")
                         .WithMany("QuestionHistories")
                         .HasForeignKey("DocumentHistoryId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Luyenthi.Domain.Question", "Question")
                         .WithMany("QuestionHistories")

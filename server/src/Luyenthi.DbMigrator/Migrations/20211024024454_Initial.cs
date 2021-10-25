@@ -8,6 +8,10 @@ namespace Luyenthi.DbMigrator.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
+                name: "FK_QuestionHistories_DocumentHistories_DocumentHistoryId",
+                table: "QuestionHistories");
+
+            migrationBuilder.DropForeignKey(
                 name: "FK_QuestionSetQuestion_Questions_QuestionSetId",
                 table: "QuestionSetQuestion");
 
@@ -34,6 +38,14 @@ namespace Luyenthi.DbMigrator.Migrations
                 column: "QuestionId");
 
             migrationBuilder.AddForeignKey(
+                name: "FK_QuestionHistories_DocumentHistories_DocumentHistoryId",
+                table: "QuestionHistories",
+                column: "DocumentHistoryId",
+                principalTable: "DocumentHistories",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
                 name: "FK_QuestionSetQuestion_Questions_QuestionId",
                 table: "QuestionSetQuestion",
                 column: "QuestionId",
@@ -44,6 +56,10 @@ namespace Luyenthi.DbMigrator.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_QuestionHistories_DocumentHistories_DocumentHistoryId",
+                table: "QuestionHistories");
+
             migrationBuilder.DropForeignKey(
                 name: "FK_QuestionSetQuestion_Questions_QuestionId",
                 table: "QuestionSetQuestion");
@@ -67,6 +83,14 @@ namespace Luyenthi.DbMigrator.Migrations
                 oldType: "char(36)",
                 oldNullable: true)
                 .OldAnnotation("Relational:Collation", "ascii_general_ci");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_QuestionHistories_DocumentHistories_DocumentHistoryId",
+                table: "QuestionHistories",
+                column: "DocumentHistoryId",
+                principalTable: "DocumentHistories",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.SetNull);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_QuestionSetQuestion_Questions_QuestionSetId",

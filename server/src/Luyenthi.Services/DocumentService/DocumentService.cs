@@ -64,7 +64,7 @@ namespace Luyenthi.Services
                                                 Id = q.Id,
                                                 Introduction = q.Introduction,
                                                 Content = q.Content,
-                                                ParentId = q.ParentId
+                                                ParentId = q.ParentId,
                                             }).ToList()
                                         }).ToList()
                                     }).ToList()

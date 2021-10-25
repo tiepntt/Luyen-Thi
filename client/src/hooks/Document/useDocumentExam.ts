@@ -6,9 +6,10 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { examApi } from "services/api/document/examApi";
 import { questionHistoryApi } from "services/api/question/questionHistory";
-import { history } from "services/history";
+import { toastService } from "services/toast";
 import { DocumentHistoryStatus } from "settings/document/documentHistory";
 import { DocumentTypeLabel } from "settings/document/documentType";
+import { QuestionHistoryStatus } from "settings/question/questionHistoryStatus";
 import { QuestionType } from "settings/question/questionType";
 
 export const useDocumentExam = (id: string) => {
@@ -19,6 +20,9 @@ export const useDocumentExam = (id: string) => {
   const [times, setTimes] = useState(3600);
   const [loopTime, setLoopTime] = useState<any>();
   const answerQuestionIndex = (questionId: string) => (value: any) => {
+    if (documentHistory.status !== DocumentHistoryStatus.Doing) {
+      return;
+    }
     let newHistories = { ...documentHistory };
     let questionHistories = documentHistory?.questionHistories || [];
     let index = questionHistories.findIndex((q) => q.questionId === questionId);
@@ -104,11 +108,12 @@ export const useDocumentExam = (id: string) => {
         newDocumentHistory.questionHistories = initHistory(
           questions,
           newDocumentHistory.questionHistories,
-          newDocumentHistory.id
+          newDocumentHistory.id,
+          newDocumentHistory.status === DocumentHistoryStatus.Close
         );
         setDocumentHistory(newDocumentHistory);
       } else {
-        history.push("/404");
+        // history.push("/404");
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -117,7 +122,8 @@ export const useDocumentExam = (id: string) => {
   const initHistory = (
     questions: Question[],
     histories: QuestionHistory[],
-    historyId = ""
+    historyId = "",
+    isDone = false
   ) =>
     questions.map((question): QuestionHistory => {
       var questionHistory = histories.find((i) => i.questionId === question.id);
@@ -127,6 +133,9 @@ export const useDocumentExam = (id: string) => {
             questionId: question.id,
             documentId: id,
             documentHistoryId: historyId,
+            answerStatus: isDone
+              ? QuestionHistoryStatus.Incorrect
+              : QuestionHistoryStatus.Temp,
           } as QuestionHistory);
     });
   useEffect(() => {
@@ -136,8 +145,13 @@ export const useDocumentExam = (id: string) => {
         documentHistory.status === DocumentHistoryStatus.Close
       ) {
         clearInterval(loopTime);
-      }
-      if (
+        setTimes(
+          moment(documentHistory.endTime).diff(
+            documentHistory.startTime,
+            "seconds"
+          )
+        );
+      } else if (
         documentHistory &&
         documentHistory.status === DocumentHistoryStatus.Doing
       ) {
@@ -150,7 +164,63 @@ export const useDocumentExam = (id: string) => {
     } catch {}
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [documentHistory.status]);
-
+  const submit = () => {
+    setDocumentHistory({
+      ...documentHistory,
+      status: DocumentHistoryStatus.Close,
+      endTime: new Date(Date.now()),
+    });
+    examApi.submit(documentHistory.id || "").then((res) => {
+      if (res.status === 200) {
+        // init History
+        let questions = (document as DocumentExam)?.questionSets
+          .map((qs) => qs.questions)
+          .flat()
+          .map((q) =>
+            q.type === QuestionType.MultipleChoice ? q : q.subQuestions
+          )
+          .flat();
+        let newDocumentHistory = res.data as DocumentHistory;
+        newDocumentHistory.questionHistories = initHistory(
+          questions || [],
+          newDocumentHistory.questionHistories,
+          newDocumentHistory.id,
+          true
+        );
+        setDocumentHistory(newDocumentHistory);
+      } else {
+        toastService.error(res.data.message);
+      }
+    });
+  };
+  const reset = () => {
+    setDocumentHistory({
+      ...documentHistory,
+      status: DocumentHistoryStatus.Close,
+      endTime: new Date(Date.now()),
+    });
+    examApi.reset(document?.id || "").then((res) => {
+      if (res.status === 200) {
+        // init History
+        let questions = (document as DocumentExam)?.questionSets
+          .map((qs) => qs.questions)
+          .flat()
+          .map((q) =>
+            q.type === QuestionType.MultipleChoice ? q : q.subQuestions
+          )
+          .flat();
+        let newDocumentHistory = res.data as DocumentHistory;
+        newDocumentHistory.questionHistories = initHistory(
+          questions || [],
+          newDocumentHistory.questionHistories,
+          newDocumentHistory.id
+        );
+        setDocumentHistory(newDocumentHistory);
+      } else {
+        toastService.error(res.data.message);
+      }
+    });
+  };
   return {
     document,
     answerQuestionIndex,
@@ -160,5 +230,7 @@ export const useDocumentExam = (id: string) => {
     submitDocument,
     userAnswerIndex,
     times,
+    submit,
+    reset,
   };
 };

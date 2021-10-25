@@ -4,4 +4,14 @@
     border-color: rgb(3, 156, 194) !important;
     color: white;
   }
+  .correct {
+    background-color: green !important;
+    border-color: green !important;
+    color: white;
+  }
+  .incorrect {
+    background-color: #994118 !important;
+    border-color: #994118 !important;
+    color: white;
+  }
 }

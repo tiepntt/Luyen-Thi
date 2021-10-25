@@ -165,6 +165,11 @@ namespace Luyenthi.EntityFrameworkCore
             Context.Entry(entityToUpdate).State = EntityState.Modified;
             Context.SaveChanges();
         }
-       
+        public virtual void UpdateMany(List<TEntity> entitiesToUpdate)
+        {
+            Entities.UpdateRange(entitiesToUpdate);
+            Context.SaveChanges();
+        }
+
     }
 }

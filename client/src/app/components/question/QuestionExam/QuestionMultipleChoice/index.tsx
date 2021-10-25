@@ -2,6 +2,7 @@ import TemplatePreview from "app/components/_share/TemplatePreview";
 import { useHistoryQuestions } from "hooks/Question/historyQuestionExam";
 import { Question } from "models/question/Question";
 import React, { createRef, useEffect, useState } from "react";
+import { getClassStatusQuestion } from "utils/questionFunction";
 interface Props {
   question: Question;
   questionSetId: string;
@@ -10,7 +11,7 @@ const QuestionMultipleChoice: React.FC<Props> = ({
   questionSetId,
   question,
 }) => {
-  const { content = [], introduction = [], correctAnswer } = question;
+  const { content = [], introduction = [] } = question;
   const { setQuestionHistoryIndex, userAnswerIndex } = useHistoryQuestions();
   const [optionsRef] = useState(createRef<HTMLDivElement>());
   const questionHistory = userAnswerIndex(question.id) || {};
@@ -79,8 +80,10 @@ const QuestionMultipleChoice: React.FC<Props> = ({
             >
               <div
                 className={`name-option ${
-                  correctAnswer === option.name && "correct-answer"
-                } ${option.name === questionHistory.answer ? "active" : ""}`}
+                  option.name === questionHistory.answer
+                    ? `active ${getClassStatusQuestion(questionHistory)}`
+                    : ""
+                }  `}
                 onClick={() => setAnswer(option.name)}
               >
                 {option.name}

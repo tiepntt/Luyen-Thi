@@ -38,6 +38,7 @@
       align-items: center;
       border-radius: 4px;
       margin: 6px 9px;
+      border: 0.5px solid transparent;
       &.has-answer {
         color: #c6c6c6;
       }
@@ -48,6 +49,9 @@
       &.incorrect {
         color: white !important;
         background-color: rgb(153, 65, 24);
+        &:not(.has-answer) {
+          background-color: rgb(202, 182, 4) !important;
+        }
       }
     }
   }
