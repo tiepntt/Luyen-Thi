@@ -20,6 +20,7 @@ namespace Luyenthi.Domain
         public ApplicationUser User { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
+        public double TimeDuration { get; set; } = 0;
         public int NumberCorrect { get; set; } = 0;
         public int NumberIncorrect { get; set; } = 0;
         public DocumentHistoryStatus Status { get; set; }

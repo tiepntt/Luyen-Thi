@@ -32,7 +32,7 @@ namespace Luyenthi.HttpApi.Host.Middleware
                 if(userTokenPayload != null)
                 {
                     httpContext.Items["User"] = userTokenPayload.User;
-                    httpContext.Items["Role"] = userTokenPayload.Roles;
+                    httpContext.Items["Roles"] = userTokenPayload.Roles;
                 };
             }    
 

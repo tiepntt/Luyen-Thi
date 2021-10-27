@@ -1,4 +1,5 @@
-﻿using Luyenthi.Core.Enums;
+﻿using Luyenthi.Core.Dtos;
+using Luyenthi.Core.Enums;
 using Luyenthi.Domain;
 using Luyenthi.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -37,6 +38,7 @@ namespace Luyenthi.Services
             current.NumberCorrect = documentHistory.NumberCorrect;
             current.EndTime = documentHistory.EndTime;
             current.NumberIncorrect = documentHistory.NumberIncorrect;
+            current.TimeDuration = documentHistory.TimeDuration;
             current.Status = documentHistory.Status;
             _documentHistoryRepository.UpdateEntity(current);
             return current;
@@ -61,6 +63,8 @@ namespace Luyenthi.Services
                     EndTime = h.EndTime,
                     Status = h.Status,
                     DocumentId = h.DocumentId,
+                    NumberCorrect = h.NumberCorrect,
+                    NumberIncorrect = h.NumberIncorrect,
                     QuestionHistories = h.QuestionHistories.Select(q => new QuestionHistory { 
                         Id = q.Id, 
                         QuestionId = q.QuestionId,
@@ -90,10 +94,84 @@ namespace Luyenthi.Services
             }).ToList();
             _questionHistoryService.UpdateMany(questionHistories);
             documentHistory.NumberCorrect = questionHistories.Count(i => i.AnswerStatus == AnswerStatus.Correct);
+            documentHistory.NumberIncorrect = questionHistories.Count() - documentHistory.NumberCorrect;
+            documentHistory.TimeDuration = (documentHistory.EndTime - documentHistory.StartTime).TotalMinutes;
             Update(documentHistory);
             scope.Complete();
             scope.Dispose();
             documentHistory.QuestionHistories = questionHistories.ToList();
+        }
+        public async Task<UserAnalyticResponse> GetAnalyticUser(UserAnalyticQuery query)
+        {
+            var result = new UserAnalyticResponse();
+            var documentHistories = await _documentHistoryRepository
+                .Find(i => i.Status == DocumentHistoryStatus.Close &&
+                     (query.GradeCode == null || i.Document.Grade.Code == query.GradeCode) &&
+                     (query.SubjectCode == null || i.Document.Subject.Code == query.SubjectCode) &&
+                     (query.UserId == null || i.CreatedBy == query.UserId)
+                )
+                .GroupBy(i => i.DocumentId)
+                .Select(h => new {
+                    DocumentId = h.Key,
+                    NumberDocument = h.Count(),
+                    MaxScore = h.Max(s => (double)(s.NumberCorrect / (s.NumberCorrect + s.NumberIncorrect))),
+                    Medium = h.Average(s => s.NumberCorrect / (s.NumberCorrect + s.NumberIncorrect)),
+                    TotalTime = h.Sum(s => s.TimeDuration)
+                }).ToListAsync();
+            result.NumberDocument = documentHistories.Sum(i => i.NumberDocument);
+            result.PercentCorrect = Math.Round((double)documentHistories.Average(i => i.Medium) * 100, 2);
+            result.TotalTime = documentHistories.Sum(i => i.TotalTime);
+            result.Medium = documentHistories.Average(i => i.Medium);
+            result.MaxScore = documentHistories.Max(i => Math.Round(i.MaxScore, 2));
+            return result;
+        }
+        public async Task<List<UserHistoryAnalyticDto>> GetUserHistoryAnalytic(UserHistoryAnalyticQuery query)
+        {
+            var timeAnalytic = DocumentHelper.GetTimeAnalytic(query.Type);
+            var histories = await _documentHistoryRepository
+                .Find(i => (query.UserId == Guid.Empty || i.CreatedBy == query.UserId) &&
+                      i.Status == DocumentHistoryStatus.Close &&
+                      i.EndTime >= timeAnalytic.StartTime && i.EndTime <= timeAnalytic.EndTime)
+                .Select(i => new DocumentHistory
+                {
+                    Id = i.Id,
+                    DocumentId = i.DocumentId,
+                    StartTime = i.StartTime,
+                    EndTime = i.EndTime,
+                    NumberCorrect = i.NumberCorrect,
+                    NumberIncorrect = i.NumberIncorrect,
+                    TimeDuration = i.TimeDuration
+                })
+                .ToListAsync();
+            var historyAnalytics= histories
+                .GroupBy(i => {
+                    switch (query.Type)
+                    {
+                        case UserHistoryAnalyticType.Today:
+                            return i.EndTime.Hour/2;
+                        case UserHistoryAnalyticType.InWeek:
+                            return i.EndTime.Day;
+                        case UserHistoryAnalyticType.InMonth:
+                            return i.EndTime.Day/3;
+                        case UserHistoryAnalyticType.InYear:
+                            return i.EndTime.Month;
+                    };
+                    return 1 ;
+                })
+                .Select(i => new UserHistoryAnalyticDto
+                {
+                    Key=i.Key,
+                    Label = DocumentHelper.GetLabelAnalytic(query.Type, i.Key),
+                    MaxScore = Math.Round(i.Max(h => (double)h.NumberCorrect / (h.NumberCorrect + h.NumberIncorrect)*10),2),
+                    Total = i.Count(),
+                    TimeDuration = i.Sum(h => h.TimeDuration)
+                }).ToList();
+            
+            return historyAnalytics;
+        }
+        public async Task<List<UserDocumentAnalyticDto>> GetRanks()
+        {
+            return new List<UserDocumentAnalyticDto>();
         }
     }
 }

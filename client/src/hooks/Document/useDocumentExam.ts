@@ -134,7 +134,7 @@ export const useDocumentExam = (id: string) => {
             documentId: id,
             documentHistoryId: historyId,
             answerStatus: isDone
-              ? QuestionHistoryStatus.Incorrect
+              ? QuestionHistoryStatus.InCorrect
               : QuestionHistoryStatus.Temp,
           } as QuestionHistory);
     });

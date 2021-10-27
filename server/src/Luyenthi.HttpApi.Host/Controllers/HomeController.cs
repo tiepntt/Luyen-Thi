@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Luyenthi.Core.Dtos;
+using Luyenthi.Domain.User;
 using Luyenthi.Services;
 using Luyenthi.Services.GoolgeAPI;
 using Microsoft.AspNetCore.Hosting;
@@ -41,12 +43,19 @@ namespace Luyenthi.HttpApi.Host.Controllers
             var documentGrade =  _gradeService.CountByGrades();
             var documentSubject = _subjectService.CountBySubject();
             var progress = await Task.WhenAll(documentGrade, documentSubject);
-            
             var result = new Dictionary<string, dynamic>()
             {
                 {"Grades", progress[0]},
                 {"Subjects", progress[1]},
             };
+            var user = (ApplicationUser)HttpContext.Items["User"];
+            var roles = (List<string>)HttpContext.Items["Roles"];
+            if (user != null)
+            {
+                var userInfo = _mapper.Map<UserInfoDto>(user);
+                userInfo.Roles = roles;
+                result.Add( "UserInfo", userInfo);
+            }
             return result;
         }
     }

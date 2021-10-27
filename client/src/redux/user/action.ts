@@ -1,8 +1,9 @@
-import { UserRedux } from "models/user/userInfo";
+import { User, UserRedux } from "models/user/userInfo";
 export enum UserActcion {
   Login = "Login",
   LogOut = "Logout",
   EmailConfirm = "EmailConfirm",
+  UpdateUser = "UpdateUser",
 }
 export const UserFunction = {
   login: (user: UserRedux) => {
@@ -13,5 +14,8 @@ export const UserFunction = {
   },
   activeAccount: () => {
     return { type: UserActcion.EmailConfirm };
+  },
+  updateUser: (userInfo: User) => {
+    return { type: UserActcion.UpdateUser, payload: { userInfo } };
   },
 };
