@@ -1,18 +1,148 @@
 #home-page {
+  
+  text-align: center;
   .block-carousels {
     position: relative;
     width: 100%;
     height: 400px;
     background-color: #019176;
-    img {
-      width: 100%;
-      max-height: 300px;
-      object-fit: contain;
-      background-position: center;
+    .header-intro {
+      h1 {
+        font-size: 3rem;
+        color: #fff;
+        font-weight: 700;
+      }
+    }
+    .list-polygon {
+      list-style-type: none;
+      img {
+        width: 100%;
+        max-height: 300px;
+        object-fit: contain;
+        background-position: center;
+      }
     }
   }
   .content-home-page {
     background-color: #ebfaf7;
-    // padding: 10px;
+  }
+  .working-button {
+    color: #fff;
+    padding: 0.25rem 4rem;
+    font-weight: bold;
+    box-shadow: 0px 7px 14px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+    outline: none;
+    border: none;
+    background-color: #EEC14E;
+  }
+  .document-section {
+    height: 400px;
+    background-color: #82DBCA;    
+    color: #1A6356;
+    .left {
+      left: 64px;
+    }
+    .right {
+      right: 64px;
+    }
+    .document-list {
+      display: flex;
+      position: relative;
+      flex-direction: column;
+      justify-content: space-between;
+      margin: 3rem 0px;
+      div {
+        width: 140px;
+        height: 75px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      color: #fff;
+      font-weight: bold;
+      :not(:last-child) {
+        background-color: #0A584A;
+      }
+      :last-child {
+        background-color: #019176;
+      }
+    }
+
+  }
+  .test-section {
+    height: 500px;
+    background: rgba(0, 196, 159, 0.08);
+    background-image: url("../../../assets/images/homepage/background_1.png");
+    background-size: 45%;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: #1A6356;
+    .list-class {
+      width: 35%;
+      height: auto;
+      position: relative;
+      left: 55px;
+      div {
+        width: 100%;
+        height: 115px;
+        background-size: 20%;
+        background-repeat: no-repeat;
+        background-position: left;
+        background-position-x: 50px;
+        color: #FFF;
+        font-weight: bold;
+        font-size: 20px;
+        opacity: 80%;
+        outline: none;
+        border-radius: 2px;
+        hr {
+          margin-left: auto;
+          width: 60%;
+          height: 5px;
+        }
+      }
+      .class-10 {
+        background-color: #EB9595;
+        background-image: url("../../../assets/images/homepage/medal.png");
+      }
+      .class-11 {
+        background-color: #D1E171;
+        background-image: url("../../../assets/images/homepage/book_a4.png");
+      }
+      .class-12 {
+        background-color: #C4C4C4;
+        background-image: url("../../../assets/images/homepage/lamp.png");
+      }
+      .national-test {
+        position: relative;
+        top: 8px;
+        left: 8px;
+        background-image: url("../../../assets/images/homepage/graduation_hat.png");
+        background-color: #84CBB6;
+      }
+    }
+    h1 {
+      position: relative;
+      top: 5px;
+      color: #E5B22C;
+      font-weight: bold;
+    }
+    h5 {
+      position: relative;
+      color: #083C32;
+      font-weight: bold;
+      bottom: 5px;
+    }
+
+  }
+  .learning-path {
+    background-color: #0A584A;
+    height: 70px;
+    background-image: url("../../../assets/images/homepage/redirect.png");
+    background-size: 3%;
+    background-position-x: 33%;
+    background-position-y: center;
+    background-repeat: no-repeat;
   }
 }
