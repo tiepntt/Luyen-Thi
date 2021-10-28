@@ -108,7 +108,8 @@ namespace Luyenthi.Services
             switch (type)
             {
                 case UserHistoryAnalyticType.Today:
-                    StartTime = DateTime.Now.AddDays(-1);
+                    StartTime = DateTime.Now.AddDays(-1).AddHours(2);
+                    EndTime = DateTime.Now;
                     break;
                 case UserHistoryAnalyticType.InWeek:
                     StartTime = DateTime.Today.AddDays(-6);
@@ -140,13 +141,20 @@ namespace Luyenthi.Services
                     label = $"{StartTime.Hour}-{EndTime.Hour}h";
                     break;
                 case UserHistoryAnalyticType.InWeek:
-                    StartTime = DateTime.Now.AddDays(-key);
+                    StartTime = DateTime.Now.AddDays(-key + 1);
                     label = StartTime.ToString("ddd");
                     break;
                 case UserHistoryAnalyticType.InMonth:
-                    StartTime = DateTime.Now.AddDays(-key*3);
-                    EndTime = DateTime.Now.AddDays((-key + 1)*3);
-                    label = $"{StartTime.ToString("dd/MM")}";
+                    StartTime = DateTime.Now.AddMonths(-1).AddDays(key*3);
+                    EndTime = DateTime.Now.AddMonths(-1).AddDays((key +1)*3);
+                    if(StartTime.Date.Month != EndTime.Date.Month)
+                    {
+                        label = $"{StartTime.ToString("dd")}/{StartTime.ToString("MM")}-{EndTime.ToString("dd")}/{EndTime.ToString("MM")}";
+                    }
+                    else
+                    {
+                        label = $"{StartTime.ToString("dd")}-{EndTime.ToString("dd")}/{StartTime.ToString("MM")}";
+                    }
                     break;
                 case UserHistoryAnalyticType.InYear:
                     StartTime = DateTime.Now.AddMonths((int)-key);
