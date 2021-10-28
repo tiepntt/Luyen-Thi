@@ -7,7 +7,7 @@ export const getClassStatusQuestion = (questionHistory: QuestionHistory) => {
       return "temp";
     case QuestionHistoryStatus.Correct:
       return "correct";
-    case QuestionHistoryStatus.Incorrect:
+    case QuestionHistoryStatus.InCorrect:
       return "incorrect";
   }
 };

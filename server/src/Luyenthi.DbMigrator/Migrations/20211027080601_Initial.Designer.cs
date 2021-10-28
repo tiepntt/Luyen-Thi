@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Luyenthi.DbMigrator.Migrations
 {
     [DbContext(typeof(LuyenthiDbContext))]
-    [Migration("20211024024454_Initial")]
+    [Migration("20211027080601_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -172,6 +172,9 @@ namespace Luyenthi.DbMigrator.Migrations
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
+
+                    b.Property<double>("TimeDuration")
+                        .HasColumnType("double");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)");

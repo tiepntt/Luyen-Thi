@@ -23,6 +23,11 @@ export const UserReducer = (
         ...state,
         userInfo: { ...(userInfo as User), emailConfirmed: true },
       };
+    case UserActcion.UpdateUser:
+      return {
+        ...state,
+        userInfo: action.payload?.userInfo,
+      };
     default:
       return state;
   }

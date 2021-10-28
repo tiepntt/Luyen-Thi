@@ -1,4 +1,5 @@
-﻿using Luyenthi.Domain;
+﻿using Luyenthi.Core.Dtos;
+using Luyenthi.Domain;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -100,5 +101,60 @@ namespace Luyenthi.Services
             var count =(int)questionSets.SelectMany(qs => qs.Questions).Sum(i => i.NumberQuestion);
             return count;
         } 
+        public static TimeAnalytic GetTimeAnalytic(UserHistoryAnalyticType type)
+        {
+            var StartTime = DateTime.Now;
+            var EndTime = DateTime.Now;
+            switch (type)
+            {
+                case UserHistoryAnalyticType.Today:
+                    StartTime = DateTime.Now.AddDays(-1);
+                    break;
+                case UserHistoryAnalyticType.InWeek:
+                    StartTime = DateTime.Today.AddDays(-6);
+                    break;
+                case UserHistoryAnalyticType.InMonth:
+                    StartTime = DateTime.Today.AddMonths(-1).AddDays(1);
+                    break;
+                case UserHistoryAnalyticType.InYear:
+                    StartTime = DateTime.Today.AddYears(-1).AddMonths(1);
+                    break;
+            }
+
+            return new TimeAnalytic
+            {
+                StartTime = StartTime,
+                EndTime = EndTime
+            };
+        }
+        public static string GetLabelAnalytic(UserHistoryAnalyticType type, int key)
+        {
+            var StartTime = DateTime.Now;
+            var EndTime = DateTime.Now;
+            var label = "";
+            switch (type)
+            {
+                case UserHistoryAnalyticType.Today:
+                    StartTime = DateTime.Now.Date.AddHours(key*2);
+                    EndTime = DateTime.Now.Date.AddHours((key + 1)*2);
+                    label = $"{StartTime.Hour}-{EndTime.Hour}h";
+                    break;
+                case UserHistoryAnalyticType.InWeek:
+                    StartTime = DateTime.Now.AddDays(-key);
+                    label = StartTime.ToString("ddd");
+                    break;
+                case UserHistoryAnalyticType.InMonth:
+                    StartTime = DateTime.Now.AddDays(-key*3);
+                    EndTime = DateTime.Now.AddDays((-key + 1)*3);
+                    label = $"{StartTime.ToString("dd/MM")}";
+                    break;
+                case UserHistoryAnalyticType.InYear:
+                    StartTime = DateTime.Now.AddMonths((int)-key);
+                    label = $"T{StartTime.ToString("MM")}";
+                    break;
+            }
+            return label;
+        }
+
     }
 }

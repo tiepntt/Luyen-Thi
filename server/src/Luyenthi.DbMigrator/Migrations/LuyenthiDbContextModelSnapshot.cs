@@ -171,6 +171,9 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<double>("TimeDuration")
+                        .HasColumnType("double");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)");
 

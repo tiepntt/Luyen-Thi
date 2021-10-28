@@ -32,6 +32,13 @@ namespace Luyenthi.DbMigrator.Migrations
                 nullable: false,
                 defaultValue: 0);
 
+            migrationBuilder.AddColumn<double>(
+                name: "TimeDuration",
+                table: "DocumentHistories",
+                type: "double",
+                nullable: false,
+                defaultValue: 0.0);
+
             migrationBuilder.CreateIndex(
                 name: "IX_QuestionSetQuestion_QuestionId",
                 table: "QuestionSetQuestion",
@@ -70,6 +77,10 @@ namespace Luyenthi.DbMigrator.Migrations
 
             migrationBuilder.DropColumn(
                 name: "Status",
+                table: "DocumentHistories");
+
+            migrationBuilder.DropColumn(
+                name: "TimeDuration",
                 table: "DocumentHistories");
 
             migrationBuilder.AlterColumn<Guid>(

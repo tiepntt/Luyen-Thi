@@ -8,12 +8,15 @@ import { Grade } from "models/matrix/Grade";
 import { Subject } from "models/matrix/Subject";
 import { homeApi } from "services/api/home";
 import { toastService } from "services/toast";
+import { useDispatch } from "react-redux";
+import { UserFunction } from "redux/user/action";
 
 const AppLayout: React.FC = ({ children }) => {
   const [showHeader, setShowHeader] = useState(true);
   const [showFooter, setShowFooter] = useState(true);
   const [grades, setGrades] = useState<Grade[]>([]);
   const [subjects, setSubjects] = useState<Subject[]>([]);
+  const dispatch = useDispatch();
 
   const [, setMobileNavOpen] = useState(false);
   const scrollTop = () => {
@@ -32,10 +35,14 @@ const AppLayout: React.FC = ({ children }) => {
       if (res.status === 200) {
         setGrades(res.data.grades);
         setSubjects(res.data.subjects);
+        if (res.data.userInfo) {
+          dispatch(UserFunction.updateUser(res.data.userInfo));
+        }
       } else {
         toastService.error(res.data.message);
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const value: AppModels = {
     showHeader,

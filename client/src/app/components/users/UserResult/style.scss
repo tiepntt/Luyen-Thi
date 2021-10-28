@@ -1,0 +1,22 @@
+.user-result {
+  padding: 10px 10px;
+  .label {
+    text-transform: uppercase;
+  }
+  .label-inlne {
+    justify-items: center;
+    align-items: end;
+    max-width: 900px;
+    padding-right: 40px;
+  }
+  .overview {
+  }
+  .list-bugget {
+    padding: 0 35px;
+    max-width: 900px;
+  }
+  .analytic-chart-result {
+    position: relative;
+    max-width: 900px;
+  }
+}
