@@ -12,6 +12,7 @@ namespace Luyenthi.Core.Dtos
         public string Label { get; set; }
         public double MaxScore { get; set; }
         public int Total { get; set; }
+        public double Medium { get; set; }
         public double TimeDuration { get; set; }
         public DateTime StartDate { get; set; }
 

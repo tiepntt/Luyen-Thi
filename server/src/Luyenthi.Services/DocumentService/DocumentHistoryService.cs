@@ -164,10 +164,60 @@ namespace Luyenthi.Services
                     Label = DocumentHelper.GetLabelAnalytic(query.Type, i.Key),
                     MaxScore = Math.Round(i.Max(h => (double)h.NumberCorrect / (h.NumberCorrect + h.NumberIncorrect)*10),2),
                     Total = i.Count(),
-                    TimeDuration = i.Sum(h => h.TimeDuration)
+                    TimeDuration = i.Sum(h => h.TimeDuration),
+                    Medium = Math.Round(i.Average(h => (double)h.NumberCorrect / (h.NumberCorrect + h.NumberIncorrect)) * 10,2),
+                    StartDate = i.Min(i => i.EndTime),
+                    EndDate = i.Max(i => i.EndTime)
+                    
                 }).ToList();
+            // lấp đầy dữ liệu
+            var StartTime = timeAnalytic.StartTime;
+            var EndTime = timeAnalytic.StartTime;
+            var results = new List<UserHistoryAnalyticDto>();
+            while(StartTime <= timeAnalytic.EndTime) {
+                var key = 1;
+                switch (query.Type)
+                {
+                    case UserHistoryAnalyticType.Today:
+                        key= StartTime.Hour / 2;
+                        EndTime = EndTime.AddHours(2);
+                        break;
+                    case UserHistoryAnalyticType.InWeek:
+                        key = StartTime.Day ;
+                        EndTime = EndTime.AddDays(1);
+                        break;
+                    case UserHistoryAnalyticType.InMonth:
+                        key = StartTime.Day/3;
+                        EndTime = EndTime.AddDays(3);
+                        break;
+                    case UserHistoryAnalyticType.InYear:
+                        key = StartTime.Month ;
+                        EndTime = EndTime.AddMonths(1);
+                        break;
+                };
+                var userHistory = historyAnalytics.Find(i => i.Key == key);
+                if(userHistory == null)
+                {
+                    results.Add(new UserHistoryAnalyticDto
+                    {
+                        Key=key,
+                        Label=DocumentHelper.GetLabelAnalytic(query.Type, key),
+                        TimeDuration=0,
+                        StartDate = StartTime,
+                        EndDate = EndTime,
+                        Medium=0,
+                        MaxScore = 0,
+                        Total = 0
+                    });
+                }
+                else
+                {
+                    results.Add(userHistory);
+                }
+                StartTime = EndTime;
+            }
             
-            return historyAnalytics;
+            return results.OrderBy(i => i.StartDate).ToList();
         }
         public async Task<List<UserDocumentAnalyticDto>> GetRanks()
         {

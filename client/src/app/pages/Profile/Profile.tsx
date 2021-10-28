@@ -11,11 +11,13 @@ const ProfilePage: React.FC = () => {
       <Container className="px-3">
         <div className="profile-main-content">
           <ProfileNavbar />
-          <Switch>
-            {profileRoutes.map((route, i) => (
-              <Route {...route} key={i} />
-            ))}
-          </Switch>
+          <div className="profile-content">
+            <Switch>
+              {profileRoutes.map((route, i) => (
+                <Route {...route} key={i} />
+              ))}
+            </Switch>
+          </div>
         </div>
       </Container>
     </div>

@@ -7,4 +7,9 @@ export const TimeFunction = {
     const sec = String(Math.floor(seconds % 60)).padStart(2, "0");
     return `${hours}:${minutes}:${sec}`;
   },
+  convertMinutes: (minutes: number) => {
+    const hours = Math.floor(minutes / 60);
+    const minute = Math.floor(minutes) % 60;
+    return `${hours}h${minute}'`;
+  },
 };
