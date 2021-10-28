@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 interface Props {
   className?: string;
   href: string;
-  icon: any;
+  icon?: any;
   title: string;
   rest?: any;
 }
@@ -37,6 +37,7 @@ const useStyles: any = makeStyles((theme: Theme) => ({
     display: "flex",
     paddingTop: 0,
     paddingBottom: 0,
+    borderRadius: 0,
   },
   button: {
     color: theme.palette.text.secondary,
