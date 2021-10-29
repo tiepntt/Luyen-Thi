@@ -19,7 +19,7 @@ const DocumentItem: React.FC<Props> = ({ document, onClick }) => {
             height={200}
           />
         </div>
-        <div className="document-info">
+        <div className="document-info" style={{ flexGrow: 1 }}>
           <div className="title-document" onClick={onClick}>
             {document.name}
           </div>

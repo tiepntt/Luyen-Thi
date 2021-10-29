@@ -52,7 +52,7 @@
       color: #888282;
     }
     .document-options {
-      margin-top: 12px;
+      margin-top: 5px;
       justify-content: center;
       justify-items: center;
       align-items: center;
@@ -67,7 +67,7 @@
           color: #f45235;
         }
       }
-      button {
+      .btn-do {
         background: #6e9cc6;
         border: #6e9cc6;
         padding: 7px 13px;
@@ -82,7 +82,7 @@
     .desription {
       color: gray;
       font-size: 14px;
-      height: 35px;
+      height: 39px;
       overflow: hidden;
       margin-top: 5px;
     }

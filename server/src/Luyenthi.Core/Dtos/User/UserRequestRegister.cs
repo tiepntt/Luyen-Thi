@@ -22,5 +22,6 @@ namespace Luyenthi.Core.Dtos
         public string UserName { get; set; }
         [Required]
         public string Password { get; set; }
+        public DateTime BirthDay { get; set; } = DateTime.Today.AddYears(18);
     }
 }

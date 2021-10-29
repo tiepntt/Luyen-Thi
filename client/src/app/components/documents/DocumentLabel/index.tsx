@@ -47,7 +47,11 @@ const DocumentLabel: React.FC<Props> = ({ document }) => {
         </div>
         <div className="d-flex document-options">
           <div className="button-do" style={{ flexGrow: 1 }}>
-            <Button size="sm">
+            <Button
+              size="sm"
+              href={`/document/${document.id}`}
+              className="btn-do"
+            >
               Làm ngay
               <span>
                 <FontAwesomeIcon icon={faChevronRight} />

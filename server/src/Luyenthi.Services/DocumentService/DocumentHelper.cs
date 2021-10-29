@@ -108,7 +108,7 @@ namespace Luyenthi.Services
             switch (type)
             {
                 case UserHistoryAnalyticType.Today:
-                    StartTime = DateTime.Now.AddDays(-1).AddHours(2);
+                    StartTime = DateTime.Now.AddDays(-1).AddHours(1);
                     EndTime = DateTime.Now;
                     break;
                 case UserHistoryAnalyticType.InWeek:
@@ -136,29 +136,21 @@ namespace Luyenthi.Services
             switch (type)
             {
                 case UserHistoryAnalyticType.Today:
-                    StartTime = DateTime.Now.Date.AddHours(key*2);
-                    EndTime = DateTime.Now.Date.AddHours((key + 1)*2);
-                    label = $"{StartTime.Hour}-{EndTime.Hour}h";
+                    StartTime = DateTime.Now.AddHours(-key - 1);
+                    EndTime = DateTime.Now.AddHours(-key);
+                    label = $"{EndTime.Hour}h";
                     break;
                 case UserHistoryAnalyticType.InWeek:
-                    StartTime = DateTime.Now.AddDays(-key + 1);
-                    label = StartTime.ToString("ddd");
+                    StartTime = DateTime.Now.AddDays(-key);
+                    label = StartTime.ToString("dd");
                     break;
                 case UserHistoryAnalyticType.InMonth:
-                    StartTime = DateTime.Now.AddMonths(-1).AddDays(key*3);
-                    EndTime = DateTime.Now.AddMonths(-1).AddDays((key +1)*3);
-                    if(StartTime.Date.Month != EndTime.Date.Month)
-                    {
-                        label = $"{StartTime.ToString("dd")}/{StartTime.ToString("MM")}-{EndTime.ToString("dd")}/{EndTime.ToString("MM")}";
-                    }
-                    else
-                    {
-                        label = $"{StartTime.ToString("dd")}-{EndTime.ToString("dd")}/{StartTime.ToString("MM")}";
-                    }
+                    StartTime = DateTime.Now.AddDays(-key);
+                    EndTime = DateTime.Now.AddDays((-key +1));
+                    label = StartTime.ToString("dd");
                     break;
                 case UserHistoryAnalyticType.InYear:
-                    StartTime = DateTime.Now.AddMonths((int)-key);
-                    label = $"T{StartTime.ToString("MM")}";
+                    label = $"T{key}";
                     break;
             }
             return label;

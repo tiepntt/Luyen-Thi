@@ -4,11 +4,14 @@ using Luyenthi.Core.Enums;
 using Luyenthi.Domain.User;
 using Luyenthi.EntityFrameworkCore;
 using Luyenthi.Services;
+using Luyenthi.Services.Settings;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -54,6 +57,32 @@ namespace Luyenthi.HttpApi.Host.Controllers
             user.AvatarUrl = request.AvatarUrl;
             user.BirthDay = request.BirthDay;
             user.PhoneNumber = request.PhoneNumber;
+            user.Gender = request.Gender;
+            await _userManager.UpdateAsync(user);
+            var userResponse = _mapper.Map<UserInfoDto>(user);
+            userResponse.Roles = roles;
+            return userResponse;
+        }
+        [HttpPut("change-avatar")]
+        public async Task<UserInfoDto> ChangeAvatar(IFormCollection formData)
+        {
+            var user = (ApplicationUser)HttpContext.Items["User"];
+            var roles = (List<string>)HttpContext.Items["Roles"];
+            var file = formData.Files.FirstOrDefault();
+            var fileResult = new FileDto { };
+            var cloundinaryService = CloudinarySerivce.GetService();
+            if (file == null)
+            {
+                throw new KeyNotFoundException("Không có file nào được chọn");
+            }
+            using (var ms = new MemoryStream())
+            {
+                file.CopyTo(ms);
+                var fileBytes = ms.ToArray();
+                var imageResult = await CloudinarySerivce.UploadImage(cloundinaryService, fileBytes, CloudinarySetting.FolderUser, user.Id.ToString());
+                fileResult.Path = imageResult.SecureUrl.AbsoluteUri;
+            }
+            user.AvatarUrl = fileResult.Path;
             await _userManager.UpdateAsync(user);
             var userResponse = _mapper.Map<UserInfoDto>(user);
             userResponse.Roles = roles;

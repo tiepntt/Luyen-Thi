@@ -41,7 +41,7 @@ const AddChapterModal: React.FC<Props> = (props) => {
       if (res.status === 200) {
         onAddChapter && onAddChapter(res.data);
         handleCloseModal();
-        toastService.success();
+        // toastService.success();
       } else {
         toastService.error();
       }

@@ -17,7 +17,7 @@ const DocumentList = (props: Props) => {
   return (
     <div>
       <Grid container>
-        <Grid item lg={10} md={12} xl={9} xs={12}>
+        <Grid item lg={12} md={12} xl={9} xs={12}>
           <div className="list-document">
             {_.chunk(documents, 2).map((datas, i) => {
               return (

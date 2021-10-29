@@ -31,7 +31,7 @@ const Dashboard = () => {
                 </Grid>
                 <Grid item lg={3} sm={6} xl={3} xs={12}>
                   <Budget
-                    title={"Bộ câu hỏi"}
+                    title={"Bộ CH"}
                     amount={100}
                     icon={<Folder />}
                     color="orange"
@@ -39,7 +39,7 @@ const Dashboard = () => {
                 </Grid>
                 <Grid item lg={3} sm={6} xl={3} xs={12}>
                   <Budget
-                    title={"Người dùng"}
+                    title={"Users"}
                     amount={100}
                     icon={<Folder />}
                     color="blue"
@@ -69,7 +69,7 @@ const Dashboard = () => {
                 </Grid>
                 <Grid item lg={3} sm={6} xl={3} xs={12}>
                   <Budget
-                    title={"Bộ câu hỏi"}
+                    title={"Bộ CH"}
                     amount={100}
                     icon={<Folder />}
                     color="orange"
@@ -77,7 +77,7 @@ const Dashboard = () => {
                 </Grid>
                 <Grid item lg={3} sm={6} xl={3} xs={12}>
                   <Budget
-                    title={"Người dùng"}
+                    title={"User"}
                     amount={100}
                     icon={<Folder />}
                     color="blue"

@@ -113,7 +113,7 @@ namespace Luyenthi.Services
                 .GroupBy(i => i.DocumentId)
                 .Select(h => new {
                     DocumentId = h.Key,
-                    NumberDocument = h.Count(),
+                    NumberDocument = 1,
                     MaxScore = h.Max(s => (double)(s.NumberCorrect / (s.NumberCorrect + s.NumberIncorrect))),
                     Medium = h.Average(s => s.NumberCorrect / (s.NumberCorrect + s.NumberIncorrect)),
                     TotalTime = h.Sum(s => s.TimeDuration)
@@ -148,11 +148,11 @@ namespace Luyenthi.Services
                     switch (query.Type)
                     {
                         case UserHistoryAnalyticType.Today:
-                            return i.EndTime.Hour/2;
+                            return (int)(DateTime.Now -  i.EndTime).TotalHours;
                         case UserHistoryAnalyticType.InWeek:
-                            return i.EndTime.Day;
+                            return (int)(DateTime.Now.Date - i.EndTime.Date).TotalDays;
                         case UserHistoryAnalyticType.InMonth:
-                            return i.EndTime.Day/3;
+                            return (int)(DateTime.Now.Date - i.EndTime.Date).TotalDays;
                         case UserHistoryAnalyticType.InYear:
                             return i.EndTime.Month;
                     };
@@ -171,28 +171,32 @@ namespace Luyenthi.Services
                     
                 }).ToList();
             // lấp đầy dữ liệu
-            var StartTime = timeAnalytic.StartTime;
-            var EndTime = timeAnalytic.StartTime;
+            var StartTime = timeAnalytic.EndTime;
+            var EndTime = timeAnalytic.EndTime;
             var results = new List<UserHistoryAnalyticDto>();
-            while(StartTime <= timeAnalytic.EndTime) {
+            while(EndTime >= timeAnalytic.StartTime) {
                 var key = 1;
                 switch (query.Type)
                 {
                     case UserHistoryAnalyticType.Today:
-                        key= StartTime.Hour / 2;
-                        EndTime = EndTime.AddHours(2);
+                        key = (int)(DateTime.Now - EndTime).TotalHours;
+                        EndTime = EndTime.AddHours(-1);
+                        StartTime = EndTime.AddHours(1);
                         break;
                     case UserHistoryAnalyticType.InWeek:
-                        key = StartTime.Day ;
-                        EndTime = EndTime.AddDays(1);
+                        key = (int)(DateTime.Now.Date - EndTime.Date).TotalDays;
+                        EndTime = EndTime.AddDays(-1);
+                        StartTime = EndTime.AddDays(1);
                         break;
                     case UserHistoryAnalyticType.InMonth:
-                        key = StartTime.Day/3;
-                        EndTime = EndTime.AddDays(3);
+                        key = (int)(DateTime.Now.Date - EndTime.Date).TotalDays;
+                        EndTime = EndTime.AddDays(-1);
+                        StartTime = EndTime.AddDays(1);
                         break;
                     case UserHistoryAnalyticType.InYear:
-                        key = StartTime.Month ;
-                        EndTime = EndTime.AddMonths(1);
+                        key = EndTime.Month ;
+                        EndTime = EndTime.AddMonths(-1);
+                        StartTime = EndTime.AddMonths(1);
                         break;
                 };
                 var userHistory = historyAnalytics.Find(i => i.Key == key);
@@ -203,8 +207,8 @@ namespace Luyenthi.Services
                         Key=key,
                         Label=DocumentHelper.GetLabelAnalytic(query.Type, key),
                         TimeDuration=0,
-                        StartDate = StartTime,
-                        EndDate = EndTime,
+                        StartDate = EndTime,
+                        EndDate = StartTime,
                         Medium=0,
                         MaxScore = 0,
                         Total = 0

@@ -166,12 +166,12 @@ namespace Luyenthi.HttpApi.Host.Controllers
             document.GoogleDocId = questionImport.GoogleDocUrl;
             //_documentRepository.UpdateEntity(document);
             // xóa các question set đã tạo
-            _questionSetService.RemoveByDocumentId(questionImport.DocumentId);
+            await _questionSetService.RemoveByDocumentId(questionImport.DocumentId);
             // xóa các question đã tạo 
             _questionSetService.CreateMany(questionSets);
             // update document google Doc Id
             // cập nhật document
-
+            _documentRepository.UpdateEntity(document);
 
             questionSets = DocumentHelper.MakeIndexQuestions(questionSets);
             return questionSets;
@@ -197,11 +197,17 @@ namespace Luyenthi.HttpApi.Host.Controllers
         {
             _documentService.RemoveById(documentId);
         }
-        [HttpPost("getAll")]
-        public List<DocumentTitleDto> GetByGradeAndSubject(DocumentGetByGradeSubjectDto request)
+        [HttpGet("getAll")]
+        public async Task<DocumentGetAllDto> GetByGradeAndSubject([FromQuery] DocumentGetByGradeSubjectDto request)
         {
-            var documents = _documentService.GetAll(request);
-            return _mapper.Map<List<DocumentTitleDto>>(documents);
+            var documentTask = _documentService.GetAll(request);
+            var countTask = _documentService.CountAll(request);
+            await Task.WhenAll(documentTask, countTask);
+
+            return new DocumentGetAllDto {
+                Documents = _mapper.Map<List<DocumentTitleDto>>(documentTask.Result),
+                Total = countTask.Result
+            }; 
         }
         [HttpPut]
         public void UpdateById(DocumentUpdateDto documentUpdate)

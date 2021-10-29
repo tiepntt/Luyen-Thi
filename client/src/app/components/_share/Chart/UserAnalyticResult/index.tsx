@@ -54,7 +54,6 @@ const UserAnalyticResult: React.FC<Props> = ({ userHistoies }) => {
       yaxis: [
         {
           min: 0,
-          max: Math.max(times as any) + 5,
           labels: {
             formatter: function (val) {
               return val.toFixed(0);

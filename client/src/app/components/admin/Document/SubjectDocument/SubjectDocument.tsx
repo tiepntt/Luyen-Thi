@@ -1,12 +1,16 @@
 import GradeDocumentBreadcubms from "app/components/_share/Breadcrumbs/GradeDocumentBreadcrubms/GradeDocumentBreadcubms";
 import React, { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import DocumentList from "./DocumentList/DocumentList";
 import AddDocumentModal from "app/components/_share/Modals/AddDocumentModal/AddDocumentModal";
 import { DocumentTitle } from "models/document/DocumentTitle";
 import { DocumentGetAllRequest } from "models/document/DocumentGetAll";
 import { documentApi } from "services/api/document/documentApi";
 import { useAppContext } from "hooks/AppContext/AppContext";
+import { AppPagination } from "app/components/_share/Pagination/Pagination";
+import { NumberParam, StringParam, useQueryParams } from "use-query-params";
+import { history } from "services/history";
+import queryString from "query-string";
 interface Param {
   gradeId: string;
   subjectId: string;
@@ -33,18 +37,17 @@ const SubjectDocument = () => {
     },
   ];
   const [documents, setDocuments] = useState<DocumentTitle[]>([]);
-  const [request] = useState<DocumentGetAllRequest>({
-    take: 5,
-    skip: 0,
-    key: "",
-    gradeId: grade?.id,
-    subjectId: subject?.id,
+  const [count, setCount] = React.useState(10);
+  const [filter] = useQueryParams({
+    key: StringParam,
+    page: NumberParam,
+    type: NumberParam,
   });
-  const location = useLocation();
-  const getDocuments = () => {
-    documentApi.getAll(request).then((res: any) => {
+  const getDocuments = (query: DocumentGetAllRequest) => {
+    documentApi.getAll(query).then((res: any) => {
       if (res.status === 200) {
-        setDocuments(res.data);
+        setDocuments(res.data.documents);
+        setCount(res.data.total);
       }
     });
   };
@@ -52,9 +55,28 @@ const SubjectDocument = () => {
     setDocuments([...documents, { ...doc }]);
   };
   useEffect(() => {
-    getDocuments();
+    if (grade && subject) {
+      var query: DocumentGetAllRequest = {
+        key: filter.key || "",
+        skip: ((filter.page || 1) - 1) * 6,
+        gradeId: grade?.id,
+        subjectId: subject?.id,
+        take: 6,
+      };
+      getDocuments(query);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname]);
+  }, [filter, grade, subject]);
+  const onChangePage = (page: number) => {
+    const newFilter = {
+      ...filter,
+      page,
+    };
+    history.push({
+      pathname: `/admin/document/${grade?.code}/${subject?.code}`,
+      search: queryString.stringify(newFilter),
+    });
+  };
   return (
     <div className="subject-document">
       <GradeDocumentBreadcubms
@@ -65,6 +87,11 @@ const SubjectDocument = () => {
       <div className="main-content-document">
         <DocumentList documents={documents} />
       </div>
+      <AppPagination
+        pageActive={filter.page || 1}
+        lastPage={Math.ceil(count / 6)}
+        onPageChange={onChangePage}
+      />
       {grade && subject && (
         <AddDocumentModal
           grade={grade}

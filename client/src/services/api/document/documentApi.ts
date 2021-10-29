@@ -12,7 +12,7 @@ export const documentApi = {
     return api.get(baseUrl, { params: { ...search } });
   },
   getAll: (request: DocumentGetAllRequest) => {
-    return api.post(`${baseUrl}/getAll`, { ...request });
+    return api.get(`${baseUrl}/getAll`, { params: request });
   },
   getPreview: (id: string) => {
     return api.get(`${baseUrl}/preview/${id}`);

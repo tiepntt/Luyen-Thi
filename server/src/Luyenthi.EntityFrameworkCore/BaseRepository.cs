@@ -121,12 +121,18 @@ namespace Luyenthi.EntityFrameworkCore
         /// <param name="entity">The entity.</param>
         public void Remove(TEntity entity)
         {
+            Context.Entry(entity).State = EntityState.Detached;
             Entities.Remove(entity);
             Context.SaveChanges();
         }
         public void RemoveById(Guid id)
         {
-            Entities.Remove(Entities.Find(id));
+            var entity = Entities.Find(id);
+            if (Context.Entry(entity).State == EntityState.Detached)
+            {
+                Entities.Attach(entity);
+            }
+            Entities.Remove(entity);
             Context.SaveChanges();
         }
 

@@ -13,8 +13,31 @@ export interface User {
   emailConfirmed: boolean;
   avatarUrl?: string;
 }
+export interface UserInfo {
+  id: string;
+  username: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  createAt: Date;
+  birthDay: Date;
+  gender: Gender;
+  roles: Role[];
+  emailConfirmed: boolean;
+  avatarUrl?: string;
+  phoneNumber?: string;
+}
 
 export interface UserRedux {
   accessToken: string;
   userInfo?: User;
+}
+export interface UserUpdateInfo {
+  id: string;
+  firstName: string;
+  lastName: string;
+  birthDay?: Date;
+  avatarUrl?: string;
+  phoneNumber?: string;
+  gender: Gender;
 }

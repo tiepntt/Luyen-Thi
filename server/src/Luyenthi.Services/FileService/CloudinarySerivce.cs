@@ -2,6 +2,7 @@
 using CloudinaryDotNet.Actions;
 using Google.Apis.Docs.v1.Data;
 using Luyenthi.Core.Dtos.GoogleDoc;
+using Luyenthi.Services.Settings;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -34,15 +35,19 @@ namespace Luyenthi.Services
              var _cloudinary = new Cloudinary(account);
             return _cloudinary;
         }
-        public static async Task<ImageUploadResult> UploadImage(Cloudinary cloudinary, byte[] bytes,string folder)
+        public static async Task<ImageUploadResult> UploadImage(Cloudinary cloudinary, byte[] bytes,string folder, string name = null)
         {
             var _webClient = new WebClient();
             var md5 = new MD5CryptoServiceProvider();
             Stream stream = new MemoryStream(bytes);
             
-            string name = Convert.ToBase64String(bytes);
             byte[] imageHash = md5.ComputeHash(bytes);
             string imageName = string.Join("", imageHash.Select(i => i.ToString("X2"))).ToLower();
+            if (name != null)
+            {
+                imageName = name;
+            }
+
             var uploadParams = new ImageUploadParams()
             {
                 File = new FileDescription(imageName, stream),
@@ -64,15 +69,16 @@ namespace Luyenthi.Services
                 string Id = inlineObject.ObjectId;
 
                 byte[] imageBytes = _webClient.DownloadData(imageUri);
-                string name = Convert.ToBase64String(imageBytes);
+
                 byte[] imageHash = md5.ComputeHash(imageBytes);
+                string name = Convert.ToBase64String(imageBytes);
                 string imageName = string.Join("", imageHash.Select(i => i.ToString("X2"))).ToLower();
                 Stream stream = new MemoryStream(imageBytes);
                 var uploadParams = new ImageUploadParams()
                 {
                     File = new FileDescription(imageName, stream),
                     PublicId = imageName,
-                    Folder = "Luyenthi/Questions"
+                    Folder = CloudinarySetting.FolderQuestion
                 };
                 var uploadResult = await cloudinary.UploadAsync(uploadParams);
                 return new ImageDto
