@@ -47,7 +47,7 @@ const EditChapterModal: React.FC<Props> = (props) => {
     chapterApi.updateChapter(chapterUpate).then((res) => {
       setLoading(false);
       if (res.status === 200) {
-        toastService.success();
+        // toastService.success();
         onEditChapter && onEditChapter(res.data);
         handleCloseModal();
       } else {

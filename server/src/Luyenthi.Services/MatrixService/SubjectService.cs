@@ -29,7 +29,7 @@ namespace Luyenthi.Services
                     Id = x.Id,
                     Code = x.Code,
                     Name = x.Name,
-                    Total = x.Documents.Count()
+                    Total = x.Documents.Count(x => x.IsApprove == IsApprove && x.Status == status)
                 })
                 .ToListAsync();
             return grades;

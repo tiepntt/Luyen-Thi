@@ -1,4 +1,3 @@
-import LineChart from "app/components/_share/Chart/LineChart";
 import React from "react";
 import Select from "react-select";
 const ActionUser = () => {
@@ -10,9 +9,7 @@ const ActionUser = () => {
           <Select options={options as any} defaultValue={options[0]} />
         </div>
       </div>
-      <div className="chart">
-        <LineChart />
-      </div>
+      <div className="chart">{/* <LineChart /> */}</div>
     </div>
   );
 };

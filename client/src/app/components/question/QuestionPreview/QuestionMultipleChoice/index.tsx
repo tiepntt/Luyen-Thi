@@ -43,7 +43,7 @@ const QuestionMultipleChocie: React.FC<Props> = ({
       }
 
       setScaleSize(newScale);
-    });
+    }, 500);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, content);

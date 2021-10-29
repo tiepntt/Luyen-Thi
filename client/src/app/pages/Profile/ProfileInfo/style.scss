@@ -5,7 +5,7 @@
     padding: 5px 15px 5px 0;
   }
   .info-user {
-    padding-right: 100px;
+    padding-right: 3.2rem;
   }
   .form-control {
     border-radius: 0 !important;
@@ -13,5 +13,35 @@
   .profile-name-user {
     color: #02596c;
     // font-size: 18px;
+  }
+  .avt-image {
+    position: relative;
+    &:hover {
+      .image-editor {
+        display: inline-block !important;
+      }
+    }
+  }
+  .image-editor {
+    display: none;
+    position: absolute;
+    top: 90px;
+    left: 50px;
+    opacity: 0.8;
+    .fileContainer {
+      background: transparent;
+      box-shadow: none !important;
+      position: relative;
+      border-radius: 0 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      transition: all 0.3s ease-in;
+      .chooseFileButton {
+        margin: 0 !important;
+        padding: 4px 10px;
+        background: #3f4257;
+        border-radius: 0 !important;
+      }
+    }
   }
 }

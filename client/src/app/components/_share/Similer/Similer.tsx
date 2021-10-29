@@ -14,7 +14,7 @@ import { faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons";
 interface Props {
   list?: { id: any; name: string; total?: number; code: string }[];
   title: string;
-  onClick?: (value: number) => void;
+  onClick?: (value: any) => void;
 }
 
 export const Similar = (props: Props) => {

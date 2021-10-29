@@ -81,16 +81,30 @@ namespace Luyenthi.Services
             }
             _documentRepository.Remove(document);
         }
-        public List<Document> GetAll( DocumentGetByGradeSubjectDto request)
+        public async Task<List<Document>> GetAll( DocumentGetByGradeSubjectDto request)
         {
-            var documents = _documentRepository.Find(d =>
+            var documents = await _documentRepository.Find(d =>
                                             (request.GradeId == Guid.Empty || d.GradeId == request.GradeId) &&
                                             (request.SubjectId == Guid.Empty || d.SubjectId ==request.SubjectId)&&
                                             (EF.Functions.Like(d.Name, $"%{request.Key}%")||EF.Functions.Like(d.NameNomarlize, $"%{request.Key}%"))&&
                                             (request.Status ==d.Status||request.Status ==null)&&
                                             (request.Type == d.DocumentType || request.Type == null)
-                                            ).Take(request.Take).Skip(request.Skip).ToList();
+                                            )
+                .OrderByDescending(i => i.CreatedAt)
+                .Skip(request.Skip)
+                .Take(request.Take).ToListAsync();
             return documents;
+        }
+        public async Task<int> CountAll(DocumentGetByGradeSubjectDto request)
+        {
+            var count = await _documentRepository.Find(d =>
+                                            (request.GradeId == Guid.Empty || d.GradeId == request.GradeId) &&
+                                            (request.SubjectId == Guid.Empty || d.SubjectId == request.SubjectId) &&
+                                            (EF.Functions.Like(d.Name, $"%{request.Key}%") || EF.Functions.Like(d.NameNomarlize, $"%{request.Key}%")) &&
+                                            (request.Status == d.Status || request.Status == null) &&
+                                            (request.Type == d.DocumentType || request.Type == null)
+                                            ).CountAsync();
+            return count;
         }
         public Document Update(DocumentUpdateDto documentUpdate) {
 

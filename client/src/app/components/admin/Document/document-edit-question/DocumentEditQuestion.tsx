@@ -37,7 +37,7 @@ const DocumentEditQuestion: React.FC = () => {
               <div className={classes.content}>
                 <div className="main-content-document">
                   <Grid container>
-                    <Grid item xl={9} lg={8} md={12}>
+                    <Grid item xl={9} lg={9} md={12}>
                       <Switch>
                         <Route path="/editor/document/:id/" exact={true}>
                           <div className="preview-questions ">
@@ -67,7 +67,7 @@ const DocumentEditQuestion: React.FC = () => {
                         </Route>
                       </Switch>
                     </Grid>
-                    <Grid item xl={3} lg={4} md={12}>
+                    <Grid item xl={3} lg={3} md={12}>
                       <Switch>
                         <Route
                           path="/editor/document/:id/:questionSetId/:questionId"

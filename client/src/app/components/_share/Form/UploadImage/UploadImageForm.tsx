@@ -3,9 +3,10 @@ import ImageUploader from "react-images-upload";
 
 interface Props {
   onUpload: (value: any) => void;
+  title?: string;
 }
 const UploadImageForm: React.FC<Props> = (props) => {
-  const { onUpload } = props;
+  const { onUpload, title } = props;
   const onDrop = (img: any[], pictureDataURLs: any) => {
     if (onUpload) {
       onUpload(img.pop());
@@ -17,7 +18,7 @@ const UploadImageForm: React.FC<Props> = (props) => {
       <ImageUploader
         withIcon={false}
         withLabel={false}
-        buttonText="Chọn ảnh"
+        buttonText={title || "Chọn ảnh"}
         onChange={onDrop}
         imgExtension={[".jpg", ".gif", ".png", ".gif"]}
         maxFileSize={5242880}

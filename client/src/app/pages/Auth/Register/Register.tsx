@@ -3,7 +3,6 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import DatePicker from "react-datepicker";
 import "./style.scss";
 import _ from "lodash";
 import { authApi } from "services/api/auth/auth";
@@ -11,6 +10,8 @@ import { toastService } from "services/toast";
 import { useDispatch } from "react-redux";
 import { UserFunction } from "redux/user/action";
 import { useRedirectAuth } from "hooks/User/useRedirectAuth";
+import DatePicker from "react-date-picker";
+import moment from "moment";
 
 const Register = (props: any) => {
   useRedirectAuth();
@@ -214,13 +215,14 @@ const Register = (props: any) => {
             <Form.Label>Ngày sinh</Form.Label>
             <Form.Control
               as={DatePicker}
-              selected={formik.values.birthDay}
+              format="dd/MM/yyyy"
+              clearIcon={null}
+              value={
+                new Date(moment.utc(formik.values?.birthDay).toString()) as any
+              }
               onChange={(date: any) =>
                 formik.setValues({ ...formik.values, birthDay: date })
               }
-              name="birthDay"
-              maxDate={new Date()}
-              dateFormat="dd/MM/yyyy"
             />
           </Form.Group>
         </Row>

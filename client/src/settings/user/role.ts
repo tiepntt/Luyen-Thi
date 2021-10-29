@@ -18,7 +18,7 @@ export const roleDefaults = [
   },
 ];
 export const getRoles = (roles: Role[]) => {
-  if (roles.length) {
+  if (!roles.length) {
     return roleDefaults.find((i) => i.value === Role.Student);
   }
   if (roles.includes(Role.Admin)) {

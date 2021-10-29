@@ -2,6 +2,9 @@ import { Similar } from "app/components/_share/Similer/Similer";
 import { useGrades } from "hooks/Grade-Subject/useGrades";
 import { useSubjects } from "hooks/Grade-Subject/useSubjects";
 import { Image } from "react-bootstrap";
+import { history } from "services/history";
+
+import qs from "query-string";
 import "./style.scss";
 interface Props {}
 
@@ -14,13 +17,31 @@ export const DocumentSearchSidebar = (props: Props) => {
         <Image src={"/assets/images/logo.gif"} />
       </div>
       <div className="item">
-        <Similar list={grades} title="Tài liệu theo lớp" onClick={(e) => {}} />
+        <Similar
+          list={grades}
+          title="Tài liệu theo lớp"
+          onClick={(id) => {
+            history.push({
+              pathname: "/document",
+              search: qs.stringify({
+                gradeCode: grades.find((i) => i.id === id)?.code,
+              }),
+            });
+          }}
+        />
       </div>
       <div className="item">
         <Similar
           list={subjects}
           title="Tài liệu theo môn học"
-          onClick={(e) => {}}
+          onClick={(id) => {
+            history.push({
+              pathname: "/document",
+              search: qs.stringify({
+                subjectCode: subjects.find((i) => i.id === id)?.code,
+              }),
+            });
+          }}
         />
       </div>
     </div>

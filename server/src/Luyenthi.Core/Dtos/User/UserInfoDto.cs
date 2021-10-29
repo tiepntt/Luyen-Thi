@@ -11,6 +11,7 @@ namespace Luyenthi.Core.Dtos
     {
         public Guid Id { get; set; }
         public string FirstName { get; set; }
+        public string Username { get; set; }
         public string LastName { get; set; }
         public DateTime BirthDay { get; set; }
         public Gender Gender { get; set; }

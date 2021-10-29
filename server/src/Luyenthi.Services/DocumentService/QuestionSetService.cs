@@ -78,7 +78,7 @@ namespace Luyenthi.Services
             // đánh index cho các question
             return questionSet;
         }
-        public void RemoveByDocumentId(Guid documentId)
+        public async Task RemoveByDocumentId(Guid documentId)
         {
             // chỉ sử dụng cho import
             var questionSets = _questionSetRepository.Find(qs => qs.DocumentId == documentId)
@@ -91,8 +91,24 @@ namespace Luyenthi.Services
             var questions = questionSets.SelectMany(i => i.Questions).ToList();
             var subQuestions = questions.SelectMany(i => i.SubQuestions).ToList();
             questions.AddRange(subQuestions);
-            _questionRepository.RemoveRange(questions);
-            _questionSetRepository.RemoveRange(questionSets);
+            var questionsRemoveId = new List<Guid>();
+            var questionsSetId= questionSets.Select(i => i.Id);
+            var questionSetRemoves = await _questionSetRepository.Find(i => questionsSetId.Contains(i.Id)).ToListAsync();
+            _questionSetRepository.RemoveRange(questionSetRemoves);
+            foreach (QuestionSet questionSet in questionSets)
+            {
+                foreach (Question question in questionSet.Questions)
+                {
+                    if(question.QuestionSets.Count() <= 1)
+                    {
+                        questionsRemoveId.Add(question.Id);
+                    }
+                }
+            }
+            var questionRemoves = await _questionRepository.Find(i => questionsRemoveId.Contains(i.Id)).ToListAsync();
+           
+            _questionRepository.RemoveRange(questionRemoves);
+            
         }
         public Question AddQuestion(Question question, Guid id)
         {

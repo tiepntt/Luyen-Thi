@@ -38,7 +38,7 @@ const EditUnitModal: React.FC<Props> = (props) => {
       .then((res: any) => {
         setLoading(false);
         if (res.status === 200) {
-          toastService.success();
+          // toastService.success();
           handleCloseModal();
           onEditUnit && onEditUnit(res.data);
         } else {
