@@ -21,7 +21,6 @@
 
 LOCK TABLES `hangfirejobparameter` WRITE;
 /*!40000 ALTER TABLE `hangfirejobparameter` DISABLE KEYS */;
-INSERT INTO `hangfirejobparameter` (`Id`, `JobId`, `Name`, `Value`) VALUES (1,1,'CurrentCulture','\"en-US\"'),(2,1,'CurrentUICulture','\"en-US\"'),(3,1,'RetryCount','1'),(4,2,'CurrentCulture','\"en-US\"'),(5,2,'CurrentUICulture','\"en-US\"'),(6,3,'CurrentCulture','\"en-US\"'),(7,3,'CurrentUICulture','\"en-US\"'),(8,4,'CurrentCulture','\"en-US\"'),(9,4,'CurrentUICulture','\"en-US\"'),(10,5,'CurrentCulture','\"en-US\"'),(11,5,'CurrentUICulture','\"en-US\"');
 /*!40000 ALTER TABLE `hangfirejobparameter` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -34,4 +33,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-10-30  3:00:02
+-- Dump completed on 2021-10-31  0:18:04

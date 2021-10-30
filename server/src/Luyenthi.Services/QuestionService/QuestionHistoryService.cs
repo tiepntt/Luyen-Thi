@@ -25,6 +25,7 @@ namespace Luyenthi.Services
         }
         public async Task<QuestionHistory> CreateOrUpdate(QuestionHistory questionHistory, Guid userId)
         {
+           
             if(questionHistory.Id == Guid.Empty)
             {
                 questionHistory.Id = new Guid();

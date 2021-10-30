@@ -21,7 +21,7 @@
 
 LOCK TABLES `grades` WRITE;
 /*!40000 ALTER TABLE `grades` DISABLE KEYS */;
-INSERT INTO `grades` (`Id`, `Name`, `Code`, `OrderNumber`) VALUES ('73a6f98e-8bcf-49db-b413-cf79ff3189bd','Lớp 11','lop-11',11),('7d9c9e86-89c5-49bf-bf35-99a97ca22f2a','Lớp 12','lop-12',12),('80486e93-144e-4969-afc5-cae30a87a1bf','Lớp 10','lop-10',10),('e377aa7a-4e79-4d3d-8fba-0219193b43f7','Ôn thi THPQ Quốc gia','on-thi-thpt-quoc-gia',13);
+INSERT INTO `grades` VALUES ('73a6f98e-8bcf-49db-b413-cf79ff3189bd','Lớp 11','lop-11',11),('7d9c9e86-89c5-49bf-bf35-99a97ca22f2a','Lớp 12','lop-12',12),('80486e93-144e-4969-afc5-cae30a87a1bf','Lớp 10','lop-10',10),('e377aa7a-4e79-4d3d-8fba-0219193b43f7','Ôn thi THPQ Quốc gia','on-thi-thpt-quoc-gia',13);
 /*!40000 ALTER TABLE `grades` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -34,4 +34,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-10-30  3:00:02
+-- Dump completed on 2021-10-31  0:18:01

@@ -7,5 +7,5 @@ export interface DocumentTitle {
   id: string;
   documentType: DocumentTypeLabel;
   numberDo: number;
-  createAt: Date;
+  createdAt: Date;
 }

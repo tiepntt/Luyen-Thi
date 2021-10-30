@@ -42,7 +42,7 @@ const DocumentLabel: React.FC<Props> = ({ document }) => {
               : "Đề thi"}
           </div>
           <div className="date">
-            <span>{moment(document.createAt).format("DD/MM/YYYY")}</span>
+            <span>{moment(document.createdAt).format("DD/MM/YYYY")}</span>
           </div>
         </div>
         <div className="d-flex document-options">
