@@ -21,7 +21,7 @@
 
 LOCK TABLES `aspnetroles` WRITE;
 /*!40000 ALTER TABLE `aspnetroles` DISABLE KEYS */;
-INSERT INTO `aspnetroles` (`Id`, `Name`, `NormalizedName`, `ConcurrencyStamp`) VALUES ('daf39ce6-9c5f-495e-af95-810df7f64e40','Admin','ADMIN','8b48fea6-018f-4ec5-a14a-1ec2fb464d40'),('f25e6a5a-2ce9-4273-9bd3-3b71755add19','Teacher','TEACHER','269d8817-5124-40d4-8f72-669ad4b6e3f3'),('fcdea3ce-afe0-4fff-b32c-6c28309ec12e','Student','STUDENT','8fca7ecf-6001-4146-905c-819dc23b4e18');
+INSERT INTO `aspnetroles` VALUES ('daf39ce6-9c5f-495e-af95-810df7f64e40','Admin','ADMIN','8b48fea6-018f-4ec5-a14a-1ec2fb464d40'),('f25e6a5a-2ce9-4273-9bd3-3b71755add19','Teacher','TEACHER','269d8817-5124-40d4-8f72-669ad4b6e3f3'),('fcdea3ce-afe0-4fff-b32c-6c28309ec12e','Student','STUDENT','8fca7ecf-6001-4146-905c-819dc23b4e18');
 /*!40000 ALTER TABLE `aspnetroles` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -34,4 +34,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-10-30  3:00:02
+-- Dump completed on 2021-10-31  0:18:00

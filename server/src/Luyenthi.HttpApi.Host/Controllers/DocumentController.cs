@@ -70,7 +70,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
             };
         }
         [HttpGet]
-        public DocumentSearchResponse GetDocuments([FromQuery] DocumentQuery query)
+        public async Task<DocumentSearchResponse> GetDocuments([FromQuery] DocumentQuery query)
         {
             // lấy tất cả theo kênh tìm kiếm
             var result = new DocumentSearchResponse();
@@ -97,9 +97,9 @@ namespace Luyenthi.HttpApi.Host.Controllers
                 NumberDo = d.DocumentHistories.Count(),
                 Name = d.Name,
                 DocumentType=d.DocumentType,
-                CreateAt = d.CreatedAt
+                CreatedAt = d.CreatedAt
             })
-            .ToList();
+            .ToListAsync();
             var documentCount = _documentRepository.Find(
                 d =>
                 d.IsApprove == true &&
@@ -110,9 +110,10 @@ namespace Luyenthi.HttpApi.Host.Controllers
                 (EF.Functions.Like(d.Name, $"%{query.Key}%") || EF.Functions.Like(d.NameNomarlize, $"%{query.Key}%"))
             )
             .Include(i => i.Grade)
-            .Include(i => i.Subject).Count();
-            result.Documents = documents;
-            result.Total = documentCount;
+            .Include(i => i.Subject).CountAsync();
+            await Task.WhenAll(documentCount, documents);
+            result.Documents = documents.Result;
+            result.Total = documentCount.Result;
             return result;
         }
         [HttpPost("import-document")]

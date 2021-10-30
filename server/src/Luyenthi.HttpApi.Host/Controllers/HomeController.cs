@@ -42,11 +42,11 @@ namespace Luyenthi.HttpApi.Host.Controllers
         {
             var documentGrade =  _gradeService.CountByGrades();
             var documentSubject = _subjectService.CountBySubject();
-            var progress = await Task.WhenAll(documentGrade, documentSubject);
+            await Task.WhenAll(documentGrade, documentSubject);
             var result = new Dictionary<string, dynamic>()
             {
-                {"Grades", progress[0]},
-                {"Subjects", progress[1]},
+                {"Grades", documentGrade.Result},
+                {"Subjects", documentSubject.Result},
             };
             var user = (ApplicationUser)HttpContext.Items["User"];
             var roles = (List<string>)HttpContext.Items["Roles"];

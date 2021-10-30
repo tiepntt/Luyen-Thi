@@ -94,7 +94,7 @@ namespace Luyenthi.Services
             }).ToList();
             _questionHistoryService.UpdateMany(questionHistories);
             documentHistory.NumberCorrect = questionHistories.Count(i => i.AnswerStatus == AnswerStatus.Correct);
-            documentHistory.NumberIncorrect = questionHistories.Count() - documentHistory.NumberCorrect;
+            documentHistory.NumberIncorrect = questions.Count() - documentHistory.NumberCorrect;
             documentHistory.TimeDuration = (documentHistory.EndTime - documentHistory.StartTime).TotalMinutes;
             Update(documentHistory);
             scope.Complete();
@@ -222,6 +222,28 @@ namespace Luyenthi.Services
             }
             
             return results.OrderBy(i => i.StartDate).ToList();
+        }
+        public bool CheckAllowUpdateHistory(Guid id)
+        {
+            var history = _documentHistoryRepository.Find(h => h.Id == id)
+                .Select(h => new 
+                {
+                    StartTime =h.StartTime,
+                    Endtime = h.EndTime,
+                    Status = h.Status,
+                    TotalTime = h.Document.Times,
+                    Type = h.Document.DocumentType
+                }).FirstOrDefault();
+            if(history.Status == DocumentHistoryStatus.Close)
+            {
+                return false;
+            }
+
+            if (history.Type == DocumentType.Exam && history.StartTime.AddMinutes(history.TotalTime) <= DateTime.Now)
+            {
+                return false;
+            }
+            return true;
         }
         public async Task<List<UserDocumentAnalyticDto>> GetRanks()
         {

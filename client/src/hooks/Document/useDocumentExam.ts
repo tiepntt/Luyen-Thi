@@ -34,8 +34,6 @@ export const useDocumentExam = (id: string) => {
       questionHistoryApi.save(questionHistories[index]).then((res) => {
         if (res.status === 200) {
           newHistories.questionHistories[index] = res.data;
-          console.log(newHistories);
-
           setDocumentHistory(newHistories);
         }
       });
@@ -63,8 +61,12 @@ export const useDocumentExam = (id: string) => {
         setLoopTime(
           setInterval(() => {
             let newTimes =
-              (document?.times || 0) -
+              (document?.times || 0) * 60 -
               moment().diff(documentHistory.startTime, "seconds");
+            if (newTimes === 0) {
+              submit();
+              clearInterval(loopTime);
+            }
             setTimes(newTimes);
           }, 1000)
         );

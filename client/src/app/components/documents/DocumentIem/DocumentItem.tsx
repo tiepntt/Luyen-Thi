@@ -1,5 +1,6 @@
 import BoxApp from "app/components/_share/Box/Box";
 import { DocumentTitle } from "models/document/DocumentTitle";
+import moment from "moment";
 import React from "react";
 import { Image } from "react-bootstrap";
 import "./style.scss";
@@ -29,7 +30,9 @@ const DocumentItem: React.FC<Props> = ({ document, onClick }) => {
               <div className="number-do">
                 Số lượt làm bài : <span>100</span>
               </div>
-              <div className="date-create">Ngày tạo : 22/09/2021</div>
+              <div className="date-create">
+                Ngày tạo : {moment(document?.createdAt).format("DD/MM/yyyy")}
+              </div>
             </div>
             <div className="status-document"></div>
           </div>

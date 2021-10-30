@@ -49,6 +49,7 @@ namespace Luyenthi.Services
                 {
                     Id = d.Id,
                     Name = d.Name,
+                    Times = d.Times,
                     Description = d.Description,
                     DocumentType = d.DocumentType,
                     QuestionSets = d.QuestionSets

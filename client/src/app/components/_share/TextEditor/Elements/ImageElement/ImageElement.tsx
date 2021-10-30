@@ -11,13 +11,17 @@ interface Props {
 const ImageElement: React.FC<Props> = ({ element, attributes, children }) => {
   return (
     <div {...attributes}>
-      <div className="d-inline-block" contentEditable={false}>
+      <div
+        className="d-inline-block"
+        contentEditable={false}
+        style={{ maxWidth: "80%" }}
+      >
         <Image
           src={element.url}
           width={"auto"}
           height={"auto"}
           style={{
-            maxWidth: "80%",
+            maxWidth: "100%",
             maxHeight: 300,
           }}
         />

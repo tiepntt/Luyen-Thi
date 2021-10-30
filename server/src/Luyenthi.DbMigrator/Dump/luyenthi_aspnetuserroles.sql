@@ -21,7 +21,7 @@
 
 LOCK TABLES `aspnetuserroles` WRITE;
 /*!40000 ALTER TABLE `aspnetuserroles` DISABLE KEYS */;
-INSERT INTO `aspnetuserroles` (`UserId`, `RoleId`) VALUES ('cb3850a2-0a32-4cee-a175-08df5ec6169b','daf39ce6-9c5f-495e-af95-810df7f64e40'),('08d99920-adbb-446e-8bf0-80798b4bf519','fcdea3ce-afe0-4fff-b32c-6c28309ec12e');
+INSERT INTO `aspnetuserroles` VALUES ('cb3850a2-0a32-4cee-a175-08df5ec6169b','daf39ce6-9c5f-495e-af95-810df7f64e40'),('08d99920-adbb-446e-8bf0-80798b4bf519','fcdea3ce-afe0-4fff-b32c-6c28309ec12e');
 /*!40000 ALTER TABLE `aspnetuserroles` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -34,4 +34,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-10-30  3:00:02
+-- Dump completed on 2021-10-31  0:18:04
