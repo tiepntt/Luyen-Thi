@@ -29,6 +29,19 @@ namespace Luyenthi.Services
         public Question GetQuestion(Guid Id)
         {
             var question = _questionRepository.Find(q => q.Id == Id)
+                .Take(1)
+                .Select(q => new Question
+                {
+                    Id =q.Id,
+                    CorrectAnswer=q.CorrectAnswer,
+                    Solve=q.Solve
+                })
+                .FirstOrDefault();
+            return question;
+        }
+        public Question GetCorrectAnswer(Guid Id)
+        {
+            var question = _questionRepository.Find(q => q.Id == Id)
                 .Include(q => q.SubQuestions)
                 .FirstOrDefault();
             return question;

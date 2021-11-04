@@ -14,6 +14,7 @@ const elements = {
 
 interface Props {
   type?: string;
+  ident: number;
 }
 const TemplatePreview: React.FC<Props> = (element) => {
   const { type = "text" } = element;

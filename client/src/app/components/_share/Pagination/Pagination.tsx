@@ -21,11 +21,6 @@ export const AppPagination = (props: Props) => {
           changePage((pageActive as any) - 1);
         }}
       />
-      {(pageActive as any) >= (lastPage as any) - 1 &&
-      (pageActive as any) > 2 ? (
-        <Pagination.Ellipsis />
-      ) : null}
-      {(pageActive as any) - 1 > 1 ? <Pagination.Ellipsis /> : null}
       {(pageActive as any) === (lastPage as any) &&
       (lastPage as any) - 2 > 0 ? (
         <Pagination.Item
@@ -65,13 +60,6 @@ export const AppPagination = (props: Props) => {
           {(pageActive as any) + 2}
         </Pagination.Item>
       ) : null}{" "}
-      {(pageActive as any) + 1 < (lastPage as any) ? (
-        <Pagination.Ellipsis />
-      ) : null}
-      {(pageActive as any) + 3 < (lastPage as any) &&
-      (pageActive as any) <= 2 ? (
-        <Pagination.Ellipsis />
-      ) : null}
       <Pagination.Next
         disabled={pageActive === lastPage}
         onClick={() => changePage((pageActive as any) + 1)}

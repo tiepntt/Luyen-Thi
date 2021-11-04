@@ -52,7 +52,7 @@ namespace Luyenthi
 
                 );
                 options.EnableSensitiveDataLogging();
-            },ServiceLifetime.Transient
+            }
             );
             services.AddDistributedRedisCache(option =>
             {

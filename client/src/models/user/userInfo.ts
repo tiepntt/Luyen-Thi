@@ -19,7 +19,7 @@ export interface UserInfo {
   email: string;
   firstName: string;
   lastName: string;
-  createAt: Date;
+  createdAt: Date;
   birthDay: Date;
   gender: Gender;
   roles: Role[];
@@ -40,4 +40,12 @@ export interface UserUpdateInfo {
   avatarUrl?: string;
   phoneNumber?: string;
   gender: Gender;
+}
+export interface UserCreateModel {
+  firstName: string;
+  lastName?: string;
+  username: string;
+  password: string;
+  email: string;
+  roles: Role[];
 }

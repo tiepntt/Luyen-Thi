@@ -30,10 +30,10 @@ namespace Luyenthi.HttpApi.Host
             }
             else
             {
-                bool isAuthorize = _roles.Length ==0 || _roles.Any(role => _roles.Contains(role));
+                bool isAuthorize = _roles.Length ==0 || _roles.Any(role => roles.Contains(role));
                 if (!isAuthorize)
                 {
-                    context.Result = new JsonResult(new { message = "Bạn không có quyền truy cập" })
+                    context.Result = new JsonResult(new { message = "Bạn không có quyền làm điều này" })
                     { StatusCode = StatusCodes.Status403Forbidden };
                     return;
                 }

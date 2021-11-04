@@ -28,5 +28,17 @@ namespace Luyenthi.Services
         {
             return RandomString(6, false);
         }
+        public static string GenerateIndexUser(int size)
+        {
+            var builder = new StringBuilder(size);
+            char offset = '0';
+            const int lettersOffset = 9;
+            for (int i = 0; i < size; i++)
+            {
+                var @char = (char)_random.Next(offset, offset + lettersOffset);
+                builder.Append(@char);
+            }
+            return builder.ToString().ToLower();
+        }
     }
 }

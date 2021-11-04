@@ -51,9 +51,9 @@ namespace Luyenthi.HttpApi.Host.Controllers
             _mapper = mapper;
         }
         [HttpGet("preview/{Id}")]
-        public async  Task<DocumentPreviewDto> GetPreview(Guid Id)
+        public DocumentPreviewDto GetPreview(Guid Id)
         {
-            var document = await  _documentService.GetDetailById(Id);
+            var document =   _documentService.GetDetailById(Id);
             var questionSets = document.QuestionSets;
             var numberQuestion = questionSets.SelectMany(i => i.Questions)
                 .SelectMany(q => q.Type == QuestionType.QuestionGroup ? q.SubQuestions : new List<Question> { q })
@@ -70,37 +70,12 @@ namespace Luyenthi.HttpApi.Host.Controllers
             };
         }
         [HttpGet]
-        public async Task<DocumentSearchResponse> GetDocuments([FromQuery] DocumentQuery query)
+        public DocumentSearchResponse GetDocuments([FromQuery] DocumentQuery query)
         {
             // lấy tất cả theo kênh tìm kiếm
             var result = new DocumentSearchResponse();
-             
+
             var documents = _documentRepository.Find(
-                d =>
-                d.IsApprove == true &&
-                d.Status == DocumentStatus.Public &&
-                (query.Type == null || d.DocumentType==query.Type)&&
-                (query.GradeCode == null || query.GradeCode == d.Grade.Code) &&
-                (query.SubjectCode == null || query.SubjectCode == d.Subject.Code) &&
-                (EF.Functions.Like(d.Name, $"%{query.Key}%") || EF.Functions.Like(d.NameNomarlize, $"%{query.Key}%"))
-            )
-            .Include(i => i.Grade)
-            .Include(i => i.Subject)
-            .OrderByDescending(i => i.CreatedAt)
-            .Skip(query.Skip)
-            .Take(query.Take)
-            .Select(d => new DocumentTitleDto
-            {
-                Id = d.Id,
-                Description = d.Description,
-                ImageUrl = d.ImageUrl,
-                NumberDo = d.DocumentHistories.Count(),
-                Name = d.Name,
-                DocumentType=d.DocumentType,
-                CreatedAt = d.CreatedAt
-            })
-            .ToListAsync();
-            var documentCount = _documentRepository.Find(
                 d =>
                 d.IsApprove == true &&
                 d.Status == DocumentStatus.Public &&
@@ -110,10 +85,23 @@ namespace Luyenthi.HttpApi.Host.Controllers
                 (EF.Functions.Like(d.Name, $"%{query.Key}%") || EF.Functions.Like(d.NameNomarlize, $"%{query.Key}%"))
             )
             .Include(i => i.Grade)
-            .Include(i => i.Subject).CountAsync();
-            await Task.WhenAll(documentCount, documents);
-            result.Documents = documents.Result;
-            result.Total = documentCount.Result;
+            .Include(i => i.Subject)
+            .OrderByDescending(i => i.CreatedAt);
+            
+            result.Documents = documents.Skip(query.Skip)
+            .Take(query.Take)
+            .Select(d => new DocumentTitleDto
+            {
+                Id = d.Id,
+                Description = d.Description,
+                ImageUrl = d.ImageUrl,
+                NumberDo = d.DocumentHistories.Count(),
+                Name = d.Name,
+                DocumentType = d.DocumentType,
+                CreatedAt = d.CreatedAt
+            })
+            .ToList(); ;
+            result.Total = documents.Count();
             return result;
         }
         [HttpPost("import-document")]

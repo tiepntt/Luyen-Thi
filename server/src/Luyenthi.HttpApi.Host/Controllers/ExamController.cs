@@ -6,7 +6,7 @@ using Luyenthi.Domain.User;
 using Luyenthi.EntityFrameworkCore;
 using Luyenthi.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.SecurityTokenService;
+using SendGrid.Helpers.Errors.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,12 +24,14 @@ namespace Luyenthi.HttpApi.Host.Controllers
         private readonly DocumentHistoryService _historyService;
         private readonly QuestionSetService _questionSetService;
         private readonly QuestionHistoryService _questionHistoryService;
+        private readonly QuestionService _questionService;
         private readonly IMapper _mapper;
         public ExamController(
             DocumentService documentService,
             DocumentHistoryService historyService,
             QuestionSetService questionSetService,
             QuestionHistoryService questionHistoryService,
+            QuestionService questionService,
             IMapper mapper
             )
         {
@@ -37,30 +39,32 @@ namespace Luyenthi.HttpApi.Host.Controllers
             _historyService = historyService;
             _documentService = documentService;
             _questionHistoryService = questionHistoryService;
+            _questionService = questionService;
             _mapper = mapper;
         }
         [HttpGet("{documentId}")]
 
-        public async Task<ExamDto> GetExam(Guid documentId)
+        public ExamDto GetExam(Guid documentId)
         {
             // lấy ra content document
             ApplicationUser user = (ApplicationUser)HttpContext.Items["User"];
-            var documentTask= _documentService.GetDetailById(documentId);
+            var documentTask = _documentService.GetDetailById(documentId);
             var documentHistoryTask = _historyService.GetDetailByDocumentId(user.Id, documentId);
-            await Task.WhenAll(documentTask, documentHistoryTask);
-            var document = documentTask.Result;
-            var documentHistory = documentHistoryTask.Result;
+            //await Task.WhenAll(documentTask, documentHistoryTask);
+            var document = documentTask;
+            var documentHistory = documentHistoryTask;
             document.QuestionSets = DocumentHelper.MakeIndexQuestions(document.QuestionSets);
             if (document == null)
             {
                 throw new KeyNotFoundException("Không tìm thấy đề thi");
             }
-            if (documentHistory == null) {
+            if (documentHistory == null)
+            {
                 // nếu chưa có thì tạo
                 documentHistory = new DocumentHistory
                 {
                     Id = new Guid(),
-                    StartTime = DateTime.Now,
+                    StartTime = DateTime.UtcNow,
                     Status = DocumentHistoryStatus.Doing,
                     DocumentId = documentId,
                 };
@@ -69,9 +73,9 @@ namespace Luyenthi.HttpApi.Host.Controllers
             else
             {
                 // nếu bài thi đã kết thúc => chấm bài và trả về kết quả
-                if(document.DocumentType == DocumentType.Exam && documentHistory.StartTime.AddMinutes(document.Times) < DateTime.Now)
+                if (document.DocumentType == DocumentType.Exam && documentHistory.StartTime.AddMinutes(document.Times) < DateTime.UtcNow)
                 {
-                    await _historyService.CloseHistory(documentHistory, document.Times);
+                    _historyService.CloseHistory(documentHistory, document.Times);
                 }
             }
             var result = new ExamDto
@@ -82,42 +86,64 @@ namespace Luyenthi.HttpApi.Host.Controllers
             return result;
         }
         [HttpPost("submit")]
-        public async Task<DocumentHistoryDto> SubmitExam(SubmitExamRequest request) {
+        public DocumentHistoryDto SubmitExam(SubmitExamRequest request)
+        {
             ApplicationUser user = (ApplicationUser)HttpContext.Items["User"];
-            var documentHistory =await _historyService.GetDetailByDocumentId(user.Id, null, request.DocumentHistoryId);
-            var document =  _documentService.GetById((Guid)documentHistory.DocumentId);
-            if(documentHistory == null)
+            var documentHistory = _historyService.GetDetailByDocumentId(user.Id, null, request.DocumentHistoryId);
+            var document = _documentService.GetById((Guid)documentHistory.DocumentId);
+            if (documentHistory == null)
             {
                 throw new KeyNotFoundException("Không tìm thấy bản ghi");
             }
-            if(documentHistory.Status != DocumentHistoryStatus.Close)
+            if (documentHistory.Status != DocumentHistoryStatus.Close)
             {
-                await _historyService.CloseHistory(documentHistory,document.Times);
+                _historyService.CloseHistory(documentHistory, document.Times);
             }
             return _mapper.Map<DocumentHistoryDto>(documentHistory);
         }
         [HttpPost("reset")]
-        public async Task<DocumentHistoryDto> ResetDocument(ReseteExamRequest request)
+        public DocumentHistoryDto ResetDocument(ReseteExamRequest request)
         {
-            //
-                ApplicationUser user = (ApplicationUser)HttpContext.Items["User"];
-                var documentHistoryTask = _historyService.GetDetailByDocumentId(user.Id, request.DocumentId, null, DocumentHistoryStatus.Doing);
-                await Task.WhenAll(documentHistoryTask);
-                var documentHistory = documentHistoryTask.Result;
-                if (documentHistory != null)
-                {
-                    throw new BadRequestException("Bạn vẫn chưa kết thúc bài thi này");
-                }
-                documentHistory = new DocumentHistory
-                {
-                    Id = new Guid(),
-                    StartTime = DateTime.Now,
-                    Status = DocumentHistoryStatus.Doing,
-                    DocumentId = request.DocumentId,
-                };
-                _historyService.Create(documentHistory);
-                return _mapper.Map<DocumentHistoryDto>(documentHistory);
+            ApplicationUser user = (ApplicationUser)HttpContext.Items["User"];
+            var documentHistory = _historyService.GetDetailByDocumentId(user.Id, request.DocumentId, null, DocumentHistoryStatus.Doing);
+            if (documentHistory != null)
+            {
+                throw new BadRequestException("Bạn vẫn chưa kết thúc bài thi này");
             }
-                       
+            documentHistory = new DocumentHistory
+            {
+                Id = new Guid(),
+                StartTime = DateTime.UtcNow,
+                Status = DocumentHistoryStatus.Doing,
+                DocumentId = request.DocumentId,
+            };
+            _historyService.Create(documentHistory);
+            return _mapper.Map<DocumentHistoryDto>(documentHistory);
+        }
+        [HttpGet("{documentId}/solve/{questionId}")]
+        public QuestionCorrectAnswerDto GetSolveQuestion(Guid documentId, Guid questionId)
+        {
+            ApplicationUser user = (ApplicationUser)HttpContext.Items["User"];
+            List<string> roles = (List<string>)HttpContext.Items["Roles"];
+            var history = _historyService.GetExitDocument(user.Id, documentId);
+            // nếu user là tác giả hoặc admin/editor
+            // nếu user đã hoàn thành bài thi
+            var questionSolve = _questionService.GetCorrectAnswer(questionId);
+            List<string> roleAccess = new List<string> { Role.Admin };
+            var result = _mapper.Map<QuestionCorrectAnswerDto>(questionSolve);
+            if (roles.Any(role => roleAccess.Contains(role)))
+            {
+                return result;
+            }
+            if(history != null && history.Document != null)
+            {
+                if(user.Id == history.Document.CreatedBy || history.Status == DocumentHistoryStatus.Close)
+                {
+                    return result;
+                }
+            }
+            throw new ForbiddenException("Bạn không có quyền làm điều này");
+        }
+
     }
 }

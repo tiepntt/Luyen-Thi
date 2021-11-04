@@ -10,7 +10,7 @@ namespace Luyenthi.Services
 {
     public class QuestionHelper
     {
-        public static AnswerStatus CheckAnswer(Question question, QuestionHistory? questionHistory)
+        public static AnswerStatus CheckAnswer(Question question, QuestionHistory questionHistory)
         {
             if (question == null)
             {

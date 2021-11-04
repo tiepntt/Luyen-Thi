@@ -18,10 +18,10 @@ namespace Luyenthi.Services
         {
             _subjectRepository = subjectRepository;
         }
-        public async Task<List<DocumentGradeDto>> CountBySubject(bool IsApprove = true,
+        public List<DocumentGradeDto> CountBySubject(bool IsApprove = true,
            DocumentStatus status = DocumentStatus.Public)
         {
-            var grades = await _subjectRepository.GetAll()
+            var grades =  _subjectRepository.GetAll()
                 .Include(x => x.Documents.Where(x => x.IsApprove == IsApprove && x.Status == status))
                 .OrderBy( x=> x.OrderNumber)
                 .Select(x => new DocumentGradeDto
@@ -31,7 +31,7 @@ namespace Luyenthi.Services
                     Name = x.Name,
                     Total = x.Documents.Count(x => x.IsApprove == IsApprove && x.Status == status)
                 })
-                .ToListAsync();
+                .ToList();
             return grades;
         }
     }

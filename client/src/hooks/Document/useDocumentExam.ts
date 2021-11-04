@@ -62,7 +62,9 @@ export const useDocumentExam = (id: string) => {
           setInterval(() => {
             let newTimes =
               (document?.times || 0) * 60 -
-              moment().diff(documentHistory.startTime, "seconds");
+              moment
+                .utc()
+                .diff(moment.utc(documentHistory.startTime), "seconds");
             if (newTimes === 0) {
               submit();
               clearInterval(loopTime);
@@ -83,7 +85,9 @@ export const useDocumentExam = (id: string) => {
       case DocumentHistoryStatus.Doing:
         setLoopTime(
           setInterval(() => {
-            let newTimes = moment().diff(documentHistory.startTime, "seconds");
+            let newTimes = moment
+              .utc()
+              .diff(moment.utc(documentHistory.startTime), "seconds");
             setTimes(newTimes);
           }, 1000)
         );
@@ -148,10 +152,9 @@ export const useDocumentExam = (id: string) => {
       ) {
         clearInterval(loopTime);
         setTimes(
-          moment(documentHistory.endTime).diff(
-            documentHistory.startTime,
-            "seconds"
-          )
+          moment
+            .utc(documentHistory.endTime)
+            .diff(moment.utc(documentHistory.startTime), "seconds")
         );
       } else if (
         documentHistory &&

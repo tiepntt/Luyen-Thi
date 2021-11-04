@@ -28,6 +28,7 @@ namespace Luyenthi.HttpApi.Host
             CreateMap<QuestionGdocDto, Question>();
             CreateMap<Question, QuestionDto>();
             CreateMap<Question, QuestionMatrixDto>();
+            CreateMap<Question, QuestionCorrectAnswerDto>();
             CreateMap<QuestionHistory, QuestionHistoryDto>();
             CreateMap<QuestionHistoryRequestDto, QuestionHistory>();
             // question set
@@ -56,6 +57,7 @@ namespace Luyenthi.HttpApi.Host
             // user
             CreateMap<ApplicationUser, UserInfoDto>();
             CreateMap<UserRequestRegister, ApplicationUser>();
+            CreateMap<UserCreateRequest, ApplicationUser>();
         }
     }
 }

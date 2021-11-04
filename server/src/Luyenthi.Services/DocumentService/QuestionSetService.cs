@@ -58,12 +58,12 @@ namespace Luyenthi.Services
             }
             
         }
-        public async Task<List<QuestionSet>> GetByDocumentId(Guid DocumentId)
+        public List<QuestionSet> GetByDocumentId(Guid DocumentId)
         {
-            var questionSets = await _questionSetRepository.Find(questionSet => questionSet.DocumentId == DocumentId)
+            var questionSets =  _questionSetRepository.Find(questionSet => questionSet.DocumentId == DocumentId)
                                             .Include(qs => qs.Document)
                                             .Include(qs => qs.Questions)
-                                            .ThenInclude(q => q.SubQuestions).ToListAsync();
+                                            .ThenInclude(q => q.SubQuestions).ToList();
             // đánh index cho các question
             // đánh index cho các question
             return questionSets;

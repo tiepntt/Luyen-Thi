@@ -38,15 +38,14 @@ namespace Luyenthi.HttpApi.Host.Controllers
             _mapper = mapper;
         }
         [HttpGet]
-        public async Task<Dictionary<string, dynamic>> GetDocumentRate()
+        public Dictionary<string, dynamic> GetDocumentRate()
         {
             var documentGrade =  _gradeService.CountByGrades();
             var documentSubject = _subjectService.CountBySubject();
-            await Task.WhenAll(documentGrade, documentSubject);
             var result = new Dictionary<string, dynamic>()
             {
-                {"Grades", documentGrade.Result},
-                {"Subjects", documentSubject.Result},
+                {"Grades", documentGrade},
+                {"Subjects", documentSubject},
             };
             var user = (ApplicationUser)HttpContext.Items["User"];
             var roles = (List<string>)HttpContext.Items["Roles"];

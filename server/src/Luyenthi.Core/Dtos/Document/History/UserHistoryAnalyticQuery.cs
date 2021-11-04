@@ -10,6 +10,7 @@ namespace Luyenthi.Core.Dtos
     {
         public Guid? UserId { get; set; }
         public UserHistoryAnalyticType Type { get; set; }
+        public string TimeZone { get; set; } = "Asia/Bangkok";
     }
     public enum UserHistoryAnalyticType
     {

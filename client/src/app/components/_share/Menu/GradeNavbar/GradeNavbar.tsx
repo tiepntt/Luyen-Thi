@@ -29,10 +29,12 @@ const GradeNavbar: React.FC<Props> = ({ parentPath }) => {
     </ListItem>
   );
   return (
-    <div className="grade-nav-bar d-flex">
-      {grades.map((grade, i) => (
-        <GradeItem key={i} {...grade} />
-      ))}
+    <div className="grade-nav-bar d-flex pr-3">
+      <div className="list-grade d-flex flex-grow-1">
+        {grades.map((grade, i) => (
+          <GradeItem key={i} {...grade} />
+        ))}
+      </div>
     </div>
   );
 };
