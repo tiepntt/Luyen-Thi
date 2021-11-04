@@ -12,7 +12,7 @@ const QuestionGroupPreview: React.FC<Props> = ({ question, questionSetId }) => {
     <div className="question-group-preview" id={`qid-${question.id}`}>
       <div className="question-introduction">
         {introduction.map((element, i) => (
-          <TemplatePreview key={i} {...element} />
+          <TemplatePreview key={i} {...element} ident={30} />
         ))}
         <div className="sub-questions">
           {subQuestions.map((subQuestion, i) => (

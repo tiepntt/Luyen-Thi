@@ -2,6 +2,7 @@ import { Grid } from "@material-ui/core";
 import { UserResultBugget } from "app/components/_share/Bugget/UserResultBugget";
 import UserAnalyticResult from "app/components/_share/Chart/UserAnalyticResult";
 import { AlarmClock, ClosedBook, CheckedCheckbox } from "assets/images";
+import { useAppContext } from "hooks/AppContext/AppContext";
 import {
   UserHistoryAnalytic,
   UserHistoryAnalyticQuery,
@@ -14,6 +15,7 @@ import { profileApi } from "services/api/user/profile";
 import { TimeFunction } from "utils/timeFunction";
 
 const UserResultOverview = () => {
+  const { timeZone } = useAppContext();
   const [userAnalyticResult, setUserAnalyticResult] =
     useState<UserResultAnalytic>();
   const [userHistories, setUserHistories] = useState<UserHistoryAnalytic[]>([]);
@@ -29,11 +31,14 @@ const UserResultOverview = () => {
     });
   }, []);
   useEffect(() => {
-    profileApi.getHistories(historyAnalyticQuery).then((res) => {
-      if (res.status === 200) {
-        setUserHistories(res.data);
-      }
-    });
+    profileApi
+      .getHistories({ ...historyAnalyticQuery, timeZone: timeZone })
+      .then((res) => {
+        if (res.status === 200) {
+          setUserHistories(res.data);
+        }
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [historyAnalyticQuery]);
   return (
     <div id="overview">
@@ -82,7 +87,9 @@ const UserResultOverview = () => {
                 type: e.value,
               })
             }
-            defaultValue={timeDurationValues[2]}
+            value={timeDurationValues.find(
+              (i) => i.value === historyAnalyticQuery.type
+            )}
           />
         </div>
       </div>

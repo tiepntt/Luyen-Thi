@@ -42,9 +42,10 @@ namespace Luyenthi.Services
                 .FirstOrDefault();
             return document;
         }
-        public async Task<Document> GetDetailById(Guid Id)
+        public Document GetDetailById(Guid Id)
         {
-            var document =  await _documentRepository.Find(s => s.Id == Id)
+            var document = _documentRepository.Find(s => s.Id == Id)
+                .Take(1)
                 .Select(d => new Document
                 {
                     Id = d.Id,
@@ -53,7 +54,8 @@ namespace Luyenthi.Services
                     Description = d.Description,
                     DocumentType = d.DocumentType,
                     QuestionSets = d.QuestionSets
-                                    .Select(qs => new QuestionSet { 
+                                    .Select(qs => new QuestionSet
+                                    {
                                         Show = qs.Show,
                                         Name = qs.Name,
                                         Questions = qs.Questions.Select(q => new Question
@@ -61,16 +63,20 @@ namespace Luyenthi.Services
                                             Id = q.Id,
                                             Introduction = q.Introduction,
                                             Content = q.Content,
-                                            SubQuestions = q.SubQuestions.Select(sq => new Question {
-                                                Id = q.Id,
-                                                Introduction = q.Introduction,
-                                                Content = q.Content,
-                                                ParentId = q.ParentId,
+                                            Type = q.Type,
+                                            SubQuestions = q.SubQuestions.Select(sq => new Question
+                                            {
+                                                Id = sq.Id,
+                                                Introduction = sq.Introduction,
+                                                Content = sq.Content,
+                                                ParentId = sq.ParentId,
+                                                Type = sq.Type
                                             }).ToList()
                                         }).ToList()
                                     }).ToList()
                 })
-                .FirstOrDefaultAsync();
+                .FirstOrDefault();
+                
             return document;
         }
         public void RemoveById(Guid id)

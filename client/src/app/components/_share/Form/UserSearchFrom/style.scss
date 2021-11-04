@@ -1,0 +1,30 @@
+.user-search-form {
+  .form-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    button {
+      border-radius: 0 !important;
+      width: 100%;
+      &:focus {
+        box-shadow: none !important;
+      }
+    }
+
+    .form-control {
+      border-radius: 0 !important;
+      outline-width: 0 !important;
+      width: 100%;
+
+      &:focus {
+        box-shadow: none !important;
+      }
+    }
+    .no-border {
+      width: 100%;
+      div {
+        border-radius: 0 !important;
+      }
+    }
+  }
+}

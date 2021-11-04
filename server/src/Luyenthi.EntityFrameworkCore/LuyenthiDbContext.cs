@@ -55,15 +55,15 @@ namespace Luyenthi.EntityFrameworkCore
                     switch (changedEntity.State)
                     {
                         case EntityState.Added:
-                            entity.CreatedAt = now;
-                            entity.UpdatedAt = now;
+                            entity.CreatedAt = DateTime.UtcNow;
+                            entity.UpdatedAt = DateTime.UtcNow;
                             entity.CreatedBy = currentUserId;
                             entity.UpdatedBy = currentUserId;
                             break;
                         case EntityState.Modified:
                             Entry(entity).Property(x => x.CreatedBy).IsModified = false;
                             Entry(entity).Property(x => x.CreatedAt).IsModified = false;
-                            entity.UpdatedAt = now;
+                            entity.UpdatedAt = DateTime.UtcNow;
                             entity.UpdatedBy = currentUserId;
                             break;
                     }

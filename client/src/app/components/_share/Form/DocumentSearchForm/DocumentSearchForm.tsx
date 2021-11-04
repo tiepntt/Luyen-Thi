@@ -53,7 +53,7 @@ const DocumentSearchForm: React.FC<Props> = (props) => {
                 input={documentTypes as any}
                 value={filter?.type || 0}
                 onSelect={(e) => {
-                  onChangeCondition("type", e);
+                  onChangeCondition("type", e ? e : null);
                 }}
                 label="Thể loại"
               />
@@ -63,7 +63,7 @@ const DocumentSearchForm: React.FC<Props> = (props) => {
                 input={grades as any}
                 value={filter?.gradeCode || 0}
                 onSelect={(e) => {
-                  onChangeCondition("gradeCode", e);
+                  onChangeCondition("gradeCode", e ? e : null);
                 }}
                 label="Lớp"
                 getValue="code"
@@ -74,7 +74,7 @@ const DocumentSearchForm: React.FC<Props> = (props) => {
                 input={subjects as any}
                 value={filter?.subjectCode || 0}
                 onSelect={(e) => {
-                  onChangeCondition("subjectCode", e);
+                  onChangeCondition("subjectCode", e ? e : null);
                 }}
                 label="Môn học"
                 getValue="code"

@@ -11,5 +11,6 @@ namespace Luyenthi.Core.Dtos
         public string GradeCode { get; set; }
         public string SubjectCode { get; set; }
         public Guid? UserId { get; set; }
+        public string TimeZone { get; set; }
     }
 }

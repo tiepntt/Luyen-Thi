@@ -5,14 +5,12 @@ import { routes } from "./router";
 
 const Matrix = () => {
   return (
-    <div className="admin-wrap">
-      <Switch>
-        {routes.map((route, i) => (
-          <Route key={i} {...route} />
-        ))}
-        <Redirect from="/admin/matrix" to={`/admin/matrix/lop-10`} />
-      </Switch>
-    </div>
+    <Switch>
+      {routes.map((route, i) => (
+        <Route key={i} {...route} />
+      ))}
+      <Redirect from="/admin/matrix" to={`/admin/matrix/grade-10`} />
+    </Switch>
   );
 };
 

@@ -19,6 +19,7 @@ using Luyenthi.Core.Dtos.User;
 using Google.Apis.Auth;
 using System.Net.Http;
 using Microsoft.Extensions.Options;
+using System.Text.RegularExpressions;
 
 namespace Luyenthi.HttpApi.Host
 {
@@ -176,7 +177,7 @@ namespace Luyenthi.HttpApi.Host
                 {
                     //token is from our App
                     user.Email = userObj.email;
-                    user.UserName = userObj.email;
+                    user.UserName = $"fbuser_{MutationService.GenerateIndexUser(6)}";
                     user.FirstName = userObj.first_name;
                     user.LastName = userObj.last_name;
                     user.EmailConfirmed = true;
@@ -208,8 +209,8 @@ namespace Luyenthi.HttpApi.Host
             }
             var requestRegister = new ApplicationUser()
             {
+                UserName = $"gguser_{MutationService.GenerateIndexUser(6)}",
                 Email = payload.Email,
-                UserName = payload.Email,
                 FirstName = payload.GivenName,
                 LastName = payload.FamilyName,
                 AvatarUrl = payload.Picture,

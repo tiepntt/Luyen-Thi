@@ -66,7 +66,7 @@ const ProfileInfo = () => {
           </div>
           <div className="m-3">
             <h5 className="profile-name-user">{`${userInfo?.lastName} ${userInfo?.firstName}`}</h5>
-            <div>{getRoles([])?.name}</div>
+            <div>{getRoles(userInfo?.roles)?.name}</div>
           </div>
         </div>
       </Grid>

@@ -2,10 +2,12 @@ export interface UserResultAnalyticQuery {
   gradeCode?: string;
   subjectCode?: string;
   userId?: string;
+  timeZone?: string;
 }
 export interface UserHistoryAnalyticQuery {
   userId?: string;
   type: UserHistoryTypeTime;
+  timeZone?: string;
 }
 export enum UserHistoryTypeTime {
   Today,

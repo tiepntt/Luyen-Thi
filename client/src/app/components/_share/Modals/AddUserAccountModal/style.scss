@@ -1,0 +1,14 @@
+.modal-add-user {
+  .modal-content {
+    border-radius: 0;
+    border: none;
+    .form-control {
+      border-radius: 0;
+    }
+    .option-select-role {
+      div {
+        border-radius: 0 !important;
+      }
+    }
+  }
+}

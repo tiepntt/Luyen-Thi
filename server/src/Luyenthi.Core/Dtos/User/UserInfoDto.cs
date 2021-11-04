@@ -21,5 +21,6 @@ namespace Luyenthi.Core.Dtos
         public bool EmailConfirmed { get; set; }
         public string Provider { get; set; }
         public List<string> Roles { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

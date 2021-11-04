@@ -20,7 +20,7 @@ const GradeDocument = () => {
 
       <div className="main-content-document">
         <Row>
-          <Col lg={8} md={12}>
+          <Col lg={12} md={12}>
             <div className="list-subject">
               {subjects.map((subject, i) => (
                 <SubjectItem
@@ -31,7 +31,7 @@ const GradeDocument = () => {
               ))}
             </div>
           </Col>
-          <Col lg={4} md={12}>
+          <Col lg={12} md={12}>
             {/* <BoxApp>
               <div className="side-bar-grade"></div>
             </BoxApp> */}

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using TimeZoneConverter;
 
 namespace Luyenthi.Services
 {
@@ -48,10 +49,10 @@ namespace Luyenthi.Services
             var history = _documentHistoryRepository.Get(id);
             return history;
         }
-        public async Task<DocumentHistory> GetDetailByDocumentId(
+        public DocumentHistory GetDetailByDocumentId(
             Guid userId, Guid? documentId, Guid? Id = null, DocumentHistoryStatus? status = null)
         {
-            var documentHistory = await _documentHistoryRepository
+            var documentHistory = _documentHistoryRepository
                 .Find(i => i.CreatedBy == userId && (i.DocumentId == documentId || i.Id == Id) 
                             && (status == null ||status == i.Status))
                 .OrderByDescending(i => i.StartTime)
@@ -65,25 +66,38 @@ namespace Luyenthi.Services
                     DocumentId = h.DocumentId,
                     NumberCorrect = h.NumberCorrect,
                     NumberIncorrect = h.NumberIncorrect,
+                   
                     QuestionHistories = h.QuestionHistories.Select(q => new QuestionHistory { 
                         Id = q.Id, 
                         QuestionId = q.QuestionId,
                         QuestionSetId = q.QuestionSetId,
                         DocumentHistoryId=h.Id,
                         Answer = q.Answer,
-                        AnswerStatus =q.AnswerStatus
+                        AnswerStatus =q.AnswerStatus,
+                        
                     }).ToList()
                 })
-                .FirstOrDefaultAsync();
+                .FirstOrDefault();
             return documentHistory;
         }
-        public async Task CloseHistory(DocumentHistory documentHistory,int times = 0)
+        public DocumentHistory GetExitDocument(Guid userId, Guid? documentId, Guid? Id = null, DocumentHistoryStatus? status = null)
+        {
+            var documentHistory = _documentHistoryRepository
+               .Find(i => i.CreatedBy == userId && (i.DocumentId == documentId || i.Id == Id)
+                           && (status == null || status == i.Status))
+               .OrderByDescending(i => i.StartTime)
+               .Take(1)
+               .Select(h => new DocumentHistory { Status=h.Status, Document = h.Document })
+               .FirstOrDefault();
+            return documentHistory;
+        }
+        public void CloseHistory(DocumentHistory documentHistory,int times = 0)
         {
             using TransactionScope scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
             // kiểm tra đáp án
-            documentHistory.EndTime = DateTime.Now <= documentHistory.StartTime.AddMinutes(times) || times == 0  ? DateTime.Now : documentHistory.StartTime.AddMinutes(times);
+            documentHistory.EndTime = DateTime.UtcNow <= documentHistory.StartTime.AddMinutes(times) || times == 0  ? DateTime.UtcNow : documentHistory.StartTime.AddMinutes(times);
             documentHistory.Status = DocumentHistoryStatus.Close;
-            var questionSets = await _questionSetService.GetByDocumentId((Guid)documentHistory.DocumentId);
+            var questionSets =  _questionSetService.GetByDocumentId((Guid)documentHistory.DocumentId);
             var questions = questionSets.SelectMany(qs => qs.Questions)
                 .SelectMany(q => q.Type == QuestionType.QuestionGroup ? q.SubQuestions : new List<Question> { q });
             var questionHistories = documentHistory.QuestionHistories.Select(qh =>
@@ -128,6 +142,7 @@ namespace Luyenthi.Services
         public async Task<List<UserHistoryAnalyticDto>> GetUserHistoryAnalytic(UserHistoryAnalyticQuery query)
         {
             var timeAnalytic = DocumentHelper.GetTimeAnalytic(query.Type);
+            var timeZoneInfo = TZConvert.GetTimeZoneInfo(query.TimeZone);
             var histories = await _documentHistoryRepository
                 .Find(i => (query.UserId == Guid.Empty || i.CreatedBy == query.UserId) &&
                       i.Status == DocumentHistoryStatus.Close &&
@@ -148,11 +163,11 @@ namespace Luyenthi.Services
                     switch (query.Type)
                     {
                         case UserHistoryAnalyticType.Today:
-                            return (int)(DateTime.Now -  i.EndTime).TotalHours;
+                            return (int)(DateTime.UtcNow -  i.EndTime).TotalHours;
                         case UserHistoryAnalyticType.InWeek:
-                            return (int)(DateTime.Now.Date - i.EndTime.Date).TotalDays;
+                            return (int)(DateTime.UtcNow.Date - i.EndTime.Date).TotalDays;
                         case UserHistoryAnalyticType.InMonth:
-                            return (int)(DateTime.Now.Date - i.EndTime.Date).TotalDays;
+                            return (int)(DateTime.UtcNow.Date - i.EndTime.Date).TotalDays;
                         case UserHistoryAnalyticType.InYear:
                             return i.EndTime.Month;
                     };
@@ -161,7 +176,7 @@ namespace Luyenthi.Services
                 .Select(i => new UserHistoryAnalyticDto
                 {
                     Key=i.Key,
-                    Label = DocumentHelper.GetLabelAnalytic(query.Type, i.Key),
+                    Label = DocumentHelper.GetLabelAnalytic(query.Type, i.Key,timeZoneInfo),
                     MaxScore = Math.Round(i.Max(h => (double)h.NumberCorrect / (h.NumberCorrect + h.NumberIncorrect)*10),2),
                     Total = i.Count(),
                     TimeDuration = i.Sum(h => h.TimeDuration),
@@ -179,17 +194,17 @@ namespace Luyenthi.Services
                 switch (query.Type)
                 {
                     case UserHistoryAnalyticType.Today:
-                        key = (int)(DateTime.Now - EndTime).TotalHours;
+                        key = (int)(DateTime.UtcNow - EndTime).TotalHours;
                         EndTime = EndTime.AddHours(-1);
                         StartTime = EndTime.AddHours(1);
                         break;
                     case UserHistoryAnalyticType.InWeek:
-                        key = (int)(DateTime.Now.Date - EndTime.Date).TotalDays;
+                        key = (int)(DateTime.UtcNow.Date - EndTime.Date).TotalDays;
                         EndTime = EndTime.AddDays(-1);
                         StartTime = EndTime.AddDays(1);
                         break;
                     case UserHistoryAnalyticType.InMonth:
-                        key = (int)(DateTime.Now.Date - EndTime.Date).TotalDays;
+                        key = (int)(DateTime.UtcNow.Date - EndTime.Date).TotalDays;
                         EndTime = EndTime.AddDays(-1);
                         StartTime = EndTime.AddDays(1);
                         break;
@@ -205,7 +220,7 @@ namespace Luyenthi.Services
                     results.Add(new UserHistoryAnalyticDto
                     {
                         Key=key,
-                        Label=DocumentHelper.GetLabelAnalytic(query.Type, key),
+                        Label=DocumentHelper.GetLabelAnalytic(query.Type, key,timeZoneInfo),
                         TimeDuration=0,
                         StartDate = EndTime,
                         EndDate = StartTime,
@@ -239,7 +254,7 @@ namespace Luyenthi.Services
                 return false;
             }
 
-            if (history.Type == DocumentType.Exam && history.StartTime.AddMinutes(history.TotalTime) <= DateTime.Now)
+            if (history.Type == DocumentType.Exam && history.StartTime.AddMinutes(history.TotalTime) <= DateTime.UtcNow)
             {
                 return false;
             }

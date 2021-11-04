@@ -1,23 +1,25 @@
+import { Option } from "settings/_share/select";
+
 export enum Role {
   Admin = "Admin",
   Teacher = "Teacher",
   Student = "Student",
 }
-export const roleDefaults = [
+export const roleDefaults: Option<Role>[] = [
   {
     name: "Quản trị viên",
     value: Role.Admin,
   },
   {
-    name: "Thành viên",
+    name: "Học sinh",
     value: Role.Student,
   },
   {
-    name: "Thành viên",
+    name: "Giáo viên",
     value: Role.Teacher,
   },
 ];
-export const getRoles = (roles: Role[]) => {
+export const getRoles = (roles: Role[] = []) => {
   if (!roles.length) {
     return roleDefaults.find((i) => i.value === Role.Student);
   }

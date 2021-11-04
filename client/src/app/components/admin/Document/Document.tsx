@@ -6,14 +6,12 @@ import "./style.scss";
 const Document = () => {
   //   const { grades } = useGrades();
   return (
-    <div className="admin-wrap">
-      <Switch>
-        {routes.map((route, i) => (
-          <Route key={i} {...route} />
-        ))}
-        <Redirect from="/admin/document" to={`/admin/document/lop-10`} />
-      </Switch>
-    </div>
+    <Switch>
+      {routes.map((route, i) => (
+        <Route key={i} {...route} />
+      ))}
+      <Redirect from="/admin/document" to={`/admin/document/grade-10`} />
+    </Switch>
   );
 };
 

@@ -2,26 +2,26 @@
   {
     "Id": "7d9c9e86-89c5-49bf-bf35-99a97ca22f2a",
     "Name": "Lớp 12",
-    "Code": "lop-12",
+    "Code": "grade-12",
     "OrderNumber": 12
   },
   {
     "Id": "73a6f98e-8bcf-49db-b413-cf79ff3189bd",
     "Name": "Lớp 11",
-    "Code": "lop-11",
+    "Code": "grade-11",
     "OrderNumber": 11
     
   },
   {
     "Id": "80486e93-144e-4969-afc5-cae30a87a1bf",
     "Name": "Lớp 10",
-    "Code": "lop-10",
+    "Code": "grade-10",
     "OrderNumber": 10
   },
   {
     "Id": "e377aa7a-4e79-4d3d-8fba-0219193b43f7",
     "Name": "Ôn thi THPQ Quốc gia",
-    "Code": "on-thi-thpt-quoc-gia",
+    "Code": "national-high-school-exam",
     "OrderNumber": 13
   }
 ]

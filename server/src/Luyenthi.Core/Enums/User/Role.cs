@@ -6,8 +6,8 @@ namespace Luyenthi.Core.Enums
 {
     public class Role
     {
-        public static string Admin = "Admin";
-        public static string Teacher = "Teacher";
-        public static string Student = "Student";
+        public const string Admin = "Admin";
+        public const string Teacher = "Teacher";
+        public const string Student = "Student";
     }
 }

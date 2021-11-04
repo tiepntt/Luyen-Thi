@@ -23,12 +23,14 @@ const AdminPage: React.FC = () => {
         <div className={classes.wrapper}>
           <div className={classes.contentContainer}>
             <div className={classes.content}>
-              <Switch>
-                {adminRoutes.map((route, i) => (
-                  <Route key={i} path={route.href} {...route} />
-                ))}
-                <Redirect from="/admin" to="/admin/dashboard" />
-              </Switch>
+              <div className="admin-wrap">
+                <Switch>
+                  {adminRoutes.map((route, i) => (
+                    <Route key={i} path={route.href} {...route} />
+                  ))}
+                  <Redirect from="/admin" to="/admin/dashboard" />
+                </Switch>
+              </div>
             </div>
           </div>
         </div>

@@ -1,6 +1,7 @@
 .pagination-item {
   .page-link {
     color: black;
+    z-index: 0 !important;
   }
   .page-item.active .page-link {
     background-color: gray;

@@ -15,6 +15,7 @@ const AppLayout: React.FC = ({ children }) => {
   const [showHeader, setShowHeader] = useState(true);
   const [showFooter, setShowFooter] = useState(true);
   const [grades, setGrades] = useState<Grade[]>([]);
+  const [timeZone, setTimeZone] = useState("Asia/Ho_Chi_Minh");
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const dispatch = useDispatch();
 
@@ -42,6 +43,9 @@ const AppLayout: React.FC = ({ children }) => {
         toastService.error(res.data.message);
       }
     });
+    const timezoneName = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    setTimeZone(timezoneName);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const value: AppModels = {
@@ -52,6 +56,7 @@ const AppLayout: React.FC = ({ children }) => {
     scrollTop,
     grades,
     subjects,
+    timeZone,
   };
   return (
     <AppContext.Provider value={value}>

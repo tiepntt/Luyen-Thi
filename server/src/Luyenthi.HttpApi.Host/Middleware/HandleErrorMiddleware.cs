@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.IdentityModel.SecurityTokenService;
+using SendGrid.Helpers.Errors.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +36,9 @@ namespace Luyenthi.HttpApi.Host.Middleware
                         break;
                     case BadRequestException e: 
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
+                        break;
+                    case ForbiddenException e:
+                        response.StatusCode = (int)HttpStatusCode.Forbidden;
                         break;
                     default:
                         response.StatusCode = (int)HttpStatusCode.InternalServerError;

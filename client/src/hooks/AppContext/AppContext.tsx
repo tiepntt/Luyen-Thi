@@ -9,6 +9,7 @@ export interface AppModels {
   scrollTop: () => void;
   grades: Grade[];
   subjects: Subject[];
+  timeZone?: string;
 }
 export const AppContext = React.createContext<AppModels>({} as AppModels);
 export const useAppContext = () => useContext(AppContext);
