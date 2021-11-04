@@ -1,6 +1,7 @@
 import { Grid } from "@material-ui/core";
 import DocumentExamContent from "app/components/documents/DocumentExamContent";
 import DocumentExamSidebar from "app/components/sidebars/DocumentExamSidebar";
+import SnipperLayout from "app/components/_share/Layouts/SpinnerLayout";
 import DocumentExamTopbar from "app/components/_share/Menu/DocumentExamTopBar";
 import { useAppContext } from "hooks/AppContext/AppContext";
 import { useDocumentExam } from "hooks/Document/useDocumentExam";
@@ -40,31 +41,33 @@ const DocumentExam = () => {
     userAnswerIndex: userAnswerIndex,
   } as HistoriesQuestionModel;
   return (
-    <div id="document-exam-page">
-      <DocumentExamTopbar document={document} />
-      <Container>
-        <HistoryQuestions.Provider value={questionHistoriesValue}>
-          <div className="document-exam-main">
-            <Grid container className="h-100">
-              <Grid item lg={3} md={4} className="h-100">
-                <DocumentExamSidebar
-                  documentHistory={documentHistory}
-                  times={times}
-                  onSubmit={submit}
-                  onReset={reset}
-                />
-              </Grid>
-              <Grid item lg={9} md={8}>
-                <div className="exam-content">
-                  <DocumentExamContent
-                    questionSets={document?.questionSets || []}
+    <div id={`document-exam-page`}>
+      <SnipperLayout className="no-content" loading={document}>
+        <DocumentExamTopbar document={document} />
+        <Container>
+          <HistoryQuestions.Provider value={questionHistoriesValue}>
+            <div className="document-exam-main">
+              <Grid container className="h-100">
+                <Grid item lg={3} md={4} className="h-100">
+                  <DocumentExamSidebar
+                    documentHistory={documentHistory}
+                    times={times}
+                    onSubmit={submit}
+                    onReset={reset}
                   />
-                </div>
+                </Grid>
+                <Grid item lg={9} md={8}>
+                  <div className="exam-content">
+                    <DocumentExamContent
+                      questionSets={document?.questionSets || []}
+                    />
+                  </div>
+                </Grid>
               </Grid>
-            </Grid>
-          </div>
-        </HistoryQuestions.Provider>
-      </Container>
+            </div>
+          </HistoryQuestions.Provider>
+        </Container>
+      </SnipperLayout>
     </div>
   );
 };

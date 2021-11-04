@@ -31,3 +31,10 @@ html:focus-within {
 .text-right {
   text-align: right;
 }
+.no-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}

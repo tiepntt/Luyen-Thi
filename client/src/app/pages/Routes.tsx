@@ -1,14 +1,18 @@
 import DocumentEditQuestion from "app/components/admin/Document/document-edit-question/DocumentEditQuestion";
+
 import { useAppContext } from "hooks/AppContext/AppContext";
-import React, { useEffect } from "react";
-import { Redirect, Route, Switch } from "react-router";
-import NotFoundPage from "./404/NotFound";
-import AdminPage from "./Admin/Admin";
-import AuthPage from "./Auth/Auth";
-import DocumentPage from "./Document/Document";
-import DocumentExam from "./Document/document-exam/DocumentExam";
-import HomePage from "./Home/Home";
-import ProfilePage from "./Profile/Profile";
+import React, { Suspense, useEffect } from "react";
+import { Route, Switch } from "react-router";
+
+const AdminPage = React.lazy(() => import("./Admin/Admin"));
+const AuthPage = React.lazy(() => import("./Auth/Auth"));
+const DocumentPage = React.lazy(() => import("./Document/Document"));
+const DocumentExam = React.lazy(
+  () => import("./Document/document-exam/DocumentExam")
+);
+const HomePage = React.lazy(() => import("./Home/Home"));
+const ProfilePage = React.lazy(() => import("./Profile/Profile"));
+const NotFoundPage = React.lazy(() => import("./404/NotFound"));
 interface RouterProps {
   path: string;
   component: React.FC;
@@ -77,14 +81,16 @@ const routes: RouterProps[] = [
 ];
 const Routes: React.FC = () => {
   return (
-    <Switch>
-      {routes.map((route, i) => (
-        <Route path={route.path} exact={route.exact} key={i}>
-          <RouterComponent {...route} />
-        </Route>
-      ))}
-      <Redirect to="/404"></Redirect>
-    </Switch>
+    <Suspense fallback={<></>}>
+      <Switch>
+        {routes.map((route, i) => (
+          <Route path={route.path} exact={route.exact} key={i}>
+            <RouterComponent {...route} />
+          </Route>
+        ))}
+        {/* <Redirect from="*" to="/404"></Redirect> */}
+      </Switch>
+    </Suspense>
   );
 };
 const RouterComponent: React.FC<RouterProps> = (props) => {
