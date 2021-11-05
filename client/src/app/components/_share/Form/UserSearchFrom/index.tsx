@@ -25,7 +25,7 @@ const UserSearchForm: React.FC<Props> = ({
             <Button
               variant="outline-success"
               onClick={(e) => showAddModal && showAddModal(true)}
-              disabled={accessAdmin}
+              disabled={!accessAdmin}
             >
               Thêm mới
             </Button>

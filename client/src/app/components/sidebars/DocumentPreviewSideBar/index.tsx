@@ -19,7 +19,6 @@ const DocumentPriviewSideBar: React.FC<Props> = ({ questions, times }) => {
   };
   return (
     <div className="preview-sidebar">
-      <div className="label-sidebar">Dach sách câu hỏi</div>
       <div className="list-question-index">
         {questions &&
           questions.map(({ questionId }, i) => (

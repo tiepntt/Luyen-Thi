@@ -64,7 +64,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
                 documentHistory = new DocumentHistory
                 {
                     Id = new Guid(),
-                    StartTime = DateTime.UtcNow,
+                    StartTime = DateTime.UtcNow.AddSeconds(1),
                     Status = DocumentHistoryStatus.Doing,
                     DocumentId = documentId,
                 };
@@ -73,7 +73,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
             else
             {
                 // nếu bài thi đã kết thúc => chấm bài và trả về kết quả
-                if (document.DocumentType == DocumentType.Exam && documentHistory.StartTime.AddMinutes(document.Times) < DateTime.UtcNow)
+                if (document.DocumentType == DocumentType.Exam && documentHistory.Status ==DocumentHistoryStatus.Doing &&documentHistory.StartTime.AddMinutes(document.Times) < DateTime.UtcNow)
                 {
                     _historyService.CloseHistory(documentHistory, document.Times);
                 }
@@ -113,7 +113,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
             documentHistory = new DocumentHistory
             {
                 Id = new Guid(),
-                StartTime = DateTime.UtcNow,
+                StartTime = DateTime.UtcNow.AddSeconds(1),
                 Status = DocumentHistoryStatus.Doing,
                 DocumentId = request.DocumentId,
             };

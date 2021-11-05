@@ -14,7 +14,7 @@ const User: React.FC = () => {
   const [users, setUsers] = useState<UserInfo[]>([]);
   const [showModalAddUser, setShowModalAddUser] = useState(false);
   const [count, setCount] = React.useState(10);
-  const take = 15;
+  const take = 10;
   const [filter] = useQueryParams({
     key: StringParam,
     page: NumberParam,
@@ -63,7 +63,7 @@ const User: React.FC = () => {
     });
   };
   const onAddUser = (user: UserInfo) => {
-    setUsers([user, ...users]);
+    setUsers([user, ...users].slice(0, take));
   };
   return (
     <div className="user-admin">
@@ -73,7 +73,7 @@ const User: React.FC = () => {
         showAddModal={setShowModalAddUser}
       />
       <div className="user-list px-2 mt-3">
-        <UserTable users={users} setUsers={setUsers} />
+        <UserTable users={users} setUsers={setUsers} total={count} />
         <AppPagination
           pageActive={filter.page || 1}
           lastPage={Math.ceil(count / take)}

@@ -1,0 +1,98 @@
+#ranking-document {
+  padding-bottom: 20px;
+  .avatar {
+    // background-color: white;
+    border: 4px solid #edebf0;
+    border-radius: 50%;
+    outline-color: mintcream;
+    outline-width: 21 px;
+    display: inline-block;
+    text-align: center;
+  }
+  .avart-user {
+    background-color: white;
+  }
+  .top-3-user {
+    min-width: 600px;
+    max-width: 100%;
+  }
+  .border-bottom-img {
+    margin-top: -40px;
+  }
+  .top-user-1 {
+    margin-top: 0rem !important;
+    color: #f9d30b;
+    .avatar {
+      // background-color: white;
+      border-color: #fae26b;
+    }
+  }
+  .top-user-2 {
+    margin-top: 4.2rem !important;
+    color: #b7b7b7;
+    .avatar {
+      // background-color: white;
+      border-color: #b7b7b7;
+    }
+  }
+  .top-user-3 {
+    margin-top: 4.2rem !important;
+    color: #eab371;
+    .avatar {
+      // background-color: white;
+      border-color: #eab371;
+    }
+  }
+  .name-user {
+    font-weight: bold;
+
+    font-size: 1.1rem;
+  }
+  .list-rank {
+    padding: 15px;
+    margin: 15px;
+    .label-rank {
+      font-size: 1.05rem;
+      font-weight: bold;
+      color: rgb(106, 108, 109);
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e4e2e5;
+    }
+    .index-rank {
+      font-weight: bold;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .user-info {
+      align-items: center;
+      font-size: 1.05rem;
+      color: #595959;
+    }
+    .time-number {
+      background: rgb(2, 136, 146);
+      border: 0;
+      padding: 3px 20px;
+      color: white;
+      display: inline-flex;
+    }
+    .time-result {
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
+    .point-result {
+      align-items: center;
+      font-size: 1.2rem;
+      color: #f5b500;
+      font-weight: bold;
+      height: 100%;
+    }
+    .rank-item {
+      padding: 6px 0;
+      border: 1px solid #eaeaeb;
+      margin-top: 5px;
+    }
+  }
+}

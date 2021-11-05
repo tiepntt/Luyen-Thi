@@ -6,7 +6,7 @@ export interface AppModels {
   showFooter: boolean;
   setShowHeader: (value: boolean) => void;
   setShowFooter: (value: boolean) => void;
-  scrollTop: () => void;
+  scrollTop: (id?: string, position?: string) => void;
   grades: Grade[];
   subjects: Subject[];
   timeZone?: string;

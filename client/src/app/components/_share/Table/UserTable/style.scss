@@ -38,4 +38,14 @@
       }
     }
   }
+  .option-button-user {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    .btn {
+      padding: 0 !important;
+      background: none !important;
+      border: none !important;
+    }
+  }
 }

@@ -1,6 +1,12 @@
+import {
+  ApproveUserIcon,
+  LockAccountIcon,
+  SendMessageIcon,
+} from "assets/images/user";
 import { UserInfo } from "models/user/userInfo";
 import moment from "moment";
 import React from "react";
+import { Button, Image } from "react-bootstrap";
 import Select from "react-select";
 import { userApi } from "services/api/user/user";
 import { toastService } from "services/toast";
@@ -10,8 +16,9 @@ import "./style.scss";
 interface Props {
   users: UserInfo[];
   setUsers?: (users: UserInfo[]) => void;
+  total?: number;
 }
-const UserTable: React.FC<Props> = ({ users, setUsers }) => {
+const UserTable: React.FC<Props> = ({ users, setUsers, total }) => {
   const setUser = (user: UserInfo) => {
     var userIndex = users.findIndex((u) => u.id === user.id);
     if (userIndex !== -1) {
@@ -25,10 +32,14 @@ const UserTable: React.FC<Props> = ({ users, setUsers }) => {
           <td className="user-table-cell">Tên đăng nhập</td>
           <td className="user-table-cell">Email</td>
           <td className="user-table-cell">Họ và tên</td>
-          <td className="user-table-cell">Vai trò</td>
+          <td className="user-table-cell" style={{ width: 200 }}>
+            Vai trò
+          </td>
           <td className="user-table-cell">Trạng thái</td>
           <td className="user-table-cell">Ngày tham gia</td>
-          <td className="user-table-cell">options abc</td>
+          <td className="user-table-cell" style={{ width: 100 }}>
+            Tổng : {total}
+          </td>
         </tr>
         {users.map((user, i) => (
           <Userrow user={user} key={i} setUser={setUser} />
@@ -85,9 +96,21 @@ const Userrow: React.FC<UserProps> = ({ user, setUser }) => {
         {user.emailConfirmed ? "Đã xác thực" : "Chưa xác thực"}
       </td>
       <td className="user-table-cell text-center">
-        {moment(user.createdAt).format("DD/MM/YYYY")}
+        {moment.utc(user.createdAt).local().format("DD/MM/YYYY")}
       </td>
-      <td className="user-table-cell"></td>
+      <td className="user-table-cell">
+        <div className="option-button-user">
+          <Button className="mx-1 btn-access" size="sm">
+            <Image src={ApproveUserIcon} width={32} height={32} />
+          </Button>
+          <Button className="mx-1 send-message" size="sm">
+            <Image src={SendMessageIcon} width={32} height={32} />
+          </Button>
+          <Button className="mx-1 btn-lock" size="sm">
+            <Image src={LockAccountIcon} width={32} height={32} />
+          </Button>
+        </div>
+      </td>
     </tr>
   );
 };

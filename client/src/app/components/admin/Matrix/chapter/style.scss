@@ -1,4 +1,5 @@
 .subject-matrix {
+  width: 100%;
   .list-chapter {
     //   padding: 10px 0px;
     width: 100%;
@@ -21,7 +22,6 @@
     .add-unit-btn {
       cursor: pointer;
       user-select: none;
-      
     }
   }
 }

@@ -1,10 +1,13 @@
 import React from "react";
-import { Spinner } from "react-bootstrap";
+import Spinner from "./Spinner";
 
 const Loading = () => {
   return (
-    <div className="loadding text-center m-auto pt-3">
-      <Spinner animation="border" variant="primary" />
+    <div className="text-center m-auto pt-3">
+      <div className="content-loader">
+        <Spinner />
+        <div className="loadding-text">Đang tải dữ liệu</div>
+      </div>
     </div>
   );
 };

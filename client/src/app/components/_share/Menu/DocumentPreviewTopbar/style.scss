@@ -1,0 +1,16 @@
+.top-document-preview-options {
+  padding: 0 15px;
+  background: white;
+  align-items: center;
+  min-height: 64px;
+  border-bottom: 1px solid #e2e8f0;
+  .preview-tag-buton {
+    text-decoration: none;
+    font-size: 18px;
+    margin: 0 10px;
+    color: #959191;
+    &.active {
+      color: rgb(6, 122, 143);
+    }
+  }
+}
