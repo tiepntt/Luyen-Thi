@@ -29,4 +29,7 @@ export const documentApi = {
   approve: (id: string) => {
     return api.patch(`${baseUrl}/approve/${id}`);
   },
+  getRank: (id: string) => {
+    return api.get(`${baseUrl}/rank/${id}`);
+  },
 };

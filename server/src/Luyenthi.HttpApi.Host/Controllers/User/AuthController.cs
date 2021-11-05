@@ -6,7 +6,6 @@ using Luyenthi.HttpApi.Host.Helpers;
 using Luyenthi.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.SecurityTokenService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +19,7 @@ using Google.Apis.Auth;
 using System.Net.Http;
 using Microsoft.Extensions.Options;
 using System.Text.RegularExpressions;
+using SendGrid.Helpers.Errors.Model;
 
 namespace Luyenthi.HttpApi.Host
 {
@@ -182,7 +182,7 @@ namespace Luyenthi.HttpApi.Host
                     user.LastName = userObj.last_name;
                     user.EmailConfirmed = true;
                     user.AvatarUrl = userObj.picture.Data.url;
-                    user.CreatedAt = DateTime.Now;
+                    user.CreatedAt = DateTime.UtcNow;
                 }
 
                 return user;
@@ -215,7 +215,7 @@ namespace Luyenthi.HttpApi.Host
                 LastName = payload.FamilyName,
                 AvatarUrl = payload.Picture,
                 EmailConfirmed = true,
-                CreatedAt = DateTime.Now
+                CreatedAt = DateTime.UtcNow
                 
             };
             var loginResponse =  await UserResponseLoginProvider(requestRegister, "google");
@@ -233,7 +233,7 @@ namespace Luyenthi.HttpApi.Host
             if (user == null)
             {
 
-                requestRegister.CreatedAt = DateTime.Now;
+                requestRegister.CreatedAt = DateTime.UtcNow;
                 requestRegister.Provider = provider;
                 var proccessUser = await _userManager.CreateAsync(requestRegister);
                 if (!proccessUser.Succeeded)

@@ -58,6 +58,7 @@ namespace Luyenthi.HttpApi.Host
             CreateMap<ApplicationUser, UserInfoDto>();
             CreateMap<UserRequestRegister, ApplicationUser>();
             CreateMap<UserCreateRequest, ApplicationUser>();
+            CreateMap<ApplicationUser, UserTitleDto>();
         }
     }
 }

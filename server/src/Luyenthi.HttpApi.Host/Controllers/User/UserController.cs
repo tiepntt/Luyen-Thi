@@ -5,7 +5,7 @@ using Luyenthi.Core.Enums;
 using Luyenthi.Domain.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.SecurityTokenService;
+using SendGrid.Helpers.Errors.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +40,7 @@ namespace Luyenthi.HttpApi.Host.Controllers.User
                                 user.Email.ToUpper().Contains(query.Key.ToUpper()) ||
                                 user.FirstName.ToUpper().Contains(query.Key.ToUpper()) ||
                                 user.LastName.ToUpper().Contains(query.Key.ToUpper())
-                                ).ToList();
+                                ).OrderByDescending(u => u.CreatedAt).ToList();
             var result = new PageResultDto<UserInfoDto>();
             result.Total = users.Count();
             users= users
@@ -65,10 +65,10 @@ namespace Luyenthi.HttpApi.Host.Controllers.User
                 throw new KeyNotFoundException("Không tìm thấy người dùng");
             }
             var _roles = await _userManager.GetRolesAsync(user);
-            var roles = request.Roles.Where(role => !_roles.Contains(role));
-            var rolesRemove = _roles.Where(role => !request.Roles.Contains(role));
+            var roles = request.Roles.Where(role => !_roles.Contains(role)).ToList();
+            var rolesRemove = _roles.Where(role => !request.Roles.Contains(role)).ToList();
             var userInfo = _mapper.Map<UserInfoDto>(user);
-            if (roles.Count() == 0)
+            if (roles.Count() == 0 && rolesRemove.Count==0)
             {
                 return userInfo;  
             }
@@ -97,18 +97,21 @@ namespace Luyenthi.HttpApi.Host.Controllers.User
                         throw new BadRequestException("Email đã tồn tại");
                     }
                 }
-                
+                else
+                {
+                    request.Email = null;
+                }
+
                 var user = _mapper.Map<ApplicationUser>(request);
+                user.CreatedAt = DateTime.UtcNow;
                 user.EmailConfirmed = true;
                 var userProccess = await _userManager.CreateAsync(user, request.Password);
                 var userResponse = _mapper.Map<UserInfoDto>(user);
                 var roleProcess = await _userManager.AddToRolesAsync(user, request.Roles);
-
                 var userInfo = _mapper.Map<UserInfoDto>(user);
                 userInfo.Roles = request.Roles;
                 scope.Complete();
                 scope.Dispose();
-
                 return userInfo;
             }
             catch(Exception e)

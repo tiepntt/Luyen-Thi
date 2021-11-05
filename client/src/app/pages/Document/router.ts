@@ -14,7 +14,6 @@ export const routes = [
   },
   {
     path: "/document/:id/preview",
-    exact: true,
     component: DocumentPreivew,
   },
 ];

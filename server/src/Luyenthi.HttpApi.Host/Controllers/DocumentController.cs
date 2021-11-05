@@ -5,6 +5,7 @@ using Luyenthi.Core.Dtos.Document;
 using Luyenthi.Core.Dtos.GoogleDoc;
 using Luyenthi.Core.Enums;
 using Luyenthi.Domain;
+using Luyenthi.Domain.User;
 using Luyenthi.EntityFrameworkCore;
 using Luyenthi.Services;
 using Luyenthi.Services.GoolgeAPI;
@@ -30,6 +31,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly DocumentRepository _documentRepository;
         private readonly DocumentHistoryRepository _documentHistoryRepository;
+        private readonly DocumentHistoryService _documentHistoryService;
         private readonly IMapper _mapper;
 
         public DocumentController(
@@ -39,6 +41,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
             QuestionService questionService,
             DocumentRepository documentRepository,
             DocumentHistoryRepository documentHistoryRepository,
+            DocumentHistoryService documentHistoryService,
         IMapper mapper
             )
         {
@@ -48,18 +51,20 @@ namespace Luyenthi.HttpApi.Host.Controllers
             _questionService = questionService;
             _documentRepository = documentRepository;
             _documentHistoryRepository = documentHistoryRepository;
+            _documentHistoryService = documentHistoryService;
             _mapper = mapper;
         }
         [HttpGet("preview/{Id}")]
         public DocumentPreviewDto GetPreview(Guid Id)
         {
+            ApplicationUser user = (ApplicationUser)HttpContext.Items["User"];
             var document =   _documentService.GetDetailById(Id);
             var questionSets = document.QuestionSets;
             var numberQuestion = questionSets.SelectMany(i => i.Questions)
                 .SelectMany(q => q.Type == QuestionType.QuestionGroup ? q.SubQuestions : new List<Question> { q })
                 .Count();
             questionSets = DocumentHelper.MakeIndexQuestions(questionSets);
-            return new DocumentPreviewDto
+            var result = new DocumentPreviewDto
             {
                 Id = document.Id,
                 Name = document.Name,
@@ -68,6 +73,15 @@ namespace Luyenthi.HttpApi.Host.Controllers
                 NumberQuestion = numberQuestion,
                 QuestionSets = _mapper.Map<List<QuestionSetDetailDto>>(questionSets)
             };
+        // lấy ra lần gần nhất làm bài
+      
+            if (user != null)
+            {
+                var  history = _documentHistoryService.GetExitDocument(user.Id, Id);
+                result.DocumentHistory = _mapper.Map<DocumentHistoryDto>(history);
+            }
+
+            return result;
         }
         [HttpGet]
         public DocumentSearchResponse GetDocuments([FromQuery] DocumentQuery query)
@@ -217,6 +231,41 @@ namespace Luyenthi.HttpApi.Host.Controllers
             }
             document.IsApprove = true;
             _documentRepository.UpdateEntity(document);
+        }
+        [HttpGet("rank/{documentId}")]
+        public List<DocumentHistoryRank> GetRanks(Guid documentId)
+        {
+            ApplicationUser user = (ApplicationUser)HttpContext.Items["User"];
+            var histories = _documentHistoryService.GetRankInDocument(documentId);
+            // lấy top 10
+            var results = histories
+                .Select((h,index) => new DocumentHistoryRank 
+                {
+                    User=_mapper.Map<UserTitleDto>(h.User),
+                    NumberCorrect=h.NumberCorrect,
+                    Rank = index + 1,
+                    TimeDuration=h.TimeDuration
+                }).ToList();
+            if(user != null)
+            {
+                var userRank = histories.FirstOrDefault(h => h.CreatedBy == user.Id);
+                if(userRank != null)
+                {
+                    var userRankIndex = histories.ToList().IndexOf(userRank);
+                    if(userRankIndex >= 10)
+                    {
+                        results.Add(new DocumentHistoryRank {
+
+                            User = _mapper.Map<UserTitleDto>(user),
+                            NumberCorrect = userRank.NumberCorrect,
+                            Rank = userRankIndex + 1,
+                            TimeDuration = userRank.TimeDuration
+                        });
+                    }
+                }
+            }
+            
+            return results;
         }
         
     }

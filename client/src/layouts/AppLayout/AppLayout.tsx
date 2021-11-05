@@ -20,13 +20,13 @@ const AppLayout: React.FC = ({ children }) => {
   const dispatch = useDispatch();
 
   const [, setMobileNavOpen] = useState(false);
-  const scrollTop = () => {
+  const scrollTop = (id?: string, position = "start") => {
     try {
-      let element = document.getElementById("app");
+      let element = document.getElementById(id || "app");
       element &&
         element.scrollIntoView({
-          block: "start",
-          inline: "start",
+          block: position as any,
+          inline: position as any,
           behavior: "smooth",
         });
     } catch (e) {}

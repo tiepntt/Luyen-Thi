@@ -15,6 +15,7 @@ namespace Luyenthi.Core.Dtos
         public int NumberQuestion {get;set;}
         public int Times {get;set;}
         public DocumentType DocumentType { get;set;}
+        public DocumentHistoryDto DocumentHistory { get; set; }
         public List<QuestionSetDetailDto> QuestionSets { get; set; }
         // history question
     }

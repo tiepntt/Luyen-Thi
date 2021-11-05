@@ -4,13 +4,23 @@
     box-shadow: -1px 1px 4px 0px rgba(0, 0, 0, 0.2);
   }
   .document-preview-sidebar {
-    box-shadow: -1px 1px 4px 0px rgba(0, 0, 0, 0.2);
+    // box-shadow: -1px 1px 4px 0px rgba(0, 0, 0, 0.2);
+    border-right: 1px solid #e2e8f0;
   }
   .document-preview {
     position: relative;
     padding: 20px 20px;
     // height: 100vh;
     // overflow-y: auto;
+  }
+
+  .btn-submit {
+    background-color: #2a5bfb !important;
+    margin: auto;
+    border: #fb752a !important;
+    padding: 8px 15px;
+    font-size: 16px;
+    border-radius: 0 !important;
   }
 }
 .no-document-content {

@@ -1,19 +1,32 @@
 import { Grid } from "@material-ui/core";
-import DocumentLabel from "app/components/documents/DocumentLabel";
-import { DocumentSearchSidebar } from "app/components/sidebars/DocumentSearchSidebar/DocumentSearchSidebar";
-import DocumentBreadcumbs from "app/components/_share/Breadcrumbs/DocumentBreadcumbs";
-import DocumentSearchForm from "app/components/_share/Form/DocumentSearchForm/DocumentSearchForm";
 import { AppPagination } from "app/components/_share/Pagination/Pagination";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { Container } from "react-bootstrap";
 import { history } from "services/history";
 import { useQueryParams, StringParam, NumberParam } from "use-query-params";
 import qs from "query-string";
-import "./style.scss";
 import { documentApi } from "services/api/document/documentApi";
 import { DocumentTitle } from "models/document/DocumentTitle";
 import { toastService } from "services/toast";
 import { useAppContext } from "hooks/AppContext/AppContext";
+import "./style.scss";
+import SnipperLayout from "app/components/_share/Layouts/SpinnerLayout";
+const DocumentBreadcumbs = React.lazy(
+  () => import("app/components/_share/Breadcrumbs/DocumentBreadcumbs")
+);
+const DocumentSearchForm = React.lazy(
+  () =>
+    import("app/components/_share/Form/DocumentSearchForm/DocumentSearchForm")
+);
+const DocumentSearchSidebar = React.lazy(
+  () =>
+    import(
+      "app/components/sidebars/DocumentSearchSidebar/DocumentSearchSidebar"
+    )
+);
+const DocumentLabel = React.lazy(
+  () => import("app/components/documents/DocumentLabel")
+);
 const DocumentSearch: React.FC = () => {
   const [count, setCount] = React.useState(10);
   const { scrollTop } = useAppContext();
@@ -78,52 +91,54 @@ const DocumentSearch: React.FC = () => {
 
   return (
     <div className="document-search-page">
-      <DocumentSearchForm
-        filter={filter as any}
-        onChangeCondition={onChangeCondition}
-      />
-      <Container className="content">
-        <Grid container spacing={3}>
-          <Grid item lg={8} xl={8} xs={12} md={12}>
-            {/* list document */}
-
-            <div className="list-document-side-bar">
-              <DocumentBreadcumbs rootPath={"/document"} params={params} />
-              <div className="header-title">
-                Đề thi thử THPT Quốc gia chọn lọc, miễn phí
+      <Suspense
+        fallback={<SnipperLayout loading={false} className="page-no-data" />}
+      >
+        <DocumentSearchForm
+          filter={filter as any}
+          onChangeCondition={onChangeCondition}
+        />
+        <Container className="content">
+          <Grid container spacing={3}>
+            <Grid item lg={8} xl={8} xs={12} md={12}>
+              <div className="list-document-side-bar">
+                <DocumentBreadcumbs rootPath={"/document"} params={params} />
+                <div className="header-title">
+                  Đề thi thử THPT Quốc gia chọn lọc, miễn phí
+                </div>
+                <div id="hint-result">
+                  <b>
+                    {((filter.page || 1) - 1) * 5 + 1} -{" "}
+                    {(filter.page || 1) * 5 >= count
+                      ? count
+                      : (filter.page || 1) * 5}
+                  </b>{" "}
+                  trong <b>{count}</b> kết quả cho "
+                  <span id="key-word">Từ khóa tìm kiếm</span>"
+                </div>
+                <div className="list-document">
+                  {documents.map((document, i) => (
+                    <DocumentLabel document={document} key={i} />
+                  ))}
+                </div>
+                <hr />
+                <div className="pagination-tag">
+                  <AppPagination
+                    pageActive={filter.page || 1}
+                    lastPage={Math.ceil(count / 5)}
+                    onPageChange={onChangePage}
+                  />
+                </div>
               </div>
-              <div id="hint-result">
-                <b>
-                  {((filter.page || 1) - 1) * 5 + 1} -{" "}
-                  {(filter.page || 1) * 5 >= count
-                    ? count
-                    : (filter.page || 1) * 5}
-                </b>{" "}
-                trong <b>{count}</b> kết quả cho "
-                <span id="key-word">Từ khóa tìm kiếm</span>"
+            </Grid>
+            <Grid item lg={4} xl={4} xs={12} md={12}>
+              <div className="document-side-bar">
+                <DocumentSearchSidebar />
               </div>
-              <div className="list-document">
-                {documents.map((document, i) => (
-                  <DocumentLabel document={document} key={i} />
-                ))}
-              </div>
-              <hr />
-              <div className="pagination-tag">
-                <AppPagination
-                  pageActive={filter.page || 1}
-                  lastPage={Math.ceil(count / 5)}
-                  onPageChange={onChangePage}
-                />
-              </div>
-            </div>
+            </Grid>
           </Grid>
-          <Grid item lg={4} xl={4} xs={12} md={12}>
-            <div className="document-side-bar">
-              <DocumentSearchSidebar />
-            </div>
-          </Grid>
-        </Grid>
-      </Container>
+        </Container>
+      </Suspense>
     </div>
   );
 };

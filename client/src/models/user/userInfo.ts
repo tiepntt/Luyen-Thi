@@ -49,3 +49,9 @@ export interface UserCreateModel {
   email: string;
   roles: Role[];
 }
+export interface UserTitle {
+  id: string;
+  firstName: string;
+  lastName: string;
+  avatarUrl?: string;
+}

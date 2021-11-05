@@ -8,7 +8,7 @@ import qs from "query-string";
 import "./style.scss";
 interface Props {}
 
-export const DocumentSearchSidebar = (props: Props) => {
+const DocumentSearchSidebar = (props: Props) => {
   const { grades } = useGrades();
   const { subjects } = useSubjects();
   return (
@@ -47,3 +47,4 @@ export const DocumentSearchSidebar = (props: Props) => {
     </div>
   );
 };
+export default DocumentSearchSidebar;

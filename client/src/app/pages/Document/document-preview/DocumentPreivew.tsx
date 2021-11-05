@@ -1,17 +1,23 @@
-import { Grid } from "@material-ui/core";
-import QuestionSetPreview from "app/components/question-set/QuestionSetPreview";
-import DocumentPriviewSideBar from "app/components/sidebars/DocumentPreviewSideBar";
 import DocumentBanner from "app/components/_share/Banners/DocumentBanner";
 import SnipperLayout from "app/components/_share/Layouts/SpinnerLayout";
+import DocumentPreviewTopBar from "app/components/_share/Menu/DocumentPreviewTopbar";
 import { DocumentPreview } from "models/document/DocumentPreview";
-import { QuestionHistory } from "models/question/QuestionHistory";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { Container } from "react-bootstrap";
-import { useParams } from "react-router";
+import { Redirect, Route, Switch, useParams } from "react-router";
 import { documentApi } from "services/api/document/documentApi";
+import { examApi } from "services/api/document/examApi";
+import { history } from "services/history";
 import { toastService } from "services/toast";
-import { QuestionType } from "settings/question/questionType";
+import { DocumentHistoryStatus } from "settings/document/documentHistory";
 import "./style.scss";
+const DocumentPreviewQuestion = React.lazy(
+  () => import("app/components/documents/DocumentPreviewQuestion")
+);
+const DocumentPreviewRank = React.lazy(
+  () => import("app/components/documents/DocumentPreviewRank")
+);
+
 const DocumentPreivew = () => {
   const [document, setDocument] = useState<DocumentPreview>();
   const { id } = useParams<any>();
@@ -24,49 +30,52 @@ const DocumentPreivew = () => {
       }
     });
   }, [id]);
-  const [historyQuestion, setQuestionHistory] = useState<QuestionHistory[]>([]);
-  useEffect(() => {
+  const startExam = () => {
     if (document) {
-      if (!document.questionHistory) {
-        // createHistory
-        setQuestionHistory(
-          document.questionSets
-            .map((qs) => qs.questions)
-            .flat()
-            .map((q) =>
-              q.type === QuestionType.MultipleChoice ? q : q.subQuestions
-            )
-            .flat()
-            .map((q) => ({
-              questionId: q.id,
-            }))
-        );
-      }
+      examApi.reset(document?.id).then((res) => {
+        if (res.status === 200) {
+          history.push(`/document/${document?.id}`);
+        } else {
+          toastService.error(res.data.message);
+        }
+      });
     }
-  }, [document]);
+  };
+  const continueExam = () => {
+    history.push(`/document/${document?.id}`);
+  };
   return (
     <div id="document-preview">
-      <SnipperLayout loading={document} className="no-document-content">
+      <SnipperLayout loading={document} className="page-no-data">
         <DocumentBanner document={document} />
         <Container>
           <div className=" px-3">
             <div className="document-main">
-              <Grid container>
-                <Grid item lg={4} md={4} className="document-preview-sidebar">
-                  <DocumentPriviewSideBar
-                    questions={historyQuestion || []}
-                    times={document?.times || 60}
+              <DocumentPreviewTopBar
+                status={
+                  document?.documentHistory?.status ||
+                  DocumentHistoryStatus.Close
+                }
+                documentId={document?.id}
+                startExam={startExam}
+                continueExam={continueExam}
+              />
+              <Suspense fallback={<></>}>
+                <Switch>
+                  <Route path={"/document/:id/preview/question"} exact>
+                    <DocumentPreviewQuestion document={document} />
+                  </Route>
+                  <Route path={"/document/:id/preview/rank"} exact>
+                    <DocumentPreviewRank
+                      totalQuestions={document?.numberQuestion}
+                    />
+                  </Route>
+                  <Redirect
+                    from={"/document/:id/preview"}
+                    to={"/document/:id/preview/question"}
                   />
-                </Grid>
-                <Grid item lg={8} md={8} sm={12}>
-                  <div className="top-options"></div>
-                  <div className="document-preview">
-                    {document?.questionSets.map((qs, i) => (
-                      <QuestionSetPreview data={qs} />
-                    ))}
-                  </div>
-                </Grid>
-              </Grid>
+                </Switch>
+              </Suspense>
             </div>
           </div>
         </Container>

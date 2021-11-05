@@ -1,5 +1,6 @@
 import { QuestionHistory } from "models/question/QuestionHistory";
 import { QuestionSetDetail } from "models/questionSet/QuestionSetDetail";
+import { DocumentHistory } from "./DocumentHistory";
 
 export interface DocumentPreview {
   id: string;
@@ -8,5 +9,5 @@ export interface DocumentPreview {
   times: number;
   numberQuestion: number;
   questionSets: QuestionSetDetail[];
-  questionHistory: QuestionHistory[];
+  documentHistory?: DocumentHistory;
 }

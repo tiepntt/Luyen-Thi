@@ -15,7 +15,6 @@ namespace Luyenthi.Core.Dtos
         public double Medium { get; set; }
         public double TimeDuration { get; set; }
         public DateTime StartDate { get; set; }
-
         public DateTime EndDate { get; set; }
     }
 }

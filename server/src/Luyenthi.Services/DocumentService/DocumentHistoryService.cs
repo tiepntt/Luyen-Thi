@@ -85,9 +85,9 @@ namespace Luyenthi.Services
             var documentHistory = _documentHistoryRepository
                .Find(i => i.CreatedBy == userId && (i.DocumentId == documentId || i.Id == Id)
                            && (status == null || status == i.Status))
+               .Include(h => h.Document)
                .OrderByDescending(i => i.StartTime)
                .Take(1)
-               .Select(h => new DocumentHistory { Status=h.Status, Document = h.Document })
                .FirstOrDefault();
             return documentHistory;
         }
@@ -263,6 +263,24 @@ namespace Luyenthi.Services
         public async Task<List<UserDocumentAnalyticDto>> GetRanks()
         {
             return new List<UserDocumentAnalyticDto>();
+        }
+        public IQueryable<DocumentHistory> GetRankInDocument(Guid documentId)
+        {
+            var histories = _documentHistoryRepository.Find(i => i.DocumentId == documentId && i.Status == DocumentHistoryStatus.Close)
+                .Include(h => h.User)
+                .OrderByDescending(h => h.NumberCorrect)
+                .ThenBy(h => h.TimeDuration)
+                .ToList()
+                .GroupBy(i => i.User)
+                .Select(h => new DocumentHistory
+                {
+                    User = h.Key,
+                    NumberCorrect = h.FirstOrDefault().NumberCorrect,
+                    CreatedBy=h.Key.Id,
+                    TimeDuration = h.FirstOrDefault().TimeDuration
+                })
+                .AsQueryable();
+            return histories;
         }
     }
 }

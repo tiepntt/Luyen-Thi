@@ -22,6 +22,11 @@ const DocumentBanner: React.FC<Props> = ({ document }) => {
       href: "/",
     },
   ];
+  const documentHistory = document?.documentHistory;
+  const scrore = documentHistory
+    ? ((documentHistory.numberCorrect || 0) / (document?.numberQuestion || 1)) *
+      10
+    : 0;
 
   return (
     <div className="document-banner pb-3">
@@ -46,7 +51,9 @@ const DocumentBanner: React.FC<Props> = ({ document }) => {
               <div className="block-process d-inline-block mx-3">
                 <CircularProgressbar
                   value={100}
-                  text={`0/${document?.numberQuestion || 40}`}
+                  text={`${documentHistory?.numberCorrect || 0}/${
+                    document?.numberQuestion || 40
+                  }`}
                   className="progress-item"
                   strokeWidth={5}
                   styles={buildStyles({
@@ -60,7 +67,7 @@ const DocumentBanner: React.FC<Props> = ({ document }) => {
               <div className="block-process d-inline-block mx-3">
                 <CircularProgressbar
                   value={100}
-                  text={`9.75/10`}
+                  text={`${scrore.toFixed(2)}/10`}
                   className="progress-item"
                   strokeWidth={5}
                   styles={buildStyles({
@@ -74,7 +81,9 @@ const DocumentBanner: React.FC<Props> = ({ document }) => {
               <div className="block-process d-inline-block mx-3">
                 <CircularProgressbar
                   value={100}
-                  text={`0/${document?.times || 0}`}
+                  text={`${documentHistory?.timeDuration || 0}/${
+                    document?.times || 0
+                  }`}
                   className="progress-item"
                   strokeWidth={5}
                   styles={buildStyles({
