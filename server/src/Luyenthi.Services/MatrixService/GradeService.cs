@@ -22,17 +22,18 @@ namespace Luyenthi.Services
         public List<DocumentGradeDto> CountByGrades(bool IsApprove = true,
            DocumentStatus status = DocumentStatus.Public)
         {
-            var grades =  _gradeRepository.GetAll()
+            var grades = _gradeRepository.GetAll()
                 .Include(x => x.Documents.Where(x => x.IsApprove == IsApprove && x.Status == status))
+                .Include(x => x.Subjects)
                 .OrderBy(x => x.OrderNumber)
                 .Select(x => new DocumentGradeDto
-                { 
+                {
                     Id = x.Id,
                     Code = x.Code,
                     Name = x.Name,
-                    Total = x.Documents.Count(x => x.IsApprove == IsApprove && x.Status == status)
+                    Total = x.Documents.Count(x => x.IsApprove == IsApprove && x.Status == status),
+                    Subjects = x.Subjects.Select(s => new SubjectDto { Code = s.Code, Id = s.Id }).ToList()
                 })
-                
                 .ToList();
             return grades;
         }
@@ -42,5 +43,6 @@ namespace Luyenthi.Services
                 .ToList();
             return grades;
         }
+        
     }
 }

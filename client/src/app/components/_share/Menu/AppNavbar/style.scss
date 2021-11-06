@@ -18,8 +18,11 @@
     a {
       background: #019176 !important;
       border: none !important;
+      border-radius: 0 !important;
+      &:focus {
+        box-shadow: none !important;
+        border-color: transparent !important;
+      }
     }
-  }
-  &.sticky {
   }
 }

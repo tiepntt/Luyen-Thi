@@ -1,23 +1,25 @@
-import GradeDocumentBreadcubms from "app/components/_share/Breadcrumbs/GradeDocumentBreadcrubms/GradeDocumentBreadcubms";
+import GradeDocumentBreadcubms from "app/components/_share/Breadcrumbs/GradeDocumentBreadcrubms";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import DocumentList from "./DocumentList/DocumentList";
-import AddDocumentModal from "app/components/_share/Modals/AddDocumentModal/AddDocumentModal";
+import AddDocumentModal from "app/components/_share/Modals/AddDocumentModal";
 import { DocumentTitle } from "models/document/DocumentTitle";
 import { DocumentGetAllRequest } from "models/document/DocumentGetAll";
 import { documentApi } from "services/api/document/documentApi";
-import { useAppContext } from "hooks/AppContext/AppContext";
-import { AppPagination } from "app/components/_share/Pagination/Pagination";
+import { AppPagination } from "app/components/_share/Pagination";
 import { NumberParam, StringParam, useQueryParams } from "use-query-params";
 import { history } from "services/history";
 import queryString from "query-string";
+import { useGrades } from "hooks/Grade-Subject/useGrades";
+import { useSubjects } from "hooks/Grade-Subject/useSubjects";
 interface Param {
   gradeId: string;
   subjectId: string;
 }
 const SubjectDocument = () => {
   const { gradeId, subjectId } = useParams<Param>();
-  const { grades, subjects } = useAppContext();
+  const { grades } = useGrades(subjectId);
+  const { subjects } = useSubjects(gradeId);
   const subject = subjects.find((s) => s.code === subjectId);
   const grade = grades.find((s) => s.code === gradeId);
   const [showModal, setShowModal] = useState(false);

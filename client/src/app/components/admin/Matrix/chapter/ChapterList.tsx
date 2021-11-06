@@ -1,11 +1,12 @@
 import { Grid } from "@material-ui/core";
-import ChapterItem from "app/components/matrix/chapter/chapterItem/ChapterItem";
-import BoxApp from "app/components/_share/Box/Box";
-import GradeDocumentBreadcubms from "app/components/_share/Breadcrumbs/GradeDocumentBreadcrubms/GradeDocumentBreadcubms";
-import AddChapterModal from "app/components/_share/Modals/AddChapterModal/AddChapterModal";
-import EditChapterModal from "app/components/_share/Modals/EditChapterModal/EditChapterModal";
-import SubmitModal from "app/components/_share/Modals/SubmitModal/SubmitModal";
-import { useAppContext } from "hooks/AppContext/AppContext";
+import ChapterItem from "app/components/matrix/chapter/chapterItem";
+import BoxApp from "app/components/_share/Box";
+import GradeDocumentBreadcubms from "app/components/_share/Breadcrumbs/GradeDocumentBreadcrubms";
+import AddChapterModal from "app/components/_share/Modals/AddChapterModal";
+import EditChapterModal from "app/components/_share/Modals/EditChapterModal";
+import SubmitModal from "app/components/_share/Modals/SubmitModal";
+import { useGrades } from "hooks/Grade-Subject/useGrades";
+import { useSubjects } from "hooks/Grade-Subject/useSubjects";
 import { useChapters } from "hooks/Matrix/useChapters";
 import { Chapter } from "models/matrix/Chapter";
 import React, { useState } from "react";
@@ -19,7 +20,8 @@ interface Param {
 }
 const ChapterList = () => {
   const { gradeId, subjectId } = useParams<Param>();
-  const { grades, subjects } = useAppContext();
+  const { grades } = useGrades(subjectId);
+  const { subjects } = useSubjects(gradeId);
   const subject = subjects.find((s) => s.code === subjectId);
   const grade = grades.find((s) => s.code === gradeId);
   const [showModal, setShowModal] = useState(false);

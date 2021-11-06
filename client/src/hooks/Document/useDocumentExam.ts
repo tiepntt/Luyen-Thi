@@ -119,7 +119,7 @@ export const useDocumentExam = (id: string) => {
         );
         setDocumentHistory(newDocumentHistory);
       } else {
-        // history.push("/404");
+        toastService.error(res.data.message);
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -12,4 +12,5 @@ namespace Luyenthi.Core.Dtos
         public string Name { get; set; }
         public string Code { get; set; }
     }
+   
 }

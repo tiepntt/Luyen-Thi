@@ -1,9 +1,9 @@
 import { faFolderPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import UnitItem from "app/components/matrix/unit/unitItem/UnitItem";
-import AddTemplateQuestionModal from "app/components/_share/Modals/AddTemplateQuestionModal/AddTemplateQuestionModal";
-import AddUnitModal from "app/components/_share/Modals/AddUnitModal/AddUnitModal";
-import EditUnitModal from "app/components/_share/Modals/EditUnitModal/EditUnitModal";
+import UnitItem from "app/components/matrix/unit/unitItem";
+import AddTemplateQuestionModal from "app/components/_share/Modals/AddTemplateQuestionModal";
+import AddUnitModal from "app/components/_share/Modals/AddUnitModal";
+import EditUnitModal from "app/components/_share/Modals/EditUnitModal";
 import { useUnits } from "hooks/Matrix/useUnits";
 import { Chapter } from "models/matrix/Chapter";
 import { TemplateQuestion } from "models/matrix/TemplateQuestion";

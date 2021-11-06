@@ -13,4 +13,18 @@
       color: rgb(6, 122, 143);
     }
   }
+  .btn-submit {
+    background-color: #2a5bfb !important;
+    margin: auto;
+    border: #fb752a !important;
+    padding: 8px 15px;
+    font-size: 16px;
+    border-radius: 0 !important;
+    &.btn-recheck {
+      background-color: transparent !important;
+      color: rgb(119, 119, 3) !important;
+      border: 1px solid rgb(119, 119, 3) !important;
+      box-shadow: 0 !important;
+    }
+  }
 }

@@ -103,24 +103,23 @@ namespace Luyenthi.Services
             var count =(int)questionSets.SelectMany(qs => qs.Questions).Sum(i => i.NumberQuestion);
             return count;
         } 
-        public static TimeAnalytic GetTimeAnalytic(UserHistoryAnalyticType type)
+        public static TimeAnalytic GetTimeAnalytic(UserHistoryAnalyticType type, TimeZoneInfo timeZoneInfo)
         {
-            var StartTime = DateTime.UtcNow;
-            var EndTime = DateTime.UtcNow;
+            var StartTime =TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZoneInfo);
+            var EndTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow,timeZoneInfo);
             switch (type)
             {
                 case UserHistoryAnalyticType.Today:
-                    StartTime = DateTime.UtcNow.AddDays(-1).AddHours(1);
-                    EndTime = DateTime.UtcNow;
+                    StartTime = StartTime.AddDays(-1).AddHours(1);
                     break;
                 case UserHistoryAnalyticType.InWeek:
-                    StartTime = DateTime.UtcNow.AddDays(-6).Date;
+                    StartTime = StartTime.AddDays(-6).Date;
                     break;
                 case UserHistoryAnalyticType.InMonth:
-                    StartTime = DateTime.UtcNow.AddMonths(-1).AddDays(1).Date;
+                    StartTime = StartTime.AddMonths(-1).AddDays(1).Date;
                     break;
                 case UserHistoryAnalyticType.InYear:
-                    StartTime = DateTime.UtcNow.AddYears(-1).AddMonths(1).Date;
+                    StartTime = StartTime.AddYears(-1).AddMonths(1).Date;
                     break;
             }
 
@@ -132,24 +131,21 @@ namespace Luyenthi.Services
         }
         public static string GetLabelAnalytic(UserHistoryAnalyticType type, int key, TimeZoneInfo timeZoneInfo)
         {
-            var StartTime = DateTime.UtcNow;
-            var EndTime = DateTime.UtcNow;
+            var StartTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow,timeZoneInfo);
+            var EndTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZoneInfo);
             var label = "";
             switch (type)
             {
                 case UserHistoryAnalyticType.Today:
-                    EndTime = DateTime.UtcNow.AddHours(-key);
-                    EndTime = TimeZoneInfo.ConvertTimeFromUtc(EndTime, timeZoneInfo);
+                    EndTime = EndTime.AddHours(-key);
                     label = $"{EndTime.Hour}h";
                     break;
                 case UserHistoryAnalyticType.InWeek:
-                    StartTime = DateTime.UtcNow.AddDays(-key);
-                    StartTime = TimeZoneInfo.ConvertTimeFromUtc(StartTime, timeZoneInfo);
+                    StartTime = StartTime.AddDays(-key);
                     label = StartTime.ToString("dd");
                     break;
                 case UserHistoryAnalyticType.InMonth:
-                    StartTime = DateTime.UtcNow.AddDays(-key);
-                    StartTime = TimeZoneInfo.ConvertTimeFromUtc(StartTime, timeZoneInfo);
+                    StartTime = StartTime.AddDays(-key);
                     label = StartTime.ToString("dd");
                     break;
                 case UserHistoryAnalyticType.InYear:

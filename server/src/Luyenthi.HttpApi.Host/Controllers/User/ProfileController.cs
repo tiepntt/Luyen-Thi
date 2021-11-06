@@ -89,19 +89,19 @@ namespace Luyenthi.HttpApi.Host.Controllers
             return userResponse;
         }
         [HttpGet("analytic")]
-        public async Task<UserAnalyticResponse> GetAnalytic([FromQuery]UserAnalyticQuery query)
+        public UserAnalyticResponse GetAnalytic([FromQuery]UserAnalyticQuery query)
         {
             var user = (ApplicationUser)HttpContext.Items["User"];
             query.UserId = user.Id;
-            var result = await _documentHistorySerevice.GetAnalyticUser(query);
+            var result =  _documentHistorySerevice.GetAnalyticUser(query);
             return result;
         }
         [HttpGet("history-analytic")]
-        public async Task<List<UserHistoryAnalyticDto>> GetHistoryAnalytic([FromQuery] UserHistoryAnalyticQuery query)
+        public List<UserHistoryAnalyticDto> GetHistoryAnalytic([FromQuery] UserHistoryAnalyticQuery query)
         {
             var user = (ApplicationUser)HttpContext.Items["User"];
             query.UserId = user.Id;
-            var result = await _documentHistorySerevice.GetUserHistoryAnalytic(query);
+            var result =  _documentHistorySerevice.GetUserHistoryAnalytic(query);
             return result;
         }
     }

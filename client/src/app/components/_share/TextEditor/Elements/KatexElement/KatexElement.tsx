@@ -1,4 +1,4 @@
-import TemplateKatex from "app/components/_share/TemplateKatex/TemplateKatex";
+import TemplateKatex from "app/components/_share/TemplateKatex";
 import React from "react";
 interface Props {
   element: {

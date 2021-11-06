@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { DocumentHistoryStatus } from "settings/document/documentHistory";
 import "./style.scss";
 interface Props {
-  status: DocumentHistoryStatus;
+  status?: DocumentHistoryStatus;
   documentId?: string;
   continueExam: () => void;
   startExam: () => void;
@@ -30,14 +30,21 @@ const DocumentPreviewTopBar: React.FC<Props> = ({
         <NavItem path="/question" title="Nội dung" />
         <NavItem path="/rank" title="Xếp hạng" />
       </div>
-      <div className="start-btn d-inline-block">
-        {status !== DocumentHistoryStatus.Close ? (
-          <Button className="btn-submit" onClick={continueExam}>
+      <div className="start-btn d-inline-flex">
+        {status === DocumentHistoryStatus.Close && (
+          <Button className="btn-submit btn-recheck" onClick={continueExam}>
+            Xem lại bài làm
+          </Button>
+        )}
+        {status === DocumentHistoryStatus.Doing ? (
+          <Button className="btn-submit mx-1" onClick={continueExam}>
             Làm tiếp
           </Button>
         ) : (
-          <Button className="btn-submit" onClick={startExam}>
-            Bắt đầu làm bài
+          <Button className="btn-submit mx-1" onClick={startExam}>
+            {status === DocumentHistoryStatus.Close
+              ? "Làm lại"
+              : "Bắt đầu làm bài"}
           </Button>
         )}
       </div>

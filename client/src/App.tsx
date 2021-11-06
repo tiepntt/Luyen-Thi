@@ -1,5 +1,5 @@
 import Routes from "app/pages/Routes";
-import AppLayout from "layouts/AppLayout/AppLayout";
+import AppLayout from "layouts/AppLayout";
 import React from "react";
 import { ToastContainer } from "react-toastify";
 import { Router } from "react-router";

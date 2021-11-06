@@ -1,18 +1,19 @@
-import GradeNavbar from "app/components/_share/Menu/GradeNavbar/GradeNavbar";
-import { useSubjects } from "hooks/Grade-Subject/useSubjects";
 import React from "react";
+import GradeNavbar from "app/components/_share/Menu/GradeNavbar";
+import { useSubjects } from "hooks/Grade-Subject/useSubjects";
 import { Col, Row } from "react-bootstrap";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import SubjectItem from "../../Document/GradeDocument/SubjectItem";
 
 const ListSubjectMatrix = () => {
-  const { subjects } = useSubjects();
+  const { grade } = useParams<any>();
+  const { subjects } = useSubjects(grade);
   const history = useHistory();
   const location = useLocation();
   const onSelectSubject = (code: string) => {
     history.push(`${location.pathname}/${code}`);
   };
-  
+
   return (
     <div className="grade-matrix">
       <GradeNavbar parentPath="/admin/matrix" />

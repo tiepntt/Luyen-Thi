@@ -90,6 +90,10 @@ namespace Luyenthi.Services
         
             return 1;
         }
+        //public IQueryable<Question> GetAnalytic()
+        //{
+
+        //}
        
 
     }

@@ -1,6 +1,10 @@
-import { useAppContext } from "hooks/AppContext/AppContext";
+import { useAppContext } from "hooks/AppContext";
 
-export const useSubjects = () => {
+export const useSubjects = (gradeCode?: string) => {
   const { subjects } = useAppContext();
-  return { subjects };
+
+  const valueSubjects = subjects.filter(
+    (s) => !gradeCode || s.grades?.some((g) => g.code === gradeCode)
+  );
+  return { subjects: valueSubjects };
 };

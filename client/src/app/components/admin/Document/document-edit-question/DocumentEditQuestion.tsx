@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { Grid, makeStyles, Theme } from "@material-ui/core";
 import "./style.scss";
-import DocumentTopBar from "app/components/_share/Menu/DocumentTopBar/DocumentTopBar";
+import DocumentTopBar from "app/components/_share/Menu/DocumentTopBar";
 import { Route, Switch, useParams } from "react-router";
 import { useQuestions } from "hooks/Question/useQuestions";
-import QuestionMatrixSideBar from "app/components/sidebars/QuestionMatrixSideBar/QuestionMatrixSideBar";
-import QuestionEditor from "app/components/question/QuestionEditor/QuestionEditor";
+import QuestionMatrixSideBar from "app/components/sidebars/QuestionMatrixSideBar";
+import QuestionEditor from "app/components/question/QuestionEditor";
 import { DocumentEditContext } from "hooks/DocumentEditQuestionContext/DocumentEditContext";
-import AddQuestionSetModal from "app/components/_share/Modals/AddQuestionSetModal/AddQuestionSetModal";
-import QuestionSetEdit from "app/components/question-set/QuestionSetEdit/QuestionSetEdit";
-import QuestionEditSideBar from "app/components/sidebars/QuestionSideBar/QuestionEditSideBar";
+import AddQuestionSetModal from "app/components/_share/Modals/AddQuestionSetModal";
+import QuestionSetEdit from "app/components/question-set/QuestionSetEdit";
+import QuestionEditSideBar from "app/components/sidebars/QuestionSideBar";
 import QuestionDocument from "../SubjectDocument/DocumentDetail/question-documents/QuestionDocument";
 const DocumentEditQuestion: React.FC = () => {
   const { id } = useParams<Params>();

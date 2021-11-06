@@ -7,7 +7,7 @@ import {
   Slide,
 } from "@material-ui/core";
 import InputMathQuil from "app/components/_share/Quil";
-import TemplateKatex from "app/components/_share/TemplateKatex/TemplateKatex";
+import TemplateKatex from "app/components/_share/TemplateKatex";
 import React, { useEffect, useState } from "react";
 import { useSlateStatic } from "slate-react";
 import { insertKaTextAtIndex } from "../../Elements/KatexElement/WithKatex";

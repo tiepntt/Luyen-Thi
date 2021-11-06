@@ -14,7 +14,7 @@ const DocumentBanner: React.FC<Props> = ({ document }) => {
       href: "/",
     },
     {
-      title: "Đề thi",
+      title: "Tài liệu",
       href: "/",
     },
     {

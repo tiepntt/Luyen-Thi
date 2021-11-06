@@ -2,5 +2,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  min-height: 80vh;
+  padding: 1rem 0;
+  .react-date-picker__wrapper {
+    border: none !important;
+  }
+  .form-control,
+  button {
+    border-radius: 0 !important;
+  }
 }

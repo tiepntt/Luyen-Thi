@@ -115,10 +115,10 @@ namespace Luyenthi.Services
             scope.Dispose();
             documentHistory.QuestionHistories = questionHistories.ToList();
         }
-        public async Task<UserAnalyticResponse> GetAnalyticUser(UserAnalyticQuery query)
+        public UserAnalyticResponse GetAnalyticUser(UserAnalyticQuery query)
         {
             var result = new UserAnalyticResponse();
-            var documentHistories = await _documentHistoryRepository
+            var documentHistories =  _documentHistoryRepository
                 .Find(i => i.Status == DocumentHistoryStatus.Close &&
                      (query.GradeCode == null || i.Document.Grade.Code == query.GradeCode) &&
                      (query.SubjectCode == null || i.Document.Subject.Code == query.SubjectCode) &&
@@ -131,43 +131,45 @@ namespace Luyenthi.Services
                     MaxScore = h.Max(s => (double)(s.NumberCorrect / (s.NumberCorrect + s.NumberIncorrect))),
                     Medium = h.Average(s => s.NumberCorrect / (s.NumberCorrect + s.NumberIncorrect)),
                     TotalTime = h.Sum(s => s.TimeDuration)
-                }).ToListAsync();
-            result.NumberDocument = documentHistories.Sum(i => i.NumberDocument);
-            result.PercentCorrect = Math.Round((double)documentHistories.Average(i => i.Medium) * 100, 2);
-            result.TotalTime = documentHistories.Sum(i => i.TotalTime);
-            result.Medium = documentHistories.Average(i => i.Medium);
-            result.MaxScore = documentHistories.Max(i => Math.Round(i.MaxScore, 2));
+                }).ToList();
+            if(documentHistories.Count != 0)
+            {
+                result.NumberDocument = documentHistories.Sum(i => i.NumberDocument);
+                result.PercentCorrect = Math.Round((double)documentHistories.Average(i => i.Medium) * 100, 2);
+                result.TotalTime = documentHistories.Sum(i => i.TotalTime);
+                result.Medium = documentHistories.Average(i => i.Medium);
+                result.MaxScore = documentHistories.Max(i => Math.Round(i.MaxScore, 2));
+            }
+            
             return result;
         }
-        public async Task<List<UserHistoryAnalyticDto>> GetUserHistoryAnalytic(UserHistoryAnalyticQuery query)
+        public List<UserHistoryAnalyticDto> GetUserHistoryAnalytic(UserHistoryAnalyticQuery query)
         {
-            var timeAnalytic = DocumentHelper.GetTimeAnalytic(query.Type);
             var timeZoneInfo = TZConvert.GetTimeZoneInfo(query.TimeZone);
-            var histories = await _documentHistoryRepository
+            var timeAnalytic = DocumentHelper.GetTimeAnalytic(query.Type, timeZoneInfo);
+            var histories =  _documentHistoryRepository
                 .Find(i => (query.UserId == Guid.Empty || i.CreatedBy == query.UserId) &&
                       i.Status == DocumentHistoryStatus.Close &&
-                      i.EndTime >= timeAnalytic.StartTime && i.EndTime <= timeAnalytic.EndTime)
+                     i.EndTime >=  timeAnalytic.StartTime.ToUniversalTime() && i.EndTime <= timeAnalytic.EndTime.ToUniversalTime())
                 .Select(i => new DocumentHistory
                 {
                     Id = i.Id,
                     DocumentId = i.DocumentId,
-                    StartTime = i.StartTime,
-                    EndTime = i.EndTime,
+                    StartTime = TimeZoneInfo.ConvertTimeFromUtc(i.StartTime, timeZoneInfo),
+                    EndTime = TimeZoneInfo.ConvertTimeFromUtc(i.EndTime, timeZoneInfo),
                     NumberCorrect = i.NumberCorrect,
                     NumberIncorrect = i.NumberIncorrect,
                     TimeDuration = i.TimeDuration
-                })
-                .ToListAsync();
-            var historyAnalytics= histories
+                }).AsEnumerable()
                 .GroupBy(i => {
                     switch (query.Type)
                     {
                         case UserHistoryAnalyticType.Today:
-                            return (int)(DateTime.UtcNow -  i.EndTime).TotalHours;
+                            return (int)(TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZoneInfo) -  i.EndTime).TotalHours;
                         case UserHistoryAnalyticType.InWeek:
-                            return (int)(DateTime.UtcNow.Date - i.EndTime.Date).TotalDays;
+                            return (int)(TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZoneInfo) - i.EndTime.Date).TotalDays;
                         case UserHistoryAnalyticType.InMonth:
-                            return (int)(DateTime.UtcNow.Date - i.EndTime.Date).TotalDays;
+                            return (int)(TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZoneInfo) - i.EndTime.Date).TotalDays;
                         case UserHistoryAnalyticType.InYear:
                             return i.EndTime.Month;
                     };
@@ -194,17 +196,17 @@ namespace Luyenthi.Services
                 switch (query.Type)
                 {
                     case UserHistoryAnalyticType.Today:
-                        key = (int)(DateTime.UtcNow - EndTime).TotalHours;
+                        key = (int)(TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZoneInfo) - EndTime).TotalHours;
                         EndTime = EndTime.AddHours(-1);
                         StartTime = EndTime.AddHours(1);
                         break;
                     case UserHistoryAnalyticType.InWeek:
-                        key = (int)(DateTime.UtcNow.Date - EndTime.Date).TotalDays;
+                        key = (int)(TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZoneInfo) - EndTime.Date).TotalDays;
                         EndTime = EndTime.AddDays(-1);
                         StartTime = EndTime.AddDays(1);
                         break;
                     case UserHistoryAnalyticType.InMonth:
-                        key = (int)(DateTime.UtcNow.Date - EndTime.Date).TotalDays;
+                        key = (int)(TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZoneInfo) - EndTime.Date).TotalDays;
                         EndTime = EndTime.AddDays(-1);
                         StartTime = EndTime.AddDays(1);
                         break;
@@ -214,7 +216,7 @@ namespace Luyenthi.Services
                         StartTime = EndTime.AddMonths(1);
                         break;
                 };
-                var userHistory = historyAnalytics.Find(i => i.Key == key);
+                var userHistory = histories.Find(i => i.Key == key);
                 if(userHistory == null)
                 {
                     results.Add(new UserHistoryAnalyticDto
@@ -282,5 +284,6 @@ namespace Luyenthi.Services
                 .AsQueryable();
             return histories;
         }
+        
     }
 }

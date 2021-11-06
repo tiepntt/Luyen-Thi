@@ -21,7 +21,7 @@
 
 LOCK TABLES `levelquestions` WRITE;
 /*!40000 ALTER TABLE `levelquestions` DISABLE KEYS */;
-INSERT INTO `levelquestions` VALUES ('85f2b183-d760-407e-b1cd-9abe0e54c122','Nhận biết','nhan-biet',0),('c072523a-3e53-4ea5-a493-1ad49c3d7d8b','Thông hiểu','thong-hieu',0),('cb66d06b-7ce3-4c3e-a26d-7e39c993c50e','Vận dụng cao','van-dung-cao',0),('e3ddb686-5c8a-416e-bbd6-d9ed20f2e609','Vận dụng','van-dung',0);
+INSERT INTO `levelquestions` VALUES ('85f2b183-d760-407e-b1cd-9abe0e54c122','Nhận biết','nhan-biet',1),('c072523a-3e53-4ea5-a493-1ad49c3d7d8b','Thông hiểu','thong-hieu',2),('cb66d06b-7ce3-4c3e-a26d-7e39c993c50e','Vận dụng cao','van-dung-cao',4),('e3ddb686-5c8a-416e-bbd6-d9ed20f2e609','Vận dụng','van-dung',3);
 /*!40000 ALTER TABLE `levelquestions` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -34,4 +34,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-10-31  0:18:03
+-- Dump completed on 2021-11-06  7:51:18
