@@ -1,8 +1,8 @@
-import Dashboard from "app/components/admin/Dashboard/Dashboard";
-import Document from "app/components/admin/Document/Document";
-import Matrix from "app/components/admin/Matrix/Matrix";
-import TemplateExam from "app/components/admin/TemplateExam/TemplateExam";
-import User from "app/components/admin/User/User";
+import Dashboard from "app/components/admin/Dashboard";
+import Document from "app/components/admin/Document";
+import Matrix from "app/components/admin/Matrix";
+import TemplateExam from "app/components/admin/TemplateExam";
+import User from "app/components/admin/User";
 import { BarChart as BarChartIcon, User as UserIcon } from "react-feather";
 export const adminRoutes = [
   {

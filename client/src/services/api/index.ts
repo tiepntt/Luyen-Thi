@@ -1,4 +1,5 @@
 import axios from "axios";
+import { UserRedux } from "models/user/userInfo";
 import { CommonFunction } from "redux/common/action";
 import { store } from "redux/store";
 import { UserFunction } from "redux/user/action";
@@ -31,6 +32,14 @@ export const setupAxios = () => {
         store.dispatch(
           CommonFunction.setRedirectPath(window.location.pathname)
         );
+        const { UserReducer } = store.getState();
+        if ((UserReducer as UserRedux).accessToken) {
+          toastService.warning("Phiên đăng nhập đã kết thúc.");
+        } else {
+          toastService.warning(
+            "Vui lòng đăng nhập để tiếp tục sử dụng dịch vụ."
+          );
+        }
         store.dispatch(UserFunction.logout());
         history.push("/auth/login");
       } else {

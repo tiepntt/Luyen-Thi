@@ -21,7 +21,7 @@
 
 LOCK TABLES `aspnetuserlogins` WRITE;
 /*!40000 ALTER TABLE `aspnetuserlogins` DISABLE KEYS */;
-INSERT INTO `aspnetuserlogins` VALUES ('google','nguyenthaitiep206@gmail.com','GOOGLE','08d99920-adbb-446e-8bf0-80798b4bf519');
+INSERT INTO `aspnetuserlogins` VALUES ('google','nguyenthaitiep206@gmail.com','GOOGLE','08d99920-adbb-446e-8bf0-80798b4bf519'),('luyenthi','18020074@vnu.edu.vn','LUYENTHI','08d99f6a-b21b-42a0-88e0-a762ed86a690'),('luyenthi','18021277@vnu.edu.vn','LUYENTHI','08d99e2c-1135-45f9-8d21-bd843088f7b1'),('luyenthi','nguyenthaitiep206@gmail.com','LUYENTHI','08d99e29-9a90-4ab0-8c2d-a9ec5a39c851');
 /*!40000 ALTER TABLE `aspnetuserlogins` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -34,4 +34,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-10-31  0:18:01
+-- Dump completed on 2021-11-06  7:51:15

@@ -1,6 +1,6 @@
 import { Grid } from "@material-ui/core";
-import GradeDocumentBreadcubms from "app/components/_share/Breadcrumbs/GradeDocumentBreadcrubms/GradeDocumentBreadcubms";
-import { useAppContext } from "hooks/AppContext/AppContext";
+import GradeDocumentBreadcubms from "app/components/_share/Breadcrumbs/GradeDocumentBreadcrubms";
+import { useAppContext } from "hooks/AppContext";
 import { DocumentDetailContext } from "hooks/Document/DocumentDetailContext";
 import { DocumentDetail } from "models/document/DocumentDetail";
 import { QuestionSetDetail } from "models/questionSet/QuestionSetDetail";

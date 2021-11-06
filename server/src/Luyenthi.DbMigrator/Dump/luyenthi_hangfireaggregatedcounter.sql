@@ -21,7 +21,7 @@
 
 LOCK TABLES `hangfireaggregatedcounter` WRITE;
 /*!40000 ALTER TABLE `hangfireaggregatedcounter` DISABLE KEYS */;
-INSERT INTO `hangfireaggregatedcounter` VALUES (1,'stats:succeeded:2021-10-29',5,'2021-11-29 08:35:17'),(3,'stats:succeeded',5,NULL);
+INSERT INTO `hangfireaggregatedcounter` VALUES (1,'stats:succeeded:2021-10-29',5,'2021-11-29 08:35:17'),(3,'stats:succeeded',8,NULL),(4,'stats:succeeded:2021-11-02',2,'2021-12-02 18:10:46'),(10,'stats:succeeded:2021-11-04',1,'2021-12-04 08:11:31');
 /*!40000 ALTER TABLE `hangfireaggregatedcounter` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -34,4 +34,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-10-31  0:18:03
+-- Dump completed on 2021-11-06  7:51:17

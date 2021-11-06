@@ -1,7 +1,7 @@
 import { Avatar } from "@material-ui/core";
 import SnipperLayout from "app/components/_share/Layouts/SpinnerLayout";
 import { TopOne, TopThree, TopTwo } from "assets/images/user";
-import { useAppContext } from "hooks/AppContext/AppContext";
+import { useAppContext } from "hooks/AppContext";
 import { DocumentHistoryRank } from "models/document/DocumentHistory";
 import React, { useEffect, useState } from "react";
 import { Image } from "react-bootstrap";

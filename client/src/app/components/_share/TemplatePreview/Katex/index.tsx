@@ -1,5 +1,5 @@
 import React from "react";
-import TemplateKatex from "../../TemplateKatex/TemplateKatex";
+import TemplateKatex from "../../TemplateKatex";
 interface Props {
   element: {
     content: string;

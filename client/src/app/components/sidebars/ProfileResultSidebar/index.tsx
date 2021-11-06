@@ -9,13 +9,15 @@ const ProfileResultSidebar = () => {
     <div>
       <List>
         <SideBarItem href={`/profile/result/overview`} title={"Tổng quan"} />
-        {subjects.map((subject, i) => (
-          <SideBarItem
-            key={i}
-            href={`/profile/result/${subject.code}`}
-            title={subject.name}
-          />
-        ))}
+        {subjects
+          .filter((i) => i.code !== "others")
+          .map((subject, i) => (
+            <SideBarItem
+              key={i}
+              href={`/profile/result/${subject.code}`}
+              title={subject.name}
+            />
+          ))}
       </List>
     </div>
   );

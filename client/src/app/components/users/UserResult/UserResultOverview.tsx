@@ -2,7 +2,7 @@ import { Grid } from "@material-ui/core";
 import { UserResultBugget } from "app/components/_share/Bugget/UserResultBugget";
 import UserAnalyticResult from "app/components/_share/Chart/UserAnalyticResult";
 import { ClosedBook, CheckedCheckbox, AlarmClock } from "assets/images/user";
-import { useAppContext } from "hooks/AppContext/AppContext";
+import { useAppContext } from "hooks/AppContext";
 import {
   UserHistoryAnalytic,
   UserHistoryAnalyticQuery,

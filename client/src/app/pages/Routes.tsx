@@ -1,17 +1,17 @@
 import DocumentEditQuestion from "app/components/admin/Document/document-edit-question/DocumentEditQuestion";
 
-import { useAppContext } from "hooks/AppContext/AppContext";
+import { useAppContext } from "hooks/AppContext";
 import React, { Suspense, useEffect } from "react";
 import { Route, Switch } from "react-router";
 
-const AdminPage = React.lazy(() => import("./Admin/Admin"));
-const AuthPage = React.lazy(() => import("./Auth/Auth"));
-const DocumentPage = React.lazy(() => import("./Document/Document"));
+const AdminPage = React.lazy(() => import("./Admin"));
+const AuthPage = React.lazy(() => import("./Auth"));
+const DocumentPage = React.lazy(() => import("./Document"));
 const DocumentExam = React.lazy(
-  () => import("./Document/document-exam/DocumentExam")
+  () => import("./Document/document-exam")
 );
-const HomePage = React.lazy(() => import("./Home/Home"));
-const ProfilePage = React.lazy(() => import("./Profile/Profile"));
+const HomePage = React.lazy(() => import("./Home"));
+const ProfilePage = React.lazy(() => import("./Profile"));
 const NotFoundPage = React.lazy(() => import("./404/NotFound"));
 interface RouterProps {
   path: string;

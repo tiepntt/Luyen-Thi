@@ -1,4 +1,4 @@
-import BoxApp from "app/components/_share/Box/Box";
+import BoxApp from "app/components/_share/Box";
 import { useGrades } from "hooks/Grade-Subject/useGrades";
 import { useSubjects } from "hooks/Grade-Subject/useSubjects";
 import { DocumentUpdateInfo } from "models/document/DocumentUpdateInfo";

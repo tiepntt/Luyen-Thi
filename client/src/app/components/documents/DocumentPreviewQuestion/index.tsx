@@ -1,6 +1,6 @@
 import { Grid } from "@material-ui/core";
 import Spinner from "app/components/_share/StaticLayout/Spinner";
-import { useAppContext } from "hooks/AppContext/AppContext";
+import { useAppContext } from "hooks/AppContext";
 import { DocumentPreview } from "models/document/DocumentPreview";
 import { QuestionHistory } from "models/question/QuestionHistory";
 import React, { useEffect, useState, Suspense } from "react";
@@ -20,7 +20,7 @@ const DocumentPreviewQuestion: React.FC<Props> = ({ document }) => {
   useEffect(() => {
     if (document) {
       // createHistory
-      scrollTop();
+      scrollTop("documnt-preview-question");
       setQuestionHistory(
         document.questionSets
           .map((qs) => qs.questions)
@@ -37,7 +37,7 @@ const DocumentPreviewQuestion: React.FC<Props> = ({ document }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [document]);
   return (
-    <div className="documnt-preview-question" style={{ minHeight: 300 }}>
+    <div id="documnt-preview-question" style={{ minHeight: 300 }}>
       <Suspense fallback={<Spinner />}>
         <Grid container>
           <Grid item lg={4} md={4} className="document-preview-sidebar">

@@ -1,5 +1,5 @@
-import DocumentPreivew from "./document-preview/DocumentPreivew";
-import DocumentSearch from "./document-search/DocumentSearch";
+import DocumentPreivew from "./document-preview";
+import DocumentSearch from "./document-search";
 
 export const routes = [
   {

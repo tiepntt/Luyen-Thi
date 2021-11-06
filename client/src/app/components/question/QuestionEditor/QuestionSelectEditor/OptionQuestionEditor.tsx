@@ -1,4 +1,4 @@
-import Box from "app/components/_share/Box/Box";
+import Box from "app/components/_share/Box";
 import TextEditor from "app/components/_share/TextEditor";
 import React from "react";
 interface Props {

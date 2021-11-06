@@ -21,7 +21,7 @@
 
 LOCK TABLES `subjects` WRITE;
 /*!40000 ALTER TABLE `subjects` DISABLE KEYS */;
-INSERT INTO `subjects` VALUES ('18cdf684-f05e-4db2-a6da-f3d63856291c','Lịch sử','lich-su',5),('2e3a837f-efb0-4aae-9d8a-6c7ad75882db','Tiếng Anh','tieng-anh',10),('370c25ae-5e13-4057-a76d-f2511a65143e','Giáo dục công dân','giao-duc-cong-dan',7),('49795e43-199c-4d75-bc72-4d510af25dcb','Toán học','toan-hoc',1),('5497624c-b5ec-4288-afba-0c0a4abe18d2','Vật lý','vat-ly',2),('5a8cd25d-6905-4a9e-b968-d9878234fcb4','Sinh học','sinh-hoc',4),('72230517-0e81-4eb9-a29f-cf8b7b8902ad','Hóa học','hoa-hoc',3),('ce80af0d-1772-48b6-9a79-d894a560ba62','Địa lý','dia-ly',6);
+INSERT INTO `subjects` VALUES ('18cdf684-f05e-4db2-a6da-f3d63856291c','Lịch sử','history',5),('2e3a837f-efb0-4aae-9d8a-6c7ad75882db','Tiếng Anh','english',8),('370c25ae-5e13-4057-a76d-f2511a65143e','Giáo dục công dân','civic-education',7),('49795e43-199c-4d75-bc72-4d510af25dcb','Toán học','math',1),('4ff2780b-6ddb-4561-9338-0d4ce6819e30','Tiếng Anh Thi THPTQG','enlish-exam',9),('5497624c-b5ec-4288-afba-0c0a4abe18d2','Vật lý','physics',2),('5a8cd25d-6905-4a9e-b968-d9878234fcb4','Sinh học','biology',4),('72230517-0e81-4eb9-a29f-cf8b7b8902ad','Hóa học','chemistry',3),('ce80af0d-1772-48b6-9a79-d894a560ba62','Địa lý','geography',6),('ee7187af-4f4d-4226-949f-08b3460a8230','Khác','others',10);
 /*!40000 ALTER TABLE `subjects` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -34,4 +34,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-10-31  0:18:00
+-- Dump completed on 2021-11-06  7:51:14

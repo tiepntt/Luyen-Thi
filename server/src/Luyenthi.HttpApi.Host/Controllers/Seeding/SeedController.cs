@@ -1,4 +1,5 @@
-﻿using Luyenthi.Domain;
+﻿using Luyenthi.Core.Dtos;
+using Luyenthi.Domain;
 using Luyenthi.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -43,10 +44,20 @@ namespace Luyenthi.HttpApi.Host.Controllers.Seeding
             using (StreamReader r = new StreamReader(@"../Luyenthi.DbMigrator/Data/subject.json"))
             {
                 string json = r.ReadToEnd();
-                List<Subject> subjects = JsonConvert.DeserializeObject<List<Subject>>(json);
-                foreach(var subject in subjects)
+                List<SubjectCreateDto> subjectCreates = JsonConvert.DeserializeObject<List<SubjectCreateDto>>(json);
+                List<Subject> subjects = new List<Subject>();
+                foreach(var subjectCreate in subjectCreates)
                 {
-                    subject.Grades = grades;
+                    var gradesInSubject = grades.Where(i => subjectCreate.Grades.Contains(i.OrderNumber)).ToList(); 
+                    var subject = new Subject
+                    {
+                        Id = subjectCreate.Id,
+                        Code = subjectCreate.Code,
+                        Name = subjectCreate.Name,
+                        OrderNumber = subjectCreate.OrderNumber,
+                        Grades = gradesInSubject
+                    };
+                    subjects.Add(subject);
                 }
                 _subjectRepository.AddRange(subjects);
             }
