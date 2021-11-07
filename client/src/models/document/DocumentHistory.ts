@@ -8,8 +8,8 @@ export interface DocumentHistory {
   startTime?: Date;
   endTime?: Date;
   questionHistories: QuestionHistory[];
-  numberCorrect?: number;
-  numberIncorrect?: number;
+  numberCorrect: number;
+  numberIncorrect: number;
   timeDuration?: number;
   status: DocumentHistoryStatus;
 }

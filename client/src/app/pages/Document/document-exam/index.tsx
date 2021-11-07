@@ -9,10 +9,11 @@ import {
   HistoriesQuestionModel,
   HistoryQuestions,
 } from "hooks/Question/historyQuestionExam";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { useParams } from "react-router";
 import { DocumentHistoryStatus } from "settings/document/documentHistory";
+import ModalShowMark from "./modalShowMark";
 import "./style.scss";
 const DocumentExam = () => {
   const { showHeader, setShowHeader } = useAppContext();
@@ -32,6 +33,10 @@ const DocumentExam = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showHeader]);
+  const [showModalMark, setShowModalMark] = useState(false);
+  const [showLoadingMark, setShowLoadingMark] = useState(false);
+  const handleCloseModalMark = () => setShowModalMark(false);
+  const handleShowModalMark = () => setShowModalMark(true);
   const questionHistoriesValue = {
     questionHistories: documentHistory?.questionHistories || [],
     disable: !(
@@ -40,6 +45,38 @@ const DocumentExam = () => {
     setQuestionHistoryIndex: answerQuestionIndex,
     userAnswerIndex: userAnswerIndex,
   } as HistoriesQuestionModel;
+
+  useEffect(() => {
+    if (
+      documentHistory &&
+      documentHistory.status === DocumentHistoryStatus.Close
+    ) {
+      handleShowModalMark();
+      if (
+        documentHistory.numberIncorrect + documentHistory.numberCorrect ===
+        0
+      ) {
+        setShowLoadingMark(true);
+      } else {
+        setShowLoadingMark(false);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    documentHistory.numberCorrect,
+    documentHistory.numberIncorrect,
+    documentHistory.status,
+  ]);
+
+  const getMark = () => {
+    if (documentHistory.numberCorrect + documentHistory.numberIncorrect !== 0) {
+      return (
+        (documentHistory.numberCorrect * 10) /
+        (documentHistory.numberCorrect + documentHistory.numberIncorrect)
+      );
+    }
+  };
+
   return (
     <div id={`document-exam-page`}>
       <SnipperLayout className="no-content" loading={document}>
@@ -65,6 +102,13 @@ const DocumentExam = () => {
                 </Grid>
               </Grid>
             </div>
+            <ModalShowMark
+              loading={showLoadingMark}
+              show={showModalMark}
+              handleClose={handleCloseModalMark}
+              getMark={getMark}
+              documentHistory={documentHistory}
+            />
           </HistoryQuestions.Provider>
         </Container>
       </SnipperLayout>

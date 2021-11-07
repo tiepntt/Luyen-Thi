@@ -19,3 +19,25 @@
     position: relative;
   }
 }
+.modal-show-mark {
+  .text-highlight {
+    color: #0a584a;
+    font-weight: bold;
+  }
+  .mark-test {
+    width: 80px;
+    height: 80px;
+    background-color: #019176;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: x-large;
+    font-weight: bold;
+  }
+  .button-detail {
+    background-color: #fb752a;
+    padding: 5px 30px;
+  }
+}
