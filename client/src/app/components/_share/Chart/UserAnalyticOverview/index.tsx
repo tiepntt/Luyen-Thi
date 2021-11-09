@@ -6,18 +6,18 @@ import "./style.scss";
 interface Props {
   userHistoies: UserHistoryAnalytic[];
 }
-const UserAnalyticResult: React.FC<Props> = ({ userHistoies }) => {
-  const timeDuration = userHistoies.map((i) => i.timeDuration.toFixed(0));
-  const times = userHistoies.map((i) => i.total);
+const UserAnalyticOverview: React.FC<Props> = ({ userHistoies }) => {
+  const scores = userHistoies.map((i) => i.medium);
+  const maxScore = userHistoies.map((i) => i.maxScore);
   let chart: { options: ApexOptions; series: any } = {
     options: {
       chart: {
         height: 350,
-        type: "line",
-        toolbar: { show: false },
+        type: "bar",
       },
       plotOptions: {
         bar: {
+          horizontal: false,
           columnWidth: "50%",
           colors: { ranges: [{ color: "#FAA515" }] },
         },
@@ -26,13 +26,8 @@ const UserAnalyticResult: React.FC<Props> = ({ userHistoies }) => {
         show: true,
       },
       stroke: {
-        curve: "straight",
         show: true,
-
         width: [0, 2],
-      },
-      dataLabels: {
-        enabled: false,
       },
       fill: {
         type: "solid",
@@ -51,31 +46,16 @@ const UserAnalyticResult: React.FC<Props> = ({ userHistoies }) => {
         },
       },
 
-      yaxis: [
-        {
-          min: 0,
-          labels: {
-            formatter: function (val) {
-              return val.toFixed(0);
-            },
-          },
-          axisBorder: {
-            show: true,
+      yaxis: {
+        min: 0,
+        max: 10,
+        labels: {
+          formatter: function (val) {
+            return val.toFixed(0);
           },
         },
-        {
-          min: 0,
-          opposite: true,
-          axisBorder: {
-            show: true,
-          },
-          labels: {
-            formatter: function (val) {
-              return val.toFixed(0);
-            },
-          },
-        },
-      ],
+      },
+
       xaxis: {},
 
       tooltip: {
@@ -83,21 +63,21 @@ const UserAnalyticResult: React.FC<Props> = ({ userHistoies }) => {
         intersect: false,
         custom: ({ seriesIndex, dataPointIndex }) => {
           return `<div class="tool-tip-chart">
-          <div className="point">Thời gian luyện tập : ${timeDuration[dataPointIndex]}</div>
-          <div className="time">Số lần luyện tập : ${times[dataPointIndex]}</div></div>`;
+          <div className="point">Điểm trung bình : ${scores[dataPointIndex]}</div>
+          <div className="time">Điểm cao nhất : ${maxScore[dataPointIndex]}</div></div>`;
         },
       },
     },
     series: [
       {
-        name: "Số lượt làm bài",
+        name: "Điểm cao nhất",
         type: "column",
-        data: times,
+        data: maxScore,
       },
       {
-        name: "Tổng thời gian làm bài",
+        name: "Điểm trung bình",
         type: "line",
-        data: timeDuration,
+        data: scores,
       },
     ],
   };
@@ -112,4 +92,4 @@ const UserAnalyticResult: React.FC<Props> = ({ userHistoies }) => {
   );
 };
 
-export default UserAnalyticResult;
+export default UserAnalyticOverview;

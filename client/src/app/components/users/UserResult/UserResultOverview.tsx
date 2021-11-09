@@ -1,6 +1,7 @@
 import { Grid } from "@material-ui/core";
 import { UserResultBugget } from "app/components/_share/Bugget/UserResultBugget";
 import UserAnalyticResult from "app/components/_share/Chart/UserAnalyticResult";
+import UserAnalyticOverview from "app/components/_share/Chart/UserAnalyticOverview";
 import { ClosedBook, CheckedCheckbox, AlarmClock } from "assets/images/user";
 import { useAppContext } from "hooks/AppContext";
 import {
@@ -96,7 +97,14 @@ const UserResultOverview = () => {
       <div className="analytic-chart-result">
         <UserAnalyticResult userHistoies={userHistories} />
       </div>
-      <div className="anayltic-chart-overview"></div>
+      <div className="label-inlne d-flex">
+        <h5 className="label mt-4 mb-3" style={{ flexGrow: 1 }}>
+          Đánh giá chung
+        </h5>
+      </div>
+      <div className="analytic-chart-overview">
+        <UserAnalyticOverview userHistoies={userHistories} />
+      </div>
     </div>
   );
 };
