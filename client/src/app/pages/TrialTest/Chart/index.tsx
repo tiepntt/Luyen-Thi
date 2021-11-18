@@ -8,8 +8,8 @@ export default class ApexChart extends React.Component<any, any> {
     this.state = {
       series: [
         {
-          name: "Desktops",
-          data: [10, 41, 35, 51, 49, 62, 69, 91, 148],
+          name: "Điểm số",
+          data: [10, 41, 35, 51, 49, 62, 69],
         },
       ],
       options: {
@@ -24,10 +24,11 @@ export default class ApexChart extends React.Component<any, any> {
           enabled: false,
         },
         stroke: {
-          curve: "straight",
+          curve: "smooth",
+          width: 2
         },
         title: {
-          text: "Product Trends by Month",
+          text: "Tuần này",
           align: "left",
         },
         grid: {
@@ -38,15 +39,13 @@ export default class ApexChart extends React.Component<any, any> {
         },
         xaxis: {
           categories: [
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
+            "Mon",
+            "Tue",
+            "Wed",
+            "Thur",
+            "Fri",
+            "Sat",
+            "Sun",
           ],
         },
       },
