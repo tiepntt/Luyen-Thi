@@ -9,6 +9,7 @@ import { toastService } from "services/toast";
 import { useDispatch } from "react-redux";
 import { UserFunction } from "redux/user/action";
 import "./style.scss";
+import AppSideBar from "app/components/sidebars/AppSideBar";
 const AppLayout: React.FC = ({ children }) => {
   const [showHeader, setShowHeader] = useState(true);
   const [showFooter, setShowFooter] = useState(true);
@@ -17,7 +18,7 @@ const AppLayout: React.FC = ({ children }) => {
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const dispatch = useDispatch();
 
-  const [, setMobileNavOpen] = useState(false);
+  const [isMobileNavOpen, setMobileNavOpen] = useState(false);
   const scrollTop = (id?: string, position = "start") => {
     try {
       let element = document.getElementById(id || "app");
@@ -62,6 +63,10 @@ const AppLayout: React.FC = ({ children }) => {
         {showHeader && (
           <div className="header">
             <AppNavbar onMobileNavOpen={() => setMobileNavOpen(true)} />
+            <AppSideBar
+              onMobileClose={() => setMobileNavOpen(false)}
+              openMobile={isMobileNavOpen}
+            />
           </div>
         )}
         <div className="app-content">{children}</div>

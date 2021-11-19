@@ -7,7 +7,7 @@ interface Props {
   userHistoies: UserHistoryAnalytic[];
 }
 const UserAnalyticResult: React.FC<Props> = ({ userHistoies }) => {
-  const timeDuration = userHistoies.map((i) => i.timeDuration.toFixed(0));
+  const scores = userHistoies.map((i) => i.medium);
   const times = userHistoies.map((i) => i.total);
   let chart: { options: ApexOptions; series: any } = {
     options: {
@@ -65,6 +65,7 @@ const UserAnalyticResult: React.FC<Props> = ({ userHistoies }) => {
         },
         {
           min: 0,
+          max: 10,
           opposite: true,
           axisBorder: {
             show: true,
@@ -83,7 +84,7 @@ const UserAnalyticResult: React.FC<Props> = ({ userHistoies }) => {
         intersect: false,
         custom: ({ seriesIndex, dataPointIndex }) => {
           return `<div class="tool-tip-chart">
-          <div className="point">Thời gian luyện tập : ${timeDuration[dataPointIndex]}</div>
+          <div className="point">Điểm trung bình : ${scores[dataPointIndex]}</div>
           <div className="time">Số lần luyện tập : ${times[dataPointIndex]}</div></div>`;
         },
       },
@@ -95,9 +96,9 @@ const UserAnalyticResult: React.FC<Props> = ({ userHistoies }) => {
         data: times,
       },
       {
-        name: "Tổng thời gian làm bài",
+        name: "Điểm trung bình",
         type: "line",
-        data: timeDuration,
+        data: scores,
       },
     ],
   };

@@ -2,6 +2,7 @@ import { DocumentCreate } from "models/document/Document";
 import { DocumentGetAllRequest } from "models/document/DocumentGetAll";
 import { DocumentUpdateInfo } from "models/document/DocumentUpdateInfo";
 import { SearchModel } from "models/document/SearchModel";
+import { QuestionMatrix } from "models/question/Question";
 import api from "..";
 const baseUrl = "/document";
 export const documentApi = {
@@ -31,5 +32,8 @@ export const documentApi = {
   },
   getRank: (id: string) => {
     return api.get(`${baseUrl}/rank/${id}`);
+  },
+  updateMatrix: (matrix: QuestionMatrix) => {
+    return api.put(`${baseUrl}/update-matrix`, { ...matrix });
   },
 };

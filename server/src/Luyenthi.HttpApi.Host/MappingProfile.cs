@@ -59,6 +59,11 @@ namespace Luyenthi.HttpApi.Host
             CreateMap<UserRequestRegister, ApplicationUser>();
             CreateMap<UserCreateRequest, ApplicationUser>();
             CreateMap<ApplicationUser, UserTitleDto>();
+            // tempalte
+            CreateMap<TemplateDocument, TemplateDocumentDto>();
+            CreateMap<TemplateQuestionSet, TemplateQuestionSetDto>();
+            CreateMap<TemplateQuestionGenerate, TemplateQuestionGenerateDto>();
+            CreateMap<TemplateLevelGenerate, TemplateLevelGenerateDto>();
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Luyenthi.EntityFrameworkCore
         public DbSet<TemplateDocument> TemplateDocuments { get; set; }
         public DbSet<TemplateQuestionSet> TemplateQuestionSets { get; set; }
         public DbSet<TemplateQuestionGenerate> TemplateQuestionGenerates { get; set; }
-        public DbSet<TemplateLevelGenarate> TemplateLevelGenarates { get; set; }
+        public DbSet<TemplateLevelGenerate> TemplateLevelGenarates { get; set; }
         
       
         public LuyenthiDbContext(DbContextOptions<LuyenthiDbContext> options, IHttpContextAccessor httpContextAccessor) : base(options)

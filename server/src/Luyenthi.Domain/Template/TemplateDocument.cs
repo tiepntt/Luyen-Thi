@@ -20,5 +20,7 @@ namespace Luyenthi.Domain
         public DateTime UpdatedAt { get; set; }
         public Guid? CreatedBy { get; set; }
         public Guid? UpdatedBy { get; set; }
+        public string BackgroundUrl { get; set; }
+        public string BannerUrl { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Luyenthi.Core.Dtos;
+using Luyenthi.Core.Enums;
 using Luyenthi.Domain;
 using Luyenthi.Services;
 using Microsoft.AspNetCore.Http;
@@ -13,6 +14,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class QuestionSetController : Controller
     {
         private readonly QuestionSetService _questionSetService;
@@ -29,6 +31,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
             _mapper = mapper;
         }
         [HttpGet("in-document/{documentId}")]
+        [Authorize(Role.Admin, Role.Teacher)]
         public List<QuestionSetDetailDto> GetQuestionSetByDocumentId(Guid documentId) {
             var questionSets = _questionSetService.GetByDocumentId(documentId);
             questionSets = DocumentHelper.MakeIndexQuestions(questionSets);

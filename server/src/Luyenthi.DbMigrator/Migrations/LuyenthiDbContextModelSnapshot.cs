@@ -492,6 +492,12 @@ namespace Luyenthi.DbMigrator.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
+                    b.Property<string>("BackgroundUrl")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("BannerUrl")
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
@@ -522,7 +528,7 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.ToTable("TemplateDocuments");
                 });
 
-            modelBuilder.Entity("Luyenthi.Domain.TemplateLevelGenarate", b =>
+            modelBuilder.Entity("Luyenthi.Domain.TemplateLevelGenerate", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -577,19 +583,19 @@ namespace Luyenthi.DbMigrator.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid?>("ChapterId")
+                    b.Property<Guid>("ChapterId")
                         .HasColumnType("char(36)");
 
                     b.Property<Guid>("GradeId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid?>("TemplateQuestionId")
+                    b.Property<Guid>("TemplateQuestionId")
                         .HasColumnType("char(36)");
 
                     b.Property<Guid?>("TemplateQuestionSetId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid?>("UnitId")
+                    b.Property<Guid>("UnitId")
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
@@ -619,7 +625,7 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.Property<bool>("Show")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<Guid?>("TemplateDocumentId")
+                    b.Property<Guid>("TemplateDocumentId")
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
@@ -1108,7 +1114,7 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.Navigation("Subject");
                 });
 
-            modelBuilder.Entity("Luyenthi.Domain.TemplateLevelGenarate", b =>
+            modelBuilder.Entity("Luyenthi.Domain.TemplateLevelGenerate", b =>
                 {
                     b.HasOne("Luyenthi.Domain.LevelQuestion", "LevelQuestion")
                         .WithMany()
@@ -1142,7 +1148,9 @@ namespace Luyenthi.DbMigrator.Migrations
                 {
                     b.HasOne("Luyenthi.Domain.Chapter", "Chapter")
                         .WithMany()
-                        .HasForeignKey("ChapterId");
+                        .HasForeignKey("ChapterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Luyenthi.Domain.Grade", "Grade")
                         .WithMany()
@@ -1152,7 +1160,9 @@ namespace Luyenthi.DbMigrator.Migrations
 
                     b.HasOne("Luyenthi.Domain.TemplateQuestion", "TemplateQuestion")
                         .WithMany()
-                        .HasForeignKey("TemplateQuestionId");
+                        .HasForeignKey("TemplateQuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Luyenthi.Domain.TemplateQuestionSet", "TemplateQuestionSet")
                         .WithMany("QuestionGenerates")
@@ -1160,7 +1170,9 @@ namespace Luyenthi.DbMigrator.Migrations
 
                     b.HasOne("Luyenthi.Domain.Unit", "Unit")
                         .WithMany()
-                        .HasForeignKey("UnitId");
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Chapter");
 
@@ -1178,7 +1190,8 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.HasOne("Luyenthi.Domain.TemplateDocument", "TemplateDocument")
                         .WithMany("TemplateQuestionSets")
                         .HasForeignKey("TemplateDocumentId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("TemplateDocument");
                 });

@@ -25,8 +25,12 @@ namespace Luyenthi.Services
         }
         public async Task<QuestionHistory> CreateOrUpdate(QuestionHistory questionHistory, Guid userId)
         {
-           
-            if(questionHistory.Id == Guid.Empty)
+            var history = await _questionHistoryRepository.Find(
+                   i => (i.Id == questionHistory.Id ||
+                       (i.QuestionId == questionHistory.QuestionId
+                       && i.DocumentHistoryId == questionHistory.DocumentHistoryId))
+                       && i.CreatedBy == userId).FirstOrDefaultAsync();
+            if (history == null)
             {
                 questionHistory.Id = new Guid();
                 _questionHistoryRepository.Add(questionHistory);
@@ -34,11 +38,7 @@ namespace Luyenthi.Services
             }
             else
             {
-                var history = await _questionHistoryRepository.Find(
-                    i => i.Id == questionHistory.Id
-                        && i.DocumentHistoryId == questionHistory.DocumentHistoryId
-                        && i.CreatedBy == userId).FirstOrDefaultAsync();
-                if(history != null)
+                if (history != null)
                 {
                     history.Answer = questionHistory.Answer;
                     history.AnswerStatus = questionHistory.AnswerStatus;

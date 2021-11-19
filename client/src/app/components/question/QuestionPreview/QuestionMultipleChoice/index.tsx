@@ -1,6 +1,7 @@
 import TemplatePreview from "app/components/_share/TemplatePreview";
 import { Question } from "models/question/Question";
 import React, { createRef, useEffect, useState } from "react";
+import { checkContentNull } from "utils/questionFunction";
 import "./style.scss";
 interface Props {
   question: Question;
@@ -10,7 +11,7 @@ const QuestionMultipleChocie: React.FC<Props> = ({
   questionSetId,
   question,
 }) => {
-  const { content = [], introduction = [], correctAnswer } = question;
+  const { content = [], introduction = [], correctAnswer, solve } = question;
   const [optionsRef] = useState(createRef<HTMLDivElement>());
   const [boxRefs] = useState<any[]>(
     Array(content ? content.length : 0)
@@ -40,6 +41,7 @@ const QuestionMultipleChocie: React.FC<Props> = ({
         newScale.width = optionBoxWidth / 2 - 21;
       } else {
         newScale.width = optionBoxWidth - 25;
+        newScale.height = "auto";
       }
 
       setScaleSize(newScale);
@@ -87,6 +89,13 @@ const QuestionMultipleChocie: React.FC<Props> = ({
             </div>
           ))}
       </div>
+      {solve && solve.length && !checkContentNull(solve) && (
+        <div className="solve-content">
+          {solve.map((element, i) => (
+            <TemplatePreview key={i} {...element} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

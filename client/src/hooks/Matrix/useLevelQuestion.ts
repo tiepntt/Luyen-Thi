@@ -1,8 +1,10 @@
+import { LevelQuestion } from "models/matrix/Level";
 import { useState } from "react";
 
 export const useLevelQuestion = () => {
   const [levels] = useState(levelsQuestion);
-  return { levels };
+  const [currentLevel, setCurrentLevel] = useState<LevelQuestion>();
+  return { levels, currentLevel, setCurrentLevel };
 };
 const levelsQuestion = [
   {

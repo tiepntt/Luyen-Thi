@@ -5,6 +5,7 @@ import { toastService } from "services/toast";
 
 export const useQuestionTemplate = (unitId?: string) => {
   const [templates, setTemplate] = useState<TemplateQuestion[]>([]);
+  const [currentTemplate, setCurrentTemplate] = useState<TemplateQuestion>();
   const getTemplates = () => {
     if (unitId) {
       templateQuestionApi.getAllByUnitId(unitId).then((res) => {
@@ -18,6 +19,7 @@ export const useQuestionTemplate = (unitId?: string) => {
     }
   };
   useEffect(() => {
+    setCurrentTemplate(null as any);
     if (unitId) {
       getTemplates();
     } else {
@@ -25,5 +27,5 @@ export const useQuestionTemplate = (unitId?: string) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [unitId]);
-  return { templates };
+  return { templates, currentTemplate, setCurrentTemplate };
 };

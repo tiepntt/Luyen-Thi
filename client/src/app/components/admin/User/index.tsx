@@ -14,7 +14,7 @@ const User: React.FC = () => {
   const [users, setUsers] = useState<UserInfo[]>([]);
   const [showModalAddUser, setShowModalAddUser] = useState(false);
   const [count, setCount] = React.useState(10);
-  const take = 10;
+  const take = 11;
   const [filter] = useQueryParams({
     key: StringParam,
     page: NumberParam,

@@ -21,7 +21,7 @@ export const useQuestionMatrix = (questionId: string) => {
     questionMatrix?.gradeId,
     questionMatrix?.subjectId
   );
-  const { units, setChappterId } = useUnits();
+  const { units } = useUnits(questionMatrix?.chapterId);
   const { templates } = useQuestionTemplate(questionMatrix?.unitId);
   const { levels } = useLevelQuestion();
   useEffect(() => {
@@ -29,10 +29,6 @@ export const useQuestionMatrix = (questionId: string) => {
     setQuestionMatrix({ ...questionMatrix, unitId: unit ? unit.id : null });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [units]);
-  useEffect(() => {
-    setChappterId(questionMatrix?.chapterId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [questionMatrix?.chapterId]);
 
   useEffect(() => {
     let chapter = chapters.find((i) => i.id === questionMatrix?.chapterId);

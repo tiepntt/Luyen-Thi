@@ -14,6 +14,9 @@ import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import { profileApi } from "services/api/user/profile";
 import { TimeFunction } from "utils/timeFunction";
+import UserAnalyticGrade from "app/components/_share/Chart/UserAnalyticGrade";
+import { Col, Row } from "react-bootstrap";
+import UserAnalyticSubject from "app/components/_share/Chart/UserAnalyticSubject";
 
 const UserResultOverview = () => {
   const { timeZone } = useAppContext();
@@ -60,7 +63,7 @@ const UserResultOverview = () => {
             <UserResultBugget
               image={ClosedBook}
               title="Đã làm"
-              number={`${userAnalyticResult?.numberDocument} tài liệu`}
+              number={`${userAnalyticResult?.numberDocument || 0} tài liệu`}
               color="#C9512B"
             />
           </Grid>
@@ -68,7 +71,7 @@ const UserResultOverview = () => {
             <UserResultBugget
               image={CheckedCheckbox}
               title="Chính xác"
-              number={`${userAnalyticResult?.percentCorrect}%`}
+              number={`${userAnalyticResult?.percentCorrect || 0}%`}
               color="#2BC986"
             />
           </Grid>
@@ -103,7 +106,26 @@ const UserResultOverview = () => {
         </h5>
       </div>
       <div className="analytic-chart-overview">
-        <UserAnalyticOverview userHistoies={userHistories} />
+        <Row>
+          <Col>
+            <UserAnalyticGrade
+              values={[30, 50, 30]}
+              labels={["Lớp 10", "Lớp 11", "Lớp 12"]}
+            />
+          </Col>
+          <Col>
+            <UserAnalyticGrade
+              values={[5, 5, 5, 5]}
+              labels={["Nhận biết", "Thông hiểu", "Vận dụng", "Vận dụng cao"]}
+            />
+          </Col>
+        </Row>
+        <h5 className="label mt-4 mb-3" style={{ flexGrow: 1 }}>
+          Đánh giá theo môn học
+        </h5>
+        <Row>
+          <UserAnalyticSubject />
+        </Row>
       </div>
     </div>
   );

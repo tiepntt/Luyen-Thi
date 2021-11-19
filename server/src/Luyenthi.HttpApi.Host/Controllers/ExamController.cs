@@ -77,6 +77,10 @@ namespace Luyenthi.HttpApi.Host.Controllers
                 {
                     _historyService.CloseHistory(documentHistory, document.Times);
                 }
+                if (document.DocumentType == DocumentType.Document && documentHistory.Status == DocumentHistoryStatus.Doing && documentHistory.StartTime.AddHours(6) < DateTime.UtcNow)
+                {
+                    _historyService.CloseHistory(documentHistory, 120);
+                }
             }
             var result = new ExamDto
             {

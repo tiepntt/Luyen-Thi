@@ -8,6 +8,7 @@ import { questionSetApi } from "services/api/document/questionSetApi";
 import { questionApi } from "services/api/question/question";
 import { toastService } from "services/toast";
 import { useDocumentEditContext } from "hooks/DocumentEditQuestionContext/DocumentEditContext";
+import { checkContentNull } from "utils/questionFunction";
 
 interface Props {
   question: Question;
@@ -26,6 +27,9 @@ const QuestionSelectEditor: React.FC<Props> = ({
   useEffect(() => {
     setQuestionContent(intQuestion(question));
   }, [question]);
+  useEffect(() => {
+    console.log(questionContent);
+  }, [questionContent]);
   const setContentOption = (value: [], index: number) => {
     const content = initDefaultValue(value);
     let options = [...questionContent.content];
@@ -141,8 +145,8 @@ const QuestionSelectEditor: React.FC<Props> = ({
             })
           }
           value={questionContent.solve}
-          focus={focusIndex === "introduction"}
-          onClick={() => setFocusIndex("introduction")}
+          focus={focusIndex === "solve"}
+          onClick={() => setFocusIndex("solve")}
         />
       </div>
     </div>
@@ -180,7 +184,7 @@ const intQuestion = (question: Question) => {
       { name: "A", content: initDefaultValue([]) as any },
     ];
   }
-  if (!questionContent.solve || questionContent.solve.length) {
+  if (!questionContent.solve || checkContentNull(question.solve)) {
     questionContent.solve = initDefaultValue([]) as any;
   }
   return questionContent;

@@ -10,7 +10,7 @@ interface Props {
 }
 const DocumentBreadcumbs: React.FC<Props> = ({
   params,
-  rootPath,
+  rootPath = "",
   className = "document-breadcrumbs",
 }) => {
   return (

@@ -16,10 +16,7 @@ const DocumentBreadcumbs = React.lazy(
   () => import("app/components/_share/Breadcrumbs/DocumentBreadcumbs")
 );
 const DocumentSearchSidebar = React.lazy(
-  () =>
-    import(
-      "app/components/sidebars/DocumentSearchSidebar"
-    )
+  () => import("app/components/sidebars/DocumentSearchSidebar")
 );
 const DocumentLabel = React.lazy(
   () => import("app/components/documents/DocumentLabel")
@@ -78,11 +75,11 @@ const DocumentSearch: React.FC = () => {
   const params = [
     {
       title: "Trang chủ",
-      href: "/exam",
+      href: "/",
     },
     {
       title: "Tìm kiếm",
-      href: "/document",
+      href: "/",
     },
   ];
 

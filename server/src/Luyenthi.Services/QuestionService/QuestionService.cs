@@ -29,13 +29,8 @@ namespace Luyenthi.Services
         public Question GetQuestion(Guid Id)
         {
             var question = _questionRepository.Find(q => q.Id == Id)
+                .Include(q => q.SubQuestions)
                 .Take(1)
-                .Select(q => new Question
-                {
-                    Id =q.Id,
-                    CorrectAnswer=q.CorrectAnswer,
-                    Solve=q.Solve
-                })
                 .FirstOrDefault();
             return question;
         }
@@ -89,6 +84,11 @@ namespace Luyenthi.Services
         {
         
             return 1;
+        }
+        public List<Question> UpdateMany(List<Question> questions)
+        {
+            _questionRepository.UpdateMany(questions);
+            return questions;
         }
         //public IQueryable<Question> GetAnalytic()
         //{

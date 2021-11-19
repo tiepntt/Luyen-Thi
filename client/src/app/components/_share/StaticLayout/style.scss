@@ -21,6 +21,13 @@
   border-bottom-color: #086068;
   border-radius: 50%;
   animation: spin 1.5s linear infinite;
+  &.normal {
+  }
+  &.sm {
+    width: 1.5em;
+    height: 1.5em;
+    border: 1px solid transparent !important;
+  }
 }
 
 .spinner-loading:before {
@@ -37,4 +44,37 @@
   color: #8c9697;
   margin-top: 20px;
   font-size: 1.2rem;
+}
+.balls {
+  width: 1.5em;
+  display: inline-flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.balls div {
+  width: 0.3em;
+  height: 0.3em;
+  border-radius: 50%;
+  background-color: #c9c4c6;
+  transform: translateY(-100%);
+  animation: wave 0.8s ease-in-out alternate infinite;
+}
+
+.balls div:nth-of-type(1) {
+  animation-delay: -0.4s;
+}
+
+.balls div:nth-of-type(2) {
+  animation-delay: -0.2s;
+}
+
+@keyframes wave {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(100%);
+  }
 }

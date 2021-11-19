@@ -1,4 +1,5 @@
 import DocumentEditQuestion from "app/components/admin/Document/document-edit-question/DocumentEditQuestion";
+import DocumentMatrixTool from "app/components/admin/Document/document-matrix-tool";
 
 import { useAppContext } from "hooks/AppContext";
 import React, { Suspense, useEffect } from "react";
@@ -7,9 +8,7 @@ import { Route, Switch } from "react-router";
 const AdminPage = React.lazy(() => import("./Admin"));
 const AuthPage = React.lazy(() => import("./Auth"));
 const DocumentPage = React.lazy(() => import("./Document"));
-const DocumentExam = React.lazy(
-  () => import("./Document/document-exam")
-);
+const DocumentExam = React.lazy(() => import("./Document/document-exam"));
 const HomePage = React.lazy(() => import("./Home"));
 const ProfilePage = React.lazy(() => import("./Profile"));
 const NotFoundPage = React.lazy(() => import("./404/NotFound"));
@@ -73,6 +72,12 @@ const routes: RouterProps[] = [
     component: DocumentEditQuestion,
     showHeader: false,
     showFooter: false,
+  },
+  {
+    path: "/editor/matrix/:documentId",
+    component: DocumentMatrixTool,
+    showHeader: true,
+    showFooter: true,
   },
   {
     path: "/auth",

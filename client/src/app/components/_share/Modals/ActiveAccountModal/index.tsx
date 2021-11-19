@@ -48,7 +48,7 @@ const ActiveAccountModal: React.FC<Props> = ({
     });
   };
   return (
-    <Modal show={show} className={" pt-5 mt-5 mb-3 pb-5"} onShow={onShow}>
+    <Modal show={show} className={" pt-5 mt-5 mb-3 pb-5"} onShow={onShow} >
       <ModalHeader className="justify-content-center">
         <ModalTitle className="text-center">Xác thực tài khoản</ModalTitle>
       </ModalHeader>

@@ -12,6 +12,7 @@ namespace Luyenthi.Domain
         public Guid Id { get; set; }
         public string Name { get; set; }
         public bool Show {get;set;}
+        public Guid TemplateDocumentId { get; set; }
         public virtual TemplateDocument TemplateDocument { get; set; }
         public virtual List<TemplateQuestionGenerate> QuestionGenerates { get; set; }
     }

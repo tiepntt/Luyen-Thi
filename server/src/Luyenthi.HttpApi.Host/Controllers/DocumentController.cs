@@ -267,6 +267,24 @@ namespace Luyenthi.HttpApi.Host.Controllers
             
             return results;
         }
+        [HttpPut("update-matrix")]
+        [Authorize(Role.Admin)]
+        public void UpdateMatrix(DocumentUpdateMatrixRequest request)
+        {
+            // lấy tất cả question có trong documentId
+            var questionSets = _questionSetService.GetByDocumentId(request.Id);
+            var questions = questionSets.SelectMany(qs => qs.Questions);
+            foreach(Question question in questions)
+            {
+                question.ChapterId = request.ChapterId;
+                question.SubjectId = request.SubjectId;
+                question.UnitId = request.UnitId;
+                question.GradeId = request.GradeId;
+                question.TemplateQuestionId = request.TemplateQuestionId;
+                question.LevelId = request.LevelId;
+            }
+            questions = _questionService.UpdateMany(questions.ToList());  
+        }
         
     }
 }

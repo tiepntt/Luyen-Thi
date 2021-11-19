@@ -22,7 +22,7 @@ const Dashboard = () => {
             <Grid container spacing={3}>
               <Grid item lg={3} sm={6} xl={3} xs={12}>
                 <Budget
-                  title={"Đề thi thử"}
+                  title={"Tài liệu"}
                   amount={100}
                   icon={<Book />}
                   color="green"
@@ -30,7 +30,7 @@ const Dashboard = () => {
               </Grid>
               <Grid item lg={3} sm={6} xl={3} xs={12}>
                 <Budget
-                  title={"Bộ CH"}
+                  title={"Câu hỏi"}
                   amount={100}
                   icon={<Folder />}
                   color="orange"
@@ -38,7 +38,7 @@ const Dashboard = () => {
               </Grid>
               <Grid item lg={3} sm={6} xl={3} xs={12}>
                 <Budget
-                  title={"Users"}
+                  title={"Lớp học"}
                   amount={100}
                   icon={<Folder />}
                   color="blue"
@@ -46,7 +46,7 @@ const Dashboard = () => {
               </Grid>
               <Grid item lg={3} sm={6} xl={3} xs={12}>
                 <Budget
-                  title={"Nhà trọ"}
+                  title={"Users"}
                   amount={100}
                   icon={<UserCheck />}
                   color="green"

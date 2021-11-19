@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Luyenthi.Domain
 {
-    public class TemplateLevelGenarate:IEntity<Guid>
+    public class TemplateLevelGenerate:IEntity<Guid>
     {
         public Guid Id { get; set; }
         public int Count { get; set; }

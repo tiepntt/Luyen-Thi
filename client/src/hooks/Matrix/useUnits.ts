@@ -3,12 +3,11 @@ import { Unit } from "models/matrix/Unit";
 import { useEffect, useState } from "react";
 import { unitApi } from "services/api/matrix/unit";
 
-export const useUnits = (chapteIdInput?: string) => {
-  const [chapterId, setChappterId] = useState(chapteIdInput || "");
+export const useUnits = (chapterId?: string) => {
   const [units, setUnits] = useState<Unit[]>([]);
   const [curentUnit, setCurentUnit] = useState<Unit>();
   const getUnits = () => {
-    unitApi.getAllByChapterId(chapterId).then((res) => {
+    unitApi.getAllByChapterId(chapterId || "").then((res) => {
       if (res.status === 200) {
         setUnits(res.data);
       }
@@ -49,6 +48,7 @@ export const useUnits = (chapteIdInput?: string) => {
     setUnits(newUnits);
   };
   useEffect(() => {
+    setCurentUnit(null as any);
     if (chapterId) {
       getUnits();
     } else {
@@ -58,7 +58,6 @@ export const useUnits = (chapteIdInput?: string) => {
   }, [chapterId]);
   return {
     units,
-    setChappterId,
     addUnit,
     setCurentUnit,
     curentUnit,

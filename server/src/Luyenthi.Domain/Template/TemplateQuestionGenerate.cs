@@ -11,11 +11,14 @@ namespace Luyenthi.Domain
     {
         public Guid Id { get; set; }
         public virtual Guid GradeId { get; set; }
+        public virtual Guid ChapterId { get; set; }
+        public virtual Guid UnitId { get; set; }
+        public virtual Guid TemplateQuestionId { get; set; }
         public virtual Grade Grade { get; set; }
         public virtual Chapter Chapter { get; set; }
         public virtual Unit Unit { get; set; }
         public virtual TemplateQuestion TemplateQuestion { get; set; }
-        public virtual List<TemplateLevelGenarate> TemplateLevelGenarates { get; set; }
+        public virtual List<TemplateLevelGenerate> TemplateLevelGenarates { get; set; }
         public virtual TemplateQuestionSet TemplateQuestionSet { get; set; }
     }
 }
