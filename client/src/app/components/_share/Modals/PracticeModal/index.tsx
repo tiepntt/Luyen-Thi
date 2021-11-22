@@ -6,8 +6,10 @@ import {
 import { useQuestionPractice } from "hooks/Question/useQuestionHistory";
 import { PracticeConfig } from "models/practice/practiceConfig";
 import React, { useEffect } from "react";
-import { Modal } from "react-bootstrap";
+import { Modal, Button } from "react-bootstrap";
 import SnipperLayout from "../../Layouts/SpinnerLayout";
+import { BsArrowRightCircleFill, BsLightbulb } from "react-icons/bs";
+import "./style.scss";
 interface Props {
   show: boolean;
   setShow: (value: boolean) => void;
@@ -44,6 +46,7 @@ const PracticeModal: React.FC<Props> = ({ show, setShow, config }) => {
       onHide={handleClose}
       centered
       className="modal-show-mark pb-5"
+      size="lg"
       //   backdrop="static"
     >
       <Modal.Body className="p-3">
@@ -55,6 +58,11 @@ const PracticeModal: React.FC<Props> = ({ show, setShow, config }) => {
           </div>
         </SnipperLayout>
       </Modal.Body>
+      <Modal.Footer>
+        <BsLightbulb color="black" size={30} />
+        <Button className="check-answer" disabled variant="primary">Kiểm tra</Button>
+        <BsArrowRightCircleFill color="#00FFCC" size={30} />
+      </Modal.Footer>
     </Modal>
   );
 };
