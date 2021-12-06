@@ -44,3 +44,10 @@
     }
   }
 }
+
+
+@media only screen and (max-width: 576px) {
+  #app-breadcrumb {
+    display: none !important;
+  }
+}

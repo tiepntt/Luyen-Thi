@@ -14,7 +14,8 @@ const AppBreadcumbs: React.FC<Props> = ({
   className = "document-breadcrumbs",
 }) => {
   return (
-    <div className={`d-inline-flex ${className}`}>
+    <div id="app-breadcrumb">
+      <div className={`d-inline-flex ${className}`}>
       {params?.map(({ title, href }, i) => (
         <div
           className={`param-item ${i === params.length - 1 ? "last" : ""}`}
@@ -28,6 +29,7 @@ const AppBreadcumbs: React.FC<Props> = ({
           )}
         </div>
       ))}
+    </div>
     </div>
   );
 };
