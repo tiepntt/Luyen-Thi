@@ -7,7 +7,7 @@ import { ChapterIcon } from "assets/images/practice";
 import { useAppContext } from "hooks/AppContext";
 import { PracticeConfig } from "models/practice/practiceConfig";
 import React, { useEffect, useState } from "react";
-import { Container, Form, Image } from "react-bootstrap";
+import { Col, Container, Form, Image, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { BsPlusCircle } from "react-icons/bs";
 import "./style.scss";
@@ -22,7 +22,7 @@ const ranking_data: DocumentHistoryRank[] = [
       firstName: "Manh",
       lastName: "Nguyen Van",
       avatarUrl:
-        "https://www.google.com/url?sa=i&url=https%3A%2F%2Fscr.vn%2Fhinh-avatar.html&psig=AOvVaw1v7RaXQp9jQcC2iDAlqBI5&ust=1639382764280000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIDhpu3m3fQCFQAAAAAdAAAAABAD",
+        "https://scr.vn/wp-content/uploads/2020/07/avt-cute.jpg.webp",
     },
     numberCorrect: 100,
     rank: 1,
@@ -181,7 +181,36 @@ const CheckpointPractice: React.FC = () => {
                 ))}
               </div>
             </div>
-            <Ranking {...ranking_data} />
+            <div className="level-config">
+              <div className="level-label">Xếp hạng</div>
+              <div className="level-label-clarative"></div>
+              <div className="d-flex">
+                <div style={{flexGrow: 1}}>
+                  <Row>
+                    <Col className="col-2">
+                      <Image src={ranking_data[0].user.avatarUrl} roundedCircle fluid />
+                    </Col>
+                    <Col className="col-6 d-flex align-items-center">
+                      <span>Nguyễn Văn Mạnh</span>
+                    </Col>
+                  </Row>
+                </div>
+                <div className="d-flex align-items-center">500</div>
+              </div>
+              <div className="d-flex">
+                <div style={{flexGrow: 1}}>
+                  <Row>
+                    <Col className="col-2">
+                      <Image src={ranking_data[0].user.avatarUrl} roundedCircle fluid />
+                    </Col>
+                    <Col className="col-6 d-flex align-items-center">
+                      <span>Nguyễn Văn Mạnh</span>
+                    </Col>
+                  </Row>
+                </div>
+                <div className="d-flex align-items-center">500</div>
+              </div>
+            </div>
           </Grid>
         </Grid>
       </Container>
