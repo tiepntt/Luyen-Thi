@@ -30,6 +30,8 @@ namespace Luyenthi.Services
                     Id = x.Id,
                     Code = x.Code,
                     Name = x.Name,
+                    AvatarUrl=x.AvatarUrl,
+                    TemplateId = x.TemplateDocument.Id,
                     Total = x.Documents.Count(x => x.IsApprove == IsApprove && x.Status == status),
                     Grades = x.Grades.Select(g => new GradeDto { Code =g.Code, Id =g.Id}).ToList()
                 })

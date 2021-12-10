@@ -63,7 +63,6 @@ namespace Luyenthi.HttpApi.Host
             CreateMap<TemplateDocument, TemplateDocumentDto>();
             CreateMap<TemplateQuestionSet, TemplateQuestionSetDto>();
             CreateMap<TemplateQuestionGenerate, TemplateQuestionGenerateDto>();
-            CreateMap<TemplateLevelGenerate, TemplateLevelGenerateDto>();
         }
     }
 }

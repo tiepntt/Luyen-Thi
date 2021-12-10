@@ -22,4 +22,8 @@
     <ProjectReference Include="..\Luyenthi.EntityFrameworkCore\Luyenthi.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+
 </Project>

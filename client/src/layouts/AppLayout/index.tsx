@@ -10,12 +10,14 @@ import { useDispatch } from "react-redux";
 import { UserFunction } from "redux/user/action";
 import "./style.scss";
 import AppSideBar from "app/components/sidebars/AppSideBar";
+import { LevelQuestion } from "models/matrix/Level";
 const AppLayout: React.FC = ({ children }) => {
   const [showHeader, setShowHeader] = useState(true);
   const [showFooter, setShowFooter] = useState(true);
   const [grades, setGrades] = useState<Grade[]>([]);
   const [timeZone, setTimeZone] = useState("Asia/Ho_Chi_Minh");
   const [subjects, setSubjects] = useState<Subject[]>([]);
+  const [levels, setLevels] = useState<LevelQuestion[]>([]);
   const dispatch = useDispatch();
 
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
@@ -35,6 +37,7 @@ const AppLayout: React.FC = ({ children }) => {
       if (res.status === 200) {
         setGrades(res.data.grades);
         setSubjects(res.data.subjects);
+        setLevels(res.data.levels);
         if (res.data.userInfo) {
           dispatch(UserFunction.updateUser(res.data.userInfo));
         }
@@ -56,6 +59,7 @@ const AppLayout: React.FC = ({ children }) => {
     grades,
     subjects,
     timeZone,
+    levels,
   };
   return (
     <AppContext.Provider value={value}>

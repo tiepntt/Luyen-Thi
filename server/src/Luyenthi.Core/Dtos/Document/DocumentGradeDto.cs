@@ -20,6 +20,8 @@ namespace Luyenthi.Core.Dtos
         public string Name { get; set; }
         public string Code { get; set; }
         public int Total { get; set; }
+        public string AvatarUrl { get; set; }
+        public Guid? TemplateId { get; set; }
         public List<GradeDto> Grades { get; set; }
     }
 }

@@ -12,7 +12,8 @@ namespace Luyenthi.Domain
         public Guid Id { get; set; }
         public string Name { get; set; }
         public Unit Unit { get; set; }
-        public Guid UnitId {get;set;}
+        public Guid UnitId { get; set; }
         public virtual List<Question> Questions { get; set; }
+        public virtual List<TemplateQuestionGenerate> TemplateQuestionGenerates{ get; set; }
     }
 }

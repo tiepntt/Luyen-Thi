@@ -19,5 +19,6 @@ namespace Luyenthi.Domain
         public Guid? UpdatedBy { get; set; }
         public virtual List<Question> Questions { get; set; }
         public virtual List<TemplateQuestion> TemplateQuestions { get; set; }
+        public virtual List<TemplateQuestionGenerate> QuestionGenerates { get; set; }
     }
 }

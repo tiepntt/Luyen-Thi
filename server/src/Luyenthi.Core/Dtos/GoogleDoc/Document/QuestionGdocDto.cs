@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 
 namespace Luyenthi.Core
 {
+    public class QuestionInfo
+    {
+        public QuestionLevel Level { get; set; }
+        public QuestionGdocDto question { get; set; }
+    }
     public class QuestionGdocDto
     {
         public dynamic Introduction { get; set; }

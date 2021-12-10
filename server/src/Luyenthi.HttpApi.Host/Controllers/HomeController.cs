@@ -22,12 +22,14 @@ namespace Luyenthi.HttpApi.Host.Controllers
         private readonly DocumentService _documentService;
         private readonly GradeService _gradeService;
         private readonly SubjectService _subjectService;
+        private readonly LevelQuestionService _levelQuestionService;
         private readonly IMapper _mapper;
         public HomeController(
             IWebHostEnvironment environment,
             DocumentService documentService,
             GradeService gradeService,
             SubjectService subjectService,
+            LevelQuestionService levelQuestionService,
             IMapper mapper
             )
         {
@@ -35,6 +37,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
             _documentService = documentService;
             _gradeService = gradeService;
             _subjectService = subjectService;
+            _levelQuestionService = levelQuestionService;
             _mapper = mapper;
         }
         [HttpGet]
@@ -42,10 +45,12 @@ namespace Luyenthi.HttpApi.Host.Controllers
         {
             var documentGrade =  _gradeService.CountByGrades();
             var documentSubject = _subjectService.CountBySubject();
+            var levels = _levelQuestionService.GetAll();
             var result = new Dictionary<string, dynamic>()
             {
                 {"Grades", documentGrade},
                 {"Subjects", documentSubject},
+                {"Levels", levels},
             };
             var user = (ApplicationUser)HttpContext.Items["User"];
             var roles = (List<string>)HttpContext.Items["Roles"];

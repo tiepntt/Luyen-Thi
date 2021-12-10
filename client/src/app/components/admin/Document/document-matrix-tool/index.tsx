@@ -4,16 +4,33 @@ import { useChapters } from "hooks/Matrix/useChapters";
 import { useLevelQuestion } from "hooks/Matrix/useLevelQuestion";
 import { useQuestionTemplate } from "hooks/Matrix/useTemplate";
 import { useUnits } from "hooks/Matrix/useUnits";
-import React, { FormEvent, useState } from "react";
+import { QuestionSet } from "models/questionSet/QuestionSetCreate";
+import { QuestionSetDetail } from "models/questionSet/QuestionSetDetail";
+import React, { FormEvent, useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useParams } from "react-router";
 import Select from "react-select";
 import { documentApi } from "services/api/document/documentApi";
+import { questionSetApi } from "services/api/document/questionSetApi";
 import { toastService } from "services/toast";
 
 const DocumentMatrixTool: React.FC = () => {
   const [loadding, setLoadding] = useState(false);
   const { documentId } = useParams<any>();
+  const [start, setStart] = useState(0);
+  const [end, setEnd] = useState(0);
+  const [numberQuestion, setNumbers] = useState(0);
+  useEffect(() => {
+    questionSetApi.getByDocumentId(documentId).then((res) => {
+      const questionSets: QuestionSetDetail[] = res.data;
+      let numberQ = questionSets
+        .map((q) => q.questions.length)
+        .reduce((a, b) => a + b);
+      setNumbers(numberQ);
+      setEnd(numberQ - 1);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [documentId]);
   const { grades, gradeSelect, setGradeSelect } = useGrades();
   const { subjects, subjectSelect, setSubjectSelect } = useSubjects(
     gradeSelect?.id as any
@@ -38,6 +55,8 @@ const DocumentMatrixTool: React.FC = () => {
         unitId: curentUnit?.id as any,
         levelId: currentLevel?.id as any,
         templateQuestionId: currentTemplate?.id,
+        start,
+        end,
       })
       .then((res) => {
         setLoadding(false);
@@ -124,8 +143,28 @@ const DocumentMatrixTool: React.FC = () => {
                 onChange={setCurrentLevel as any}
               />
             </Form.Group>
+            <Form.Group as={Col}>
+              <Form.Label>Bắt đầu</Form.Label>
+              <Form.Control
+                type="number"
+                min={0}
+                value={start}
+                max={numberQuestion}
+                onChange={(e: any) => setStart(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group as={Col}>
+              <Form.Label>Kết thúc</Form.Label>
+              <Form.Control
+                type="number"
+                min={0}
+                value={end}
+                max={numberQuestion}
+                onChange={(e: any) => setEnd(e.target.value)}
+              />
+            </Form.Group>
           </Row>
-          <Button type="submit" disabled={loadding}>
+          <Button type="submit" disabled={loadding || start - end >= 0}>
             Lưu
           </Button>
         </Form>

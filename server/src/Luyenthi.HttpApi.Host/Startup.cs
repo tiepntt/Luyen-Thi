@@ -31,7 +31,6 @@ namespace Luyenthi
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-
         }
 
         public IConfiguration Configuration { get; }
@@ -78,7 +77,6 @@ namespace Luyenthi
             services.AddTransient<TemplateDocumentRepository>();
             services.AddTransient<TemplateQuestionSetRepository>();
             services.AddTransient<TemplateQuestionGenerateRepository>();
-            services.AddTransient<TemplateLevelGenerateRepository>();
             
             // add transient service
             services.AddTransient<DocumentService>();
@@ -98,7 +96,9 @@ namespace Luyenthi
             services.AddTransient<DocumentHistoryService>();
             services.AddTransient<QuestionHistoryService>();
             services.AddTransient<UserService>();
-            services.AddTransient<TemplateDocumentService>();
+            services.AddTransient<GenerateService>();
+            services.AddTransient<QuestionSetGenerateService>();
+            services.AddTransient<LevelQuestionService>();
 
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
                 {

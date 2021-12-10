@@ -1,4 +1,5 @@
 import { Grade } from "models/matrix/Grade";
+import { LevelQuestion } from "models/matrix/Level";
 import { Subject } from "models/matrix/Subject";
 import React, { useContext } from "react";
 export interface AppModels {
@@ -9,6 +10,7 @@ export interface AppModels {
   scrollTop: (id?: string, position?: string) => void;
   grades: Grade[];
   subjects: Subject[];
+  levels: LevelQuestion[];
   timeZone?: string;
 }
 export const AppContext = React.createContext<AppModels>({} as AppModels);

@@ -17,5 +17,8 @@ namespace Luyenthi.Core.Dtos
         public Guid? TemplateQuestionId { get; set; }
         public Guid? LevelId { get; set; }
         public QuestionStatus? Status { get; set; }
+        public int Start { get; set; }
+        public int End { get; set; }
+
     }
 }

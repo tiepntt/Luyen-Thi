@@ -17,4 +17,11 @@ namespace Luyenthi.Core.Dtos
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
     }
+    public class UserAnalyticByGradeDto
+    {
+        public int Label { get; set; }
+        public int Count { get; set; }
+        public double Medium { get; set; }
+        public double Rate { get; set; }
+    }
 }

@@ -36,5 +36,7 @@ namespace Luyenthi.Domain
         public DateTime UpdatedAt { get; set; }
         public Guid? CreatedBy { get; set; }
         public Guid? UpdatedBy { get; set; }
+        public Guid? TemplateDocumentId { get; set; }
+        public virtual TemplateDocument TemplateDocument { get; set; }
     }
 }

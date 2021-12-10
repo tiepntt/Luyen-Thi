@@ -33,7 +33,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
         [HttpGet("in-document/{documentId}")]
         [Authorize(Role.Admin, Role.Teacher)]
         public List<QuestionSetDetailDto> GetQuestionSetByDocumentId(Guid documentId) {
-            var questionSets = _questionSetService.GetByDocumentId(documentId);
+            var questionSets = _questionSetService.GetByDocumentId(documentId).ToList();
             questionSets = DocumentHelper.MakeIndexQuestions(questionSets);
             return _mapper.Map<List<QuestionSetDetailDto>>(questionSets);
         }

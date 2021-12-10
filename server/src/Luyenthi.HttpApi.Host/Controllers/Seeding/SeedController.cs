@@ -55,7 +55,8 @@ namespace Luyenthi.HttpApi.Host.Controllers.Seeding
                         Code = subjectCreate.Code,
                         Name = subjectCreate.Name,
                         OrderNumber = subjectCreate.OrderNumber,
-                        Grades = gradesInSubject
+                        Grades = gradesInSubject,
+                        AvatarUrl= subjectCreate.AvatarUrl
                     };
                     subjects.Add(subject);
                 }

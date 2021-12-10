@@ -37,6 +37,8 @@ export interface QuestionMatrix {
   unitId: any;
   templateQuestionId: any;
   levelId: any;
+  start?: number;
+  end?: number;
 }
 export interface MatrixQuestion {
   id: string;

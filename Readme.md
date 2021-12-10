@@ -75,3 +75,5 @@ Dump data by **Command prompt** in `Luyenthi.DbMigrator>Data>`
 ```sh
 mysqldump -u root  -p luyenthi -t --complete-insert --ignore-table=luyenthi.__efmigrationshistory > dump.sql
 ```
+- Mysql
+  Import by **Mysql Workbench** in `[Dữ liệu đầy đủ](https://drive.google.com/drive/folders/1zI9-o4Pihj5jtXWQZlhCM3H72nBLiQvz)`

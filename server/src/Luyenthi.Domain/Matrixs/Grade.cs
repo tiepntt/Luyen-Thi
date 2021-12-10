@@ -18,5 +18,7 @@ namespace Luyenthi.Domain
         public virtual List<Subject> Subjects { get; set; }
         public virtual List<Question> Questions { get; set; }
         public virtual List<Document> Documents { get; set; }
+        public virtual List<TemplateQuestionGenerate> QuestionGenerates { get; set; }
+        public virtual List<TemplateQuestionSet> TemplateQuestionSets { get; set; }
     }
 }
