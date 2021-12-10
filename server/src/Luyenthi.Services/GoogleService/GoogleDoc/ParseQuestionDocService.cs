@@ -32,8 +32,8 @@ namespace Luyenthi.Services
         }
         public List<QuestionSetGdocDto> Parse()
         {
-            // tách các tiêu đề 2
-            var partElements = GoogleDocHelper.SplitParagraph(_elements, "HEADING_2");
+            var heading1 = GoogleDocHelper.SplitParagraph(_elements, "HEADING_1");
+            var partElements = GoogleDocHelper.SplitParagraph(heading1.First(), "HEADING_2");
             var parts = partElements.Select((e, i) => ParsePartQuestion(e, i, partElements.Count > 1)).ToList();
             return parts;
         }

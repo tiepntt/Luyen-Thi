@@ -217,7 +217,7 @@ namespace Luyenthi.Services
                         break;
                 };
                 var userHistory = histories.Find(i => i.Key == key);
-                if(userHistory == null)
+                if (userHistory == null)
                 {
                     results.Add(new UserHistoryAnalyticDto
                     {
@@ -226,13 +226,14 @@ namespace Luyenthi.Services
                         TimeDuration=0,
                         StartDate = EndTime,
                         EndDate = StartTime,
-                        Medium=0,
+                        Medium= 0,
                         MaxScore = 0,
                         Total = 0
                     });
                 }
                 else
                 {
+                    //userHistory.Medium = Math.Round(results.Sum(h => h.Medium * h.Total) / (results.Sum(h => h.Total > 0 ? h.Total : 1)), 2);
                     results.Add(userHistory);
                 }
                 StartTime = EndTime;

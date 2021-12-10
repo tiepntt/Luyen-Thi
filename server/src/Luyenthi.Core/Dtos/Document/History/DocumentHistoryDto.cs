@@ -16,5 +16,6 @@ namespace Luyenthi.Core.Dtos
         public int NumberIncorrect { get; set; } = 0;
         public DocumentHistoryStatus Status { get; set; }
         public List<QuestionHistoryDto> QuestionHistories { get; set; }
+        public double TimeDuration { get; set; }
     }
 }

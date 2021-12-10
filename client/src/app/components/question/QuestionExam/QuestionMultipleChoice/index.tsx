@@ -3,6 +3,12 @@ import { useHistoryQuestions } from "hooks/Question/historyQuestionExam";
 import { Question } from "models/question/Question";
 import React, { createRef, useEffect, useState } from "react";
 import { getClassStatusQuestion } from "utils/questionFunction";
+import clsx from "clsx";
+import { examApi } from "services/api/document/examApi";
+import { toastService } from "services/toast";
+import SnipperLayout from "app/components/_share/Layouts/SpinnerLayout";
+import Spinner from "app/components/_share/StaticLayout/Spinner";
+import SnipperBall from "app/components/_share/StaticLayout/SnipperBall";
 interface Props {
   question: Question;
   questionSetId: string;
@@ -12,7 +18,11 @@ const QuestionMultipleChoice: React.FC<Props> = ({
   question,
 }) => {
   const { content = [], introduction = [] } = question;
-  const { setQuestionHistoryIndex, userAnswerIndex } = useHistoryQuestions();
+  const [solve, setSolve] = useState<any[]>();
+  const [correctAnswer, setCorrectAnswer] = useState<string>();
+  const { setQuestionHistoryIndex, userAnswerIndex, canShowSolve, getSolve } =
+    useHistoryQuestions();
+  const [showSolve, setShowSolve] = useState(false);
   const [optionsRef] = useState(createRef<HTMLDivElement>());
   const questionHistory = userAnswerIndex(question.id) || {};
   const setAnswer = setQuestionHistoryIndex(question.id);
@@ -45,6 +55,7 @@ const QuestionMultipleChoice: React.FC<Props> = ({
         newScale.width = optionBoxWidth / 2 - 21;
       } else {
         newScale.width = optionBoxWidth - 25;
+        newScale.height = "auto";
       }
 
       setScaleSize(newScale);
@@ -57,6 +68,21 @@ const QuestionMultipleChoice: React.FC<Props> = ({
     height: scaleSize?.height || "auto",
     minWidth: 100,
   });
+  const getSolveQuestion = () => {
+    setShowSolve(!showSolve);
+    if (correctAnswer) {
+    } else {
+      getSolve(question.id).then((res) => {
+        if (res.status === 200) {
+          setSolve(res.data.solve);
+          setCorrectAnswer(res.data.correctAnswer);
+        } else {
+          setSolve([]);
+          toastService.error(res.data.message);
+        }
+      });
+    }
+  };
   return (
     <div className="question-multiple-choice" id={`qid-${question.id}`}>
       <div className="question-introduction">
@@ -96,6 +122,36 @@ const QuestionMultipleChoice: React.FC<Props> = ({
             </div>
           ))}
       </div>
+      {canShowSolve && (
+        <div className="solve-block">
+          <div className="solve-line text-right">
+            <div className="solve-link" onClick={getSolveQuestion}>
+              {showSolve ? "Ẩn giải thích" : "Xem giải thích"}
+            </div>
+          </div>
+
+          <div className={clsx("solve-content", showSolve ? "show" : "hide")}>
+            {showSolve &&
+              (correctAnswer ? (
+                <>
+                  <div className="correct-answer">
+                    Đáp án đúng : {correctAnswer}
+                  </div>
+                  <div className="solve">
+                    {solve &&
+                      solve.map((element, i) => (
+                        <TemplatePreview key={i} {...element} />
+                      ))}
+                  </div>
+                </>
+              ) : (
+                <div className="loading d-flex justify-content-center p-2 pb-3">
+                  <SnipperBall />
+                </div>
+              ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

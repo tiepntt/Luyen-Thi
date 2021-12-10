@@ -12,6 +12,11 @@ namespace Luyenthi.Core.Dtos
         public UserHistoryAnalyticType Type { get; set; }
         public string TimeZone { get; set; } = "Asia/Bangkok";
     }
+    public class AnalyticByGradeQuery
+    {
+        public UserHistoryAnalyticType Type { get; set; }
+        public Guid? SubjectId { get; set; }
+    }
     public enum UserHistoryAnalyticType
     {
         Today,

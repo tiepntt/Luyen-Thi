@@ -35,14 +35,13 @@ namespace Luyenthi.EntityFrameworkCore
         public DbSet<TemplateDocument> TemplateDocuments { get; set; }
         public DbSet<TemplateQuestionSet> TemplateQuestionSets { get; set; }
         public DbSet<TemplateQuestionGenerate> TemplateQuestionGenerates { get; set; }
-        public DbSet<TemplateLevelGenarate> TemplateLevelGenarates { get; set; }
-        
-      
+
+
         public LuyenthiDbContext(DbContextOptions<LuyenthiDbContext> options, IHttpContextAccessor httpContextAccessor) : base(options)
         {
             this._httpContextAccessor = httpContextAccessor;
         }
-        
+
         public override int SaveChanges()
         {
             var now = DateTime.Now;
@@ -77,13 +76,13 @@ namespace Luyenthi.EntityFrameworkCore
                             questionEntity.Type = questionEntity.Type == QuestionType.QuestionGroup || questionEntity.SubQuestions.Count == 1 ? QuestionType.QuestionGroup : QuestionType.QuestionMultipleChoice;
                             break;
                         case EntityState.Modified:
-                            if(questionEntity.SubQuestions != null)
+                            if (questionEntity.SubQuestions != null)
                             {
                                 questionEntity.NumberQuestion = questionEntity.SubQuestions.Count == 0 ? 1 : questionEntity.SubQuestions.Count;
                                 questionEntity.Type = questionEntity.Type == QuestionType.QuestionGroup || questionEntity.SubQuestions.Count == 1 ? QuestionType.QuestionGroup : QuestionType.QuestionMultipleChoice;
                             }
-                            
-                            if (questionEntity.QuestionSets != null && questionEntity.QuestionSets.Count  == 0)
+
+                            if (questionEntity.QuestionSets != null && questionEntity.QuestionSets.Count == 0)
                             {
                                 base.Remove(questionEntity);
                             }
@@ -105,27 +104,34 @@ namespace Luyenthi.EntityFrameworkCore
         }
         private void EntityConfiguration(ModelBuilder builder)
         {
-            builder.Entity<Grade>(e => {
+            builder.Entity<Grade>(e =>
+            {
                 e.HasIndex(i => i.Code).IsUnique();
             });
-            builder.Entity<Subject>(e => {
+            builder.Entity<Subject>(e =>
+            {
                 e.HasIndex(i => i.Code).IsUnique();
-            }); 
-            builder.Entity<LevelQuestion>(e => {
+            });
+            builder.Entity<LevelQuestion>(e =>
+            {
                 e.HasIndex(i => i.Code).IsUnique();
-            }); 
-            builder.Entity<Unit>(e => {
+            });
+            builder.Entity<Unit>(e =>
+            {
                 e.HasOne(u => u.Chapter).WithMany(c => c.Units).OnDelete(DeleteBehavior.Cascade);
             });
-            builder.Entity<TemplateQuestion>(e => {
+            builder.Entity<TemplateQuestion>(e =>
+            {
                 e.HasIndex(i => i.Name).IsUnique();
                 e.HasOne(i => i.Unit).WithMany(u => u.TemplateQuestions).OnDelete(DeleteBehavior.Cascade);
-                
+
             });
-            builder.Entity<ApplicationUser>().HasIndex(user => new {
+            builder.Entity<ApplicationUser>().HasIndex(user => new
+            {
                 user.Provider,
                 user.Email
-            }).IsUnique(); builder.Entity<ApplicationUser>().HasIndex(user => new {
+            }).IsUnique(); builder.Entity<ApplicationUser>().HasIndex(user => new
+            {
                 user.UserName,
             }).IsUnique();
 
@@ -165,7 +171,7 @@ namespace Luyenthi.EntityFrameworkCore
                 d.HasOne(x => x.User).WithMany(x => x.DocumentHistories)
                 .HasForeignKey(x => x.CreatedBy)
                 .OnDelete(DeleteBehavior.Cascade);
-                
+
             });
             builder.Entity<QuestionHistory>(b =>
             {
@@ -195,7 +201,19 @@ namespace Luyenthi.EntityFrameworkCore
             {
                 b.HasOne(x => x.TemplateDocument).WithMany(x => x.TemplateQuestionSets)
                     .OnDelete(DeleteBehavior.Cascade);
+                //b.Property(x => x.OrderNumber).ValueGeneratedOnAdd();
             });
+            //builder.Entity<TemplateQuestionGenerate>(b =>
+            //{
+            //    b.Property(x => x.OrderNumber).ValueGeneratedOnAdd();
+            //});
+
+            //builder.Entity<Subject>(b =>
+            //{
+            //    b.HasOne(b => b.TemplateDocument)
+            //        .WithOne(i => i.Subject)
+            //        .HasForeignKey<TemplateDocument>(b => b.SubjectId).OnDelete(DeleteBehavior.Cascade);
+            //});
 
         }
         public void RelationShipConfiguration(ModelBuilder builder)
@@ -206,19 +224,34 @@ namespace Luyenthi.EntityFrameworkCore
                .WithMany(x => x.QuestionSets)
                .UsingEntity<QuestionSetQuestion>(
                    "QuestionSetQuestion",
-                   j => j.HasOne<Question>().WithMany().HasForeignKey( x=> x.QuestionId),
+                   j => j.HasOne<Question>().WithMany().HasForeignKey(x => x.QuestionId),
                    j => j.HasOne<QuestionSet>().WithMany().HasForeignKey(x => x.QuestionSetId)
                    );
 
             builder.SharedTypeEntity<GradeSubject>("GradeSubjects");
-            builder.Entity<Subject>()
-                   .HasMany(b => b.Grades)
+            builder.Entity<Subject>(s =>
+            {
+                s.HasMany(b => b.Grades)
                    .WithMany(b => b.Subjects)
                    .UsingEntity<GradeSubject>(
                         "GradeSubjects",
                         b => b.HasOne<Grade>().WithMany().HasForeignKey(x => x.GradeId),
                         b => b.HasOne<Subject>().WithMany().HasForeignKey(x => x.SubjectId)
                    );
+                s.HasOne(b => b.TemplateDocument)
+                .WithOne(b => b.Subject).HasForeignKey<TemplateDocument>(x => x.SubjectId).OnDelete(DeleteBehavior.Cascade);
+            });
+                   
+            builder.SharedTypeEntity<GradeQuestionSetGenerate>("GradeQuestionSetGenerate");
+            builder.Entity<TemplateQuestionSet>()
+                .HasMany(b => b.Grades)
+                .WithMany(b => b.TemplateQuestionSets)
+                .UsingEntity<GradeQuestionSetGenerate>(
+                    "GradeQuestionSetGenerate",
+                    b => b.HasOne<Grade>().WithMany().HasForeignKey(x => x.GradeId),
+                    b => b.HasOne<TemplateQuestionSet>().WithMany().HasForeignKey(x => x.QuestionSetGenerateId)
+                );
+
             //builder.ApplyConfiguration(new RoleConfiguration());
             //builder.ApplyConfiguration(new AdminConfiguration());
             //builder.ApplyConfiguration(new UserWithRolesConfig());

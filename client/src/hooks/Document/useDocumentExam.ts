@@ -14,6 +14,7 @@ import { QuestionType } from "settings/question/questionType";
 
 export const useDocumentExam = (id: string) => {
   const [document, setDocument] = useState<DocumentExam>();
+  const [submiting, setSubmiting] = useState(false);
   const [documentHistory, setDocumentHistory] = useState<DocumentHistory>(
     {} as any
   );
@@ -170,6 +171,7 @@ export const useDocumentExam = (id: string) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [documentHistory.status]);
   const submit = () => {
+    setSubmiting(true);
     setDocumentHistory({
       ...documentHistory,
       status: DocumentHistoryStatus.Close,
@@ -193,6 +195,8 @@ export const useDocumentExam = (id: string) => {
           true
         );
         setDocumentHistory(newDocumentHistory);
+        setTimes((newDocumentHistory.timeDuration || 0) * 60);
+        setSubmiting(false);
       } else {
         toastService.error(res.data.message);
       }
@@ -226,6 +230,9 @@ export const useDocumentExam = (id: string) => {
       }
     });
   };
+  const getAnswerQuestion = (questionId: string) => {
+    return examApi.getAnswer(questionId, id);
+  };
   return {
     document,
     answerQuestionIndex,
@@ -237,5 +244,8 @@ export const useDocumentExam = (id: string) => {
     times,
     submit,
     reset,
+    submiting,
+    setSubmiting,
+    getAnswerQuestion,
   };
 };

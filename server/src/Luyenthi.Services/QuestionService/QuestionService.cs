@@ -1,4 +1,5 @@
-﻿using Luyenthi.Core.Enums;
+﻿using Luyenthi.Core.Dtos;
+using Luyenthi.Core.Enums;
 using Luyenthi.Domain;
 using Luyenthi.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -29,13 +30,8 @@ namespace Luyenthi.Services
         public Question GetQuestion(Guid Id)
         {
             var question = _questionRepository.Find(q => q.Id == Id)
+                .Include(q => q.SubQuestions)
                 .Take(1)
-                .Select(q => new Question
-                {
-                    Id =q.Id,
-                    CorrectAnswer=q.CorrectAnswer,
-                    Solve=q.Solve
-                })
                 .FirstOrDefault();
             return question;
         }
@@ -75,7 +71,7 @@ namespace Luyenthi.Services
             _questionRepository.UpdateEntity(question);
             return question;
         }
-        
+
         // remove question
         public void Remove(Question question)
         {
@@ -87,13 +83,14 @@ namespace Luyenthi.Services
         }
         public int CountQuestion(Guid documentId)
         {
-        
+
             return 1;
         }
-        //public IQueryable<Question> GetAnalytic()
-        //{
-
-        //}
+        public List<Question> UpdateMany(List<Question> questions)
+        {
+            _questionRepository.UpdateMany(questions);
+            return questions;
+        }
        
 
     }

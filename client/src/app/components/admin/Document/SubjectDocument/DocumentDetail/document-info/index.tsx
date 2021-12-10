@@ -316,6 +316,14 @@ const DocumentEditInfo: React.FC<Props> = ({ documentId }) => {
                   <Button
                     className="mx-2"
                     variant="outline-warning"
+                    href={`/editor/matrix/${document.id}`}
+                    target="_blank"
+                  >
+                    Cập nhật ma trận
+                  </Button>
+                  <Button
+                    className="mx-2"
+                    variant="outline-warning"
                     href={`/editor/document/${document.id}`}
                     target="_blank"
                   >

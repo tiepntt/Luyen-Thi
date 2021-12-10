@@ -12,7 +12,7 @@
     border-radius: 10px;
     margin-bottom: 8px;
     cursor: pointer;
-    align-items: center;
+    // align-items: center;
   }
 
   .options:hover {
@@ -29,6 +29,7 @@
     border: 1px solid rgb(37, 37, 37);
     width: 27px;
     height: 27px;
+    min-width: 27px;
     font-weight: bold;
     text-align: center;
     cursor: pointer;
@@ -41,6 +42,30 @@
       background-color: rgb(3, 156, 194);
       border-color: rgb(3, 156, 194) !important;
       color: white;
+    }
+  }
+  .solve-content {
+    background: #fff3ca;
+    border: 1px solid #fcd346;
+    border-radius: 10px;
+    padding: 10px 10px;
+    transition: height 1s, opacity 1s;
+    &.hide {
+      opacity: 0;
+      padding: 0 !important;
+
+      border-color: transparent !important;
+      background: none;
+    }
+    &.show {
+      opacity: 1;
+    }
+    .correct-answer {
+      font-weight: bold;
+      display: inline-block;
+      color: rgb(2, 43, 59);
+      border-bottom: 2px solid rgb(2, 43, 59);
+      line-height: 18px;
     }
   }
 }

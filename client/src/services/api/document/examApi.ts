@@ -11,4 +11,7 @@ export const examApi = {
   reset: (documentId: string, examMangerId?: string) => {
     return api.post(`${baseUrl}/reset`, { documentId, examMangerId });
   },
+  getAnswer: (questionId: string, documentId: string) => {
+    return api.get(`${baseUrl}/${documentId}/solve/${questionId}`, {});
+  },
 };

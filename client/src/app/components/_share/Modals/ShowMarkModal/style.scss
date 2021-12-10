@@ -1,0 +1,54 @@
+.modal-show-mark {
+  font-family: "Quicksand" !important;
+  .text-highlight {
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+  .congeration {
+    font-size: 1.4rem;
+    color: rgb(6, 140, 158);
+    text-align: center;
+    font-weight: bold;
+  }
+  .mark-test {
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    background-color: green;
+    justify-content: center;
+    color: #ffffff;
+    font-size: x-large;
+    font-weight: bold;
+  }
+  .button-detail {
+    background-color: #fb752a;
+    border-color: #fb752a !important;
+    padding: 5px 30px;
+  }
+  .history-info {
+    display: inline-block;
+    min-width: 140px;
+  }
+  .history-result {
+    display: inline-flex;
+    width: 100%;
+    justify-content: center;
+  }
+  .correct {
+    color: green;
+  }
+  .incorrect {
+    color: #ba1919;
+  }
+  .time-duration {
+    color: #7e878f;
+  }
+  .label {
+    text-align: center;
+  }
+  .btn-option {
+    text-align: center;
+  }
+}

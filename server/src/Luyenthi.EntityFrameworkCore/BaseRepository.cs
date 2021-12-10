@@ -63,9 +63,9 @@ namespace Luyenthi.EntityFrameworkCore
         {
             return Entities.Where(predicate);
         }
-        public TEntity FindOne(Expression<Func<TEntity, bool>> predicate)
+        public IQueryable<TEntity> FindOne(Expression<Func<TEntity, bool>> predicate)
         {
-            return Entities.Where(predicate).FirstOrDefault();
+            return Entities.Where(predicate).Take(1);
         }
         public IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate, int take, int skip)
         {

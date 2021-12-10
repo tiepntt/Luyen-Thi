@@ -5,6 +5,7 @@ import { QuestionSetDetail } from "models/questionSet/QuestionSetDetail";
 import "./style.scss";
 import { useDocumentEditContext } from "hooks/DocumentEditQuestionContext/DocumentEditContext";
 import QuestionSetItem from "./QuestionSetItem";
+import SnipperLayout from "app/components/_share/Layouts/SpinnerLayout";
 interface Props {
   onMobileClose: () => void;
   openMobile: boolean;
@@ -27,16 +28,18 @@ const QuestionEditSideBar: React.FC<Props> = ({
   }, [location.pathname]);
   const content = (
     <Box height="100%" display="flex" flexDirection="column">
-      <div className="question-set-list">
-        {questionSets.map((questionSet, i) => (
-          <QuestionSetItem key={i} questionSet={questionSet} index={i} />
-        ))}
-        <div className="question-set-add">
-          <div className="add-btn" onClick={showAddQuestionSetModal}>
-            Thêm phần
+      <SnipperLayout loading={questionSets.length} showLabel={false} size="sm">
+        <div className="question-set-list">
+          {questionSets.map((questionSet, i) => (
+            <QuestionSetItem key={i} questionSet={questionSet} index={i} />
+          ))}
+          <div className="question-set-add">
+            <div className="add-btn" onClick={showAddQuestionSetModal}>
+              Thêm phần
+            </div>
           </div>
         </div>
-      </div>
+      </SnipperLayout>
     </Box>
   );
   return (
@@ -69,13 +72,13 @@ const QuestionEditSideBar: React.FC<Props> = ({
 export default QuestionEditSideBar;
 const useStyles: any = makeStyles((theme: Theme) => ({
   mobileDrawer: {
-    width: 375,
+    width: 325,
   },
   tabDrawer: {
-    width: 375,
+    width: 325,
   },
   desktopDrawer: {
-    width: 375,
+    width: 325,
     top: 64,
     height: "calc(100% - 64px)",
     // paddingLeft: 12,

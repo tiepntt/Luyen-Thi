@@ -1,7 +1,12 @@
 import React from "react";
+import clsx from "clsx";
 import "./style.scss";
-const Spinner = () => {
-  return <div className="spinner-loading"></div>;
+
+interface Props {
+  size?: "normal" | "sm";
+}
+const Spinner: React.FC<Props> = ({ size = "normal" }) => {
+  return <div className={clsx("spinner-loading", size)}></div>;
 };
 
 export default Spinner;

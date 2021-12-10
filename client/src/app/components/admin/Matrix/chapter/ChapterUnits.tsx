@@ -19,7 +19,6 @@ interface Props {
 const ChapterUnits: React.FC<Props> = ({ chapter }) => {
   const {
     units,
-    setChappterId,
     addUnit,
     curentUnit,
     setCurentUnit,
@@ -27,18 +26,10 @@ const ChapterUnits: React.FC<Props> = ({ chapter }) => {
     editUnit,
     removeUnit,
     removeTemplate,
-  } = useUnits();
+  } = useUnits(chapter?.id);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showAddTemplateModal, setShowAddTemplateModal] = useState(false);
   const [showEditUnitModal, setShowEditUnitModal] = useState(false);
-  useEffect(() => {
-    if (chapter) {
-      setChappterId(chapter.id);
-    } else {
-      setChappterId("");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chapter]);
   const onAddTemplate = (unit: any) => {
     setCurentUnit(unit);
     setShowAddTemplateModal(true);

@@ -14,5 +14,6 @@ namespace Luyenthi.Domain
         public string Code { get; set; }
         public int OrderNumber { get; set; }
         public virtual List<Question> Questions { get; set; }
+        public virtual List<TemplateQuestionGenerate> QuestionGenerates { get; set; }
     }
 }

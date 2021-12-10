@@ -15,11 +15,11 @@ const DocumentBanner: React.FC<Props> = ({ document }) => {
     },
     {
       title: "Tài liệu",
-      href: "/",
+      href: "/document",
     },
     {
       title: document?.name || "",
-      href: "/",
+      href: `/document/${document?.id}/preview`,
     },
   ];
   const documentHistory = document?.documentHistory;
@@ -81,9 +81,9 @@ const DocumentBanner: React.FC<Props> = ({ document }) => {
               <div className="block-process d-inline-block mx-3">
                 <CircularProgressbar
                   value={100}
-                  text={`${documentHistory?.timeDuration || 0}/${
-                    document?.times || 0
-                  }`}
+                  text={`${
+                    Math.round((documentHistory?.timeDuration || 0) * 10) / 10
+                  }/${document?.times || 0}`}
                   className="progress-item"
                   strokeWidth={5}
                   styles={buildStyles({

@@ -58,12 +58,12 @@ namespace Luyenthi.Services
             }
             
         }
-        public List<QuestionSet> GetByDocumentId(Guid DocumentId)
+        public IQueryable<QuestionSet> GetByDocumentId(Guid DocumentId)
         {
-            var questionSets =  _questionSetRepository.Find(questionSet => questionSet.DocumentId == DocumentId)
+            var questionSets = _questionSetRepository.Find(questionSet => questionSet.DocumentId == DocumentId)
                                             .Include(qs => qs.Document)
                                             .Include(qs => qs.Questions)
-                                            .ThenInclude(q => q.SubQuestions).ToList();
+                                            .ThenInclude(q => q.SubQuestions);
             // đánh index cho các question
             // đánh index cho các question
             return questionSets;

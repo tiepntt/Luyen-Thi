@@ -1,0 +1,18 @@
+.app-menu-mobile {
+  .user-info-account {
+    padding: 5px 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    align-items: center;
+    .avatar-user {
+      margin-right: 15px;
+    }
+    .role {
+      font-size: 14px;
+      color: rgb(4, 88, 121);
+    }
+  }
+  .navbar-active {
+    color: #006970;
+  }
+}
