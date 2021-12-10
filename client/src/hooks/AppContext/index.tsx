@@ -1,3 +1,4 @@
+import { ChapterDetail } from "models/matrix/Chapter";
 import { Grade } from "models/matrix/Grade";
 import { LevelQuestion } from "models/matrix/Level";
 import { Subject } from "models/matrix/Subject";
@@ -12,6 +13,8 @@ export interface AppModels {
   subjects: Subject[];
   levels: LevelQuestion[];
   timeZone?: string;
+  setSubjects: (subjects: Subject[]) => void;
+  chapters: ChapterDetail[];
 }
 export const AppContext = React.createContext<AppModels>({} as AppModels);
 export const useAppContext = () => useContext(AppContext);

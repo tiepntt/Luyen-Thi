@@ -1,0 +1,35 @@
+.question-generate-editor {
+  .input-group {
+    flex-wrap: nowrap;
+  }
+  .input-group-text {
+    border-radius: 0 !important;
+  }
+  .form-control {
+    border-radius: 0 !important;
+  }
+  .option-question-generate {
+    flex-grow: 1;
+    div {
+      border-radius: 0 !important;
+    }
+  }
+  .index-question {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 38px;
+    height: 38px;
+    color: white;
+    background-color: #043c86;
+    border: none;
+    border-radius: 0;
+  }
+  .btn-remove {
+    width: 38px;
+    color: #f34949;
+    background-color: #ffdede;
+    border: none;
+    border-radius: 0;
+  }
+}

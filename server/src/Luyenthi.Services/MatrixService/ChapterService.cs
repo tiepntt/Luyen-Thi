@@ -19,13 +19,31 @@ namespace Luyenthi.Services
         {
             _chapterRepository = chapterRepository;
         }
-        public List<Chapter> GetAll(Guid? gradeId, Guid? subjectId )
+        public List<Chapter> GetAll(Guid gradeId, Guid subjectId )
         {
             var chapters = _chapterRepository
                 .Find(i => ( i.GradeId == gradeId) &&
                     ( i.SubjectId == subjectId))
                 .Include(i => i.Subject)
                 .Include(i => i.Grade).ToList();
+            return chapters;
+        }
+        public List<Chapter> GetAll()
+        {
+            var chapters = _chapterRepository
+                .GetAll()
+                .Select(c => new Chapter
+                {
+                    Id = c.Id,
+                    Name=c.Name,
+                    GradeId = c.GradeId,
+                    SubjectId = c.SubjectId,
+                    Units = c.Units.Select(u => new Unit
+                    {
+                        Id = u.Id,
+                        Name = u.Name
+                    }).ToList()
+                }).ToList();
             return chapters;
         }
         public Chapter GetById (Guid id)

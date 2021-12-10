@@ -98,8 +98,8 @@ namespace Luyenthi.Services
             documentHistory.EndTime = DateTime.UtcNow <= documentHistory.StartTime.AddMinutes(times) || times == 0  ? DateTime.UtcNow : documentHistory.StartTime.AddMinutes(times);
             documentHistory.Status = DocumentHistoryStatus.Close;
             var questionSets =  _questionSetService.GetByDocumentId((Guid)documentHistory.DocumentId);
-            var questions = questionSets.SelectMany(qs => qs.Questions)
-                .SelectMany(q => q.Type == QuestionType.QuestionGroup ? q.SubQuestions : new List<Question> { q });
+            var questions = questionSets.ToList().SelectMany(qs => qs.Questions)
+                .SelectMany(q => q.Type == QuestionType.QuestionGroup ? q.SubQuestions : new List<Question> { q }).ToList();
             var questionHistories = documentHistory.QuestionHistories.Select(qh =>
             {
                 var question = questions.FirstOrDefault(i => i.Id == qh.QuestionId);

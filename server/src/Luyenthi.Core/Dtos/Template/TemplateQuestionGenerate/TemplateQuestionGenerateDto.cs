@@ -12,10 +12,10 @@ namespace Luyenthi.Core.Dtos
     {
         public Guid Id { get; set; }
         public virtual Guid TemplateQuestionSetId { get; set; }
-        public virtual Guid GradeId { get; set; }
-        public virtual Guid ChapterId { get; set; }
-        public virtual Guid UnitId { get; set; }
-        public virtual Guid LevelQuestionId { get; set; }
+        public virtual Guid? GradeId { get; set; }
+        public virtual Guid? ChapterId { get; set; }
+        public virtual Guid? UnitId { get; set; }
+        public virtual Guid? LevelQuestionId { get; set; }
         public int NumberQuestion { get; set; }
     }
 }

@@ -51,7 +51,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
             }
             result.NumberQuestion = template.NumberQuestion;
             result.SubjectId = template.SubjectId;
-            result.Time = template.Times;
+            result.Times = template.Times;
             result.NumberQuestion = template.NumberQuestion;
             result.Id = template.Id;
             var history = _documentHistoryRepository

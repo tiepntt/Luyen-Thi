@@ -1,0 +1,29 @@
+.template-question-set-editor {
+  .template-qs-header-editor {
+    button {
+      width: 38px;
+      height: 38px;
+      border-radius: 5px;
+      margin: 0 0 0 10px;
+      padding: 0;
+    }
+    .view {
+      background-color: #f7f9fa;
+      color: #8eaabc;
+      border: 1px solid #dce7ed;
+    }
+    .delete {
+      color: #f34949;
+      background-color: #ffdede;
+    }
+    .grade-select {
+      min-width: 290px;
+      div {
+        // border-radius: 0 !important;
+      }
+      .css-7pwich-Input {
+        display: none;
+      }
+    }
+  }
+}

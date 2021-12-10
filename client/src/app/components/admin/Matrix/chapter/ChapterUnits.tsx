@@ -8,7 +8,7 @@ import { useUnits } from "hooks/Matrix/useUnits";
 import { Chapter } from "models/matrix/Chapter";
 import { TemplateQuestion } from "models/matrix/TemplateQuestion";
 import { Unit } from "models/matrix/Unit";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import { templateQuestionApi } from "services/api/matrix/templateQuestion";
 import { unitApi } from "services/api/matrix/unit";

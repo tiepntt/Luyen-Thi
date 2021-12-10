@@ -1,7 +1,6 @@
 import React from "react";
 import Loading from "../../StaticLayout/Loading";
 import clsx from "clsx";
-import { size } from "lodash";
 interface Props {
   loading: any;
   className?: string;

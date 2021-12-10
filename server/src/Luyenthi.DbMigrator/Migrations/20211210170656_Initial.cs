@@ -368,6 +368,8 @@ namespace Luyenthi.DbMigrator.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Times = table.Column<int>(type: "int", nullable: false),
+                    NumberQuestion = table.Column<int>(type: "int", nullable: false),
                     SubjectId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
