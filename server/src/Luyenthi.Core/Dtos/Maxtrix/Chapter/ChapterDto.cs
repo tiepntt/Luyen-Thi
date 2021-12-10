@@ -13,5 +13,6 @@ namespace Luyenthi.Core.Dtos
         public string Code { get; set; }
         public Guid GradeId { get; set; }
         public Guid SubjectId { get; set; }
+        public List<UnitDto> Units { get; set; }
     }
 }

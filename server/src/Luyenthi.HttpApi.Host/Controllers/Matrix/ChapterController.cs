@@ -27,7 +27,7 @@ namespace Luyenthi.HttpApi.Host.Controllers.Matrix
         [HttpGet]
         public List<ChapterDto> GetAll([FromQuery(Name ="gradeId")] Guid? gradeId, [FromQuery(Name = "subjectId")] Guid? subjectId)
         {
-            var chapters = _chapterService.GetAll(gradeId, subjectId);
+            var chapters = _chapterService.GetAll((Guid)gradeId, (Guid)subjectId);
             return _mapper.Map<List<ChapterDto>>(chapters);
         }
         [HttpGet("{id}")]

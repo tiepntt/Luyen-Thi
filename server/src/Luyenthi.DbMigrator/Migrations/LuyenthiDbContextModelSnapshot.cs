@@ -524,8 +524,14 @@ namespace Luyenthi.DbMigrator.Migrations
                     b.Property<Guid?>("CreatedBy")
                         .HasColumnType("char(36)");
 
+                    b.Property<int>("NumberQuestion")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("SubjectId")
                         .HasColumnType("char(36)");
+
+                    b.Property<int>("Times")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)");

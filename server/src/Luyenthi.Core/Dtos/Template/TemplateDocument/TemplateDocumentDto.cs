@@ -10,6 +10,8 @@ namespace Luyenthi.Core.Dtos
     {
         public Guid Id { get; set; }
         public Guid SubjectId { get; set; }
+        public int Times { get; set; }
+        public int NumberQuestion { get; set; }
         public virtual List<TemplateQuestionSetDto> TemplateQuestionSets { get; set; }
     }
 }

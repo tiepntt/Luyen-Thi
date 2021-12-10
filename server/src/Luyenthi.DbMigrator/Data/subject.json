@@ -1,0 +1,82 @@
+﻿[
+  {
+    "Id": "49795e43-199c-4d75-bc72-4d510af25dcb",
+    "Name": "Toán học",
+    "Code": "math",
+    "OrderNumber": 1,
+    "AvatarUrl": "https://res.cloudinary.com/nguyentiep/image/upload/v1637744106/Luyenthi/Subject/toan_vjbxdm.png",
+    "Grades": [ 10, 11, 12 ]
+  },
+  {
+    "Id": "2e3a837f-efb0-4aae-9d8a-6c7ad75882db",
+    "Name": "Tiếng Anh",
+    "Code": "english",
+    "OrderNumber": 8,
+    "AvatarUrl": "https://res.cloudinary.com/nguyentiep/image/upload/v1637744106/Luyenthi/Subject/tieng-anh_xjtyld.png",
+    "Grades": [ 10, 11, 12 ]
+  },
+  {
+    "Id": "5497624c-b5ec-4288-afba-0c0a4abe18d2",
+    "Name": "Vật lý",
+    "Code": "physics",
+    "OrderNumber": 2,
+    "AvatarUrl": "https://res.cloudinary.com/nguyentiep/image/upload/v1637744106/Luyenthi/Subject/vat-ly_mpyhjb.png",
+    "Grades": [ 10, 11, 12 ]
+  },
+  {
+    "Id": "72230517-0e81-4eb9-a29f-cf8b7b8902ad",
+    "Name": "Hóa học",
+    "Code": "chemistry",
+    "OrderNumber": 3,
+    "AvatarUrl": "https://res.cloudinary.com/nguyentiep/image/upload/v1637744105/Luyenthi/Subject/hoa-hoc_lkfnw9.png",
+    "Grades": [ 10, 11, 12 ]
+  },
+  {
+    "Id": "5a8cd25d-6905-4a9e-b968-d9878234fcb4",
+    "Name": "Sinh học",
+    "Code": "biology",
+    "OrderNumber": 4,
+    "AvatarUrl": "https://res.cloudinary.com/nguyentiep/image/upload/v1637744105/Luyenthi/Subject/sinh-hoc_hbp28j.png",
+    "Grades": [ 10, 11, 12 ]
+  },
+  {
+    "Id": "18cdf684-f05e-4db2-a6da-f3d63856291c",
+    "Name": "Lịch sử",
+    "Code": "history",
+    "OrderNumber": 5,
+    "AvatarUrl": "https://res.cloudinary.com/nguyentiep/image/upload/v1637744105/Luyenthi/Subject/lich-su_xsdbgg.png",
+    "Grades": [ 10, 11, 12 ]
+  },
+  {
+    "Id": "ce80af0d-1772-48b6-9a79-d894a560ba62",
+    "Name": "Địa lý",
+    "Code": "geography",
+    "OrderNumber": 6,
+    "AvatarUrl": "https://res.cloudinary.com/nguyentiep/image/upload/v1637744106/Luyenthi/Subject/dia-ly_l5qfab.png",
+    "Grades": [ 10, 11, 12 ]
+  },
+  {
+    "Id": "370c25ae-5e13-4057-a76d-f2511a65143e",
+    "Name": "Giáo dục công dân",
+    "Code": "civic-education",
+    "OrderNumber": 7,
+    "AvatarUrl": "https://res.cloudinary.com/nguyentiep/image/upload/v1637744105/Luyenthi/Subject/cong-dan_mxwyrn.png",
+    "Grades": [ 10, 11, 12 ]
+  },
+  {
+    "Id": "4ff2780b-6ddb-4561-9338-0d4ce6819e30",
+    "Name": "Tiếng Anh Thi THPTQG",
+    "Code": "enlish-exam",
+    "OrderNumber": 9,
+    "AvatarUrl": "https://res.cloudinary.com/nguyentiep/image/upload/v1637744106/Luyenthi/Subject/tieng-anh_xjtyld.png",
+    "Grades": [ 12 ]
+  },
+  {
+    "Id": "ee7187af-4f4d-4226-949f-08b3460a8230",
+    "Name": "Khác",
+    "Code": "others",
+    "AvatarUrl": "https://res.cloudinary.com/nguyentiep/image/upload/v1637744106/Luyenthi/Subject/toan_vjbxdm.png",
+    "OrderNumber": 10,
+    "Grades": []
+  }
+]

@@ -44,6 +44,8 @@ namespace Luyenthi.HttpApi.Host.Controllers.Matrix
                 {
                     Id = t.Id,
                     SubjectId = t.SubjectId,
+                    NumberQuestion=t.NumberQuestion,
+                    Times = t.Times,
                     TemplateQuestionSets = t.TemplateQuestionSets.Select(qs => new TemplateQuestionSet
                     {
                         Id = qs.Id,
@@ -62,13 +64,29 @@ namespace Luyenthi.HttpApi.Host.Controllers.Matrix
             }
             return _mapper.Map<TemplateDocumentDto>(template);
         }
+        [HttpPut]
+        public TemplateDocumentDto Update(TemplateDocumentGenerateDto templateDocument)
+        {
+            var template = _templateDocumentRepository.Get(templateDocument.Id);
+            
+                
+            if (template == null)
+            {
+                throw new KeyNotFoundException();
+            }
+            template.NumberQuestion = templateDocument.NumberQuestion;
+            template.Times = templateDocument.Times;
+            _templateDocumentRepository.UpdateEntity(template);
+            return _mapper.Map<TemplateDocumentDto>(template);
+        }
         [HttpPost("{subjectId}")]
         public TemplateDocumentDto Create(Guid subjectId)
         {
             var template = new TemplateDocument
             {
                 Id = Guid.NewGuid(),
-                SubjectId = subjectId
+                SubjectId = subjectId,
+                Times=60
             };
             _templateDocumentRepository.Add(template);
             return _mapper.Map<TemplateDocumentDto>(template);
@@ -127,7 +145,7 @@ namespace Luyenthi.HttpApi.Host.Controllers.Matrix
         {
             _templateQuestionSetRepository.RemoveById(id);
         }
-        [HttpPost("question/{templateQuestionSetId}")]
+        [HttpPost("question-generate/{templateQuestionSetId}")]
         public TemplateQuestionGenerateDto AddTemplateQuestion(Guid templateQuestionSetId)
         {
             double orderNumber = 1;

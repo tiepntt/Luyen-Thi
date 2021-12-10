@@ -4,10 +4,7 @@ import { Question } from "models/question/Question";
 import React, { createRef, useEffect, useState } from "react";
 import { getClassStatusQuestion } from "utils/questionFunction";
 import clsx from "clsx";
-import { examApi } from "services/api/document/examApi";
 import { toastService } from "services/toast";
-import SnipperLayout from "app/components/_share/Layouts/SpinnerLayout";
-import Spinner from "app/components/_share/StaticLayout/Spinner";
 import SnipperBall from "app/components/_share/StaticLayout/SnipperBall";
 interface Props {
   question: Question;

@@ -82,15 +82,14 @@ namespace Luyenthi.Services
                         templateQuestionSet.Grades.Contains(q.Grade)&&
                         q.NumberQuestion == questionGenerate.NumberQuestion &&
                         q.ParentId == null &&
-                        (questionGenerate.GradeId == null || q.GradeId == questionGenerate.GradeId)&&
                         (questionGenerate.ChapterId == null || q.ChapterId == questionGenerate.ChapterId) &&
                         (questionGenerate.UnitId == null || q.UnitId == questionGenerate.UnitId)&&
                         (questionGenerate.LevelQuestionId == null || q.LevelId == questionGenerate.LevelQuestionId)&&
                         !questionIds.Contains(q.Id)
                     )
                     .Include(i => i.Grade)
+                    .ToList()
                     .OrderBy(i => random.Next())
-                    .Take(1)
                     .FirstOrDefault();
                     if(question == null)
                     {

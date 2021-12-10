@@ -11,6 +11,7 @@ import { UserFunction } from "redux/user/action";
 import "./style.scss";
 import AppSideBar from "app/components/sidebars/AppSideBar";
 import { LevelQuestion } from "models/matrix/Level";
+import { ChapterDetail } from "models/matrix/Chapter";
 const AppLayout: React.FC = ({ children }) => {
   const [showHeader, setShowHeader] = useState(true);
   const [showFooter, setShowFooter] = useState(true);
@@ -18,6 +19,7 @@ const AppLayout: React.FC = ({ children }) => {
   const [timeZone, setTimeZone] = useState("Asia/Ho_Chi_Minh");
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [levels, setLevels] = useState<LevelQuestion[]>([]);
+  const [chapters, setChapters] = useState<ChapterDetail[]>([]);
   const dispatch = useDispatch();
 
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
@@ -38,6 +40,7 @@ const AppLayout: React.FC = ({ children }) => {
         setGrades(res.data.grades);
         setSubjects(res.data.subjects);
         setLevels(res.data.levels);
+        setChapters(res.data.chapters);
         if (res.data.userInfo) {
           dispatch(UserFunction.updateUser(res.data.userInfo));
         }
@@ -60,6 +63,8 @@ const AppLayout: React.FC = ({ children }) => {
     subjects,
     timeZone,
     levels,
+    setSubjects,
+    chapters,
   };
   return (
     <AppContext.Provider value={value}>

@@ -3,7 +3,7 @@ import { Subject } from "models/matrix/Subject";
 import { useEffect, useState } from "react";
 
 export const useSubjects = (gradeCode?: string) => {
-  const { subjects } = useAppContext();
+  const { subjects, setSubjects } = useAppContext();
   const [subjectSelect, setSubjectSelect] = useState<Subject>();
   useEffect(() => {
     if (
@@ -20,5 +20,19 @@ export const useSubjects = (gradeCode?: string) => {
       !gradeCode ||
       s.grades?.some((g) => g.code === gradeCode || g.id === gradeCode)
   );
-  return { subjects: valueSubjects, subjectSelect, setSubjectSelect };
+  const setSubject = (subject: Subject) => {
+    let index = subjects.findIndex((s) => s.id === subject.id);
+    if (index === -1) {
+      return;
+    }
+    let newSubjects = [...subjects];
+    newSubjects[index] = subject;
+    setSubjects(newSubjects);
+  };
+  return {
+    subjects: valueSubjects,
+    subjectSelect,
+    setSubjectSelect,
+    setSubject,
+  };
 };
