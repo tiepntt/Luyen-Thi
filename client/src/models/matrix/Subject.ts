@@ -7,4 +7,5 @@ export interface Subject {
   total?: number;
   grades?: Grade[];
   templateId?: string;
+  avatarUrl?: string;
 }

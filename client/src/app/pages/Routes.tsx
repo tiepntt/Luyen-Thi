@@ -8,6 +8,8 @@ import { Route, Switch } from "react-router";
 const AdminPage = React.lazy(() => import("./Admin"));
 const AuthPage = React.lazy(() => import("./Auth"));
 const DocumentPage = React.lazy(() => import("./Document"));
+const PracticePage = React.lazy(() => import("./Practice"));
+const PracticeOptionsPage = React.lazy(() => import("./PracticeOption"));
 const DocumentExam = React.lazy(() => import("./Document/document-exam"));
 const HomePage = React.lazy(() => import("./Home"));
 const ProfilePage = React.lazy(() => import("./Profile"));
@@ -60,8 +62,13 @@ const routes: RouterProps[] = [
   },
   {
     path: "/practice",
-    component: DocumentPage,
-    exact: false,
+    component: PracticePage,
+    exact: true,
+  },
+  {
+    path: "/practice/:subject",
+    component: PracticeOptionsPage,
+    exact: true,
   },
   {
     path: "/404",
