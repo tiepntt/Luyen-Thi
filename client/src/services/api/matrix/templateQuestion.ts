@@ -8,7 +8,7 @@ export const templateQuestionApi = {
   remove: (id: string) => {
     return api.delete(`${baseUrl}/${id}`);
   },
-  getAllByUnitId: (unitId: string) => {
-    return api.get(`${baseUrl}/get-in-unit/${unitId}`);
-  },
+  // getAllByUnitId: (unitId: string) => {
+  //   return api.get(`${baseUrl}/get-in-unit/${unitId}`);
+  // },
 };

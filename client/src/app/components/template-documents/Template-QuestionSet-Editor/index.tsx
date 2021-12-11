@@ -56,6 +56,7 @@ const TemplateQuestionSetEditor: React.FC<Props> = ({
         return toastService.error(res.data.message);
       }
       var newTemplateQuestionSet = { ...templateQuestionSet };
+      newTemplateQuestionSet.questionGenerates[index] = questionGenerate;
       updateTQuestionSet(newTemplateQuestionSet);
     });
   };
@@ -87,6 +88,16 @@ const TemplateQuestionSetEditor: React.FC<Props> = ({
         updateTQuestionSet({ ...templateQuestionSet, grades: grades });
       });
   };
+  const changeContent = (content: string) => {
+    templateApi
+      .updateTQuestionSet({ ...templateQuestionSet, content: content })
+      .then((res) => {
+        if (res.status !== 200) {
+          return toastService.error(res.data.message);
+        }
+        updateTQuestionSet({ ...templateQuestionSet, content: content });
+      });
+  };
 
   return (
     <div className="template-question-set-editor mt-2">
@@ -97,6 +108,7 @@ const TemplateQuestionSetEditor: React.FC<Props> = ({
               defaultValue={templateQuestionSet.content}
               placeholder="Tiêu đề phần"
               className="mx-2"
+              onChange={(e) => changeContent(e.target.value)}
             />
             <Select
               options={grades}

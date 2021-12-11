@@ -36,14 +36,14 @@ const Dashboard = () => {
                   color="orange"
                 />
               </Grid>
-              <Grid item lg={3} sm={6} xl={3} xs={12}>
+              {/* <Grid item lg={3} sm={6} xl={3} xs={12}>
                 <Budget
                   title={"Lớp học"}
                   amount={100}
                   icon={<Folder />}
                   color="blue"
                 />
-              </Grid>
+              </Grid> */}
               <Grid item lg={3} sm={6} xl={3} xs={12}>
                 <Budget
                   title={"Users"}

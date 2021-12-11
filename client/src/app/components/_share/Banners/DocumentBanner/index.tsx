@@ -1,6 +1,6 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import DocumentBreadcumbs from "../../Breadcrumbs/DocumentBreadcumbs";
+import DocumentBreadcumbs from "../../Breadcrumbs/AppBreadcumbs";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "./style.scss";
 import { DocumentPreview } from "models/document/DocumentPreview";

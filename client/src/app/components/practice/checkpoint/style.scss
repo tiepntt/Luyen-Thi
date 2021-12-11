@@ -1,0 +1,37 @@
+.checkpoint-practice {
+  .content-page {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .list-chappter-side-bar,
+  .practice-option-sidebar {
+    text-align: left;
+    background-color: white;
+    border: 10px;
+    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+      0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+    padding: 10px 1.5rem;
+  }
+  .chapter-header {
+    cursor: pointer;
+    &:hover {
+      color: rgb(1, 94, 156);
+    }
+  }
+  .unit {
+    cursor: pointer;
+    &:hover {
+      color: rgb(16, 116, 184);
+    }
+  }
+  .level-config {
+    background: white;
+    width: 100%;
+    text-align: left;
+    background-color: white;
+    border: 10px;
+    box-shadow: 0px 1px 1px -1px rgba(0, 0, 0, 0.2),
+      0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+    padding: 10px 1.5rem;
+  }
+}

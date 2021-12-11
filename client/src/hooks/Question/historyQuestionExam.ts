@@ -7,7 +7,7 @@ export interface HistoriesQuestionModel {
   canShowSolve: boolean;
   getSolve: (questionId: string) => Promise<AxiosResponse<any>>;
   userAnswerIndex: (id: string) => QuestionHistory;
-  setDisable: (value: boolean) => void;
+  setDisable?: (value: boolean) => void;
   setQuestionHistoryIndex: (id: string) => (value: any) => void;
 }
 export const HistoryQuestions = React.createContext<HistoriesQuestionModel>(

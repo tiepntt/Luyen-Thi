@@ -1,0 +1,52 @@
+.question-practice {
+  .active {
+    background-color: rgb(3, 156, 194);
+    border-color: rgb(3, 156, 194) !important;
+    color: white;
+  }
+  .correct {
+    background-color: green !important;
+    border-color: green !important;
+    color: white;
+  }
+  .incorrect {
+    background-color: #994118 !important;
+    border-color: #994118 !important;
+    color: white;
+  }
+  .solve-line {
+    font-size: 16px;
+    color: rgb(63, 63, 192);
+    text-align: right;
+    .solve-link {
+      cursor: pointer;
+      display: inline-block;
+      border-bottom: 1px solid rgb(63, 63, 192);
+      line-height: 15px;
+    }
+  }
+  .solve-content {
+    background: #fff3ca;
+    border: 1px solid #fcd346;
+    border-radius: 10px;
+    padding: 10px 10px;
+    transition: height 1s, opacity 1s;
+    &.hide {
+      opacity: 0;
+      padding: 0 !important;
+
+      border-color: transparent !important;
+      background: none;
+    }
+    &.show {
+      opacity: 1;
+    }
+    .correct-answer {
+      font-weight: bold;
+      display: inline-block;
+      color: rgb(2, 43, 59);
+      border-bottom: 2px solid rgb(2, 43, 59);
+      line-height: 18px;
+    }
+  }
+}

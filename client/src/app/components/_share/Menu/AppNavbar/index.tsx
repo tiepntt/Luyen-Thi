@@ -55,13 +55,13 @@ const AppNavbar: React.FC<Props> = ({ className, onMobileNavOpen, rest }) => {
               >
                 Luyện thi
               </NavLink>
-              <NavLink
+              {/* <NavLink
                 to="/class-room"
                 activeClassName="active"
                 className="navbar-item"
               >
                 Lớp học
-              </NavLink>
+              </NavLink> */}
             </div>
             {!userRedux.accessToken ? (
               <div className="auth-button">

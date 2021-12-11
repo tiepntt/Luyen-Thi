@@ -1,10 +1,10 @@
 import DocumentEditQuestion from "app/components/admin/Document/document-edit-question/DocumentEditQuestion";
 import DocumentMatrixTool from "app/components/admin/Document/document-matrix-tool";
+import CheckpointPractice from "app/components/practice/checkpoint";
 
 import { useAppContext } from "hooks/AppContext";
 import React, { Suspense, useEffect } from "react";
 import { Route, Switch } from "react-router";
-
 const AdminPage = React.lazy(() => import("./Admin"));
 const AuthPage = React.lazy(() => import("./Auth"));
 const DocumentPage = React.lazy(() => import("./Document"));
@@ -66,8 +66,13 @@ const routes: RouterProps[] = [
     exact: true,
   },
   {
-    path: "/practice/:subject",
+    path: "/practice/:subjectCode",
     component: PracticeOptionsPage,
+    exact: true,
+  },
+  {
+    path: "/practice/:subjectCode/checkpoint",
+    component: CheckpointPractice,
     exact: true,
   },
   {

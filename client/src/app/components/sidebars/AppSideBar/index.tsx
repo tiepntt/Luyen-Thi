@@ -48,11 +48,11 @@ const AppSideBar: React.FC<Props> = ({ onMobileClose, openMobile }) => {
       href: "/document",
       Icon: <Poll className={classes.icon} />,
     },
-    {
-      name: "Lớp học",
-      href: "/classroom",
-      Icon: <Class className={classes.icon} />,
-    },
+    // {
+    //   name: "Lớp học",
+    //   href: "/classroom",
+    //   Icon: <Class className={classes.icon} />,
+    // },
     {
       name: "Luyện thi",
       href: "/practice",

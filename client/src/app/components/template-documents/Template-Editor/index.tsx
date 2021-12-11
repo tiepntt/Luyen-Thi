@@ -3,6 +3,8 @@ import { useSubjects } from "hooks/Grade-Subject/useSubjects";
 import React from "react";
 import { Button, Col, Form, InputGroup, Row } from "react-bootstrap";
 import Select from "react-select";
+import { templateApi } from "services/api/document/templateApi";
+import { toastService } from "services/toast";
 import TemplateQuestionSetEditor from "../Template-QuestionSet-Editor";
 import "./style.scss";
 interface Props {
@@ -13,11 +15,21 @@ const TemplateEditor: React.FC<Props> = ({ templateId }) => {
 
   const {
     template,
+    setTemplate,
     templateQuestionSets,
     addTQuestionSet,
     updateTQuestionSet,
     removeTQuestionSet,
   } = useTemplateDocument(templateId);
+  const updateTemplate = (key: string, value: any) => {
+    const newTemplate = { ...template, [key]: value } as any;
+    templateApi.updateTemplate(newTemplate).then((res) => {
+      if (res.status !== 200) {
+        return toastService.error(res.data.messages);
+      }
+      setTemplate(res.data);
+    });
+  };
   const subject = subjects.find((i) => i.id === template?.subjectId);
 
   return (
@@ -43,7 +55,13 @@ const TemplateEditor: React.FC<Props> = ({ templateId }) => {
           <Col>
             <InputGroup className="mb-2">
               <InputGroup.Text>Thời gian(phút)</InputGroup.Text>
-              <Form.Control value={template?.times || 0} />
+              <Form.Control
+                value={template?.times}
+                type="number"
+                onChange={(e) =>
+                  updateTemplate("times", Number(e.target.value))
+                }
+              />
             </InputGroup>
           </Col>
         </Row>
