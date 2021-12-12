@@ -130,7 +130,7 @@ const AppSideBar: React.FC<Props> = ({ onMobileClose, openMobile }) => {
           <Divider />
           <List>
             {navbarData.map(({ href, name, Icon }, index) => (
-              <ListItem className={classes.item} disableGutters>
+              <ListItem className={classes.item} disableGutters key={`${index}-${name}`}>
                 <Button
                   activeClassName={"navbar-active"}
                   className={classes.button}
@@ -148,7 +148,7 @@ const AppSideBar: React.FC<Props> = ({ onMobileClose, openMobile }) => {
             <div className="user-list-item">
               <List>
                 {userNabar.map(({ href, name, Icon }, index) => (
-                  <ListItem className={classes.item} disableGutters>
+                  <ListItem className={classes.item} disableGutters key={`${index}-${name}`}>
                     <Button
                       activeClassName={"navbar-active"}
                       className={classes.button}
@@ -188,7 +188,7 @@ const AppSideBar: React.FC<Props> = ({ onMobileClose, openMobile }) => {
             <div className="auth-list-item">
               <List>
                 {authNabvar.map(({ href, name, Icon }, index) => (
-                  <ListItem className={classes.item} disableGutters>
+                  <ListItem className={classes.item} disableGutters key={`${index}-${name}`}>
                     <Button
                       activeClassName={"navbar-active"}
                       className={classes.button}
