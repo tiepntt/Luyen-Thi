@@ -112,8 +112,8 @@ namespace Luyenthi.Services.GoogleService
                     end = (int)formatRuns[i + 1].StartIndex;
                 }
                 string dataText = value.Substring(start, end - start);
-                dataText = ParseDoc.StringToSymbols(dataText).Trim('\n');
-                var textElements = Regex.Split(dataText, @"(\$[^$]+\$)|(\$\$[^$]*?\$\$)").ToList();
+                dataText = ParseDoc.StringToSymbols(dataText);
+                var textElements = Regex.Split(dataText, @"(\$[^$]+\$)|(\$\$[^$]*?\$\$)|(Câu\s+[0-9]+[^\s]\s{0,5})|(Question\s+[0-9]+[^\s]\s{0,5})").ToList();
                 var elements = new List<Element>();
                 textElements.ForEach(i =>
                 {
@@ -152,7 +152,7 @@ namespace Luyenthi.Services.GoogleService
             {
                 Text = text,
             };
-            if (textStyle.Bold != null)
+            if (textStyle.Bold != null || text.Trim() == "Question #{index}.")
             {
                 result.Bold = textStyle.Bold;
             }
@@ -163,6 +163,10 @@ namespace Luyenthi.Services.GoogleService
             if (textStyle.Underline != null)
             {
                 result.Underline = textStyle.Underline;
+            }
+            if ( text.Trim() == "Question #{index}." || text.Trim() == "Câu #{index}.")
+            {
+                result.Bold = true;
             }
             return result;
         }

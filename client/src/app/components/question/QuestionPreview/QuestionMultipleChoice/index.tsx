@@ -82,9 +82,10 @@ const QuestionMultipleChocie: React.FC<Props> = ({
                 {option.name}
               </div>
               <div className="content-option">
-                {option.content.map((element, i_option) => (
-                  <TemplatePreview key={i_option} {...element} />
-                ))}
+                {option.content &&
+                  option.content.map((element, i_option) => (
+                    <TemplatePreview key={i_option} {...element} />
+                  ))}
               </div>
             </div>
           ))}
