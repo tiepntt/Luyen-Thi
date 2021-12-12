@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Luyenthi.Core;
 using Luyenthi.Core.Dtos;
+using Luyenthi.Core.Dtos.Document;
 using Luyenthi.Domain;
 using Luyenthi.Domain.User;
 using System;
@@ -22,6 +23,7 @@ namespace Luyenthi.HttpApi.Host
             CreateMap<Document, DocumentPreviewDto>();
             // documentHistory
             CreateMap<DocumentHistory, DocumentHistoryDto>();
+            CreateMap<DocumentHistory, DocumentHistoryByUserDto>();
 
             // question
             CreateMap<QuestionCreateDto, Question>();

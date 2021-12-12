@@ -19,7 +19,7 @@ namespace Luyenthi.HttpApi.Host.Controllers.AnalyticControllers
     public class AnalyticController : Controller
     {
         private readonly UserService _userService;
-        private readonly GradeService _gradeService;
+        private readonly ChapterRepository _chapterRepository;
         private readonly SubjectService _subjectService;
         private readonly QuestionRepository _questionRepository;
         private readonly QuestionHistoryRepository _questionHistoryRepository;
@@ -27,7 +27,7 @@ namespace Luyenthi.HttpApi.Host.Controllers.AnalyticControllers
 
         public AnalyticController(
             UserService userService,
-            GradeService gradeService,
+            ChapterRepository chapterRepository,
             SubjectService subjectService,
             QuestionRepository questionRepository,
             QuestionHistoryRepository questionHistoryRepository,
@@ -35,29 +35,47 @@ namespace Luyenthi.HttpApi.Host.Controllers.AnalyticControllers
             )
         {
             _userService = userService;
+            _chapterRepository = chapterRepository;
             _subjectService = subjectService;
             _questionRepository = questionRepository;
             _questionHistoryRepository = questionHistoryRepository;
-            _mapper = mapper
+            _mapper = mapper;
         }
 
-        [HttpGet]
-        public Dictionary<string,dynamic> GetAnalytic()
+        [HttpGet("{subjectId}")]
+        public Dictionary<string, dynamic> GetAnalytic(Guid subjectId)
         {
             ApplicationUser user = (ApplicationUser)HttpContext.Items["User"];
+
+            var chapterBySubject = _chapterRepository.Find(c => c.SubjectId == subjectId).Select(c => c.Id).ToList();
 
             var questionHistory = _questionHistoryRepository.Find(h => h.CreatedBy == user.Id).Include(i => i.Question).Select(h => new
             {
                 ChapterId = h.Question.ChapterId,
                 QuestionId = h.QuestionId,
                 Status = h.AnswerStatus,
-            }).ToList().GroupBy(k=>k.ChapterId).Select(g=>new
+                SubjectId = h.Question.SubjectId,
+            }).Where(s => s.SubjectId == subjectId).ToList().GroupBy(k => k.ChapterId).Select(g => new
             {
-                ChapterId = g.Key,
+                ChapterId = (Guid)g.Key,
                 QuestionCorrectQuantily = g.Where(g => g.Status == AnswerStatus.Correct).Count(),
                 QuestionQuantily = g.ToList().Count,
-                QuestionTotal = _questionRepository.Find(q=>q.ChapterId == g.Key).Count(),
-            });
+                QuestionTotal = _questionRepository.Find(q => q.ChapterId == g.Key).Count(),
+            }).ToList();
+
+            foreach (var id in chapterBySubject)
+            {
+                if (!questionHistory.Select(h=>h.ChapterId).Contains(id))
+                {
+                    questionHistory.Add(new
+                    {
+                        ChapterId = id,
+                        QuestionCorrectQuantily = 0,
+                        QuestionQuantily = 0,
+                        QuestionTotal = _questionRepository.Find(q => q.ChapterId == id).Count(),
+                    });
+                }
+            }
 
             return new Dictionary<string, dynamic>()
             {
@@ -66,4 +84,3 @@ namespace Luyenthi.HttpApi.Host.Controllers.AnalyticControllers
         }
     }
 }
- 

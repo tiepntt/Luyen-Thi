@@ -91,6 +91,17 @@ namespace Luyenthi.Services
                .FirstOrDefault();
             return documentHistory;
         }
+        public List<DocumentHistory> GetAllDocumentHistory(Guid userId)
+        {
+            var documentHistory = _documentHistoryRepository
+               .Find(i => i.CreatedBy == userId)
+               .Include(h => h.Document)
+               .OrderByDescending(i => i.StartTime)
+               .ToList();
+            return documentHistory;
+        }
+
+
         public void CloseHistory(DocumentHistory documentHistory,int times = 0)
         {
             using TransactionScope scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
