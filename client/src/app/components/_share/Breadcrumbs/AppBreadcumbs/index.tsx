@@ -8,7 +8,7 @@ interface Props {
   rootPath?: string;
   className?: string;
 }
-const DocumentBreadcumbs: React.FC<Props> = ({
+const AppBreadcumbs: React.FC<Props> = ({
   params,
   rootPath = "",
   className = "document-breadcrumbs",
@@ -32,7 +32,7 @@ const DocumentBreadcumbs: React.FC<Props> = ({
   );
 };
 
-export default DocumentBreadcumbs;
+export default AppBreadcumbs;
 interface Param {
   title: string;
   href: string;

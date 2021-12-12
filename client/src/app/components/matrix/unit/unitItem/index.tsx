@@ -66,11 +66,11 @@ const UnitItem: React.FC<Props> = (props) => {
                 </div>
               ))}
             </div>
-            <div className="btn-add-template-question">
+            {/* <div className="btn-add-template-question">
               <Button size="sm" variant="link" onClick={onAddTemplate}>
                 Thêm dạng bài
               </Button>
-            </div>
+            </div> */}
           </div>
         )}
       </div>

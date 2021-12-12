@@ -1,5 +1,6 @@
 import { TemplateDocument } from "models/template-document/template-document";
 import { TemplateQuestionGenerate } from "models/template-document/template-question-generate";
+import { TemplateQuestionSet } from "models/template-document/template-question-set";
 import api from "..";
 const baseUrl = "/template";
 export const templateApi = {
@@ -25,6 +26,9 @@ export const templateApi = {
   },
   removeTQuestionSet: (tqId: string) => {
     return api.delete(`${baseUrl}/question-set/${tqId}`);
+  },
+  updateTQuestionSet: (tQuestionSet: TemplateQuestionSet) => {
+    return api.put(`${baseUrl}/question-set/`, { ...tQuestionSet });
   },
   changeGrades: (gradeIds: string[], id: string) => {
     return api.patch(`${baseUrl}/question-set/change-grades`, { gradeIds, id });

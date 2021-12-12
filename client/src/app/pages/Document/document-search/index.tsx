@@ -12,8 +12,8 @@ import { useAppContext } from "hooks/AppContext";
 import "./style.scss";
 import SnipperLayout from "app/components/_share/Layouts/SpinnerLayout";
 import DocumentSearchForm from "app/components/_share/Form/DocumentSearchForm";
-const DocumentBreadcumbs = React.lazy(
-  () => import("app/components/_share/Breadcrumbs/DocumentBreadcumbs")
+const AppBreadcumbs = React.lazy(
+  () => import("app/components/_share/Breadcrumbs/AppBreadcumbs")
 );
 const DocumentSearchSidebar = React.lazy(
   () => import("app/components/sidebars/DocumentSearchSidebar")
@@ -97,7 +97,7 @@ const DocumentSearch: React.FC = () => {
             <Grid container spacing={3}>
               <Grid item lg={8} xl={8} xs={12} md={12}>
                 <div className="list-document-side-bar">
-                  <DocumentBreadcumbs rootPath={"/document"} params={params} />
+                  <AppBreadcumbs rootPath={"/document"} params={params} />
                   <div className="header-title">
                     Đề thi thử THPT Quốc gia chọn lọc, miễn phí
                   </div>

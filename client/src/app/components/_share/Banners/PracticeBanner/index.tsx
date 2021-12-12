@@ -1,6 +1,6 @@
 import { Container } from "react-bootstrap";
 import React from "react";
-import "./style.scss"
+import "./style.scss";
 
 export type PracticeBannerProps = {
   title: string;
@@ -9,10 +9,12 @@ export type PracticeBannerProps = {
 
 const PracticeBanner = ({ title, subtitle }: PracticeBannerProps) => {
   return (
-    <Container id="practice_banner" fluid={true} style={{backgroundColor: "#041E7C"}}>
-      <h1 className="text-center practice_title">
-      {title}
-      </h1>
+    <Container
+      id="practice_banner"
+      fluid={true}
+      style={{ backgroundColor: "#041E7C" }}
+    >
+      <h1 className="text-center practice_title">{title}</h1>
       <h6 className="text-center practice_subtitle">{subtitle}</h6>
     </Container>
   );

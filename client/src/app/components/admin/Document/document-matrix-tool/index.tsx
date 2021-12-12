@@ -120,7 +120,7 @@ const DocumentMatrixTool: React.FC = () => {
             </Form.Group>
           </Row>
           <Row>
-            <Form.Group as={Col}>
+            {/* <Form.Group as={Col}>
               <Form.Label>Dạng bài</Form.Label>
               <Select
                 options={templates}
@@ -130,7 +130,7 @@ const DocumentMatrixTool: React.FC = () => {
                 value={currentTemplate}
                 onChange={setCurrentTemplate as any}
               />
-            </Form.Group>
+            </Form.Group> */}
             <Form.Group as={Col}>
               <Form.Label>Độ khó</Form.Label>
               <Select

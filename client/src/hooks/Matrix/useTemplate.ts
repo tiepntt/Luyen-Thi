@@ -6,22 +6,22 @@ import { toastService } from "services/toast";
 export const useQuestionTemplate = (unitId?: string) => {
   const [templates, setTemplate] = useState<TemplateQuestion[]>([]);
   const [currentTemplate, setCurrentTemplate] = useState<TemplateQuestion>();
-  const getTemplates = () => {
-    if (unitId) {
-      templateQuestionApi.getAllByUnitId(unitId).then((res) => {
-        if (res.status === 200) {
-          setTemplate(res.data);
-        } else {
-          toastService.error(res.data.message);
-          setTemplate([]);
-        }
-      });
-    }
-  };
+  // const getTemplates = () => {
+  //   if (unitId) {
+  //     templateQuestionApi.getAllByUnitId(unitId).then((res) => {
+  //       if (res.status === 200) {
+  //         setTemplate(res.data);
+  //       } else {
+  //         toastService.error(res.data.message);
+  //         setTemplate([]);
+  //       }
+  //     });
+  //   }
+  // };
   useEffect(() => {
     setCurrentTemplate(null as any);
     if (unitId) {
-      getTemplates();
+      // getTemplates();
     } else {
       setTemplate([]);
     }

@@ -38,12 +38,14 @@ namespace Luyenthi.Services
                     Name=c.Name,
                     GradeId = c.GradeId,
                     SubjectId = c.SubjectId,
+                    Grade = c.Grade,
                     Units = c.Units.Select(u => new Unit
                     {
                         Id = u.Id,
                         Name = u.Name
                     }).ToList()
-                }).ToList();
+                })
+                .OrderBy(c => c.Grade.OrderNumber).ToList();
             return chapters;
         }
         public Chapter GetById (Guid id)
