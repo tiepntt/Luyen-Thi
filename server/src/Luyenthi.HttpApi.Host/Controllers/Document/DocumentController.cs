@@ -301,6 +301,17 @@ namespace Luyenthi.HttpApi.Host.Controllers
             }
             questions = _questionService.UpdateMany(questions.ToList());  
         }
-        
+
+        [HttpGet("document-history")]
+        public List<DocumentHistoryByUserDto> GetDocumentHistory()
+        {
+            ApplicationUser user = (ApplicationUser)HttpContext.Items["User"];
+
+            var documentHistory = _documentHistoryService.GetAllDocumentHistory(user.Id);
+
+            var result = _mapper.Map<List<DocumentHistoryByUserDto>>(documentHistory);
+            return result;
+        }
+
     }
 }
