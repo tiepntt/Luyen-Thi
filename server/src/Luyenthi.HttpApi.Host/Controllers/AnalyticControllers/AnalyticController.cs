@@ -15,34 +15,40 @@ namespace Luyenthi.HttpApi.Host.Controllers.AnalyticControllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class AnalyticController : Controller
     {
         private readonly UserService _userService;
+        private readonly UserRepository _userRepository;
         private readonly ChapterRepository _chapterRepository;
         private readonly SubjectService _subjectService;
+        private readonly DocumentRepository _documentRepository;
         private readonly QuestionRepository _questionRepository;
         private readonly QuestionHistoryRepository _questionHistoryRepository;
         private readonly IMapper _mapper;
 
         public AnalyticController(
             UserService userService,
+            UserRepository userRepository,
             ChapterRepository chapterRepository,
             SubjectService subjectService,
+            DocumentRepository documentRepository,
             QuestionRepository questionRepository,
             QuestionHistoryRepository questionHistoryRepository,
             IMapper mapper
             )
         {
             _userService = userService;
+            _userRepository = userRepository;
             _chapterRepository = chapterRepository;
             _subjectService = subjectService;
+            _documentRepository = documentRepository;
             _questionRepository = questionRepository;
             _questionHistoryRepository = questionHistoryRepository;
             _mapper = mapper;
         }
 
         [HttpGet("{subjectId}")]
+        [Authorize]
         public Dictionary<string, dynamic> GetAnalytic(Guid subjectId)
         {
             ApplicationUser user = (ApplicationUser)HttpContext.Items["User"];
@@ -65,7 +71,7 @@ namespace Luyenthi.HttpApi.Host.Controllers.AnalyticControllers
 
             foreach (var id in chapterBySubject)
             {
-                if (!questionHistory.Select(h=>h.ChapterId).Contains(id))
+                if (!questionHistory.Select(h => h.ChapterId).Contains(id))
                 {
                     questionHistory.Add(new
                     {
@@ -80,6 +86,22 @@ namespace Luyenthi.HttpApi.Host.Controllers.AnalyticControllers
             return new Dictionary<string, dynamic>()
             {
                 {"Analytic", questionHistory},
+            };
+        }
+
+        [HttpGet("/analytic-system")]
+        [Authorize(Role.Admin)]
+        public Dictionary<string, dynamic> GetAnalyticSystem()
+        {
+            var result = new
+            {
+                DocumentQuality = _documentRepository.GetAll().Count(),
+                QuestionQuality = _questionRepository.GetAll().Count(),
+                UserQuality = _userRepository.GetAll().Count(),
+            };
+            return new Dictionary<string, dynamic>()
+            {
+                {"AnalyticSystem", result},
             };
         }
     }

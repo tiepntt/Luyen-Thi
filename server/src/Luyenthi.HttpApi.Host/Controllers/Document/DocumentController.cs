@@ -59,7 +59,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
         public DocumentPreviewDto GetPreview(Guid Id)
         {
             ApplicationUser user = (ApplicationUser)HttpContext.Items["User"];
-            var document =   _documentService.GetDetailById(Id);
+            var document = _documentService.GetDetailById(Id);
             var questionSets = document.QuestionSets;
             var numberQuestion = questionSets.SelectMany(i => i.Questions)
                 .SelectMany(q => q.Type == QuestionType.QuestionGroup ? q.SubQuestions : new List<Question> { q })
@@ -74,11 +74,11 @@ namespace Luyenthi.HttpApi.Host.Controllers
                 NumberQuestion = numberQuestion,
                 QuestionSets = _mapper.Map<List<QuestionSetDetailDto>>(questionSets)
             };
-        // lấy ra lần gần nhất làm bài
-      
+            // lấy ra lần gần nhất làm bài
+
             if (user != null)
             {
-                var  history = _documentHistoryService.GetExitDocument(user.Id, Id);
+                var history = _documentHistoryService.GetExitDocument(user.Id, Id);
                 result.DocumentHistory = _mapper.Map<DocumentHistoryDto>(history);
             }
 
@@ -102,7 +102,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
             .Include(i => i.Grade)
             .Include(i => i.Subject)
             .OrderByDescending(i => i.CreatedAt);
-            
+
             result.Documents = documents.Skip(query.Skip)
             .Take(query.Take)
             .Select(d => new DocumentTitleDto
@@ -176,7 +176,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
                 questionSetDatas = new ParseQuestionDocService(doc.Body.Content.ToList(), images, questionImport.DocumentId).Parse();
             }
             //xóa toàn bộ các question ở trong document
-            
+
             var questionSets = _mapper.Map<List<QuestionSet>>(questionSetDatas);
             document.GoogleDocId = questionImport.GoogleDocUrl;
             //_documentRepository.UpdateEntity(document);
@@ -219,10 +219,11 @@ namespace Luyenthi.HttpApi.Host.Controllers
             var countTask = _documentService.CountAll(request);
             await Task.WhenAll(documentTask, countTask);
 
-            return new DocumentGetAllDto {
+            return new DocumentGetAllDto
+            {
                 Documents = _mapper.Map<List<DocumentTitleDto>>(documentTask.Result),
                 Total = countTask.Result
-            }; 
+            };
         }
         [HttpPut]
         public void UpdateById(DocumentUpdateDto documentUpdate)
@@ -237,7 +238,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
         public void Approve(Guid id)
         {
             var document = _documentService.GetById(id);
-            if(document == null)
+            if (document == null)
             {
                 throw new KeyNotFoundException("Không tìm thấy bản ghi");
             }
@@ -251,22 +252,23 @@ namespace Luyenthi.HttpApi.Host.Controllers
             var histories = _documentHistoryService.GetRankInDocument(documentId);
             // lấy top 10
             var results = histories
-                .Select((h,index) => new DocumentHistoryRank 
+                .Select((h, index) => new DocumentHistoryRank
                 {
-                    User=_mapper.Map<UserTitleDto>(h.User),
-                    NumberCorrect=h.NumberCorrect,
+                    User = _mapper.Map<UserTitleDto>(h.User),
+                    NumberCorrect = h.NumberCorrect,
                     Rank = index + 1,
-                    TimeDuration=h.TimeDuration
+                    TimeDuration = h.TimeDuration
                 }).ToList();
-            if(user != null)
+            if (user != null)
             {
                 var userRank = histories.FirstOrDefault(h => h.CreatedBy == user.Id);
-                if(userRank != null)
+                if (userRank != null)
                 {
                     var userRankIndex = histories.ToList().IndexOf(userRank);
-                    if(userRankIndex >= 10)
+                    if (userRankIndex >= 10)
                     {
-                        results.Add(new DocumentHistoryRank {
+                        results.Add(new DocumentHistoryRank
+                        {
 
                             User = _mapper.Map<UserTitleDto>(user),
                             NumberCorrect = userRank.NumberCorrect,
@@ -276,7 +278,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
                     }
                 }
             }
-            
+
             return results;
         }
         [HttpPut("update-matrix")]
@@ -289,7 +291,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
                 .Skip(request.Start)
                 .Take(request.End - request.Start)
                 .ToList();
-            foreach(Question question in questions)
+            foreach (Question question in questions)
             {
                 question.ChapterId = request.ChapterId;
                 question.SubjectId = request.SubjectId;
@@ -299,7 +301,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
                 question.LevelId = request.LevelId;
                 question.Status = QuestionStatus.Used;
             }
-            questions = _questionService.UpdateMany(questions.ToList());  
+            questions = _questionService.UpdateMany(questions.ToList());
         }
 
         [HttpGet("document-history")]
@@ -311,6 +313,70 @@ namespace Luyenthi.HttpApi.Host.Controllers
 
             var result = _mapper.Map<List<DocumentHistoryByUserDto>>(documentHistory);
             return result;
+        }
+
+        [HttpGet("detail-document-history/{historyId}")]
+        [Authorize]
+        public DocumentHistory GetDetailDocumentHistory(Guid historyId)
+        {
+            ApplicationUser user = (ApplicationUser)HttpContext.Items["User"];
+
+            var documentHistory = _documentHistoryRepository
+            .Find(i => i.CreatedBy == user.Id && i.Id == historyId)
+            .Include(i => i.Document)
+            .Take(1)
+            .Select(h => new DocumentHistory
+            {
+                Id = h.Id,
+                StartTime = h.StartTime,
+                EndTime = h.EndTime,
+                Status = h.Status,
+                DocumentId = h.DocumentId,
+                Document = new Document
+                {
+                    Id = h.Document.Id,
+                    Name = h.Document.Name,
+                    Times = h.Document.Times,
+                    Description = h.Document.Description,
+                    DocumentType = h.Document.DocumentType,
+                    QuestionSets = h.Document.QuestionSets
+                                    .Select(qs => new QuestionSet
+                                    {
+                                        Show = qs.Show,
+                                        Name = qs.Name,
+                                        Questions = qs.Questions.Select(q => new Question
+                                        {
+                                            Id = q.Id,
+                                            Introduction = q.Introduction,
+                                            Content = q.Content,
+                                            Type = q.Type,
+                                            SubQuestions = q.SubQuestions.Select(sq => new Question
+                                            {
+                                                Id = sq.Id,
+                                                Introduction = sq.Introduction,
+                                                Content = sq.Content,
+                                                ParentId = sq.ParentId,
+                                                Type = sq.Type
+                                            }).ToList()
+                                        }).ToList()
+                                    }).ToList()
+                },
+                NumberCorrect = h.NumberCorrect,
+                NumberIncorrect = h.NumberIncorrect,
+
+                QuestionHistories = h.QuestionHistories.Select(q => new QuestionHistory
+                {
+                    Id = q.Id,
+                    QuestionId = q.QuestionId,
+                    QuestionSetId = q.QuestionSetId,
+                    DocumentHistoryId = h.Id,
+                    Answer = q.Answer,
+                    AnswerStatus = q.AnswerStatus,
+
+                }).ToList()
+            })
+            .FirstOrDefault();
+            return documentHistory;
         }
 
     }
