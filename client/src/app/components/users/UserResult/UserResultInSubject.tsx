@@ -1,29 +1,26 @@
 import { Grid } from "@material-ui/core";
 import { UserResultBugget } from "app/components/_share/Bugget/UserResultBugget";
 import { AlarmClock, CheckedCheckbox, ClosedBook } from "assets/images/user";
-import {
-  UserResultAnalytic,
-  UserHistoryAnalyticQuery,
-  UserHistoryTypeTime,
-  UserHistoryAnalytic,
-} from "models/user/userResult";
+import { UserResultAnalytic } from "models/user/userResult";
 import React, { useEffect, useState } from "react";
-import Select from "react-select";
 import { useParams } from "react-router";
 import { profileApi } from "services/api/user/profile";
+import { analyticApi } from "services/api/analytic/analytic";
+
 import { TimeFunction } from "utils/timeFunction";
-import UserAnalyticOverview from "app/components/_share/Chart/UserAnalyticOverview";
+import UserAnalyticResultInSubject from "app/components/_share/Table/UserAnalyticResultInSubject";
 import { useAppContext } from "hooks/AppContext";
+import { useSubjects } from "hooks/Grade-Subject/useSubjects";
 
 const UserResultInSubject = () => {
   const { subjectCode } = useParams<any>();
   const [userAnalyticResult, setUserAnalyticResult] =
     useState<UserResultAnalytic>();
-  const [historyAnalyticQuery, setHistoryAnalyticQuery] =
-    useState<UserHistoryAnalyticQuery>({
-      type: UserHistoryTypeTime.InWeek,
-    });
-  const [userHistories, setUserHistories] = useState<UserHistoryAnalytic[]>([]);
+  const [userResultChapters, setUserResultChapters] = useState([]);
+  const { chapters } = useAppContext();
+  const { subjects } = useSubjects();
+  const subject = subjects.find((s) => s.code === subjectCode);
+  const chaptersSubject = chapters.filter((c) => c.subjectId === subject?.id);
 
   useEffect(() => {
     profileApi.getAnalytic({ subjectCode: subjectCode }).then((res) => {
@@ -31,18 +28,11 @@ const UserResultInSubject = () => {
         setUserAnalyticResult(res.data);
       }
     });
-  }, [subjectCode]);
-  const { timeZone } = useAppContext();
-  useEffect(() => {
-    profileApi
-      .getHistories({ ...historyAnalyticQuery, timeZone: timeZone })
-      .then((res) => {
-        if (res.status === 200) {
-          setUserHistories(res.data);
-        }
-      });
+    analyticApi.getResultInSubject(subject?.id || "").then((res) => {
+      setUserResultChapters(res.data.analytic);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [historyAnalyticQuery]);
+  }, [subjectCode, subject]);
 
   return (
     <div id="overview">
@@ -83,24 +73,13 @@ const UserResultInSubject = () => {
           <h5 className="label mt-4 mb-3" style={{ flexGrow: 1 }}>
             Thống kê kết quả
           </h5>
-          <div className="select-option">
-            <Select
-              className="select"
-              options={timeDurationValues as any}
-              onChange={(e: any) =>
-                setHistoryAnalyticQuery({
-                  ...historyAnalyticQuery,
-                  type: e.value,
-                })
-              }
-              value={timeDurationValues.find(
-                (i) => i.value === historyAnalyticQuery.type
-              )}
-            />
-          </div>
         </div>
         <div className="analytic-chart-overview">
-          <UserAnalyticOverview userHistoies={userHistories} />
+          <UserAnalyticResultInSubject
+            chapter={chaptersSubject}
+            resultChapter={userResultChapters}
+            codeSubject={subjectCode}
+          />
         </div>
       </div>
     </div>
@@ -108,21 +87,3 @@ const UserResultInSubject = () => {
 };
 
 export default UserResultInSubject;
-const timeDurationValues = [
-  {
-    value: UserHistoryTypeTime.Today,
-    label: "Hôm nay",
-  },
-  {
-    value: UserHistoryTypeTime.InWeek,
-    label: "Tuần này",
-  },
-  {
-    value: UserHistoryTypeTime.InMonth,
-    label: "Tháng này",
-  },
-  {
-    value: UserHistoryTypeTime.InYear,
-    label: "Năm nay",
-  },
-];

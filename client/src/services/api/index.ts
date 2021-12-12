@@ -32,6 +32,9 @@ export const setupAxios = () => {
         store.dispatch(
           CommonFunction.setRedirectPath(window.location.pathname)
         );
+        store.dispatch(
+          UserFunction.logout()
+        );
         const { UserReducer } = store.getState();
         if ((UserReducer as UserRedux).accessToken) {
           toastService.warning("Phiên đăng nhập đã kết thúc.");

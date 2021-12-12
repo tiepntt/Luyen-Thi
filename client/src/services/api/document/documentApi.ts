@@ -36,4 +36,7 @@ export const documentApi = {
   updateMatrix: (matrix: QuestionMatrix) => {
     return api.put(`${baseUrl}/update-matrix`, { ...matrix });
   },
+  getHistory: () => {
+    return api.get(`${baseUrl}/document-history`);
+  },
 };
