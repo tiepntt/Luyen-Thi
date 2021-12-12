@@ -15,17 +15,22 @@ namespace Luyenthi.Services
     {
         private readonly TemplateDocumentRepository _templateDocumentRepository;
         private readonly DocumentRepository _documentRepository;
+        private readonly QuestionSetRepository _questionSetRepository;
         private readonly TemplateQuestionGenerateRepository _templateQuestionGenerateRepository;
         private readonly QuestionRepository _questionRepository;
         public GenerateService(
             TemplateDocumentRepository templateDocumentRepository,
             TemplateQuestionGenerateRepository templateQuestionGenerateRepository,
+            QuestionSetRepository questionSetRepository,
+            DocumentRepository documentRepository,
             QuestionRepository questionRepository
             )
         {
             _templateDocumentRepository = templateDocumentRepository;
             _templateQuestionGenerateRepository = templateQuestionGenerateRepository;
             _questionRepository = questionRepository;
+            _questionSetRepository = questionSetRepository;
+            _documentRepository = documentRepository;
         }
         
         // generate document
@@ -57,12 +62,17 @@ namespace Luyenthi.Services
             {
                 Id = Guid.NewGuid(),
                 TemplateDocumentId = template.Id,
+                Name="Đề thi thử THPT Quốc gia - cấu trúc chuẩn Bộ GD",
+                NameNomarlize = "De thi thu",
                 Status = DocumentStatus.Public,
                 IsApprove = true,
+                SubjectId = template.SubjectId,
                 QuestionSets = new List<QuestionSet>(),
+                GradeId = new Guid("7d9c9e86-89c5-49bf-bf35-99a97ca22f2a")
             };
 
             List<Guid> questionIds = new List<Guid>();
+            List<QuestionSet>  questionSets= new List<QuestionSet>();
             foreach(TemplateQuestionSet templateQuestionSet in template.TemplateQuestionSets)
             {
                 // tạo ra 1 questionSet
@@ -99,9 +109,12 @@ namespace Luyenthi.Services
                     questionIds.Add(question.Id);
                 }
                 questionSet.Questions = questions;
+                //document.QuestionSets.Add(questionSet);
                 document.QuestionSets.Add(questionSet);
             }
             _documentRepository.Add(document);
+
+            
             return document;
         }
         public Question GenerateQuestion(QuestionGenerateRequest request)
