@@ -16,7 +16,7 @@ export const useRedirectAuth = () => {
   useEffect(() => {
     if (userRedux.userInfo && userRedux.userInfo.emailConfirmed) {
       // popup vetify email code
-      window.location.href = commonState.redirectPath;
+      window.location.href = commonState.redirectPath.includes('auth') ? "/document" : commonState.redirectPath;
       scrollTop();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
