@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Luyenthi.Core.Dtos.Analytic;
 using Luyenthi.Core.Enums;
+using Luyenthi.Core.Enums.Analytic;
 using Luyenthi.Domain.User;
 using Luyenthi.EntityFrameworkCore;
 using Luyenthi.Services;
@@ -22,6 +23,7 @@ namespace Luyenthi.HttpApi.Host.Controllers.AnalyticControllers
         private readonly ChapterRepository _chapterRepository;
         private readonly SubjectService _subjectService;
         private readonly DocumentRepository _documentRepository;
+        private readonly DocumentHistoryRepository _documentHistoryRepository;
         private readonly QuestionRepository _questionRepository;
         private readonly QuestionHistoryRepository _questionHistoryRepository;
         private readonly IMapper _mapper;
@@ -32,6 +34,7 @@ namespace Luyenthi.HttpApi.Host.Controllers.AnalyticControllers
             ChapterRepository chapterRepository,
             SubjectService subjectService,
             DocumentRepository documentRepository,
+            DocumentHistoryRepository documentHistoryRepository,
             QuestionRepository questionRepository,
             QuestionHistoryRepository questionHistoryRepository,
             IMapper mapper
@@ -41,7 +44,7 @@ namespace Luyenthi.HttpApi.Host.Controllers.AnalyticControllers
             _userRepository = userRepository;
             _chapterRepository = chapterRepository;
             _subjectService = subjectService;
-            _documentRepository = documentRepository;
+            _documentHistoryRepository = documentHistoryRepository;
             _questionRepository = questionRepository;
             _questionHistoryRepository = questionHistoryRepository;
             _mapper = mapper;
@@ -89,7 +92,7 @@ namespace Luyenthi.HttpApi.Host.Controllers.AnalyticControllers
             };
         }
 
-        [HttpGet("/analytic-system")]
+        [HttpGet("admin/analytic-system")]
         [Authorize(Role.Admin)]
         public Dictionary<string, dynamic> GetAnalyticSystem()
         {
@@ -102,6 +105,115 @@ namespace Luyenthi.HttpApi.Host.Controllers.AnalyticControllers
             return new Dictionary<string, dynamic>()
             {
                 {"AnalyticSystem", result},
+            };
+        }
+        [HttpGet("admin/analytic-user")]
+        [Authorize(Role.Admin)]
+        public Dictionary<string, dynamic> GetAnalyticUser(AnalyticType type)
+        {
+            var result = new List<AnalyticUserDto>();
+            if (type == AnalyticType.Month)
+            {
+                var month = _documentHistoryRepository
+                    .Find(h => h.CreatedAt <= DateTime.Now && h.CreatedAt > DateTime.Now.AddMonths(-1))
+                    .GroupBy(h => h.CreatedAt.Day).Select(h => new AnalyticUserDto
+                    {
+                        Title = h.Key,
+                        Quality = h.Select(h => h.Id).Count(),
+
+                    }).ToList();
+                for (var i = DateTime.Now.Day + 1; i <= 30; i++)
+                {
+                    if (result.Select(r => r.Title).Contains(i))
+                    {
+                        result.Add(new AnalyticUserDto
+                        {
+                            Title = i,
+                            Quality = month.Find(m => m.Title == i).Quality,
+                        });
+                    }
+                    else
+                    {
+                        result.Add(new AnalyticUserDto
+                        {
+                            Title = i,
+                            Quality = 0,
+                        });
+                    }
+                }
+                for (var i = 1; i <= DateTime.Now.Day; i++)
+                {
+                    if (result.Select(r => r.Title).Contains(i))
+                    {
+                        result.Add(new AnalyticUserDto
+                        {
+                            Title = i,
+                            Quality = month.Find(m => m.Title == i).Quality,
+                        });
+                    }
+                    else
+                    {
+                        result.Add(new AnalyticUserDto
+                        {
+                            Title = i,
+                            Quality = 0,
+                        });
+                    }
+                }
+            }
+            if (type == AnalyticType.Year)
+            {
+                var year = _documentHistoryRepository
+                    .Find(h => h.CreatedAt <= DateTime.Now && h.CreatedAt > DateTime.Now.AddYears(-1))
+                    .GroupBy(h => h.CreatedAt.Month)
+                    .Select(h => new AnalyticUserDto
+                    {
+                        Title = h.Key,
+                        Quality = h.Select(h => h.Id).Count(),
+
+                    }).ToList();
+                for (var i = DateTime.Now.Month + 1; i <= 12; i++)
+                {
+                    if (result.Select(r => r.Title).Contains(i))
+                    {
+                        result.Add(new AnalyticUserDto
+                        {
+                            Title = i,
+                            Quality = year.Find(m => m.Title == i).Quality,
+                        });
+                    }
+                    else
+                    {
+                        result.Add(new AnalyticUserDto
+                        {
+                            Title = i,
+                            Quality = 0,
+                        });
+                    }
+                }
+                for (var i = 1; i <= DateTime.Now.Month; i++)
+                {
+                    if (result.Select(r => r.Title).Contains(i))
+                    {
+                        result.Add(new AnalyticUserDto
+                        {
+                            Title = i,
+                            Quality = year.Find(m => m.Title == i).Quality,
+                        });
+                    }
+                    else
+                    {
+                        result.Add(new AnalyticUserDto
+                        {
+                            Title = i,
+                            Quality = 0,
+                        });
+                    }
+                }
+            }
+            return new Dictionary<string, dynamic>()
+            {
+                {"AnalyticUser",result},
             };
         }
     }

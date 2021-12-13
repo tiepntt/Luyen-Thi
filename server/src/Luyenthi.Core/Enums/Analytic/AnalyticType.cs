@@ -8,7 +8,6 @@ namespace Luyenthi.Core.Enums.Analytic
 {
     public enum AnalyticType
     {
-        Day,
         Week,
         Month,
         Year,
