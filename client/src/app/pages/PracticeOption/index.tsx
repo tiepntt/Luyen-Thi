@@ -22,9 +22,8 @@ const PracticeOptionPage: React.FC = () => {
           style={{}}
         >
           <Row
-            className="d-flex justify-content-center text-center"
+            className="d-flex banner-subject justify-content-center text-center"
             style={{
-              backgroundColor: "#088BB5",
               padding: 20,
               borderTopLeftRadius: 15,
               borderTopRightRadius: 15,

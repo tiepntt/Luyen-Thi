@@ -6,6 +6,7 @@ import TrialTest from "app/components/practice/trial-test";
 import { useAppContext } from "hooks/AppContext";
 import React, { Suspense, useEffect } from "react";
 import { Route, Switch } from "react-router";
+import { Redirect } from "react-router-dom";
 const AdminPage = React.lazy(() => import("./Admin"));
 const AuthPage = React.lazy(() => import("./Auth"));
 const DocumentPage = React.lazy(() => import("./Document"));
@@ -24,11 +25,6 @@ interface RouterProps {
 }
 // applayout
 const routes: RouterProps[] = [
-  {
-    path: "/",
-    component: HomePage,
-    exact: true,
-  },
   {
     path: "/home",
     component: HomePage,
@@ -111,7 +107,7 @@ const Routes: React.FC = () => {
             <RouterComponent {...route} />
           </Route>
         ))}
-        {/* <Redirect from="*" to="/404"></Redirect> */}
+        <Redirect exact from="/" to="/home"></Redirect>
       </Switch>
     </Suspense>
   );

@@ -13,7 +13,7 @@ interface Props {
   onRemoveTemplate: (template: any) => void;
 }
 const UnitItem: React.FC<Props> = (props) => {
-  const { unit, onAddTemplate, onRemoveTemplate, onRemove, onEdit } = props;
+  const { unit, onRemoveTemplate, onRemove, onEdit } = props;
   const [showTemplate, setShowTemplate] = useState(false);
   return (
     <div className="unit-item mb-1">

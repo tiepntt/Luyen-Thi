@@ -50,7 +50,7 @@ namespace Luyenthi.Services
             return history;
         }
         public DocumentHistory GetDetailByDocumentId(
-            Guid userId, Guid? documentId, Guid? Id = null, DocumentHistoryStatus? status = null)
+            Guid userId, Guid? documentId , Guid? Id = null, DocumentHistoryStatus? status = null)
         {
             var documentHistory = _documentHistoryRepository
                 .Find(i => i.CreatedBy == userId && (i.DocumentId == documentId || i.Id == Id) 
@@ -102,12 +102,37 @@ namespace Luyenthi.Services
         }
 
 
-        public void CloseHistory(DocumentHistory documentHistory,int times = 0)
+        public DocumentHistory CloseHistory(Guid id,int times = 0)
         {
-            var documentHistoryCheck = _documentHistoryRepository.Get(documentHistory.Id);
-            if(documentHistoryCheck.Status == DocumentHistoryStatus.Close)
+            var documentHistory = _documentHistoryRepository
+                .Find(i => i.Id == id)
+                .OrderByDescending(i => i.StartTime)
+                .Take(1)
+                .Select(h => new DocumentHistory
+                {
+                    Id = h.Id,
+                    StartTime = h.StartTime,
+                    EndTime = h.EndTime,
+                    Status = h.Status,
+                    DocumentId = h.DocumentId,
+                    NumberCorrect = h.NumberCorrect,
+                    NumberIncorrect = h.NumberIncorrect,
+                    Document = h.Document,
+                    QuestionHistories = h.QuestionHistories.Select(q => new QuestionHistory
+                    {
+                        Id = q.Id,
+                        QuestionId = q.QuestionId,
+                        QuestionSetId = q.QuestionSetId,
+                        DocumentHistoryId = h.Id,
+                        Answer = q.Answer,
+                        AnswerStatus = q.AnswerStatus,
+
+                    }).ToList()
+                })
+                .FirstOrDefault();
+            if(documentHistory.Status == DocumentHistoryStatus.Close)
             {
-                return;
+                return documentHistory;
             }
             using TransactionScope scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
             // kiểm tra đáp án
@@ -130,6 +155,7 @@ namespace Luyenthi.Services
             scope.Complete();
             scope.Dispose();
             documentHistory.QuestionHistories = questionHistories.ToList();
+            return documentHistory;
         }
         public UserAnalyticResponse GetAnalyticUser(UserAnalyticQuery query)
         {

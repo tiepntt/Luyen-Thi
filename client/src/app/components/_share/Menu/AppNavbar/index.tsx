@@ -9,7 +9,6 @@ import { NavLink } from "react-router-dom";
 import { RootState } from "redux/store";
 import { useSelector } from "react-redux";
 import { UserRedux } from "models/user/userInfo";
-import Notification from "../../Badge/Notification";
 import UserBadge from "../../Badge/UserBadge";
 interface Props {
   className?: string;
@@ -83,8 +82,8 @@ const AppNavbar: React.FC<Props> = ({ className, onMobileNavOpen, rest }) => {
                 </Button>
               </div>
             ) : (
-              <div className="user-info">
-                <Notification />
+              <div className="user-info mx-2 mr-0">
+                {/* <Notification /> */}
                 <UserBadge user={userRedux.userInfo as any} />
               </div>
             )}

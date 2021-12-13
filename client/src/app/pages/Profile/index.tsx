@@ -2,7 +2,7 @@ import React from "react";
 import { Container } from "react-bootstrap";
 import "./style.scss";
 import ProfileNavbar from "app/components/_share/Menu/ProfileNavbar";
-import { Route, Switch } from "react-router";
+import { Redirect, Route, Switch } from "react-router";
 import { profileRoutes } from "./routes";
 
 const ProfilePage: React.FC = () => {
@@ -16,6 +16,7 @@ const ProfilePage: React.FC = () => {
               {profileRoutes.map((route, i) => (
                 <Route {...route} key={i} />
               ))}
+              <Redirect exact from="/profile" to={"/profile/info"} />
             </Switch>
           </div>
         </div>

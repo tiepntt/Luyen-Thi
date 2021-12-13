@@ -14,10 +14,14 @@ import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { useParams } from "react-router";
 import { DocumentHistoryStatus } from "settings/document/documentHistory";
+import { StringParam, useQueryParams } from "use-query-params";
 import "./style.scss";
 const DocumentExam = () => {
   const { showHeader, setShowHeader } = useAppContext();
   const { id } = useParams<any>();
+  const [filter] = useQueryParams({
+    historyId: StringParam,
+  });
   const {
     documentHistory,
     document,
@@ -28,7 +32,7 @@ const DocumentExam = () => {
     reset,
     submiting,
     getAnswerQuestion,
-  } = useDocumentExam(id);
+  } = useDocumentExam(id, filter?.historyId || "");
   useEffect(() => {
     if (showHeader) {
       setShowHeader(false);

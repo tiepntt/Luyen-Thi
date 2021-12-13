@@ -7,13 +7,12 @@ import { ChapterIcon } from "assets/images/practice";
 import { useAppContext } from "hooks/AppContext";
 import { PracticeConfig } from "models/practice/practiceConfig";
 import React, { useEffect, useState } from "react";
-import { Col, Container, Form, Image, Row } from "react-bootstrap";
+import { Container, Form, Image } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { BsPlusCircle } from "react-icons/bs";
 import "./style.scss";
-import { useQueryParams } from "hooks/QueryParam";
-import Ranking from "../ranking";
 import { DocumentHistoryRank } from "models/document/DocumentHistory";
+import { useQueryParams } from "hooks/QueryParam";
 
 const ranking_data: DocumentHistoryRank[] = [
   {
@@ -21,50 +20,24 @@ const ranking_data: DocumentHistoryRank[] = [
       id: "1",
       firstName: "Manh",
       lastName: "Nguyen Van",
-      avatarUrl:
-        "https://scr.vn/wp-content/uploads/2020/07/avt-cute.jpg.webp",
+      avatarUrl: "https://scr.vn/wp-content/uploads/2020/07/avt-cute.jpg.webp",
     },
-    numberCorrect: 100,
+    numberCorrect: 105,
     rank: 1,
     timeDuration: 100,
   },
   {
     user: {
       id: "2",
-      firstName: "Manh",
-      lastName: "Nguyen Van",
+      firstName: "Tiệp",
+      lastName: "Nguyễn Thái",
       avatarUrl:
-        "https://www.google.com/url?sa=i&url=https%3A%2F%2Fscr.vn%2Fhinh-avatar.html&psig=AOvVaw1v7RaXQp9jQcC2iDAlqBI5&ust=1639382764280000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIDhpu3m3fQCFQAAAAAdAAAAABAD",
+        "https://res.cloudinary.com/nguyentiep/image/upload/v1636074005/Luyenthi/User/08d99e29-9a90-4ab0-8c2d-a9ec5a39c851.png",
     },
-    numberCorrect: 100,
+    numberCorrect: 84,
     rank: 2,
-    timeDuration: 100,
+    timeDuration: 84,
   },
-  {
-    user: {
-      id: "3",
-      firstName: "Manh",
-      lastName: "Nguyen Van",
-      avatarUrl:
-        "https://www.google.com/url?sa=i&url=https%3A%2F%2Fscr.vn%2Fhinh-avatar.html&psig=AOvVaw1v7RaXQp9jQcC2iDAlqBI5&ust=1639382764280000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIDhpu3m3fQCFQAAAAAdAAAAABAD",
-    },
-    numberCorrect: 100,
-    rank: 3,
-    timeDuration: 100,
-  },
-  {
-    user: {
-      id: "4",
-      firstName: "Manh",
-      lastName: "Nguyen Van",
-      avatarUrl:
-        "https://www.google.com/url?sa=i&url=https%3A%2F%2Fscr.vn%2Fhinh-avatar.html&psig=AOvVaw1v7RaXQp9jQcC2iDAlqBI5&ust=1639382764280000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIDhpu3m3fQCFQAAAAAdAAAAABAD",
-    },
-    numberCorrect: 100,
-    rank: 4,
-    timeDuration: 100,
-  },
-
 ];
 
 const CheckpointPractice: React.FC = () => {
@@ -111,8 +84,8 @@ const CheckpointPractice: React.FC = () => {
   };
   useEffect(() => {
     const section = queryParmas.get("section");
-    if (section && scrollTop) {
-      scrollTop(section);
+    if (scrollTop) {
+      scrollTop(section || "");
     }
   }, [queryParmas, scrollTop]);
   return (
@@ -181,34 +154,34 @@ const CheckpointPractice: React.FC = () => {
                 ))}
               </div>
             </div>
-            <div className="level-config">
+            <div className="level-config mt-3">
               <div className="level-label">Xếp hạng</div>
               <div className="level-label-clarative"></div>
-              <div className="d-flex">
-                <div style={{flexGrow: 1}}>
-                  <Row>
-                    <Col className="col-2">
-                      <Image src={ranking_data[0].user.avatarUrl} roundedCircle fluid />
-                    </Col>
-                    <Col className="col-6 d-flex align-items-center">
-                      <span>Nguyễn Văn Mạnh</span>
-                    </Col>
-                  </Row>
-                </div>
-                <div className="d-flex align-items-center">500</div>
-              </div>
-              <div className="d-flex">
-                <div style={{flexGrow: 1}}>
-                  <Row>
-                    <Col className="col-2">
-                      <Image src={ranking_data[0].user.avatarUrl} roundedCircle fluid />
-                    </Col>
-                    <Col className="col-6 d-flex align-items-center">
-                      <span>Nguyễn Văn Mạnh</span>
-                    </Col>
-                  </Row>
-                </div>
-                <div className="d-flex align-items-center">500</div>
+              <div className="rank-users">
+                {ranking_data.map((rank, index) => (
+                  <div
+                    className={`d-flex user-rank pt-2 pb-2 top-${index + 1} `}
+                  >
+                    <div className="index">{index + 1}</div>
+                    <div style={{ flexGrow: 1 }}>
+                      <div className="d-flex info-user">
+                        <Image
+                          src={rank.user.avatarUrl}
+                          roundedCircle
+                          width={30}
+                          height={30}
+                          fluid
+                        />
+                        <span className="mx-3 mr-0">
+                          {rank.user.lastName + " " + rank.user.firstName}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="d-flex align-items-center">
+                      {rank.numberCorrect}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </Grid>

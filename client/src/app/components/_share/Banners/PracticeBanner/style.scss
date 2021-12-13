@@ -2,12 +2,21 @@
   color: white;
   padding-top: 30px;
   padding-bottom: 30px;
+  background: rgb(1, 26, 55);
+  background: radial-gradient(
+    circle,
+    rgba(1, 26, 55, 1) 0%,
+    rgba(4, 91, 153, 1) 55%,
+    rgba(0, 41, 83, 1) 96%
+  );
 }
 .practice_title {
-  font-family: Roboto;
+  // font-family: Roboto;
+  font-weight: bold;
 }
 
 .practice_subtitle {
   font-style: italic;
-  font-family: Roboto;
+  font-family: "Times New Roman", Times, serif;
+  color: rgb(177, 176, 175);
 }

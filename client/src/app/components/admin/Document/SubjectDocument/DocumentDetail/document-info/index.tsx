@@ -161,7 +161,7 @@ const DocumentEditInfo: React.FC<Props> = ({ documentId }) => {
                   <Image
                     src={
                       documentDetail.imageUrl ||
-                      "https://ub.com.vn/attachments/ta-de-2009-1-png.28880/"
+                      "https://taiphanmem.com.vn/anhphanmem/20210520/dethieng2-2021-05-20.png"
                     }
                     width={200}
                     height={250}

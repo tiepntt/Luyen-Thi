@@ -9,11 +9,7 @@ export type PracticeBannerProps = {
 
 const PracticeBanner = ({ title, subtitle }: PracticeBannerProps) => {
   return (
-    <Container
-      id="practice_banner"
-      fluid={true}
-      style={{ backgroundColor: "#041E7C" }}
-    >
+    <Container id="practice_banner" fluid={true}>
       <h1 className="text-center practice_title">{title}</h1>
       <h6 className="text-center practice_subtitle">{subtitle}</h6>
     </Container>
