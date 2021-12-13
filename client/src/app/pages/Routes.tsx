@@ -14,6 +14,7 @@ const DocumentExam = React.lazy(() => import("./Document/document-exam"));
 const HomePage = React.lazy(() => import("./Home"));
 const ProfilePage = React.lazy(() => import("./Profile"));
 const NotFoundPage = React.lazy(() => import("./404/NotFound"));
+const TrialTestPage = React.lazy(() => import("./TrialTest"));
 interface RouterProps {
   path: string;
   component: React.FC;
@@ -95,6 +96,11 @@ const routes: RouterProps[] = [
     path: "/auth",
     component: AuthPage,
   },
+  {
+    path: "/trial-test",
+    component: TrialTestPage,
+    exact: true
+  }
 ];
 const Routes: React.FC = () => {
   return (

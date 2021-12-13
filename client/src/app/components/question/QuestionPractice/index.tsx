@@ -9,7 +9,7 @@ interface Props {
 }
 const QuestionPractice: React.FC<Props> = ({ question }) => {
   return (
-    <div className="question-preivew question-exam">
+    <div className="question-practice question-exam">
       {question.type === QuestionType.QuestionGroup ? (
         <QuestionGroup question={question} />
       ) : (
