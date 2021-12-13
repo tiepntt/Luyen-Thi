@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Hangfire;
 using Luyenthi.Core.Dtos;
 using Luyenthi.Core.Enums;
 using Luyenthi.Domain;
@@ -68,7 +69,14 @@ namespace Luyenthi.HttpApi.Host.Controllers
                     Status = DocumentHistoryStatus.Doing,
                     DocumentId = documentId,
                 };
+                var startTime = DateTime.UtcNow.AddSeconds(1);
+                var endTime = startTime.AddMinutes(document.Times);
                 _historyService.Create(documentHistory);
+                if(document.Times > 0)
+                {
+                    BackgroundJob.Schedule(() => _historyService.CloseHistory(documentHistory, document.Times), endTime - startTime);
+                }
+                
             }
             else
             {

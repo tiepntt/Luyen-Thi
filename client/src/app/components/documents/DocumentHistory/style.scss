@@ -1,6 +1,6 @@
 .document-history {
   border-top: 1px solid #e7e4e4;
-  padding: 8px 10px 2px 0px;
+  padding: 8px 3px 2px 0px;
 
   position: relative;
   display: flex;
@@ -78,9 +78,17 @@
     .desription {
       color: gray;
       font-size: 14px;
-      height: 39px;
+      max-height: 39px;
       overflow: hidden;
       margin-top: 5px;
+    }
+    .date-change,
+    .result {
+      font-style: italic;
+      color: #2b3f46;
+      .point {
+        color: green;
+      }
     }
   }
 
@@ -127,7 +135,6 @@
   .props-img {
     padding: 2px;
     max-width: 130px !important;
-    height: 165px !important;
     position: relative;
     padding: 2px 5px !important;
 

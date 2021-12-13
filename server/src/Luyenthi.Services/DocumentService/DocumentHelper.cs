@@ -49,6 +49,21 @@ namespace Luyenthi.Services
                     if (question.SubQuestions != null && question.SubQuestions.Count > 0)
                     {
                         // bộ câu hỏi
+                        var introduction = JsonConvert.SerializeObject(question.Introduction);
+                        var regex = new Regex(@"(\([0-9]+\)\s*____)");
+                        bool match = regex.IsMatch(introduction);
+                        if (match)
+                        {
+                            for (int i = 0; i < question.SubQuestions.Count(); i++)
+                            {
+
+                                introduction = regex.Replace(introduction, $"({startQuestionIndex + i}) __u_", 1);
+                            }
+                            introduction = Regex.Replace(introduction, @"(__u_)", "____");
+
+
+                            question.Introduction = JsonConvert.DeserializeObject<List<ExpandoObject>>(introduction);
+                        }
                         foreach (Question subQ in question.SubQuestions)
                         {
                             var contenQuestion = JsonConvert.SerializeObject(subQ.Introduction);

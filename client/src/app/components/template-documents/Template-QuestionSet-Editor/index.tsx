@@ -98,6 +98,22 @@ const TemplateQuestionSetEditor: React.FC<Props> = ({
         updateTQuestionSet({ ...templateQuestionSet, content: content });
       });
   };
+  const changeShow = () => {
+    templateApi
+      .updateTQuestionSet({
+        ...templateQuestionSet,
+        show: !templateQuestionSet.show,
+      })
+      .then((res) => {
+        if (res.status !== 200) {
+          return toastService.error(res.data.message);
+        }
+        updateTQuestionSet({
+          ...templateQuestionSet,
+          show: !templateQuestionSet.show,
+        });
+      });
+  };
 
   return (
     <div className="template-question-set-editor mt-2">
@@ -122,7 +138,7 @@ const TemplateQuestionSetEditor: React.FC<Props> = ({
             />
           </div>
           <div className="option-header">
-            <button className="btn view">
+            <button className="btn view" onClick={changeShow}>
               <FontAwesomeIcon
                 icon={templateQuestionSet.show ? faEye : faEyeSlash}
               />

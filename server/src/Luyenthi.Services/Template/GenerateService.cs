@@ -42,6 +42,7 @@ namespace Luyenthi.Services
                {
                    Id = t.Id,
                    SubjectId = t.SubjectId,
+                   Times = t.Times,
                    TemplateQuestionSets = t.TemplateQuestionSets.Select(qs => new TemplateQuestionSet
                    {
                        Id = qs.Id,
@@ -64,15 +65,18 @@ namespace Luyenthi.Services
                 TemplateDocumentId = template.Id,
                 Name="Đề thi thử THPT Quốc gia - cấu trúc chuẩn Bộ GD",
                 NameNomarlize = "De thi thu",
-                Status = DocumentStatus.Public,
+                Description="Đề thi được tạo tự động dựa trên cấu trúc chuẩn của bộ giáo dục trong kì thi THPT Quốc gia.\n Dữ liệu tạo đề thi được biên soạn chọn lọc, đa dạng trải dài theo từng mức độ.",
+                Status = DocumentStatus.Private,
                 IsApprove = true,
                 SubjectId = template.SubjectId,
                 QuestionSets = new List<QuestionSet>(),
+                Times = template.Times,
                 GradeId = new Guid("7d9c9e86-89c5-49bf-bf35-99a97ca22f2a")
             };
 
             List<Guid> questionIds = new List<Guid>();
             List<QuestionSet>  questionSets= new List<QuestionSet>();
+            int index = 1;
             foreach(TemplateQuestionSet templateQuestionSet in template.TemplateQuestionSets)
             {
                 // tạo ra 1 questionSet
@@ -82,6 +86,7 @@ namespace Luyenthi.Services
                     Name = templateQuestionSet.Content,
                     Show = templateQuestionSet.Show,
                     Questions = new List<Question>(),
+                    OrderNumber = ++index
                 };
                 var questions = new List<Question>();
                 foreach (TemplateQuestionGenerate questionGenerate in templateQuestionSet.QuestionGenerates)
@@ -98,6 +103,7 @@ namespace Luyenthi.Services
                         !questionIds.Contains(q.Id)
                     )
                     .Include(i => i.Grade)
+                    .Include(i => i.Level)
                     .ToList()
                     .OrderBy(i => random.Next())
                     .FirstOrDefault();
@@ -108,6 +114,7 @@ namespace Luyenthi.Services
                     questions.Add(question);
                     questionIds.Add(question.Id);
                 }
+                questions = EnumerateService<Question>.Shuffle(questions).ToList().OrderBy(q => q.Level.OrderNumber).ToList();
                 questionSet.Questions = questions;
                 //document.QuestionSets.Add(questionSet);
                 document.QuestionSets.Add(questionSet);
@@ -135,6 +142,8 @@ namespace Luyenthi.Services
                     Id = q.Id,
                     Introduction = q.Introduction,
                     Content = q.Content,
+                    Type = q.Type,
+                    NumberQuestion = q.NumberQuestion,
                     SubQuestions = q.SubQuestions.Select(s => new Question
                     {
                         Id = s.Id,

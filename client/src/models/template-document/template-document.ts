@@ -4,3 +4,10 @@ export interface TemplateDocument {
   numberQuestion: number;
   times: number;
 }
+export interface TemplatePractice {
+  id: string;
+  subject: string;
+  numberQuestion: string;
+  times: number;
+  documentId?: string;
+}

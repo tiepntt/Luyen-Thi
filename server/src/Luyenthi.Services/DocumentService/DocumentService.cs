@@ -58,6 +58,7 @@ namespace Luyenthi.Services
                                     {
                                         Show = qs.Show,
                                         Name = qs.Name,
+                                        OrderNumber = qs.OrderNumber,
                                         Questions = qs.Questions.Select(q => new Question
                                         {
                                             Id = q.Id,
@@ -73,7 +74,7 @@ namespace Luyenthi.Services
                                                 Type = sq.Type
                                             }).ToList()
                                         }).ToList()
-                                    }).ToList()
+                                    }).OrderBy(s => s.OrderNumber).ToList()
                 })
                 .FirstOrDefault();
                 
