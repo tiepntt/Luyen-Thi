@@ -37,10 +37,11 @@
       font-weight: bold;
       text-align: center;
     }
+
     .level-label-clarative {
       width: 100%;
-      height: 1px;
-      background-color: gray;
+      height: 0.5px;
+      background-color: rgb(221, 217, 217);
       margin-top: 12px;
       margin-bottom: 12px;
     }
@@ -63,10 +64,22 @@
     font-weight: bold;
     color: #01455a;
   }
+  .user-rank {
+    border-bottom: 0.5px solid rgb(223, 221, 224);
+  }
   .unit-name {
     font-style: italic !important;
     line-height: 35px;
     margin-left: 3rem !important;
+  }
+  .info-user {
+    align-items: center;
+  }
+  .index {
+    display: inline-flex;
+    justify-content: center;
+    width: 40px;
+    align-items: center;
   }
   .chapter-option {
     justify-content: center;
@@ -77,5 +90,26 @@
     width: 100%;
     height: 0.05rem;
     background-color: gray;
+  }
+  .top-1 {
+    color: rgb(240, 206, 54);
+  }
+
+  .user-rank {
+    font-weight: 500;
+  }
+  .top-2,
+  .top-3,
+  .top-4 {
+    color: rgb(52, 177, 3);
+  }
+
+  .top-5,
+  .top-6,
+  .top-7,
+  .top-8,
+  .top-9,
+  .top-10 {
+    color: rgb(143, 9, 170);
   }
 }

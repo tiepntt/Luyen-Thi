@@ -1,7 +1,5 @@
 import { TemplateQuestion } from "models/matrix/TemplateQuestion";
 import { useState, useEffect } from "react";
-import { templateQuestionApi } from "services/api/matrix/templateQuestion";
-import { toastService } from "services/toast";
 
 export const useQuestionTemplate = (unitId?: string) => {
   const [templates, setTemplate] = useState<TemplateQuestion[]>([]);

@@ -26,3 +26,9 @@ export interface ChapterDetail {
   subject: Subject;
   grade: Grade;
 }
+export interface AnalyticChapter {
+  chapterId: string;
+  questionCorrectQuantily: number;
+  questionQuantily: number;
+  questionTotal: number;
+}

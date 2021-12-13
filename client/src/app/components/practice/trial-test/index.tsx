@@ -1,6 +1,6 @@
 import PracticeBanner from "app/components/_share/Banners/PracticeBanner";
 import React, { useEffect, useState } from "react";
-import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import { Button, Card, Container, Row } from "react-bootstrap";
 import PracticeUserChart from "app/components/_share/Chart/PracticeUserChart";
 import "./style.scss";
 import { useParams } from "react-router-dom";
@@ -55,7 +55,7 @@ const TrialTest: React.FC = () => {
             <Card style={{ maxWidth: 500 }}>
               {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
               <Card.Body>
-                <div className="d-flex font-bold">
+                <div className="d-flex font-bold mt-2">
                   <div className="flex-grow-1">Đề thi môn:</div>
                   <div>{subject?.name}</div>
                 </div>
@@ -80,8 +80,12 @@ const TrialTest: React.FC = () => {
                   <div>Từ dễ tới khó </div>
                 </div>
                 <div className="option-exam">
-                  <Button className="btn-start" onClick={startExam}>
-                    Bắt đầu làm bài
+                  <Button
+                    className="btn-start"
+                    onClick={startExam}
+                    disabled={generatting}
+                  >
+                    {generatting ? "Đang tạo dữ liệu" : "Bắt đầu làm bài"}
                   </Button>
                 </div>
               </Card.Body>

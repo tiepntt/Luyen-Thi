@@ -39,8 +39,7 @@ const DocumentMatrixTool: React.FC = () => {
     subjectSelect?.id as any
   );
   const { units, curentUnit, setCurentUnit } = useUnits(currentChapter?.id);
-  const { templates, currentTemplate, setCurrentTemplate } =
-    useQuestionTemplate(curentUnit?.id);
+  const { currentTemplate } = useQuestionTemplate(curentUnit?.id);
   const { levels, currentLevel, setCurrentLevel } = useLevelQuestion();
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();

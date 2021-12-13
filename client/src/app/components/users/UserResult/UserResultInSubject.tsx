@@ -11,12 +11,15 @@ import { TimeFunction } from "utils/timeFunction";
 import UserAnalyticResultInSubject from "app/components/_share/Table/UserAnalyticResultInSubject";
 import { useAppContext } from "hooks/AppContext";
 import { useSubjects } from "hooks/Grade-Subject/useSubjects";
+import { AnalyticChapter } from "models/matrix/Chapter";
 
 const UserResultInSubject = () => {
   const { subjectCode } = useParams<any>();
   const [userAnalyticResult, setUserAnalyticResult] =
     useState<UserResultAnalytic>();
-  const [userResultChapters, setUserResultChapters] = useState([]);
+  const [userResultChapters, setUserResultChapters] = useState<
+    AnalyticChapter[]
+  >([]);
   const { chapters } = useAppContext();
   const { subjects } = useSubjects();
   const subject = subjects.find((s) => s.code === subjectCode);
@@ -77,7 +80,7 @@ const UserResultInSubject = () => {
         <div className="analytic-chart-overview">
           <UserAnalyticResultInSubject
             chapter={chaptersSubject}
-            resultChapter={userResultChapters}
+            resultChapter={userResultChapters || []}
             codeSubject={subjectCode}
           />
         </div>

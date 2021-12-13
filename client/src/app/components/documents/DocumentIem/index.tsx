@@ -43,4 +43,5 @@ const DocumentItem: React.FC<Props> = ({ document, onClick }) => {
 };
 
 export default DocumentItem;
-const url = "https://ub.com.vn/attachments/ta-de-2009-1-png.28880/";
+const url =
+  "https://taiphanmem.com.vn/anhphanmem/20210520/dethieng2-2021-05-20.png";

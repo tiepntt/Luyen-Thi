@@ -54,7 +54,7 @@ const UserBadge: React.FC<Props> = ({ user }) => {
             <Dropdown.Item
               className="item-option"
               as={NavLink}
-              to="/profile/document"
+              to="/profile/history"
             >
               <FontAwesomeIcon icon={faUserCircle} className="icon" />
               <span className="label-item">Tài liệu đã làm</span>

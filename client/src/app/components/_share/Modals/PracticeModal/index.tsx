@@ -5,7 +5,7 @@ import {
 } from "hooks/Question/historyQuestionExam";
 import { useQuestionPractice } from "hooks/Question/useQuestionHistory";
 import { PracticeConfig } from "models/practice/practiceConfig";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
 import SnipperLayout from "../../Layouts/SpinnerLayout";
 import { BsArrowRightCircleFill, BsLightbulb } from "react-icons/bs";

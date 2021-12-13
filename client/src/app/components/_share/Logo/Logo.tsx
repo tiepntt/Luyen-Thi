@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import "./style.scss";
 const Logo = () => {
   return (
-    <NavLink className="app-logo" to="/">
+    <NavLink className="app-logo pb-2" to="/">
       iPractice
     </NavLink>
   );

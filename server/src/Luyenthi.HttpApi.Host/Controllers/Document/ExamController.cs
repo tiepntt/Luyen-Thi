@@ -45,12 +45,16 @@ namespace Luyenthi.HttpApi.Host.Controllers
         }
         [HttpGet("{documentId}")]
 
-        public ExamDto GetExam(Guid documentId)
+        public ExamDto GetExam(Guid documentId, [FromQuery] Guid? historyId)
         {
             // lấy ra content document
             ApplicationUser user = (ApplicationUser)HttpContext.Items["User"];
             var documentTask = _documentService.GetDetailById(documentId);
-            var documentHistoryTask = _historyService.GetDetailByDocumentId(user.Id, documentId);
+            if(historyId!= null)
+            {
+                documentId = Guid.Empty;
+            }
+            var documentHistoryTask = _historyService.GetDetailByDocumentId(user.Id, documentId, historyId);
             //await Task.WhenAll(documentTask, documentHistoryTask);
             var document = documentTask;
             var documentHistory = documentHistoryTask;
@@ -74,7 +78,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
                 _historyService.Create(documentHistory);
                 if(document.Times > 0)
                 {
-                    BackgroundJob.Schedule(() => _historyService.CloseHistory(documentHistory, document.Times), endTime - startTime);
+                    BackgroundJob.Schedule(() => _historyService.CloseHistory(documentHistory.Id, document.Times), endTime - startTime);
                 }
                 
             }
@@ -83,11 +87,11 @@ namespace Luyenthi.HttpApi.Host.Controllers
                 // nếu bài thi đã kết thúc => chấm bài và trả về kết quả
                 if (document.DocumentType == DocumentType.Exam && documentHistory.Status ==DocumentHistoryStatus.Doing &&documentHistory.StartTime.AddMinutes(document.Times) < DateTime.UtcNow)
                 {
-                    _historyService.CloseHistory(documentHistory, document.Times);
+                    documentHistory =  _historyService.CloseHistory(documentHistory.Id, document.Times);
                 }
                 if (document.DocumentType == DocumentType.Document && documentHistory.Status == DocumentHistoryStatus.Doing && documentHistory.StartTime.AddHours(6) < DateTime.UtcNow)
                 {
-                    _historyService.CloseHistory(documentHistory, 120);
+                    documentHistory = _historyService.CloseHistory(documentHistory.Id, 120);
                 }
             }
             var result = new ExamDto
@@ -101,16 +105,8 @@ namespace Luyenthi.HttpApi.Host.Controllers
         public DocumentHistoryDto SubmitExam(SubmitExamRequest request)
         {
             ApplicationUser user = (ApplicationUser)HttpContext.Items["User"];
-            var documentHistory = _historyService.GetDetailByDocumentId(user.Id, null, request.DocumentHistoryId);
-            var document = _documentService.GetById((Guid)documentHistory.DocumentId);
-            if (documentHistory == null)
-            {
-                throw new KeyNotFoundException("Không tìm thấy bản ghi");
-            }
-            if (documentHistory.Status != DocumentHistoryStatus.Close)
-            {
-                _historyService.CloseHistory(documentHistory, document.Times);
-            }
+            var documentHistory =  _historyService.CloseHistory(request.DocumentHistoryId);
+            
             return _mapper.Map<DocumentHistoryDto>(documentHistory);
         }
         [HttpPost("reset")]

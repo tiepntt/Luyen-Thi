@@ -8,4 +8,12 @@
   .option-practice {
     cursor: pointer;
   }
+  .banner-subject {
+    background: radial-gradient(
+      circle,
+      rgba(1, 26, 55, 1) 0%,
+      rgba(4, 91, 153, 1) 55%,
+      rgba(0, 41, 83, 1) 96%
+    );
+  }
 }

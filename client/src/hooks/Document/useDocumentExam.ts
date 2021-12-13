@@ -12,7 +12,7 @@ import { DocumentTypeLabel } from "settings/document/documentType";
 import { QuestionHistoryStatus } from "settings/question/questionHistoryStatus";
 import { QuestionType } from "settings/question/questionType";
 
-export const useDocumentExam = (id: string) => {
+export const useDocumentExam = (id: string, historyId?: string) => {
   const [document, setDocument] = useState<DocumentExam>();
   const [submiting, setSubmiting] = useState(false);
   const [documentHistory, setDocumentHistory] = useState<DocumentHistory>(
@@ -66,7 +66,7 @@ export const useDocumentExam = (id: string) => {
               moment
                 .utc()
                 .diff(moment.utc(documentHistory.startTime), "seconds");
-            if (newTimes === 0) {
+            if (newTimes < 0) {
               submit();
               clearInterval(loopTime);
             }
@@ -99,7 +99,7 @@ export const useDocumentExam = (id: string) => {
     }
   };
   useEffect(() => {
-    examApi.getExam(id).then((res) => {
+    examApi.getExam(id, historyId).then((res) => {
       if (res.status === 200) {
         let newDocument = res.data.document as DocumentExam;
         let questions = newDocument?.questionSets

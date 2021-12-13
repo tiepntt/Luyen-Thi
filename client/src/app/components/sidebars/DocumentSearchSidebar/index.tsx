@@ -14,7 +14,7 @@ const DocumentSearchSidebar = (props: Props) => {
   return (
     <div className="document-side-bar">
       <div className="img-side-bar ">
-        <Image src={"/assets/images/logo.gif"} />
+        <Image src={"/assets/images/banner.png"} />
       </div>
       <div className="item">
         <Similar

@@ -63,7 +63,7 @@ export const SearchFilterInput = (props: Props) => {
         return option.name;
       }}
       clearOnEscape
-      renderOption={(option) => option.name}
+      // renderOption={(option) => option.name}
       renderInput={(params) => (
         <TextField
           {...params}
