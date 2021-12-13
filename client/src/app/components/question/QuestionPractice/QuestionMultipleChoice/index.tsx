@@ -4,7 +4,6 @@ import { Question } from "models/question/Question";
 import React, { createRef, useEffect, useState } from "react";
 import { getClassStatusQuestion } from "utils/questionFunction";
 import clsx from "clsx";
-import { toastService } from "services/toast";
 import SnipperBall from "app/components/_share/StaticLayout/SnipperBall";
 interface Props {
   question: Question;
@@ -29,6 +28,7 @@ const QuestionMultipleChoice: React.FC<Props> = ({ question }) => {
 
   const [scaleSize, setScaleSize] = useState<any>({});
   useEffect(() => {
+    setScaleSize({ width: "auto", height: "auto" });
     setTimeout(() => {
       let lengthMax = 0;
       let heightMax = 0;
@@ -44,8 +44,9 @@ const QuestionMultipleChoice: React.FC<Props> = ({ question }) => {
       newScale.height = heightMax + 5;
 
       var optionBoxWidth = optionsRef.current?.clientWidth || 0;
+
       if (lengthMax < optionBoxWidth / 4 - 37) {
-        newScale.width = optionBoxWidth / 4 - 9;
+        newScale.width = optionBoxWidth / 2 - 21;
       } else if (lengthMax < optionBoxWidth / 2 - 37) {
         newScale.width = optionBoxWidth / 2 - 21;
       } else {

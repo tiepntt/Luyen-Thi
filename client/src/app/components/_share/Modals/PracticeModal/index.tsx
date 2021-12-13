@@ -10,15 +10,14 @@ import { Modal, Button } from "react-bootstrap";
 import SnipperLayout from "../../Layouts/SpinnerLayout";
 import { BsArrowRightCircleFill, BsLightbulb } from "react-icons/bs";
 import "./style.scss";
-import { QuestionHistory } from "models/question/QuestionHistory";
 interface Props {
   show: boolean;
   setShow: (value: boolean) => void;
   config: PracticeConfig;
 }
 const PracticeModal: React.FC<Props> = ({ show, setShow, config }) => {
-  const enableCheckRef = useRef<boolean>(false);
   const handleClose = () => {
+    clearQuestion();
     setShow(false);
   };
   const {
@@ -27,13 +26,18 @@ const PracticeModal: React.FC<Props> = ({ show, setShow, config }) => {
     generateQuestion,
     answerQuestionIndex,
     setAnswerIndex,
+    submitQuestion,
+    disable,
     getNextQuestion,
+    getSolve,
+    showSolve,
+    clearQuestion,
   } = useQuestionPractice(config);
 
   const value: HistoriesQuestionModel = {
     questionHistories: histories,
-    disable: false,
-    canShowSolve: false,
+    disable,
+    canShowSolve: showSolve,
     setQuestionHistoryIndex: setAnswerIndex,
     userAnswerIndex: answerQuestionIndex as any,
     getSolve: null as any,
@@ -42,25 +46,8 @@ const PracticeModal: React.FC<Props> = ({ show, setShow, config }) => {
     if (show && config) {
       generateQuestion();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config, show]);
-
-  const isAnswered = (history: QuestionHistory) => {
-    console.log("history.answer", history)
-    if (history.answer) return true;
-    return false;
-  }
-  const nextQuestionHandle = () => {
-    getNextQuestion()
-  }
-
-  useEffect(() => {
-    enableCheckRef.current = false;
-  }, [])
-
-  useEffect(() => {
-    const isEnough = histories.every((e) => !!e.answer);
-    enableCheckRef.current = isEnough;
-  }, [histories])
   return (
     <Modal
       animation
@@ -71,6 +58,7 @@ const PracticeModal: React.FC<Props> = ({ show, setShow, config }) => {
       size="lg"
       //   backdrop="static"
     >
+      <Modal.Header></Modal.Header>
       <Modal.Body className="p-3 question-modal">
         <SnipperLayout loading={question}>
           <div className="question-content">
@@ -80,10 +68,22 @@ const PracticeModal: React.FC<Props> = ({ show, setShow, config }) => {
           </div>
         </SnipperLayout>
       </Modal.Body>
-      <Modal.Footer>
-        <BsLightbulb color="black" size={30} />
-        <Button className="check-answer" disabled={enableCheckRef.current} variant="primary">Kiểm tra</Button>
-        <BsArrowRightCircleFill color="#00FFCC" size={30} onClick={getNextQuestion} className="next-question" />
+      <Modal.Footer className="justify-content-center">
+        <BsLightbulb color="black" size={30} onClick={getSolve} />
+        <Button
+          className="check-answer"
+          disabled={histories.some((s) => !s.answer)}
+          variant="primary"
+          onClick={submitQuestion}
+        >
+          Kiểm tra
+        </Button>
+        <BsArrowRightCircleFill
+          color="#00FFCC"
+          size={30}
+          onClick={getNextQuestion}
+          className="next-question"
+        />
       </Modal.Footer>
     </Modal>
   );

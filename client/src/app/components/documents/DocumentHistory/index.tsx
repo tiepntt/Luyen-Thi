@@ -4,21 +4,17 @@ import React from "react";
 import { Button, Image } from "react-bootstrap";
 import moment from "moment";
 import "./style.scss";
+import { DocumentHistoryDetail } from "models/document/DocumentHistory";
 interface Props {
-  history: any;
+  history: DocumentHistoryDetail;
 }
 const DocumentHistory: React.FC<Props> = ({ history }) => {
+  console.log(history);
+
   const document = history.document;
 
   return (
     <div className="document-history mt-3 mx-3">
-      <div className="props-img">
-        <Image
-          src={document.imageUrl || url}
-          className="document-avatar"
-          thumbnail
-        />
-      </div>
       <div className="info">
         <a
           className="document-item-title"
@@ -27,15 +23,20 @@ const DocumentHistory: React.FC<Props> = ({ history }) => {
           {document.name}
         </a>
         <div className="desription">{document.description}</div>
-        <div className="mt-2">
-          <b>Kết quả: </b>
-          <span className="text-danger">
-            {history.numberCorrect}/ {history.numberIncorrect}
-          </span>
-        </div>
-        <div>
-          <b>Ngày làm: </b>
-          <span>{moment(history.startTime).format("DD/MM/YYYY")}</span>
+        <div className="history-info d-flex mt-2">
+          <div className="result" style={{ flexGrow: 1 }}>
+            <span>Kết quả: </span>
+            <span className="point">
+              {Math.round(
+                (history.numberCorrect * 100) /
+                  (history.numberIncorrect + history.numberCorrect || 1)
+              ) / 100}
+            </span>
+          </div>
+          <div className="date-change">
+            <span>Ngày làm: </span>
+            <span>{moment(history.startTime).format("DD/MM/YYYY")}</span>
+          </div>
         </div>
 
         <div className="d-flex document-options">

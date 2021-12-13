@@ -1,4 +1,9 @@
 .question-practice {
+  user-select: none;
+  .content-option,
+  .name-option {
+    user-select: none;
+  }
   .active {
     background-color: rgb(3, 156, 194);
     border-color: rgb(3, 156, 194) !important;

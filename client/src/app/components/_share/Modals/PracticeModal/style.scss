@@ -1,18 +1,19 @@
 .check-answer {
-    background: #FAD202 !important;
-    border-color: transparent !important;
-    box-shadow: none !important;
-    border-radius: 1.1rem !important;
-    color: black !important;
-    font-weight: bold !important;
-    padding: 5px 15px;
+  background: #fad202 !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  border-radius: 1.1rem !important;
+  color: black !important;
+  font-weight: bold !important;
+  padding: 5px 15px;
 }
 .question-modal {
-    min-height: 260px;
-    max-height: 300px;
-    /* overflow: scroll; */
-    overflow-y: auto;
+  min-height: 260px;
+  max-height: 70vh;
+  padding: 1rem;
+  /* overflow: scroll; */
+  overflow-y: auto;
 }
 .next-question {
-    cursor: pointer;
+  cursor: pointer;
 }

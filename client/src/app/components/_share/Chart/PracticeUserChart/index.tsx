@@ -1,7 +1,7 @@
 import ReactApexChart from "react-apexcharts";
 import React from "react";
 
-export default class ApexChart extends React.Component<any, any> {
+export default class PracticeUserChart extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
 
@@ -25,7 +25,7 @@ export default class ApexChart extends React.Component<any, any> {
         },
         stroke: {
           curve: "smooth",
-          width: 2
+          width: 2,
         },
         title: {
           text: "Tuần này",
@@ -38,15 +38,7 @@ export default class ApexChart extends React.Component<any, any> {
           },
         },
         xaxis: {
-          categories: [
-            "Mon",
-            "Tue",
-            "Wed",
-            "Thur",
-            "Fri",
-            "Sat",
-            "Sun",
-          ],
+          categories: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
         },
       },
     };

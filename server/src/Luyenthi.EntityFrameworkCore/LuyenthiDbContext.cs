@@ -45,7 +45,12 @@ namespace Luyenthi.EntityFrameworkCore
         public override int SaveChanges()
         {
             var now = DateTime.Now;
-            var currentUser = _httpContextAccessor.HttpContext.Items["User"] as ApplicationUser;
+            ApplicationUser currentUser = null;
+            if (this._httpContextAccessor.HttpContext != null)
+            {
+                currentUser = _httpContextAccessor.HttpContext.Items["User"] as ApplicationUser;
+            }
+            
             Guid? currentUserId = currentUser != null ? (Guid?)currentUser.Id : null;
             foreach (var changedEntity in ChangeTracker.Entries())
             {

@@ -94,7 +94,7 @@ namespace Luyenthi.Services
         public List<DocumentHistory> GetAllDocumentHistory(Guid userId)
         {
             var documentHistory = _documentHistoryRepository
-               .Find(i => i.CreatedBy == userId)
+               .Find(i => i.CreatedBy == userId && i.DocumentId != null && i.Status == DocumentHistoryStatus.Close)
                .Include(h => h.Document)
                .OrderByDescending(i => i.StartTime)
                .ToList();
@@ -104,6 +104,11 @@ namespace Luyenthi.Services
 
         public void CloseHistory(DocumentHistory documentHistory,int times = 0)
         {
+            var documentHistoryCheck = _documentHistoryRepository.Get(documentHistory.Id);
+            if(documentHistoryCheck.Status == DocumentHistoryStatus.Close)
+            {
+                return;
+            }
             using TransactionScope scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
             // kiểm tra đáp án
             documentHistory.EndTime = DateTime.UtcNow <= documentHistory.StartTime.AddMinutes(times) || times == 0  ? DateTime.UtcNow : documentHistory.StartTime.AddMinutes(times);

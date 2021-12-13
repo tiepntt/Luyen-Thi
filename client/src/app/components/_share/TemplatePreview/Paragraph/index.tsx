@@ -1,5 +1,6 @@
 import React from "react";
 import TemplatePreview from "..";
+import "./style.scss";
 interface Props {
   type: string;
 
