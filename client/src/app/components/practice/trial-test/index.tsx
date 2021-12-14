@@ -10,7 +10,7 @@ import { practiceApi } from "services/api/document/practiceApi";
 import { toastService } from "services/toast";
 import SnipperLayout from "app/components/_share/Layouts/SpinnerLayout";
 import { history } from "services/history";
-
+import Ranking from "../ranking";
 const TrialTest: React.FC = () => {
   const [generatting, setGeneratting] = useState(false);
   const { subjectCode } = useParams<any>();
@@ -98,6 +98,12 @@ const TrialTest: React.FC = () => {
               templateId={subject?.templateId}
               // timeSelect={PracticeTime.WEEK}
             />
+          )}
+          {subject?.templateId && (
+            <div className="rank-template">
+              <h3 className="label-rank">Xếp hạng</h3>
+              <Ranking templateId={subject?.templateId} />
+            </div>
           )}
         </Container>
       </SnipperLayout>

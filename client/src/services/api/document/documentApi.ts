@@ -45,8 +45,11 @@ export const documentApi = {
   },
   getAnalysis: (
     templateId: string,
-    time = PracticeTime.WEEK,
+    time = PracticeTime.WEEK
   ): Promise<AxiosResponse<PracticeHistory>> => {
     return api.get(`${baseUrl}/history-test/${templateId}?type=${time}`);
+  },
+  getRankingTemplate: (templateId: string) => {
+    return api.get(`${baseUrl}/ranking-test/${templateId}`);
   },
 };

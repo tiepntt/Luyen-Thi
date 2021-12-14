@@ -3,7 +3,7 @@ import ApexCharts from "apexcharts";
 import React, { useEffect, useMemo, useState } from "react";
 import { PracticeTime } from "settings/practice/practiceTime";
 import { documentApi } from "services/api/document/documentApi";
-import { Form } from "react-bootstrap";
+import Select from "react-select";
 
 type UserAnalysisChartProps = {
   templateId: string;
@@ -41,6 +41,15 @@ const UserAnalysisChart = ({ templateId }: UserAnalysisChartProps) => {
       xaxis: {
         categories: [...scores.map((_, i) => i + 1)],
       },
+      yaxis: {
+        min: 0,
+        max: 10,
+        labels: {
+          formatter: function (val) {
+            return val.toFixed(0);
+          },
+        },
+      },
     };
     return options;
   }, [scores]);
@@ -54,15 +63,6 @@ const UserAnalysisChart = ({ templateId }: UserAnalysisChartProps) => {
     ];
     return series;
   }, [scores]);
-
-  const selectOnchangeHandler = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    const value = event?.target?.value as unknown as PracticeTime;
-    if (value !== timeSelect) {
-      setTimeSelect(value);
-    }
-  };
 
   useEffect(() => {
     documentApi.getAnalysis(templateId, timeSelect).then((response) => {
@@ -78,7 +78,7 @@ const UserAnalysisChart = ({ templateId }: UserAnalysisChartProps) => {
 
   return (
     <React.Fragment>
-      <Form>
+      {/* <Form>
         <Form.Group controlId="exampleForm.SelectCustom">
           <Form.Control
             value={timeSelect}
@@ -91,7 +91,15 @@ const UserAnalysisChart = ({ templateId }: UserAnalysisChartProps) => {
             <option value={PracticeTime.YEAR}>Theo năm</option>
           </Form.Control>
         </Form.Group>
-      </Form>
+      </Form> */}
+      <div className="heading-label d-flex mt-2">
+        <h3 style={{ flexGrow: 1 }}>Tình hình luyện tập của bạn</h3>
+        <Select
+          options={types}
+          value={types.find((i) => i.value === timeSelect)}
+          onChange={(e) => setTimeSelect(e?.value as any)}
+        />
+      </div>
       <div id="chart">
         {scores?.length > 0 && (
           <ReactApexChart
@@ -107,3 +115,17 @@ const UserAnalysisChart = ({ templateId }: UserAnalysisChartProps) => {
 };
 
 export default React.memo(UserAnalysisChart);
+const types = [
+  {
+    label: "Tuần này",
+    value: PracticeTime.WEEK,
+  },
+  {
+    label: "Tháng này",
+    value: PracticeTime.MONTH,
+  },
+  {
+    label: "Năm qua",
+    value: PracticeTime.YEAR,
+  },
+];

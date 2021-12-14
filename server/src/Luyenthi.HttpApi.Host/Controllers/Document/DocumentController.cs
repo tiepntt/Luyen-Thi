@@ -443,7 +443,7 @@ namespace Luyenthi.HttpApi.Host.Controllers
                     ScoreDetail = new
                     {
                         Score = ((h.NumberCorrect + h.NumberIncorrect) != 0 ? h.NumberCorrect / (h.NumberCorrect + h.NumberIncorrect) : 0) * 10,
-                        Time = h.EndTime.Subtract(h.StartTime).Minutes,
+                        Time = h.TimeDuration,
                     }
                 })
                 .ToList()
@@ -453,6 +453,10 @@ namespace Luyenthi.HttpApi.Host.Controllers
                     User = h.Select(h => h.User).FirstOrDefault(),
                     ScoreDetail = h.Select(h => h.ScoreDetail).OrderByDescending(h => h.Score).FirstOrDefault(),
                 })
+
+                .OrderByDescending(b => b.ScoreDetail.Score)
+                .ThenBy(b => b.ScoreDetail.Time)
+                .Take(10)
                 .ToList();
 
             return result;
