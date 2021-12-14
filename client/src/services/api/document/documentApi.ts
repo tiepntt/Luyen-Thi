@@ -3,7 +3,11 @@ import { DocumentGetAllRequest } from "models/document/DocumentGetAll";
 import { DocumentUpdateInfo } from "models/document/DocumentUpdateInfo";
 import { SearchModel } from "models/document/SearchModel";
 import { QuestionMatrix } from "models/question/Question";
+import { PracticeHistory } from "models/practice/practiceHistory";
 import api from "..";
+import { AxiosResponse } from "axios";
+import { PracticeTime } from "settings/practice/practiceTime";
+
 const baseUrl = "/document";
 export const documentApi = {
   create: (document: DocumentCreate) => {
@@ -38,5 +42,11 @@ export const documentApi = {
   },
   getHistory: () => {
     return api.get(`${baseUrl}/document-history`);
+  },
+  getAnalysis: (
+    templateId: string,
+    time = PracticeTime.WEEK,
+  ): Promise<AxiosResponse<PracticeHistory>> => {
+    return api.get(`${baseUrl}/history-test/${templateId}?type=${time}`);
   },
 };

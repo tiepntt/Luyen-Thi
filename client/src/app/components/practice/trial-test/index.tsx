@@ -10,6 +10,7 @@ import { practiceApi } from "services/api/document/practiceApi";
 import { toastService } from "services/toast";
 import SnipperLayout from "app/components/_share/Layouts/SpinnerLayout";
 import { history } from "services/history";
+
 const TrialTest: React.FC = () => {
   const [generatting, setGeneratting] = useState(false);
   const { subjectCode } = useParams<any>();
@@ -92,7 +93,12 @@ const TrialTest: React.FC = () => {
             </Card>
           </Row>
 
-          <PracticeUserChart />
+          {subject?.templateId && (
+            <PracticeUserChart
+              templateId={subject?.templateId}
+              // timeSelect={PracticeTime.WEEK}
+            />
+          )}
         </Container>
       </SnipperLayout>
     </React.Fragment>
