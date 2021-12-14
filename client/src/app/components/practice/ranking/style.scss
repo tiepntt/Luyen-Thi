@@ -95,7 +95,10 @@
       margin-top: 5px;
     }
   }
-  @media screen and (max-width: 525px) {
+  @media screen and (max-width: 800px) {
+    .top-users {
+      display: none !important;
+    }
     .time-duration {
       display: none !important;
     }

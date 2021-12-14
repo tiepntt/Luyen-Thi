@@ -45,3 +45,18 @@
     }
   }
 }
+@media only screen and (max-width: 950px) {
+  .profile-user {
+    justify-content: center;
+    .info-user {
+      padding: 0 1rem;
+    }
+  }
+}
+@media only screen and (max-width: 500px) {
+  .profile-user {
+    .col {
+      flex: none;
+    }
+  }
+}

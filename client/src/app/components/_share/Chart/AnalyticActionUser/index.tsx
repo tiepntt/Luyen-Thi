@@ -20,18 +20,19 @@ const AnalyticActionUser: React.FC<Props> = ({ analyticActionUser }) => {
       },
       plotOptions: {
         bar: {
-          columnWidth: "45%",
-          distributed: true,
+          columnWidth: "55%",
+          dataLabels: {
+            position: "top",
+          },
         },
       },
       legend: {
         show: false,
       },
       stroke: {
-        curve: "straight",
         show: true,
-
-        width: [0, 2],
+        width: 2,
+        colors: ["transparent"],
       },
       dataLabels: {
         enabled: false,
@@ -69,6 +70,7 @@ const AnalyticActionUser: React.FC<Props> = ({ analyticActionUser }) => {
   return (
     <div className="user-analytic-chart">
       <ReactApexChart
+        type="bar"
         options={chart.options}
         series={chart.series}
         height={375}

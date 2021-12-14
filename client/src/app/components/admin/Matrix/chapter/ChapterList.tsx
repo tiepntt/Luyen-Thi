@@ -38,7 +38,7 @@ const ChapterList = () => {
   } = useChapters(grade?.id || "", subject?.id || "");
   const params = [
     {
-      title: "Ma trận đề thi",
+      title: "Chương trình học",
       href: "/admin/matrix",
     },
     {
