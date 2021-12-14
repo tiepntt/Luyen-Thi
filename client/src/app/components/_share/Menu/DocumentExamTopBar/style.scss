@@ -17,4 +17,9 @@
     display: inline-block;
     min-width: 100px;
   }
+  @media screen and (max-width: 525px) {
+    .name-document {
+      display: none !important;
+    }
+  }
 }

@@ -68,27 +68,27 @@ const DocumentPreviewRank: React.FC<Props> = ({ totalQuestions }) => {
         <div className="list-rank mt-5">
           <div className="row label-rank">
             <div className="col-1 index-rank">#</div>
-            <div className="col-7">Người dùng</div>
-            <div className="col-2">Thời gian làm</div>
-            <div className="col-2">Điểm</div>
+            <div className="col-9 col-md-7">Người dùng</div>
+            <div className="col-2 time-duration">Thời gian làm</div>
+            <div className="col-2  score">Điểm</div>
           </div>
           {ranks.map((rank) => (
             <div className={`row rank-item`}>
               <div className="col-1 index-rank">{rank.rank}</div>
-              <div className="col-7">
+              <div className="col-9 col-md-7">
                 <div className="d-flex user-info">
                   <Avatar src={rank.user.avatarUrl} />
                   <div className="user-name mx-4">{`${rank.user.lastName} ${rank.user.firstName}`}</div>
                 </div>
               </div>
-              <div className="col-2">
+              <div className="col-2 time-duration">
                 <div className="time-result">
                   <div className="time-number">
                     {TimeFunction.convertSeconds(rank.timeDuration * 60)}
                   </div>
                 </div>
               </div>
-              <div className="col-2">
+              <div className="col-2 score">
                 <div className="point-result d-flex">
                   {((rank.numberCorrect * 10) / (totalQuestions || 1)).toFixed(
                     2

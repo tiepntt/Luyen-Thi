@@ -18,4 +18,28 @@
     overflow: auto;
     position: relative;
   }
+  @media screen and (max-width: 525px) {
+    .document-exam-main {
+      overflow: auto !important;
+    }
+    .questions-exam-document {
+      height: auto;
+    }
+    .indexs {
+      height: auto !important;
+      .index-list {
+        display: none;
+      }
+    }
+    .container {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    .btn-option {
+      padding: 10px 0;
+    }
+    .questions-exam-document {
+      padding: 5px !important;
+    }
+  }
 }

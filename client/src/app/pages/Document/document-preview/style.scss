@@ -13,9 +13,43 @@
     // height: 100vh;
     // overflow-y: auto;
   }
-
-  
 }
 .no-document-content {
   min-height: 75vh;
+}
+@media screen and (max-width: 525px) {
+  .document-preview-content {
+    padding: 0 !important;
+  }
+  .document-containter {
+    padding: 0 !important;
+  }
+  .document-preview {
+    padding: 3px 5px !important;
+  }
+  .preview-sidebar {
+    display: none;
+  }
+  .top-document-preview-options {
+    display: block !important;
+    border-bottom: none;
+    padding: 0 !important;
+    .nav-items {
+      height: 50px;
+      justify-content: center;
+      align-items: center;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .start-btn {
+      margin-top: 10px;
+      justify-content: center;
+      width: 100%;
+    }
+  }
+  .top-3-user {
+    display: none !important;
+  }
+  #ranking-document .list-rank {
+    margin: 0 !important;
+  }
 }

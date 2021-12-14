@@ -35,7 +35,7 @@ const DocumentLabel: React.FC<Props> = ({ document }) => {
           {document.name}
         </a>
         <div className="desription">{document.description}</div>
-        <div className="d-flex document-type-date d-flex">
+        <div className="document-type-date">
           <div className="document-type" style={{ flexGrow: 1 }}>
             {document.documentType === DocumentTypeLabel.DOCUMENT
               ? "Tài liệu chuyên đề"

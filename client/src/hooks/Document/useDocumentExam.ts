@@ -6,6 +6,7 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { examApi } from "services/api/document/examApi";
 import { questionHistoryApi } from "services/api/question/questionHistory";
+import { history } from "services/history";
 import { toastService } from "services/toast";
 import { DocumentHistoryStatus } from "settings/document/documentHistory";
 import { DocumentTypeLabel } from "settings/document/documentType";
@@ -208,7 +209,7 @@ export const useDocumentExam = (id: string, historyId?: string) => {
       status: DocumentHistoryStatus.Close,
       endTime: new Date(Date.now()),
     });
-    examApi.reset(document?.id || "").then((res) => {
+    examApi.reset(document?.id || "", historyId).then((res) => {
       if (res.status === 200) {
         // init History
         let questions = (document as DocumentExam)?.questionSets
@@ -225,6 +226,7 @@ export const useDocumentExam = (id: string, historyId?: string) => {
           newDocumentHistory.id
         );
         setDocumentHistory(newDocumentHistory);
+        history.push(`/document/${id}`);
       } else {
         toastService.error(res.data.message);
       }

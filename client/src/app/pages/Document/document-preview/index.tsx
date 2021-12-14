@@ -47,8 +47,8 @@ const DocumentPreivew = () => {
     <div id="document-preview">
       <SnipperLayout loading={document} className="page-no-data">
         <DocumentBanner document={document} />
-        <Container>
-          <div className=" px-3">
+        <Container className="document-containter">
+          <div className=" px-3 document-preview-content">
             <div className="document-main">
               <DocumentPreviewTopBar
                 status={document?.documentHistory?.status}

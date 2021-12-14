@@ -113,7 +113,13 @@ namespace Luyenthi.HttpApi.Host.Controllers
         public DocumentHistoryDto ResetDocument(ReseteExamRequest request)
         {
             ApplicationUser user = (ApplicationUser)HttpContext.Items["User"];
-            var documentHistory = _historyService.GetDetailByDocumentId(user.Id, request.DocumentId, null, DocumentHistoryStatus.Doing);
+
+            var documentId = request.DocumentId;
+            if(request.HistoryId != null)
+            {
+                documentId = Guid.Empty;
+            }
+            var documentHistory = _historyService.GetDetailByDocumentId(user.Id, documentId, request.HistoryId, DocumentHistoryStatus.Doing);
             if (documentHistory != null)
             {
                 throw new BadRequestException("Bạn vẫn chưa kết thúc bài thi này");

@@ -40,12 +40,6 @@ const DocumentHistory: React.FC<Props> = ({ history }) => {
 
         <div className="d-flex document-options">
           <div className="button-do">
-            <Button href={`/document/${document.id}`} className="btn-do m-2">
-              Làm lại
-              <span>
-                <FontAwesomeIcon icon={faChevronRight} />
-              </span>
-            </Button>
             <Button
               href={`/document/${document.id}?historyId=${history.id}`}
               className="btn-do"

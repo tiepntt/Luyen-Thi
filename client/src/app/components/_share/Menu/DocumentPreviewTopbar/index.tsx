@@ -25,28 +25,30 @@ const DocumentPreviewTopBar: React.FC<Props> = ({
     </NavLink>
   );
   return (
-    <div className="top-document-preview-options  d-flex ">
+    <div className="top-document-preview-options ">
       <div className="nav-items d-flex" style={{ flexGrow: 1 }}>
         <NavItem path="/question" title="Nội dung" />
         <NavItem path="/rank" title="Xếp hạng" />
       </div>
       <div className="start-btn d-inline-flex">
-        {status === DocumentHistoryStatus.Close && (
-          <Button className="btn-submit btn-recheck" onClick={continueExam}>
-            Xem lại bài làm
-          </Button>
-        )}
-        {status === DocumentHistoryStatus.Doing ? (
-          <Button className="btn-submit mx-1" onClick={continueExam}>
-            Làm tiếp
-          </Button>
-        ) : (
-          <Button className="btn-submit mx-1" onClick={startExam}>
-            {status === DocumentHistoryStatus.Close
-              ? "Làm lại"
-              : "Bắt đầu làm bài"}
-          </Button>
-        )}
+        <div className="btn-option">
+          {status === DocumentHistoryStatus.Close && (
+            <Button className="btn-submit btn-recheck" onClick={continueExam}>
+              Xem lại bài làm
+            </Button>
+          )}
+          {status === DocumentHistoryStatus.Doing ? (
+            <Button className="btn-submit mx-1" onClick={continueExam}>
+              Làm tiếp
+            </Button>
+          ) : (
+            <Button className="btn-submit mx-1" onClick={startExam}>
+              {status === DocumentHistoryStatus.Close
+                ? "Làm lại"
+                : "Bắt đầu làm bài"}
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   );

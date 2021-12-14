@@ -3,6 +3,7 @@
   background: white;
   align-items: center;
   min-height: 64px;
+  display: flex;
   border-bottom: 1px solid #e2e8f0;
   .preview-tag-buton {
     text-decoration: none;
@@ -12,6 +13,8 @@
     &.active {
       color: rgb(6, 122, 143);
     }
+  }
+  .top-document-preview-options {
   }
   .btn-submit {
     background-color: #2a5bfb !important;
