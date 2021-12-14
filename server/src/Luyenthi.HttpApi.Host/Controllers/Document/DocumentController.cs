@@ -4,6 +4,7 @@ using Luyenthi.Core.Dtos;
 using Luyenthi.Core.Dtos.Document;
 using Luyenthi.Core.Dtos.GoogleDoc;
 using Luyenthi.Core.Enums;
+using Luyenthi.Core.Enums.Analytic;
 using Luyenthi.Domain;
 using Luyenthi.Domain.User;
 using Luyenthi.EntityFrameworkCore;
@@ -379,5 +380,110 @@ namespace Luyenthi.HttpApi.Host.Controllers
             return documentHistory;
         }
 
+        [HttpGet("history-test/{templateId}")]
+        [Authorize]
+        public Dictionary<string, dynamic> GetHistoryMockTest(Guid templateId, [FromQuery] AnalyticType type)
+        {
+            ApplicationUser user = (ApplicationUser)HttpContext.Items["User"];
+
+            DateTime startTime;
+
+            switch (type)
+            {
+                case AnalyticType.Week:
+                    {
+                        startTime = DateTime.Now.AddDays(-7);
+                        break;
+                    }
+                case AnalyticType.Month:
+                    {
+                        startTime = DateTime.Now.AddMonths(-1);
+                        break;
+                    }
+                case AnalyticType.Year:
+                    {
+                        startTime = DateTime.Now.AddYears(-1);
+                        break;
+                    }
+                default:
+                    {
+                        startTime = DateTime.Now;
+                        break;
+                    }
+            }
+
+            var result = _documentHistoryRepository
+                .Find(h => h.CreatedBy == user.Id 
+                && h.Document.TemplateDocumentId != null 
+                && h.Document.TemplateDocumentId == templateId 
+                && h.CreatedAt > startTime 
+                && h.CreatedAt <= DateTime.Now)
+                .Select(h => new
+                {
+                    Score = (h.NumberIncorrect != 0 ? h.NumberCorrect / h.NumberIncorrect : 0) * 10,
+                })
+                .ToList();
+
+            return new Dictionary<string, dynamic>()
+            {
+                {"HistoryPractice",result }
+            };
+        }
+
+        [HttpGet("ranking-test/{templateId}")]
+        [Authorize]
+        public object GetRankingMockTest(Guid templateId)
+        {
+            var result = _documentHistoryRepository
+                .Find(h => h.Document.TemplateDocumentId == null || h.Document.TemplateDocumentId == templateId)
+                .Select(h => new
+                {
+                    UserId = h.CreatedBy,
+                    User = h.User,
+                    ScoreDetail = new
+                    {
+                        Score = ((h.NumberCorrect + h.NumberIncorrect) != 0 ? h.NumberCorrect / (h.NumberCorrect + h.NumberIncorrect) : 0) * 10,
+                        Time = h.EndTime.Subtract(h.StartTime).Minutes,
+                    }
+                })
+                .ToList()
+                .GroupBy(h => h.UserId)
+                .Select(h => new
+                {
+                    User = h.Select(h => h.User).FirstOrDefault(),
+                    ScoreDetail = h.Select(h => h.ScoreDetail).OrderByDescending(h => h.Score).FirstOrDefault(),
+                })
+                .ToList();
+
+            return result;
+        }
+
+        private bool checkTime(DateTime start, AnalyticType type)
+        {
+
+            switch (type)
+            {
+                case AnalyticType.Week:
+                    {
+                        if (start <= DateTime.Now && start > DateTime.Now.AddDays(7)) return true;
+                        break;
+                    }
+                case AnalyticType.Month:
+                    {
+                        if (start <= DateTime.Now && start > DateTime.Now.AddMonths(1)) return true;
+                        break;
+                    }
+                case AnalyticType.Year:
+                    {
+                        if (start <= DateTime.Now && start > DateTime.Now.AddYears(1)) return true;
+                        break;
+                    }
+                default:
+                    {
+                        return false;
+                    }
+            }
+            return false;
+        }
     }
 }
