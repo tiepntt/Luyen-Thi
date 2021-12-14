@@ -414,13 +414,14 @@ namespace Luyenthi.HttpApi.Host.Controllers
 
             var result = _documentHistoryRepository
                 .Find(h => h.CreatedBy == user.Id 
+                && h.Status == DocumentHistoryStatus.Close
                 && h.Document.TemplateDocumentId != null 
                 && h.Document.TemplateDocumentId == templateId 
                 && h.CreatedAt > startTime 
                 && h.CreatedAt <= DateTime.Now)
                 .Select(h => new
                 {
-                    Score = (h.NumberIncorrect != 0 ? h.NumberCorrect / h.NumberIncorrect : 0) * 10,
+                    Score = ((h.NumberCorrect + h.NumberIncorrect) != 0 ? h.NumberCorrect / (h.NumberCorrect + h.NumberIncorrect) : 0) * 10,
                 })
                 .ToList();
 
@@ -435,7 +436,9 @@ namespace Luyenthi.HttpApi.Host.Controllers
         public object GetRankingMockTest(Guid templateId)
         {
             var result = _documentHistoryRepository
-                .Find(h => h.Document.TemplateDocumentId == null || h.Document.TemplateDocumentId == templateId)
+                .Find(h => 
+                h.Status == DocumentHistoryStatus.Close &&
+                (h.Document.TemplateDocumentId == null || h.Document.TemplateDocumentId == templateId))
                 .Select(h => new
                 {
                     UserId = h.CreatedBy,
