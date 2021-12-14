@@ -3,7 +3,13 @@ import Document from "app/components/admin/Document";
 import Matrix from "app/components/admin/Matrix";
 import TemplateExam from "app/components/admin/TemplateExam";
 import User from "app/components/admin/User";
-import { BarChart as BarChartIcon, User as UserIcon } from "react-feather";
+import {
+  BarChart as BarChartIcon,
+  User as UserIcon,
+  FileText,
+  DivideSquare,
+  MessageSquare,
+} from "react-feather";
 export const adminRoutes = [
   {
     href: "/admin/dashboard",
@@ -13,19 +19,19 @@ export const adminRoutes = [
   },
   {
     href: "/admin/document",
-    icon: UserIcon,
+    icon: FileText,
     title: "Tài liệu",
     component: Document,
   },
   {
     href: "/admin/matrix",
-    icon: UserIcon,
-    title: "Ma trận đề thi",
+    icon: DivideSquare,
+    title: "Chương trình học",
     component: Matrix,
   },
   {
     href: "/admin/template",
-    icon: UserIcon,
+    icon: MessageSquare,
     title: "Mẫu đề thi",
     component: TemplateExam,
   },

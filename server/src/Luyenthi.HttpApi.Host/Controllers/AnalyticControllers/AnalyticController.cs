@@ -125,7 +125,7 @@ namespace Luyenthi.HttpApi.Host.Controllers.AnalyticControllers
                     }).ToList();
                 for (var i = DateTime.Now.Day + 1; i <= 30; i++)
                 {
-                    if (result.Select(r => r.Title).Contains(i))
+                    if (month.Select(r => r.Title).Contains(i))
                     {
                         result.Add(new AnalyticUserDto
                         {
@@ -144,7 +144,7 @@ namespace Luyenthi.HttpApi.Host.Controllers.AnalyticControllers
                 }
                 for (var i = 1; i <= DateTime.Now.Day; i++)
                 {
-                    if (result.Select(r => r.Title).Contains(i))
+                    if (month.Select(r => r.Title).Contains(i))
                     {
                         result.Add(new AnalyticUserDto
                         {
@@ -175,7 +175,7 @@ namespace Luyenthi.HttpApi.Host.Controllers.AnalyticControllers
                     }).ToList();
                 for (var i = DateTime.Now.Month + 1; i <= 12; i++)
                 {
-                    if (result.Select(r => r.Title).Contains(i))
+                    if (year.Select(r => r.Title).Contains(i))
                     {
                         result.Add(new AnalyticUserDto
                         {
@@ -194,7 +194,7 @@ namespace Luyenthi.HttpApi.Host.Controllers.AnalyticControllers
                 }
                 for (var i = 1; i <= DateTime.Now.Month; i++)
                 {
-                    if (result.Select(r => r.Title).Contains(i))
+                    if (year.Select(r => r.Title).Contains(i))
                     {
                         result.Add(new AnalyticUserDto
                         {

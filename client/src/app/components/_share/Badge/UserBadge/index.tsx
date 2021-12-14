@@ -3,7 +3,12 @@ import React from "react";
 import "./style.scss";
 import { Dropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faUserCircle,
+  faPollH,
+  faWindowRestore,
+  faIdCard,
+} from "@fortawesome/free-solid-svg-icons";
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { UserFunction } from "redux/user/action";
@@ -48,7 +53,7 @@ const UserBadge: React.FC<Props> = ({ user }) => {
               as={NavLink}
               to="/profile/result"
             >
-              <FontAwesomeIcon icon={faUserCircle} className="icon" />
+              <FontAwesomeIcon icon={faPollH} className="icon" />
               <span className="label-item">Kết quả học tập</span>
             </Dropdown.Item>
             <Dropdown.Item
@@ -56,11 +61,11 @@ const UserBadge: React.FC<Props> = ({ user }) => {
               as={NavLink}
               to="/profile/history"
             >
-              <FontAwesomeIcon icon={faUserCircle} className="icon" />
+              <FontAwesomeIcon icon={faWindowRestore} className="icon" />
               <span className="label-item">Tài liệu đã làm</span>
             </Dropdown.Item>
             <Dropdown.Item className="item-option" as={NavLink} to="/admin">
-              <FontAwesomeIcon icon={faUserCircle} className="icon" />
+              <FontAwesomeIcon icon={faIdCard} className="icon" />
               <span className="label-item">Quản lý hệ thống</span>
             </Dropdown.Item>
           </div>
