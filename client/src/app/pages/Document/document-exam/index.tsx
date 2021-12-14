@@ -63,7 +63,7 @@ const DocumentExam = () => {
           <HistoryQuestions.Provider value={questionHistoriesValue}>
             <div className="document-exam-main">
               <Grid container className="h-100">
-                <Grid item lg={3} md={4} className="h-100">
+                <Grid item lg={3} md={4} xs={12} className="h-100 indexs">
                   <DocumentExamSidebar
                     documentHistory={documentHistory}
                     times={times}
@@ -71,7 +71,7 @@ const DocumentExam = () => {
                     onReset={reset}
                   />
                 </Grid>
-                <Grid item lg={9} md={8}>
+                <Grid item lg={9} md={8} xs={12}>
                   <div className="exam-content">
                     <DocumentExamContent
                       questionSets={document?.questionSets || []}

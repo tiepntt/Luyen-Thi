@@ -1,6 +1,6 @@
 #home-page {
   overflow-x: hidden;
-  
+
   text-align: center;
   .block-carousels {
     position: relative;
@@ -35,12 +35,12 @@
     border-radius: 4px;
     outline: none;
     border: none;
-    background-color: #EEC14E;
+    background-color: #eec14e;
   }
   .document-section {
     height: 400px;
-    background-color: #82DBCA;    
-    color: #1A6356;
+    background-color: #82dbca;
+    color: #1a6356;
     .left {
       left: 64px;
     }
@@ -63,13 +63,12 @@
       color: #fff;
       font-weight: bold;
       :not(:last-child) {
-        background-color: #0A584A;
+        background-color: #0a584a;
       }
       :last-child {
         background-color: #019176;
       }
     }
-
   }
   .test-section {
     height: 500px;
@@ -78,7 +77,7 @@
     background-size: 45%;
     background-repeat: no-repeat;
     background-position: center;
-    color: #1A6356;
+    color: #1a6356;
     .list-class {
       width: 35%;
       height: auto;
@@ -91,7 +90,7 @@
         background-repeat: no-repeat;
         background-position: left;
         background-position-x: 50px;
-        color: #FFF;
+        color: #fff;
         font-weight: bold;
         font-size: 20px;
         opacity: 80%;
@@ -104,15 +103,15 @@
         }
       }
       .class-10 {
-        background-color: #EB9595;
+        background-color: #eb9595;
         background-image: url("../../../assets/images/homepage/medal.png");
       }
       .class-11 {
-        background-color: #D1E171;
+        background-color: #d1e171;
         background-image: url("../../../assets/images/homepage/book_a4.png");
       }
       .class-12 {
-        background-color: #C4C4C4;
+        background-color: #c4c4c4;
         background-image: url("../../../assets/images/homepage/lamp.png");
       }
       .national-test {
@@ -120,25 +119,24 @@
         top: 8px;
         left: 8px;
         background-image: url("../../../assets/images/homepage/graduation_hat.png");
-        background-color: #84CBB6;
+        background-color: #84cbb6;
       }
     }
     h1 {
       position: relative;
       top: 5px;
-      color: #E5B22C;
+      color: #e5b22c;
       font-weight: bold;
     }
     h5 {
       position: relative;
-      color: #083C32;
+      color: #083c32;
       font-weight: bold;
       bottom: 5px;
     }
-
   }
   .learning-path {
-    background-color: #0A584A;
+    background-color: #0a584a;
     height: 70px;
     background-image: url("../../../assets/images/homepage/redirect.png");
     background-size: 3%;
@@ -154,6 +152,7 @@
   }
   .r-title {
     font-size: 30px;
-    font-family: Roboto;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
   }
 }

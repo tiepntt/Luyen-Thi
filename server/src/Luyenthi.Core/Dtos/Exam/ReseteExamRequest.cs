@@ -9,6 +9,6 @@ namespace Luyenthi.Core.Dtos
     public class ReseteExamRequest
     {
         public Guid DocumentId { get; set; }
-        public Guid? ExamId { get; set; }
+        public Guid? HistoryId { get; set; }
     }
 }

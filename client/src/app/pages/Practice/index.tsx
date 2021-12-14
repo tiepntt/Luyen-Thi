@@ -5,6 +5,7 @@ import "./style.scss";
 import React from "react";
 import { useSubjects } from "hooks/Grade-Subject/useSubjects";
 import PracticeBanner from "app/components/_share/Banners/PracticeBanner";
+import SnipperLayout from "app/components/_share/Layouts/SpinnerLayout";
 
 const PracticePage = () => {
   const { subjects } = useSubjects("grade-12");
@@ -17,11 +18,13 @@ const PracticePage = () => {
       />
       <Container className="practice_ctn px-3">
         <Row>
-          {subjects.map((subject) => (
-            <Col key={subject.id} lg={4} xl={4} md={6} sm={12}>
-              <PracticeSubject {...subject} />
-            </Col>
-          ))}
+          <SnipperLayout loading={subjects && subjects.length}>
+            {subjects.map((subject) => (
+              <Col key={subject.id} lg={4} xl={4} md={6} sm={12}>
+                <PracticeSubject {...subject} />
+              </Col>
+            ))}
+          </SnipperLayout>
         </Row>
       </Container>
     </React.Fragment>
