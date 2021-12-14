@@ -44,6 +44,7 @@ namespace Luyenthi.HttpApi.Host.Controllers.AnalyticControllers
             _userRepository = userRepository;
             _chapterRepository = chapterRepository;
             _subjectService = subjectService;
+            _documentRepository = documentRepository;
             _documentHistoryRepository = documentHistoryRepository;
             _questionRepository = questionRepository;
             _questionHistoryRepository = questionHistoryRepository;

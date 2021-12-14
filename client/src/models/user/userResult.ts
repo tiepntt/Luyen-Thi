@@ -32,3 +32,7 @@ export interface UserHistoryAnalytic {
   endTime: Date;
   medium: number;
 }
+export interface AnalyticActionUserModal {
+  title: string;
+  quality: number;
+}
