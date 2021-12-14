@@ -1,4 +1,5 @@
 #home-page {
+  overflow-x: hidden;
   
   text-align: center;
   .block-carousels {
@@ -144,5 +145,15 @@
     background-position-x: 33%;
     background-position-y: center;
     background-repeat: no-repeat;
+  }
+  .start-button {
+    box-shadow: none;
+    border: none;
+    font-family: Roboto;
+    font-size: 20px;
+  }
+  .r-title {
+    font-size: 30px;
+    font-family: Roboto;
   }
 }
