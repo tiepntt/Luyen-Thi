@@ -71,14 +71,13 @@ namespace Luyenthi.HttpApi.Host.Controllers
                 }
             }
             else {
-                if (document.DocumentType == DocumentType.Exam && documentHistory.Status ==DocumentHistoryStatus.Doing &&documentHistory.StartTime.AddMinutes(document.Times) < DateTime.UtcNow)
-                {
-                    documentHistory =  _historyService.CloseHistory(documentHistory.Id, document.Times);
-                }
-                if (document.DocumentType == DocumentType.Document && documentHistory.Status == DocumentHistoryStatus.Doing && documentHistory.StartTime.AddHours(6) < DateTime.UtcNow)
-                {
-                    documentHistory = _historyService.CloseHistory(documentHistory.Id, 120);
-                }
+                if (document.DocumentType == DocumentType.Exam && documentHistory.Status == DocumentHistoryStatus.Doing 
+                 &&documentHistory.StartTime.AddMinutes(document.Times) < DateTime.UtcNow)
+                { documentHistory =  _historyService.CloseHistory(documentHistory.Id, document.Times);}
+                
+                if (document.DocumentType == DocumentType.Document && documentHistory.Status == DocumentHistoryStatus.Doing 
+                    && documentHistory.StartTime.AddHours(6) < DateTime.UtcNow)
+                { documentHistory = _historyService.CloseHistory(documentHistory.Id, 120);}
             }
             var result = new ExamDto
             {
