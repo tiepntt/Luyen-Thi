@@ -47,17 +47,14 @@ namespace Luyenthi.HttpApi.Host.Controllers
 
         public ExamDto GetExam(Guid documentId, [FromQuery] Guid? historyId)
         {
-            // lấy ra content document
             ApplicationUser user = (ApplicationUser)HttpContext.Items["User"];
             var documentTask = _documentService.GetDetailById(documentId);
-            if(historyId!= null) { documentId = Guid.Empty;}
-            
             var documentHistoryTask = _historyService.GetDetailByDocumentId(user.Id, documentId, historyId);
-            //await Task.WhenAll(documentTask, documentHistoryTask);
             var document = documentTask;
             var documentHistory = documentHistoryTask;
             document.QuestionSets = DocumentHelper.MakeIndexQuestions(document.QuestionSets);
             
+            if(historyId!= null) { documentId = Guid.Empty;}
             if (document == null) {throw new KeyNotFoundException("Không tìm thấy đề thi");}
             if (documentHistory == null){ documentHistory = new DocumentHistory{
                     Id = new Guid(),
