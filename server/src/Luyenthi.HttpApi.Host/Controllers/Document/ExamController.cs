@@ -44,7 +44,6 @@ namespace Luyenthi.HttpApi.Host.Controllers
             _mapper = mapper;
         }
         [HttpGet("{documentId}")]
-
         public ExamDto GetExam(Guid documentId, [FromQuery] Guid? historyId)
         {
             ApplicationUser user = (ApplicationUser)HttpContext.Items["User"];
