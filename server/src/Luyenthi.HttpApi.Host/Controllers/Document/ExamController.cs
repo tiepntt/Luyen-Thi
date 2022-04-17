@@ -50,24 +50,16 @@ namespace Luyenthi.HttpApi.Host.Controllers
             // lấy ra content document
             ApplicationUser user = (ApplicationUser)HttpContext.Items["User"];
             var documentTask = _documentService.GetDetailById(documentId);
-            if(historyId!= null)
-            {
-                documentId = Guid.Empty;
-            }
+            if(historyId!= null) { documentId = Guid.Empty;}
+            
             var documentHistoryTask = _historyService.GetDetailByDocumentId(user.Id, documentId, historyId);
             //await Task.WhenAll(documentTask, documentHistoryTask);
             var document = documentTask;
             var documentHistory = documentHistoryTask;
             document.QuestionSets = DocumentHelper.MakeIndexQuestions(document.QuestionSets);
-            if (document == null)
-            {
-                throw new KeyNotFoundException("Không tìm thấy đề thi");
-            }
-            if (documentHistory == null)
-            {
-                // nếu chưa có thì tạo
-                documentHistory = new DocumentHistory
-                {
+            
+            if (document == null) {throw new KeyNotFoundException("Không tìm thấy đề thi");}
+            if (documentHistory == null){ documentHistory = new DocumentHistory{
                     Id = new Guid(),
                     StartTime = DateTime.UtcNow.AddSeconds(1),
                     Status = DocumentHistoryStatus.Doing,
@@ -80,11 +72,8 @@ namespace Luyenthi.HttpApi.Host.Controllers
                 {
                     BackgroundJob.Schedule(() => _historyService.CloseHistory(documentHistory.Id, document.Times), endTime - startTime);
                 }
-                
             }
-            else
-            {
-                // nếu bài thi đã kết thúc => chấm bài và trả về kết quả
+            else {
                 if (document.DocumentType == DocumentType.Exam && documentHistory.Status ==DocumentHistoryStatus.Doing &&documentHistory.StartTime.AddMinutes(document.Times) < DateTime.UtcNow)
                 {
                     documentHistory =  _historyService.CloseHistory(documentHistory.Id, document.Times);
