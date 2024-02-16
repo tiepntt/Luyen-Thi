@@ -1,7 +1,8 @@
 # Luyenthi - IPractice
 
 > Hệ thống ôn luyện thi THPT Quốc gia 2021
-> Details: https://drive.google.com/drive/folders/1r81BZqAK8QKnTY8KkGffmAXaCSqvVfI3 
+> 
+> Details: https://drive.google.com/file/d/1Uqlgkx-pWso7ZRrMnXjMDt7InXqPQeEt/view?usp=drive_link
 
 ##
 
